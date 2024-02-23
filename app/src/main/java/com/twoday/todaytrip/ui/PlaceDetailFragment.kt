@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [ResultPreviewFragment.newInstance] factory method to
+ * Use the [PlaceDetailFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ResultPreviewFragment : Fragment() {
+class PlaceDetailFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class ResultPreviewFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_result_preview, container, false)
+        return inflater.inflate(R.layout.fragment_place_detail, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class ResultPreviewFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment ResultPreviewFragment.
+         * @return A new instance of fragment PlaceDetailFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            ResultPreviewFragment().apply {
+            PlaceDetailFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
