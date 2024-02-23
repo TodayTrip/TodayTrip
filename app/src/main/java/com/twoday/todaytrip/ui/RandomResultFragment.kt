@@ -14,10 +14,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [RandomPickFirstFragment.newInstance] factory method to
+ * Use the [RandomResultFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RandomPickFirstFragment : Fragment() {
+class RandomResultFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,7 +35,7 @@ class RandomPickFirstFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_random_pick_first, container, false)
+        return inflater.inflate(R.layout.fragment_random_result, container, false)
     }
 
     companion object {
@@ -45,12 +45,12 @@ class RandomPickFirstFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment RandomPickFirstFragment.
+         * @return A new instance of fragment RandomResultFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            RandomPickFirstFragment().apply {
+            RandomResultFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
