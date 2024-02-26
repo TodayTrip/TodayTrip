@@ -74,7 +74,7 @@
                 <TextView
                     android:id="@+id/tv_option1"
                     android:text="풀내음이\n가득한 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -98,7 +98,7 @@
                 <TextView
                     android:id="@+id/tv_option2"
                     android:text="청량함이\n있는 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -122,7 +122,7 @@
                 <TextView
                     android:id="@+id/tv_option3"
                     android:text="시간을 넘나들 수\n있는 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -147,7 +147,7 @@
                 <TextView
                     android:id="@+id/tv_option4"
                     android:text="근심이\n없어지는 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -171,7 +171,7 @@
                 <TextView
                     android:id="@+id/tv_option5"
                     android:text="감각을\n자극하는 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -196,7 +196,7 @@
                 <TextView
                     android:id="@+id/tv_option6"
                     android:text="모험심을\n발견하는 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -220,7 +220,7 @@
                 <TextView
                     android:id="@+id/tv_option7"
                     android:text="예술이\n숨 쉬는 곳"
-                    style="@style/BlueThemeText"
+                    style="@style/RandomThemeBlueBoldText"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
