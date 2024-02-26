@@ -250,7 +250,7 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
-            style="@style/DefaultBoldText"
+            style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="다음"

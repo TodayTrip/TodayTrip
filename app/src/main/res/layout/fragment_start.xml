@@ -11,7 +11,7 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/BoldText"
+        style="@style/LargeTitleBoldText"
         android:layout_marginTop="352dp"
         android:text="상상 못한 곳으로 떠날래?"
         android:textColor="@color/main_blue"
@@ -33,7 +33,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/DefaultBoldText"
+            style="@style/SmallBoldText"
             android:text="시작하기"
             android:textSize="16sp"
             android:textColor="@color/point_yellow"
