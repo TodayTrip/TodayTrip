@@ -2,8 +2,10 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="main_blue">#1355FF</color>
+    <color name="main_blue">#0085FF</color>
+    <color name="dark_blue">#0074EB</color>
     <color name="sub_blue">#E8F5FF</color>
+    <color name="point_yellow">#FFD15B</color>
     <color name="button_gray">#4E4E4E</color>
     <color name="light_gray">#F2F2F2</color>
     <color name="middle_gray">#D9D9D9</color>
