@@ -62,6 +62,7 @@
             app:layout_constraintTop_toBottomOf="@id/tv_record_chart_title" />
 
         <com.db.williamchart.view.HorizontalBarChartView
+            android:layout_marginTop="8dp"
             android:id="@+id/chart_record"
             android:layout_width="match_parent"
             android:layout_height="0dp"
