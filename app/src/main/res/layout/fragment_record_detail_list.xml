@@ -22,32 +22,48 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <ImageView
-                android:id="@+id/iv_record_detail_list_end1"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_record_detail_list_end1"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:src="@drawable/ic_record_detail_list_line_end"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_record_detail_list_line_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_record_detail_list"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/iv_record_detail_list_end1"
+                app:layout_constraintTop_toBottomOf="@id/layout_record_detail_list_end1"
                 tools:listitem="@layout/item_record_detail_list" />
 
-            <ImageView
-                android:id="@+id/iv_record_detail_list_end2"
-                android:layout_width="wrap_content"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_record_detail_list_end2"
+                android:layout_width="56dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="18dp"
-                android:rotation="180"
-                android:src="@drawable/ic_record_detail_list_line_end"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rv_record_detail_list" />
+                app:layout_constraintTop_toBottomOf="@id/rv_record_detail_list">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:rotation="180"
+                    android:src="@drawable/ic_record_detail_list_line_end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

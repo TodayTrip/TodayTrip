@@ -6,9 +6,10 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_item_record_detail_list_numbering"
-        android:layout_width="wrap_content"
+        android:layout_width="56dp"
         android:layout_height="match_parent"
-        android:paddingHorizontal="8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
@@ -26,8 +27,9 @@
             android:background="@drawable/shape_circle"
             android:backgroundTint="@color/main_blue"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf=""
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +46,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/shape_10_radius"
         android:backgroundTint="@color/white"
@@ -64,7 +65,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/image_record_default"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/layout_item_record_detail_list_numbering"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
