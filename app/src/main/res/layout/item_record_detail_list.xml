@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_item_record_detail_list_numbering"
+        android:layout_width="56dp"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_item_record_detail_list_line"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_record_detail_list_line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_item_record_detail_list_circle"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/shape_circle"
+            android:backgroundTint="@color/main_blue"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_item_record_detail_list_circle"
+            app:layout_constraintEnd_toEndOf="@id/iv_item_record_detail_list_circle"
+            app:layout_constraintStart_toStartOf="@id/iv_item_record_detail_list_circle"
+            app:layout_constraintTop_toTopOf="@id/iv_item_record_detail_list_circle" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_10_radius"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/layout_item_record_detail_list_numbering"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_item_record_detail_map_image"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:background="@drawable/shape_10_radius"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image_record_default"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_item_record_detail_map_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="부산역(고속철도)"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/iv_item_record_detail_map_image"
+            app:layout_constraintTop_toTopOf="@id/iv_item_record_detail_map_image" />
+
+        <TextView
+            android:id="@+id/tv_item_record_detail_map_address"
+            android:layout_width="192dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="부산 동구 중앙대로 206"
+            android:textColor="@color/button_gray"
+            android:textSize="16sp"
+            app:layout_constraintStart_toEndOf="@id/iv_item_record_detail_map_image"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_record_detail_map_title" />
+
+        <ImageView
+            android:id="@+id/iv_item_record_detail_map_pin"
+            android:layout_width="20dp"
+            android:layout_height="25dp"
+            android:src="@drawable/ic_record_detail_pin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/middle_gray" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

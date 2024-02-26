@@ -2,4 +2,23 @@
     <string name="app_name">TodayTrip</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--  RecordActivity  -->
+    <string name="record_title">나의 여행 기록</string>
+    <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>
+    <string name="record_chart_title">자주 방문한 여행지 <font color="#FFD15B"><b>TOP3</b></font></string>
+    <string name="record_chart_empty">저장된 여행 기록이 없습니다!</string>
+    <string name="record_list_order_most_recent">최신순</string>
+    <string name="record_list_order_least_recent">오래된순</string>
+    <string name="record_list_order_alphabetical">가나다순</string>
+    <string name="record_list_empty">저장된 여행 기록이 없습니다!</string>
+    <string name="record_new_travel">새로운 여행지를 정하러 가볼까요?</string>
+
+    <!--  RecordDetailActivity  -->
+    <string name="record_detail_back">목록으로 돌아가기</string>
+    <string name="record_detail_delete">삭제하기</string>
+
+    <!--  ItemRecordDetailMap  -->
+    <string name="item_record_detail_map_opening_hours">영업 시간</string>
+    <string name="item_record_detail_map_closed_date">쉬는 날</string>
 </resources>
