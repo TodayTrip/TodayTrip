@@ -143,9 +143,9 @@
         android:background="@drawable/shape_10_radius"
         android:backgroundTint="@color/main_blue"
         android:elevation="10dp"
-        android:textSize="20sp"
         android:outlineProvider="bounds"
         android:text="@string/record_new_travel"
         android:textColor="@color/white"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
