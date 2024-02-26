@@ -13,7 +13,7 @@
     <string name="record_list_order_alphabetical">가나다순</string>
     <string name="record_list_empty">저장된 여행 기록이 없습니다!</string>
     <string name="record_new_travel">새로운 여행지를 정하러 가볼까요?</string>
-    
+
     <!--  RecordDetailMapFragment  -->
     <string name="record_detail_map_back">목록으로 돌아가기</string>
     <string name="record_detail_map_delete">삭제하기</string>

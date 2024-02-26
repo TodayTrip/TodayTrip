@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:paddingHorizontal="16dp"
     android:paddingTop="16dp"
-    tools:context=".ui.RecordFragment">
+    tools:context=".ui.RecordActivity">
 
     <TextView
         android:id="@+id/tv_record_title"
