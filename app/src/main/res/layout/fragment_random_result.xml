@@ -52,7 +52,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.585"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/start_gift_anim"
+        app:lottie_repeatCount="1" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_trip_result"
         android:layout_width="match_parent"
         android:layout_height="45dp"
         android:layout_marginStart="30dp"
@@ -65,12 +80,12 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <TextView
+            style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/SmallBoldText"
             android:text="다음"
-            android:textSize="16sp"
             android:textColor="@color/point_yellow"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
