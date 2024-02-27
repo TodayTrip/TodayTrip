@@ -7,11 +7,20 @@
     android:background="@color/white"
     tools:context=".ui.PlaceMapActivity">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fcv_place_map_full_map"
+<!--    지도 띄우기 fragment/view 중에서 고민중-->
+<!--    <androidx.fragment.app.FragmentContainerView-->
+<!--        android:id="@+id/fcv_place_map_full_map"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:name="com.naver.maps.map.MapFragment"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.naver.maps.map.MapView
+        android:id="@+id/mv_place_map_full_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="com.naver.maps.map.MapFragment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

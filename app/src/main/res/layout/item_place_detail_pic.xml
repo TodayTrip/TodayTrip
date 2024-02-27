@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="240dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/cv_item_pic">
+    android:id="@+id/cv_item_place_detail_pic">
 
     <ImageView
         android:layout_width="match_parent"
