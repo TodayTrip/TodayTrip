@@ -16,6 +16,8 @@ class RecordActivity : AppCompatActivity() {
         _binding = ActivityRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         //WilliamsChart example code
         binding.tvChartEmpty.isVisible = false
         binding.chartRecord.isVisible = true
