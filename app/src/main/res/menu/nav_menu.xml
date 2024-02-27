@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_place_list"
+        android:icon="@drawable/ic_bottom_bus"
+        android:title="관광 정보" />
+    <item
+        android:id="@+id/navigation_route"
+        android:icon="@drawable/ic_bottom_map"
+        android:title="여행 경로" />
+
+</menu>
