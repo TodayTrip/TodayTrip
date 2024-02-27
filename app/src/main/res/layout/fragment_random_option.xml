@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_random_select_description" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/ly_step_bar"
+        android:id="@+id/layout_step_bar"
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_marginStart="32dp"
@@ -59,7 +59,7 @@
         android:layout_marginStart="10dp"
         android:background="@drawable/shape_10_radius"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/ly_step_bar"
+        app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
@@ -79,7 +79,7 @@
         android:layout_height="150dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/shape_10_radius"
-        app:layout_constraintEnd_toEndOf="@+id/ly_step_bar"
+        app:layout_constraintEnd_toEndOf="@+id/layout_step_bar"
         app:layout_constraintTop_toTopOf="@+id/btn_all_random" >
 
         <ImageView
