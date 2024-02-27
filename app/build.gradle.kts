@@ -49,7 +49,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     //Fragment
-    implementation ("androidx.fragment:fragment-ktx:1.2.5")
+    implementation ("androidx.fragment:fragment-ktx:1.6.2")
     //RecordFragment Charts
     implementation ("com.diogobernardino:williamchart:3.10.1")
+    //Naver Map
+    implementation("com.naver.maps:map-sdk:3.17.0")
 }
