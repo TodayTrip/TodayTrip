@@ -23,5 +23,10 @@
     <string name="item_record_detail_map_closed_date">쉬는 날</string>
 
     <!--  PlaceMapActivity  -->
-    <string name="back_to_list">목록으로</string>
+    <string name="place_map_back_to_list">목록으로</string>
+
+    <!--  PlaceDetailActivity  -->
+    <string name="place_detail_add_to_path">경로에 추가하기</string>
+    <string name="place_detail_my_memory">이 장소의 추억</string>
+    <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다.</string>
 </resources>
