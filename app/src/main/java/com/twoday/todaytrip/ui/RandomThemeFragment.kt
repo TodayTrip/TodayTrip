@@ -1,60 +1,92 @@
 package com.twoday.todaytrip.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
+import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [RandomThemeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class RandomThemeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var _binding: FragmentRandomThemeBinding? = null
+    private val binding get() = _binding!!
+    private var isBtnSelected = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_random_theme, container, false)
+        _binding = FragmentRandomThemeBinding.inflate(inflater, container, false)
+        binding.btnTripTheme.isEnabled = false
+        setUpClickListener()
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment RandomThemeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            RandomThemeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
+
+    private fun setUpClickListener() {
+        binding.btnTripTheme.setOnClickListener{
+            findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_random_result)
+        }
+        binding.btnTheme1.setOnClickListener {
+            selectButton(selectedNumber = 0)
+        }
+        binding.btnTheme2.setOnClickListener {
+            selectButton(selectedNumber = 1)
+        }
+        binding.btnTheme3.setOnClickListener {
+            selectButton(selectedNumber = 2)
+        }
+        binding.btnTheme4.setOnClickListener {
+            selectButton(selectedNumber = 3)
+        }
+        binding.btnTheme5.setOnClickListener {
+            selectButton(selectedNumber = 4)
+        }
+        binding.btnTheme6.setOnClickListener {
+            selectButton(selectedNumber = 5)
+        }
+        binding.btnTheme7.setOnClickListener {
+            selectButton(selectedNumber = 6)
+        }
+    }
+
+    private fun selectButton(selectedNumber: Int) {
+        // 모든 버튼의 선택 상태를 초기화
+        val buttons = listOf(
+            binding.btnTheme1,
+            binding.btnTheme2,
+            binding.btnTheme3,
+            binding.btnTheme4,
+            binding.btnTheme5,
+            binding.btnTheme6,
+            binding.btnTheme7
+        )
+
+        // 모든 버튼을 순회하면서, 선택된 번호의 버튼에만 특정 스타일 적용
+        for ((index, button) in buttons.withIndex()) {
+            if (index == selectedNumber) {
+                button.setBackgroundResource(R.drawable.shape_yellow_boarder)
+            } else {
+                button.setBackgroundResource(R.drawable.shape_without_boarder)
+            }
+        }
+
+        // '다음' 버튼 활성화
+        binding.btnTripTheme.isEnabled = true
+
+        Log.d("btn", "선택된 테마는 ${selectedNumber}번째 테마")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
 }
