@@ -24,6 +24,7 @@
 
     <!--  PlaceMapActivity  -->
     <string name="place_map_back_to_list">목록으로</string>
+<!--    위에 목록으로 돌아가기랑 합쳐도 될 것 같다-->
 
     <!--  PlaceDetailActivity  -->
     <string name="place_detail_add_to_path">경로에 추가하기</string>

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.PlaceMapActivity">
+    tools:context=".ui.place_map.PlaceMapActivity">
 
 <!--    지도 띄우기 fragment/view 중에서 고민중-->
 <!--    <androidx.fragment.app.FragmentContainerView-->
