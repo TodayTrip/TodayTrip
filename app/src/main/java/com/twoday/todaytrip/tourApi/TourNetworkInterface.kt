@@ -1,13 +1,12 @@
 package com.twoday.todaytrip.tourApi
 
+import com.twoday.todaytrip.BuildConfig
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 const val MOBILE_OS = "AND"
 const val MOBILE_NAME = "TodayTrip"
-
-//TODO move api key to personal properties file
-const val TOUR_API_KEY: String = ""
+const val TOUR_API_KEY: String = BuildConfig.TOUR_API_KEY
 
 interface TourNetworkInterface {
     //지역 기반 관광 정보 조회

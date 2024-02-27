@@ -1,7 +1,12 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val properties = Properties()
+properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.twoday.todaytrip"
@@ -15,6 +20,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "TOUR_API_KEY", properties.getProperty("TOUR_API_KEY"))
     }
 
     buildTypes {
@@ -33,7 +39,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
+    buildFeatures {
         viewBinding = true
         buildConfig = true
     }
@@ -49,16 +55,16 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation ("androidx.fragment:fragment-ktx:1.2.5")
-    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
+    implementation("androidx.fragment:fragment-ktx:1.2.5")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.4.0")
 
-    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
-    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
-    implementation ("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
 
-    implementation ("com.squareup.retrofit2:retrofit:2.6.0")
-    implementation ("com.squareup.retrofit2:converter-gson:2.6.0")
-    implementation ("com.google.code.gson:gson:2.6.2")
+    implementation("com.squareup.retrofit2:retrofit:2.6.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.6.0")
+    implementation("com.google.code.gson:gson:2.6.2")
 
-    implementation ("com.diogobernardino:williamchart:3.10.1")
+    implementation("com.diogobernardino:williamchart:3.10.1")
 }
