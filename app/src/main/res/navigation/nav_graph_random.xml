@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/random_navigation"
+    app:startDestination="@id/navigation_start">
+
+    <fragment
+        android:id="@+id/navigation_start"
+        android:name="com.twoday.todaytrip.ui.StartFragment"
+        android:label="fragment_start"
+        tools:layout="@layout/fragment_start">
+        <action
+            android:id="@+id/action_navigation_start_to_navigation_random_option"
+            app:destination="@id/navigation_random_option" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_random_option"
+        android:name="com.twoday.todaytrip.ui.RandomOptionFragment"
+        android:label="fragment_random_option"
+        tools:layout="@layout/fragment_random_option">
+        <action
+            android:id="@+id/action_navigation_random_option_to_navigation_random_theme"
+            app:destination="@id/navigation_random_theme" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_random_theme"
+        android:name="com.twoday.todaytrip.ui.RandomThemeFragment"
+        android:label="fragment_random_theme"
+        tools:layout="@layout/fragment_random_theme">
+        <action
+            android:id="@+id/action_navigation_random_theme_to_navigation_random_result"
+            app:destination="@id/navigation_random_result" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_random_result"
+        android:name="com.twoday.todaytrip.ui.RandomResultFragment"
+        android:label="fragment_random_result"
+        tools:layout="@layout/fragment_random_result">
+        <action
+            android:id="@+id/action_navigation_random_result_to_navigation_place_list"
+            app:destination="@id/navigation_place_list" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_place_list"
+        android:name="com.twoday.todaytrip.ui.PlaceListFragment"
+        android:label="fragment_place_list"
+        tools:layout="@layout/fragment_place_list">
+    </fragment>
+
+</navigation>
