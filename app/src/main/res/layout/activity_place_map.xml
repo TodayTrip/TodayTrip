@@ -38,18 +38,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tint="@color/white" />
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/tv_place_map_back"-->
-    <!--        style="@style/TabTitleText"-->
-    <!--        android:layout_marginStart="16dp"-->
-    <!--        android:elevation="1dp"-->
-    <!--        android:text="@string/back_to_list"-->
-    <!--        android:textColor="@color/white"-->
-    <!--        android:textStyle="bold"-->
-    <!--        app:layout_constraintStart_toEndOf="@+id/iv_place_map_back"-->
-    <!--        app:layout_constraintTop_toTopOf="@+id/iv_place_map_back"-->
-    <!--        app:layout_constraintBottom_toBottomOf="@+id/iv_place_map_back"-->
-    <!--        />-->
+    <TextView
+        android:id="@+id/tv_place_map_back"
+        style="@style/TabTitleText"
+        android:layout_marginStart="16dp"
+        android:elevation="1dp"
+        android:text="@string/place_map_back_to_list"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_place_map_back"
+        app:layout_constraintStart_toEndOf="@+id/iv_place_map_back"
+        app:layout_constraintTop_toTopOf="@+id/iv_place_map_back" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_place_map_list"
