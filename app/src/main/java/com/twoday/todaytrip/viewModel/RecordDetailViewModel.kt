@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.viewmodel
+package com.twoday.todaytrip.viewModel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
