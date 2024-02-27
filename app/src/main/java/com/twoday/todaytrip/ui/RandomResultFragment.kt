@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.twoday.todaytrip.MainActivity
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
 
 class RandomResultFragment : Fragment() {

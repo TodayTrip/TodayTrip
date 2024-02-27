@@ -1,10 +1,11 @@
-package com.twoday.todaytrip
+package com.twoday.todaytrip.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.twoday.todaytrip.databinding.ActivityMainBinding
+import com.twoday.todaytrip.R
 
 class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
@@ -18,6 +19,6 @@ class MainActivity : AppCompatActivity() {
         val navHomeFragment =
             supportFragmentManager.findFragmentById(R.id.nav_main_fragment) as NavHostFragment
         val navController = navHomeFragment.navController
-        binding.bottomNavigation.setupWithNavController(navController)
+        binding.bottomNavigationView.setupWithNavController(navController)
     }
 }
