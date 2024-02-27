@@ -9,4 +9,5 @@
     <color name="button_gray">#4E4E4E</color>
     <color name="light_gray">#F2F2F2</color>
     <color name="middle_gray">#D9D9D9</color>
+    <color name="start_background">#F7F7FA</color>
 </resources>
