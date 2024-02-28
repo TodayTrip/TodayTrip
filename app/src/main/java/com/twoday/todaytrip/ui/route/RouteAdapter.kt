@@ -45,7 +45,7 @@ class RouteAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.name.text = currentItem.name
-        holder.num.text = holder.adapterPosition.toString()+1
+        holder.num.text = holder.adapterPosition.toString()
         notifyItemMoved()
         holder.bind(getItem(position))
 
