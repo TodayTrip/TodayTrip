@@ -3,8 +3,8 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
-
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
@@ -83,4 +83,6 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     //Lottie animation
     implementation("com.airbnb.android:lottie:6.3.0")
+
+//    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
 }
