@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         callTourApi()
-        routeFragment()
+//      routeFragment()
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
+    /*
     private fun routeFragment() {
         binding.btnRouteFragment.setOnClickListener {
             supportFragmentManager.beginTransaction()
@@ -46,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 .commit()
         }
     }
-
+    */
     private fun callTourApi() {
         //지역 기반 관광지 정보 조회 api 테스트 코드
         //model.callAreaBased()
