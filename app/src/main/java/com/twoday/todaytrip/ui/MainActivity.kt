@@ -10,6 +10,7 @@ import com.twoday.todaytrip.databinding.ActivityMainBinding
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.ui.route.RouteFragment
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -26,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         callTourApi()
+        routeFragment()
     }
 
     override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
@@ -34,6 +36,15 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_main_fragment) as NavHostFragment
         val navController = navHomeFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
+    }
+
+    private fun routeFragment() {
+        binding.btnRouteFragment.setOnClickListener {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.nav_main_fragment, RouteFragment())
+                .addToBackStack(null)
+                .commit()
+        }
     }
 
     private fun callTourApi() {
