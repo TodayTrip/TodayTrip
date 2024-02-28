@@ -6,9 +6,9 @@ class TouristDestination(
 ) : TourItem(tourItemInfo) {
     data class TouristDestinationInfo(
         val accomCount: String? = null,
-        val chkBabyCarriage: String? = null,
-        val chkCreditCard: String? = null,
-        val chkPet: String? = null,
+        val babyCarriage: String? = null,
+        val creditCard: String? = null,
+        val pet: String? = null,
         val expAgeRange: String? = null,
         val expGuide: String? = null,
         val heritage1: String? = null,
@@ -22,7 +22,7 @@ class TouristDestination(
         val useTime: String? = null,
     )
 
-    fun getTouristDestinationInfoWithLabel(): List<Pair<String, String>> {
+    override fun getInfoWithLabel(): List<Pair<String, String>> {
         val infoWithLabel = mutableListOf<Pair<String, String>>()
         infoWithLabel.run {
             with(touristDestinationInfo) {
@@ -31,19 +31,19 @@ class TouristDestination(
                 add(("이용 시간" to useTime ?: "정보 없음") as Pair<String, String>)
                 add(("개장일" to openDate?: "정보 없음") as Pair<String, String>)
                 add(("쉬는날" to restDate ?: "정보 없음") as Pair<String, String>)
-                add(("주차시설" to parking ?: "정보 없음") as Pair<String, String>)
+                add(("주차 시설" to parking ?: "정보 없음") as Pair<String, String>)
                 // 있으면 표시, 없으면 표시되지 않을 관광지 정보
                 accomCount?.let {
                     add("수용 인원" to it)
                 }
-                chkBabyCarriage?.let {
+                babyCarriage?.let {
                     add("유모차 대여" to it)
                 }
-                chkCreditCard?.let {
-                    add("신용 카드 가능" to it)
+                creditCard?.let {
+                    add("신용카드 가능" to it)
                 }
-                chkPet?.let{
-                    add("애완 동물 동반 가능" to it)
+                pet?.let{
+                    add("반려동물 동반 가능" to it)
                 }
                 expAgeRange?.let{
                     add("체험 가능 연령" to it)

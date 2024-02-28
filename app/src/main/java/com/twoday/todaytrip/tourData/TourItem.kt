@@ -1,10 +1,11 @@
 package com.twoday.todaytrip.tourData
 
-open class TourItem (
+abstract class TourItem (
     open val tourItemInfo: TourItemInfo
         ){
     fun getTitle() = tourItemInfo.defaultInfo.title
     fun getAddress() = tourItemInfo.addressInfo?: "주소 정보 없음"
+    abstract fun getInfoWithLabel():List<Pair<String,String>>
 
     fun getContentId() = tourItemInfo.contentId
     fun getContentTypeId() = tourItemInfo.contentTypeId
