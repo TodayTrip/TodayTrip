@@ -1,6 +1,5 @@
 package com.twoday.todaytrip.ui
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
@@ -41,6 +40,5 @@ class MainActivity : AppCompatActivity() {
         //model.callCommonDetail()
         //소개 정보 조회 api 테스트 코드
         model.callIntroDetail()
-        setContentView(binding.root)
     }
 }
