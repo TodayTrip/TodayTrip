@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentStartBinding
 
+//TODO 여행지 초기화 작업 필요할 듯
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
