@@ -31,4 +31,10 @@
     <string name="place_detail_add_to_path">경로에 추가하기</string>
     <string name="place_detail_my_memory">이 장소의 추억</string>
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다.</string>
+
+    <!-- PlaceListFragment -->
+    <string name="tourist_destination">관광지</string>
+    <string name="restaurant">음식점</string>
+    <string name="event">행사/공연/축제</string>
+    <string name="contain">담기</string>
 </resources>
