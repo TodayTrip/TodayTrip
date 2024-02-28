@@ -3,14 +3,25 @@ package com.twoday.todaytrip.ui.route
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.databinding.ItemRouteListBinding
 
-class RouteAdapter(
-    private val item: MutableList<RouteListData> = mutableListOf()
-) : RecyclerView.Adapter<RouteAdapter.ViewHolder>() {
 
+class RouteAdapter :
+    ListAdapter<RouteListData, RouteAdapter.ViewHolder>(object :
+        DiffUtil.ItemCallback<RouteListData>() {
+        override fun areItemsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
+            // 비디오 id가 같은지 확인
+            return (oldItem.name == newItem.name) && (oldItem.num == newItem.num)
+        }
 
+        override fun areContentsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
+            // 모든 필드가 같은지 확인 (data class의 equals 사용)
+            return oldItem == newItem
+        }
+    }) {
 
     inner class ViewHolder(binding: ItemRouteListBinding) : RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
@@ -19,7 +30,6 @@ class RouteAdapter(
         val visi = binding.viRouteLastView
         fun bind(item: RouteListData) {
             name.text = item.name
-            num.text = item.num.toString()
         }
 
         override fun onClick(v: View?) {
@@ -32,18 +42,20 @@ class RouteAdapter(
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int {
-        return item.size
-    }
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val currentItem = item[position]
+        val currentItem = getItem(position)
         holder.name.text = currentItem.name
-        holder.num.text = currentItem.num.toString()
-        holder.bind(item[position])
+        holder.num.text = holder.adapterPosition.toString()
+        notifyItemMoved()
+        holder.bind(getItem(position))
 
-        if (position == item.count() - 1) {
+        if (position == itemCount - 1) {
             holder.visi.visibility = View.INVISIBLE
         }
     }
+
+    private fun notifyItemMoved() {
+
+    }
+
 }
