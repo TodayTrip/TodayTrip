@@ -4,6 +4,8 @@ open class TourItem (
     open val tourItemInfo: TourItemInfo
         ){
     fun getTitle() = tourItemInfo.defaultInfo.title
+    fun getAddress() = tourItemInfo.addressInfo?: "주소 정보 없음"
+
     fun getContentId() = tourItemInfo.contentId
     fun getContentTypeId() = tourItemInfo.contentTypeId
 
