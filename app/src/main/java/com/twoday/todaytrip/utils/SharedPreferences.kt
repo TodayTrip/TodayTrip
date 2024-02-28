@@ -9,7 +9,7 @@ object SharedPreferencesUtil {
         return context.getSharedPreferences(Constants.PREFERENCE_DESTINATION_KEY, Context.MODE_PRIVATE)
     }
 
-    fun saveDestination(context: Context, destination: String, destinationKey: String) {
+    fun saveDestination(context: Context, destination: String?, destinationKey: String) {
         val editor = getDestPreferences(context).edit()
         editor.putString(destinationKey, destination)
         Log.d("SaveDestination", "Destination saved: $destination")
