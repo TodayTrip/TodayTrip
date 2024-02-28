@@ -45,5 +45,14 @@ class PlaceListFragment : Fragment() {
         }
 
         binding.vpViewpagerMain.adapter = ViewPagerAdapter
+        setUpClickListener()
+    }
+    private fun setUpClickListener() {
+
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

@@ -78,7 +78,7 @@ data class IntroDetailItem(
     val sponsor2:String,
     val sponsor2tel:String,
     val subevent:String,
-    val usetimefestival:String,
+    val usetimefestival:String, //이용 요금
     // 여행 코스 정보
     val distance:String,
     val infocentertourcourse:String,
