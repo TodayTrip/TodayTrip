@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         //공통 정보 조회 api 테스트 코드
         //model.callCommonDetail()
         //소개 정보 조회 api 테스트 코드
-        model.callIntroDetail()
-        setContentView(binding.root)
+         model.callIntroDetail()
     }
 }
