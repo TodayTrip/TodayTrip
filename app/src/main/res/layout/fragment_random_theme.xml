@@ -55,7 +55,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_trip_theme"
+        app:layout_constraintBottom_toTopOf="@+id/btn_next"
         app:layout_constraintTop_toBottomOf="@+id/layout_step_bar">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -63,18 +63,21 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme1"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginStart="28dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
+                android:layout_marginEnd="40dp"
                 android:background="@drawable/shape_10_radius"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/btn_theme2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/tv_theme1"
-                    android:text="풀내음이\n가득한 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="풀내음이\n가득한 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -89,16 +92,19 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme2"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/shape_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme1"
                 app:layout_constraintTop_toTopOf="@+id/btn_theme1">
+
                 <TextView
                     android:id="@+id/tv_theme2"
-                    android:text="청량함이\n있는 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="청량함이\n있는 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,16 +119,20 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme3"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
                 android:background="@drawable/shape_10_radius"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/btn_theme4"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme1"
                 app:layout_constraintTop_toBottomOf="@+id/btn_theme1">
+
                 <TextView
                     android:id="@+id/tv_theme3"
-                    android:text="시간을 넘나들 수\n있는 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="시간을 넘나들 수\n있는 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -138,9 +148,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme4"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/shape_10_radius"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme3"
                 app:layout_constraintTop_toTopOf="@+id/btn_theme3">
@@ -162,10 +174,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme5"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="40dp"
                 android:background="@drawable/shape_10_radius"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintEnd_toStartOf="@+id/btn_theme6"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme3"
                 app:layout_constraintTop_toBottomOf="@+id/btn_theme3">
                 <TextView
@@ -188,9 +203,11 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme6"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
+                android:layout_marginEnd="30dp"
                 android:background="@drawable/shape_10_radius"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme5"
                 app:layout_constraintTop_toTopOf="@+id/btn_theme5">
@@ -212,16 +229,19 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme7"
-                android:layout_width="150dp"
+                android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/shape_10_radius"
+                app:layout_constraintEnd_toEndOf="@+id/btn_theme5"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme5"
                 app:layout_constraintTop_toBottomOf="@+id/btn_theme5">
+
                 <TextView
                     android:id="@+id/tv_theme7"
-                    android:text="예술이\n숨 쉬는 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="예술이\n숨 쉬는 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -238,9 +258,9 @@
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_trip_theme"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
+        android:id="@+id/btn_next"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
@@ -264,8 +284,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_back"
-        android:layout_width="100dp"
-        android:layout_height="45dp"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
