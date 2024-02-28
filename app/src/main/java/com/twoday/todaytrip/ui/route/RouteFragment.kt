@@ -1,21 +1,34 @@
 package com.twoday.todaytrip.ui.route
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 
 class RouteFragment : Fragment() {
 
-    private lateinit var adapter: RouteAdapter
+//    private lateinit var adapter: RouteAdapter
+    private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
+    private val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
+    private val adapter: RouteAdapter by lazy {
+        RouteAdapter()
+}
     private lateinit var binding: FragmentRouteBinding
+//    private lateinit var mContext: Context
+
+//    private val itemTouchHelper by lazy { ItemTouchHelper(ItemTouchCallback(RouteAdapter)) }
+
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +58,23 @@ class RouteFragment : Fragment() {
         datalist.add(RouteListData("경로",5))
         datalist.add(RouteListData("경로",6))
 
-        adapter = RouteAdapter(datalist)
+        adapter.submitList(datalist)
         binding.rvReouteRecyclerview.adapter = adapter
 
-        binding.cvRouteEditFrame.setOnClickListener{
 
+        // itemTouchSimpleCallback 인터페이스로 추가 작업
+        itemTouchSimpleCallback.setOnItemMoveListener(object : ItemTouchSimpleCallback.OnItemMoveListener {
+            override fun onItemMove(from: Int, to: Int) {
+            }
+        })
+
+        // itemTouchHelper와 recyclerview 연결
+        itemTouchHelper.attachToRecyclerView(binding.rvReouteRecyclerview)
+
+        binding.cvRouteEditFrame.setOnClickListener{
+            binding.tvRouteListEdit.visibility = View.INVISIBLE
+            binding.tvRouteListCompletion.visibility = View.VISIBLE
+            Toast.makeText(context,"편집클릭",Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/nanumgothicextrabold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+    <style name="address" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/gangwon</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>
