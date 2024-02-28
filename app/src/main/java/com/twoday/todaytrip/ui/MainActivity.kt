@@ -3,11 +3,9 @@ package com.twoday.todaytrip.ui
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.AttributeSet
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.twoday.todaytrip.databinding.ActivityMainBinding
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.viewModel.MainViewModel
@@ -23,13 +21,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
+        setNavigation()
         callTourApi()
     }
 
-    override fun onCreateView(name: String, context: Context, attrs: AttributeSet): View? {
-        return super.onCreateView(name, context, attrs)
+    private fun setNavigation() {
         val navHomeFragment =
             supportFragmentManager.findFragmentById(R.id.nav_main_fragment) as NavHostFragment
         val navController = navHomeFragment.navController
