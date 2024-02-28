@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.naver.maps.map.LocationSource
+import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -20,9 +21,9 @@ class PlaceMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var _binding: ActivityPlaceMapBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var adapter: PlaceMapAdapter
-
-    private lateinit var viewModel: PlaceMapViewModel
+//    private lateinit var adapter: PlaceMapAdapter
+//
+//    private lateinit var viewModel: PlaceMapViewModel
 
     private lateinit var map: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -33,7 +34,7 @@ class PlaceMapActivity : AppCompatActivity(), OnMapReadyCallback {
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
-    private lateinit var currentFocusPlace: String
+//    private lateinit var currentFocusPlace: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,7 +44,7 @@ class PlaceMapActivity : AppCompatActivity(), OnMapReadyCallback {
         initView()
         initViewModel()
         setListener()
-        setDetailFragment(currentFocusPlace)
+//        setDetailFragment(currentFocusPlace)
 
     }
 
@@ -52,8 +53,11 @@ class PlaceMapActivity : AppCompatActivity(), OnMapReadyCallback {
         _binding = null
     }
 
-    override fun onMapReady(p0: NaverMap) {
-        TODO("Not yet implemented")
+    override fun onMapReady(naverMap: NaverMap) {
+        this.map = naverMap
+        naverMap.locationSource = locationSource
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationTrackingMode = LocationTrackingMode.Face
     }
 
     private fun initView() {
@@ -90,7 +94,7 @@ class PlaceMapActivity : AppCompatActivity(), OnMapReadyCallback {
                         .commit()
                 }
         mapFragment.getMapAsync(this)
-        locationSource = FusedLocationSource(this, 0)
+        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
     }
 
     private fun checkPermission() {
