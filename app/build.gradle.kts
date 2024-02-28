@@ -3,8 +3,8 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("androidx.navigation.safeargs.kotlin")
 }
-
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
@@ -83,4 +83,6 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+
+//    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
 }

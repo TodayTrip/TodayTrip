@@ -2,7 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/random_navigation"
+    android:id="@+id/home_navigation"
     app:startDestination="@id/navigation_place_list">
 
     <fragment
@@ -10,9 +10,6 @@
         android:name="com.twoday.todaytrip.ui.PlaceListFragment"
         android:label="fragment_place_list"
         tools:layout="@layout/fragment_place_list">
-<!--        <action-->
-<!--            android:id="@+id/action_navigation_place_list_to_navigation_route"-->
-<!--            app:destination="@id/navigation_route" />-->
     </fragment>
 
     <fragment
@@ -20,9 +17,6 @@
         android:name="com.twoday.todaytrip.ui.route.RouteFragment"
         android:label="fragment_route"
         tools:layout="@layout/fragment_route">
-<!--        <action-->
-<!--            android:id="@+id/action_navigation_route_to_navigation_place_list"-->
-<!--            app:destination="@id/navigation_place_list" />-->
     </fragment>
 
 </navigation>

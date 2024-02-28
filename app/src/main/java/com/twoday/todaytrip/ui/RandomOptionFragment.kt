@@ -1,7 +1,6 @@
 package com.twoday.todaytrip.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,12 +8,16 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
+import com.twoday.todaytrip.utils.Constants
+import com.twoday.todaytrip.utils.DestinationData
+import com.twoday.todaytrip.utils.SharedPreferencesUtil
 
 class RandomOptionFragment : Fragment() {
     private var _binding: FragmentRandomOptionBinding? = null
     private val binding get() = _binding!!
-    private var isSelectedAllRandomBtn = false
+    private var isSelectedAllRandomBtn = true
     private var isSelectedThemeRandomBtn = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -30,9 +33,13 @@ class RandomOptionFragment : Fragment() {
     }
 
     private fun setUpClickListener() {
-        binding.btnOptionSelect.setOnClickListener{
-            Log.d("btn", "올랜덤 $isSelectedAllRandomBtn, 테마랜덤 $isSelectedThemeRandomBtn")
-            findNavController().navigate(R.id.action_navigation_random_option_to_navigation_random_theme)
+        binding.btnOptionSelect.setOnClickListener {
+            if (isSelectedAllRandomBtn) {
+                selectRandomDestination() // 전체 랜덤 선택 시 Sharf에 여행지 랜덤 저장
+                findNavController().navigate(R.id.action_navigation_random_option_to_navigation_random_result)
+            } else {
+                findNavController().navigate(R.id.action_navigation_random_option_to_navigation_random_theme)
+            }
         }
         binding.btnAllRandom.setOnClickListener {
             selectButton(isAllRandom = true)
@@ -54,10 +61,19 @@ class RandomOptionFragment : Fragment() {
         binding.btnThemeRandom.apply {
             setBackgroundResource(if (!isAllRandom) R.drawable.shape_yellow_boarder else R.drawable.shape_without_boarder)
         }
-
-        Log.d("btn", "올랜덤 $isSelectedAllRandomBtn, 테마랜덤 $isSelectedThemeRandomBtn")
     }
 
+    // 전체 랜덤 시 여행지 랜덤 선택하는 함수, 테마 Sharf에는 null로 저장
+    private fun selectRandomDestination() {
+        val randomDestination = DestinationData.allRandomDestination.random()
+        SharedPreferencesUtil.saveDestination(
+            requireContext(),
+            randomDestination,
+            Constants.DESTINATION_KEY
+        )
+        //TODO 올랜덤일 때 테마는 공백 문자열이 좋을지 null이 좋을지?
+        SharedPreferencesUtil.saveDestination(requireContext(), null, Constants.THEME_KEY)
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

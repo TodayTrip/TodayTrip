@@ -7,11 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
-
 class RandomResultFragment : Fragment() {
     private var _binding: FragmentRandomResultBinding? = null
     private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
