@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
 
         setNavigation()
         callTourApi()
+
     }
 
     private fun setNavigation() {
@@ -34,13 +35,13 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.setupWithNavController(navController)
     }
 
+
     private fun callTourApi() {
         //지역 기반 관광지 정보 조회 api 테스트 코드
         //model.callAreaBased()
         //공통 정보 조회 api 테스트 코드
         //model.callCommonDetail()
         //소개 정보 조회 api 테스트 코드
-        model.callIntroDetail()
-        setContentView(binding.root)
+         model.callIntroDetail()
     }
 }
