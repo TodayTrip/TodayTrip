@@ -60,6 +60,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_route_option"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="right|center_vertical"

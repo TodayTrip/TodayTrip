@@ -2,23 +2,25 @@ package com.twoday.todaytrip.ui.route
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 
 class RouteFragment : Fragment() {
 
-//    private lateinit var adapter: RouteAdapter
+    //    private lateinit var adapter: RouteAdapter
     private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
     private val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
     private val adapter: RouteAdapter by lazy {
         RouteAdapter()
-}
+    }
     private lateinit var binding: FragmentRouteBinding
 //    private lateinit var mContext: Context
 
@@ -51,30 +53,50 @@ class RouteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val datalist = mutableListOf<RouteListData>()
-        datalist.add(RouteListData("서울역",1))
-        datalist.add(RouteListData("N서울 타워",2))
-        datalist.add(RouteListData("청계천",3))
-        datalist.add(RouteListData("북촌 한옥 마을",4))
-        datalist.add(RouteListData("경로",5))
-        datalist.add(RouteListData("경로",6))
+        datalist.add(RouteListData("서울역", 1))
+        datalist.add(RouteListData("N서울 타워", 2))
+        datalist.add(RouteListData("청계천", 3))
+        datalist.add(RouteListData("북촌 한옥 마을", 4))
+        datalist.add(RouteListData("경로", 5))
+        datalist.add(RouteListData("경로", 6))
 
         adapter.submitList(datalist)
         binding.rvReouteRecyclerview.adapter = adapter
 
 
         // itemTouchSimpleCallback 인터페이스로 추가 작업
-        itemTouchSimpleCallback.setOnItemMoveListener(object : ItemTouchSimpleCallback.OnItemMoveListener {
+        itemTouchSimpleCallback.setOnItemMoveListener(object :
+            ItemTouchSimpleCallback.OnItemMoveListener {
             override fun onItemMove(from: Int, to: Int) {
+//                adapter.notifyItemMoved(from,to)
             }
         })
 
         // itemTouchHelper와 recyclerview 연결
         itemTouchHelper.attachToRecyclerView(binding.rvReouteRecyclerview)
 
-        binding.cvRouteEditFrame.setOnClickListener{
-            binding.tvRouteListEdit.visibility = View.INVISIBLE
-            binding.tvRouteListCompletion.visibility = View.VISIBLE
-            Toast.makeText(context,"편집클릭",Toast.LENGTH_SHORT).show()
+        binding.cvRouteEditFrame.setOnClickListener {
+            if (binding.tvRouteListEdit.isVisible) {
+                binding.tvRouteListEdit.visibility = View.INVISIBLE
+                binding.tvRouteListCompletion.visibility = View.VISIBLE
+            } else {
+                binding.tvRouteListEdit.visibility = View.VISIBLE
+                binding.tvRouteListCompletion.visibility = View.INVISIBLE
+            }
+            Toast.makeText(context, "편집클릭", Toast.LENGTH_SHORT).show()
+
+        }
+
+        adapter.itemClick = object : RouteAdapter.ItemClick {
+            override fun onClick(item: RouteListData) {
+
+//                (activity as? MainActivity)?.removeFavorites(item)
+                adapter.notifyDataSetChanged()
+
+
+                Log.d("favoritefragment", "remove  ${item}")
+
+            }
         }
     }
 

@@ -3,6 +3,7 @@ package com.twoday.todaytrip.ui.route
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,17 +24,25 @@ class RouteAdapter :
         }
     }) {
 
-    inner class ViewHolder(binding: ItemRouteListBinding) : RecyclerView.ViewHolder(binding.root),
-        View.OnClickListener {
+    interface ItemClick {
+        fun onClick(item:RouteListData)
+    }
+
+    var itemClick: ItemClick? = null
+
+    inner class ViewHolder(binding: ItemRouteListBinding) : RecyclerView.ViewHolder(binding.root){
         val name = binding.tvRoadText
         val num = binding.tvRoutePocketNumber
         val visi = binding.viRouteLastView
+        val cancel = binding.ivRouteCancel
+        val option = binding.ivRouteOption
         fun bind(item: RouteListData) {
             name.text = item.name
+            cancel.isVisible = item.cancel
         }
 
-        override fun onClick(v: View?) {
-        }
+//        override fun onClick(v: View?) {
+//        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,6 +58,9 @@ class RouteAdapter :
         notifyItemMoved()
         holder.bind(getItem(position))
 
+        holder.cancel.isVisible = !currentItem.cancel //홀더에 아이콘이 visivle인지 확인하고 클릭시 boolean반대값을 적용
+//        item.favorite = !item.favorite //클릭시 boolean 값변경
+
         if (position == itemCount - 1) {
             holder.visi.visibility = View.INVISIBLE
         }
@@ -57,5 +69,6 @@ class RouteAdapter :
     private fun notifyItemMoved() {
 
     }
+
 
 }
