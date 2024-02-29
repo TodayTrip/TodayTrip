@@ -3,8 +3,10 @@
     <style name="Base.Theme.TodayTrip" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
-        <item name="android:windowFullscreen">true</item>
-        <item name="windowNoTitle">true</item>
+<!--        <item name="android:windowFullscreen">true</item>-->
+<!--        <item name="windowNoTitle">true</item>-->
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/main_blue</item>
     </style>
 
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">
