@@ -1,11 +1,13 @@
 package com.twoday.todaytrip.tourData
 
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
+import com.twoday.todaytrip.tourApi.IntroDetailItem
 
 class Restaurant(
     private val _tourItemInfo: AreaBasedListItem,
-    private val restaurantInfo: RestaurantInfo
+    private val restaurantInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
+    /*
     data class RestaurantInfo(
         val creditCard: String? = null,
         val discountInfo: String? = null,
@@ -24,11 +26,12 @@ class Restaurant(
         val treatMenu: String? = null,
         val lcnsNo: String? = null
     )
+     */
 
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         listOf(
-            ("영업 시간" to restaurantInfo.openTime ?: "정보 없음") as Pair<String, String>,
-            ("쉬는날" to restaurantInfo.restDate ?: "정보 없음") as Pair<String, String>
+            ("영업 시간" to restaurantInfo.opentimefood ?: "정보 없음") as Pair<String, String>,
+            ("쉬는날" to restaurantInfo.restdatefood ?: "정보 없음") as Pair<String, String>
         )
 
     override fun getDetailInfoWithLabel(): List<Pair<String, String>> {
@@ -36,24 +39,24 @@ class Restaurant(
         infoWithLabel.run {
             with(restaurantInfo) {
                 // 필수로 표시 될 문화시설 정보
-                add(("영업 시간" to openTime ?: "정보 없음") as Pair<String, String>)
-                add(("쉬는날" to restDate ?: "정보 없음") as Pair<String, String>)
-                add(("주차 시설" to packing ?: "정보 없음") as Pair<String, String>)
-                add(("대표 메뉴" to firstMenu ?: "정보 없음") as Pair<String, String>)
+                add(("영업 시간" to opentimefood ?: "정보 없음") as Pair<String, String>)
+                add(("쉬는날" to restdatefood ?: "정보 없음") as Pair<String, String>)
+                add(("주차 시설" to parkingfood ?: "정보 없음") as Pair<String, String>)
+                add(("대표 메뉴" to firstmenu ?: "정보 없음") as Pair<String, String>)
                 // 있으면 표시, 없으면 표시되지 않을 문화시설 정보
-                treatMenu?.let {
+                treatmenu?.let {
                     add("취급 메뉴" to it)
                 }
                 packing?.let {
                     add("포장 가능" to it)
                 }
-                creditCard?.let {
+                chkcreditcardfood?.let {
                     add("신용카드 가능" to it)
                 }
-                discountInfo?.let {
+                discountinfofood?.let {
                     add("할인 정보" to it)
                 }
-                scale?.let {
+                scalefood?.let {
                     add("규모" to it)
                 }
                 seat?.let {
@@ -62,19 +65,19 @@ class Restaurant(
                 smoking?.let {
                     add("금연/흡연 여부" to it)
                 }
-                kidsFacility?.let {
+                kidsfacility?.let {
                     add("어린이 놀이방" to it)
                 }
-                openDate?.let {
+                opendatefood?.let {
                     add("개업일" to it)
                 }
-                lcnsNo?.let {
+                lcnsno?.let {
                     add("인허가번호" to it)
                 }
-                infoCenter?.let {
+                infocenterfood?.let {
                     add("문의 및 안내" to it)
                 }
-                reservation?.let {
+                reservationfood?.let {
                     add("예약 안내" to it)
                 }
             }

@@ -1,11 +1,13 @@
 package com.twoday.todaytrip.tourData
 
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
+import com.twoday.todaytrip.tourApi.IntroDetailItem
 
 class LeisureSports(
     private val _tourItemInfo: AreaBasedListItem,
-    private val leisureSportsInfo: LeisureSportsInfo
+    private val leisureSportsInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
+    /*
     data class LeisureSportsInfo(
         val accomCount: String? = null,
         val babyCarriage: String? = null,
@@ -22,11 +24,11 @@ class LeisureSports(
         val useFee: String? = null,
         val useTime: String? = null
     )
-
+     */
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         listOf(
-            ("이용 시간" to leisureSportsInfo.useTime) as Pair<String, String>,
-            ("쉬는 날" to leisureSportsInfo.restDate) as Pair<String, String>
+            ("이용 시간" to leisureSportsInfo.usetimeleports) as Pair<String, String>,
+            ("쉬는 날" to leisureSportsInfo.restdateleports) as Pair<String, String>
         )
 
     override fun getDetailInfoWithLabel(): List<Pair<String, String>> {
@@ -34,37 +36,37 @@ class LeisureSports(
         infoWithLabel.run {
             with(leisureSportsInfo) {
                 // 필수로 표시 될 레포츠 정보
-                add(("입장료" to useFee) as Pair<String, String>)
-                add(("개장 기간" to openPeriod) as Pair<String, String>)
-                add(("이용 시간" to useTime) as Pair<String, String>)
-                add(("쉬는 날" to restDate) as Pair<String, String>)
+                add(("입장료" to usefeeleports) as Pair<String, String>)
+                add(("개장 기간" to openperiod) as Pair<String, String>)
+                add(("이용 시간" to usetimeleports) as Pair<String, String>)
+                add(("쉬는 날" to restdateleports) as Pair<String, String>)
                 add(("주차 시설" to parking) as Pair<String, String>)
                 // 있으면 표시, 없으면 표시되지 않을 레포츠 정보
-                parkingFee?.let {
+                parkingfeeleports?.let {
                     add("주차 요금" to it)
                 }
-                expAgeRange?.let {
+                expagerangeleports?.let {
                     add("체험 가능 연령" to it)
                 }
                 reservation?.let {
                     add("예약 안내" to it)
                 }
-                scale?.let {
+                scaleleports?.let {
                     add("규모" to it)
                 }
-                accomCount?.let {
+                accomcountleports?.let {
                     add("수용 인원" to it)
                 }
-                babyCarriage?.let {
+                chkbabycarriageleports?.let {
                     add("유모차 대여" to it)
                 }
-                creditCard?.let {
+                chkcreditcardleports?.let {
                     add("신용카드 가능" to it)
                 }
-                pet?.let {
+                chkpetleports?.let {
                     add("반여동물 동반 가능" to it)
                 }
-                infoCenter?.let {
+                infocenterleports?.let {
                     add("문의 및 안내" to it)
                 }
             }

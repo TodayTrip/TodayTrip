@@ -1,11 +1,13 @@
 package com.twoday.todaytrip.tourData
 
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
+import com.twoday.todaytrip.tourApi.IntroDetailItem
 
 class EventPerformanceFestival(
     private val _tourItemInfo: AreaBasedListItem,
-    private val eventPerformanceFestivalInfo: EventPerformanceFestivalInfo
+    private val eventPerformanceFestivalInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
+    /*
     data class EventPerformanceFestivalInfo(
         val ageLimit: String? = null,
         val bookingPlace: String? = null,
@@ -26,16 +28,17 @@ class EventPerformanceFestival(
         val subEvent: String? = null,
         val useFee: String? = null
     )
+     */
 
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         mutableListOf<Pair<String, String>>().apply {
-            eventPerformanceFestivalInfo.eventStartDate?.let {
+            eventPerformanceFestivalInfo.eventstartdate?.let {
                 add("행사 시작일" to it)
             }
-            eventPerformanceFestivalInfo.eventEndDate?.let {
+            eventPerformanceFestivalInfo.eventenddate?.let {
                 add("행사 종료일" to it)
             }
-            eventPerformanceFestivalInfo.playTime?.let {
+            eventPerformanceFestivalInfo.playtime?.let {
                 add("공연 시간" to it)
             }
         }.toList()
@@ -46,57 +49,57 @@ class EventPerformanceFestival(
         infoWithLabel.run {
             with(eventPerformanceFestivalInfo) {
                 // 필수로 표시 될 행사/공연/축제 정보
-                add(("이용 요금" to useFee ?: "정보 없음") as Pair<String, String>)
+                add(("이용 요금" to usefee ?: "정보 없음") as Pair<String, String>)
                 // 있으면 표시, 없으면 표시되지 않을 행사/공연/축제 정보
-                ageLimit?.let {
+                agelimit?.let {
                     add("관람 가능 연령" to it)
                 }
-                bookingPlace?.let {
+                bookingplace?.let {
                     add("예매처" to it)
                 }
-                discountInfo?.let {
+                discountinfofestival?.let {
                     add("할인 정보" to it)
                 }
-                eventStartDate?.let {
+                eventstartdate?.let {
                     add("행사 시작일" to it)
                 }
-                eventEndDate?.let {
+                eventenddate?.let {
                     add("행사 종료일" to it)
                 }
-                eventPlace?.let {
+                eventplace?.let {
                     add("행사 장소" to it)
                 }
-                placeInfo?.let {
+                placeinfo?.let {
                     add("행사장 위치 안내" to it)
                 }
-                eventHomepage?.let {
+                eventhomepage?.let {
                     add("행사 홈페이지" to it)
                 }
                 program?.let {
                     add("행사 프로그램" to it)
                 }
-                subEvent?.let {
+                subevent?.let {
                     add("부대 행사" to it)
                 }
-                festivalGrade?.let {
+                festivalgrade?.let {
                     add("축제 등급" to it)
                 }
-                playTime?.let {
+                playtime?.let {
                     add("공연 시간" to it)
                 }
-                spendTime?.let {
+                spendtimefestival?.let {
                     add("관람 소요 시간" to it)
                 }
                 sponsor1?.let {
                     add("주최자 정보" to it)
                 }
-                sponsor1Tel?.let {
+                sponsor1tel?.let {
                     add("추죄자 연락처" to it)
                 }
                 sponsor2?.let {
                     add("주관사 정보" to it)
                 }
-                sponsor2Tel?.let {
+                sponsor2tel?.let {
                     add("주관사 연락처" to it)
                 }
             }
