@@ -86,4 +86,5 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.3.0")
 
 //    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
 }
