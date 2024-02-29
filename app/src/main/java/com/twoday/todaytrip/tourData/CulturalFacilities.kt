@@ -7,24 +7,6 @@ class CulturalFacilities(
     private val _tourItemInfo: AreaBasedListItem,
     private val culturalFacilitiesInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
-    /*
-    data class CulturalFacilitiesInfo(
-        val parking: String? = null,
-        val parkingFee: String? = null,
-        val useTime: String? = null,
-        val restDate: String? = null,
-        val accomCount: String? = null,
-        val babyCarriage: String? = null,
-        val creditCard: String? = null,
-        val pet: String? = null,
-        val discountInfo: String? = null,
-        val infoCenter: String? = null,
-        val useFee: String? = null,
-        val scale: String? = null,
-        val spendTime: String? = null
-    )
-     */
-
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         listOf(
             ("이용 시간" to culturalFacilitiesInfo.usetimeculture ?: "정보 없음") as Pair<String, String>,

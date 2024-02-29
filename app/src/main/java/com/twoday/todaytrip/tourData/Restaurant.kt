@@ -7,27 +7,6 @@ class Restaurant(
     private val _tourItemInfo: AreaBasedListItem,
     private val restaurantInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
-    /*
-    data class RestaurantInfo(
-        val creditCard: String? = null,
-        val discountInfo: String? = null,
-        val firstMenu: String? = null,
-        val infoCenter: String? = null,
-        val kidsFacility: String? = null,
-        val openDate: String? = null,
-        val openTime: String? = null,
-        val packing: String? = null,
-        val parking: String? = null,
-        val reservation: String? = null,
-        val restDate: String? = null,
-        val scale: String? = null,
-        val seat: String? = null,
-        val smoking: String? = null,
-        val treatMenu: String? = null,
-        val lcnsNo: String? = null
-    )
-     */
-
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         listOf(
             ("영업 시간" to restaurantInfo.opentimefood ?: "정보 없음") as Pair<String, String>,

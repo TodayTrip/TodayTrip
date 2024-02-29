@@ -7,29 +7,6 @@ class EventPerformanceFestival(
     private val _tourItemInfo: AreaBasedListItem,
     private val eventPerformanceFestivalInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
-    /*
-    data class EventPerformanceFestivalInfo(
-        val ageLimit: String? = null,
-        val bookingPlace: String? = null,
-        val discountInfo: String? = null,
-        val eventEndDate: String? = null,
-        val eventHomepage: String? = null,
-        val eventPlace: String? = null,
-        val eventStartDate: String? = null,
-        val festivalGrade: String? = null,
-        val placeInfo: String? = null,
-        val playTime: String? = null,
-        val program: String? = null,
-        val spendTime: String? = null,
-        val sponsor1: String? = null,
-        val sponsor1Tel: String? = null,
-        val sponsor2: String? = null,
-        val sponsor2Tel: String? = null,
-        val subEvent: String? = null,
-        val useFee: String? = null
-    )
-     */
-
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         mutableListOf<Pair<String, String>>().apply {
             eventPerformanceFestivalInfo.eventstartdate?.let {

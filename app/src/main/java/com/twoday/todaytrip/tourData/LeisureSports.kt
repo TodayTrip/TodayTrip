@@ -7,24 +7,6 @@ class LeisureSports(
     private val _tourItemInfo: AreaBasedListItem,
     private val leisureSportsInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
-    /*
-    data class LeisureSportsInfo(
-        val accomCount: String? = null,
-        val babyCarriage: String? = null,
-        val creditCard: String? = null,
-        val pet: String? = null,
-        val expAgeRange: String? = null,
-        val infoCenter: String? = null,
-        val openPeriod: String? = null,
-        val parkingFee: String? = null,
-        val parking: String? = null,
-        val reservation: String? = null,
-        val restDate: String? = null,
-        val scale: String? = null,
-        val useFee: String? = null,
-        val useTime: String? = null
-    )
-     */
     override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
         listOf(
             ("이용 시간" to leisureSportsInfo.usetimeleports) as Pair<String, String>,
