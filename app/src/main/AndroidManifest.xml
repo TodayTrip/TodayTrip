@@ -26,10 +26,6 @@
             android:name=".ui.RecordActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.place_map.PlaceMapActivity"
-            android:exported="false" >
-        </activity>
-        <activity
             android:name=".ui.MainActivity"
             android:exported="false"/>
         <activity
