@@ -11,7 +11,7 @@ enum class TourCategoryId1(val id:String){
 }
 enum class TourCategoryId2(val id:String){
     // TODO 카테고리 중분류 enum class
-    RESTAURANT("A0502")
+    FOOD("A0502")
 }
 enum class TourCategoryId3(val id:String){
     // TODO 카테고리 소분류 enum class
