@@ -85,4 +85,5 @@ dependencies {
     implementation("com.github.bumptech.glide:glide:4.16.0")
 
 //    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
+    implementation("com.squareup.retrofit2:converter-scalars:2.1.0")
 }
