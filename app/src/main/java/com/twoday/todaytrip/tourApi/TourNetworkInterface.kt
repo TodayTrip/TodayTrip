@@ -30,35 +30,11 @@ interface TourNetworkInterface {
         @Query("_type") responseType: String = "json", //응답 타입 (json, xml)
 
         @Query("listYN") isList: String = "Y", // 목록 구분(Y=목록, N=개수)
-        @Query("arrange") sort: String = "A"
+        @Query("arrange") sort: String = "Q"
         // 정렬 구분(A=제목 순, C=수정 순, D=생성일 순)
         // 대표 이미지가 필수인 정렬 구분(O=제목 순, Q=수정 순, R=생성일 순)
     ): AreaBasedList
 
-    //공통 정보 조회
-    @GET("detailCommon1")
-    suspend fun getCommonDetail(
-        //필수 파라미터
-        @Query("contentId") contentId: String, //공통 정보를 조회할 장소의 ID
-
-        @Query("serviceKey") serviceKey: String = TOUR_API_KEY,
-        @Query("MobileOS") os: String = MOBILE_OS,
-        @Query("MobileApp") appName: String = MOBILE_NAME,
-        //선택 파라미터
-        @Query("contentTypeId") contentTypeId: String? = null,
-
-        @Query("defaultYN") defaultYN: String? = "Y",
-        @Query("firstImageYN") firstImageYN: String? = "Y",
-        @Query("areacodeYN") areaCodeYN: String? = "Y",
-        @Query("catcodeYN") categoryCodeYN: String? = "Y",
-        @Query("addrinfoYN") addressInfoYN: String? = "Y",
-        @Query("mapinfoYN") mapInfoYN: String? = "Y",
-        @Query("overviewYN") overviewYN: String? = "Y",
-
-        @Query("numOfRows") numOfRows: Int? = null,
-        @Query("pageNo") pageNo: Int? = null,
-        @Query("_type") responseType: String = "json"
-    ): CommonDetail
 
     //소개 정보 조회
     @GET("detailIntro1")
@@ -75,4 +51,31 @@ interface TourNetworkInterface {
         @Query("pageNo") pageNo:Int? = null,
         @Query("_type") responseType:String = "json"
     ):IntroDetail
+
+    //공통 정보 조회
+    /*
+    @GET("detailCommon1")
+    suspend fun getCommonDetail(
+        //필수 파라미터
+        @Query("contentId") contentId: String, //공통 정보를 조회할 장소의 ID
+
+        @Query("serviceKey") serviceKey: String = TOUR_API_KEY,
+        @Query("MobileOS") os: String = MOBILE_OS,
+        @Query("MobileApp") appName: String = MOBILE_NAME,
+        //선택 파라미터
+        @Query("contentTypeId") contentTypeId: String? = null,
+
+        @Query("defaultYN") defaultYN: String? = "N",
+        @Query("firstImageYN") firstImageYN: String? = "N",
+        @Query("areacodeYN") areaCodeYN: String? = "N",
+        @Query("catcodeYN") categoryCodeYN: String? = "N",
+        @Query("addrinfoYN") addressInfoYN: String? = "N",
+        @Query("mapinfoYN") mapInfoYN: String? = "N",
+        @Query("overviewYN") overviewYN: String? = "Y",
+
+        @Query("numOfRows") numOfRows: Int? = null,
+        @Query("pageNo") pageNo: Int? = null,
+        @Query("_type") responseType: String = "json"
+    ): CommonDetail
+    */
 }
