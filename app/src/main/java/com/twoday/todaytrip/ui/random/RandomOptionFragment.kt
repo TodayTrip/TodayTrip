@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.random
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
