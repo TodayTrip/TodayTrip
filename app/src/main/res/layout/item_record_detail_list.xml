@@ -94,13 +94,13 @@
             app:layout_constraintStart_toEndOf="@id/iv_item_record_detail_map_image"
             app:layout_constraintTop_toBottomOf="@id/tv_item_record_detail_map_title" />
 
-        <ImageView
-            android:id="@+id/iv_item_record_detail_map_pin"
-            android:layout_width="20dp"
-            android:layout_height="25dp"
-            android:src="@drawable/ic_record_detail_pin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tint="@color/middle_gray" />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_item_record_detail_map_pin"-->
+<!--            android:layout_width="20dp"-->
+<!--            android:layout_height="25dp"-->
+<!--            android:src="@drawable/ic_record_detail_pin"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:tint="@color/middle_gray" />-->
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

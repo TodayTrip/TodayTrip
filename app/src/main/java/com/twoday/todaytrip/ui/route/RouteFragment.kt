@@ -8,10 +8,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.naver.maps.map.LocationSource
+import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.util.FusedLocationSource
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 
-class RouteFragment : Fragment() {
+class RouteFragment : Fragment(), OnMapReadyCallback {
 
 //    private lateinit var adapter: RouteAdapter
     private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
@@ -24,6 +29,9 @@ class RouteFragment : Fragment() {
 
 //    private val itemTouchHelper by lazy { ItemTouchHelper(ItemTouchCallback(RouteAdapter)) }
 
+
+    private lateinit var map: NaverMap
+    private lateinit var locationSource: FusedLocationSource
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -87,5 +95,12 @@ class RouteFragment : Fragment() {
 //                    putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        this.map = naverMap
+        naverMap.locationSource = locationSource
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationTrackingMode = LocationTrackingMode.Face
     }
 }

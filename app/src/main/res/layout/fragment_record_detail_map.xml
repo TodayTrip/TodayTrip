@@ -7,7 +7,7 @@
     android:background="@color/white"
     tools:context=".ui.RecordDetailMapFragment">
 
-    <View
+    <com.naver.maps.map.MapView
         android:id="@+id/map_record_detail_map"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

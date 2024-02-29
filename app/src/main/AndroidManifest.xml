@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
     <application
         android:usesCleartextTraffic="true"
@@ -24,10 +26,6 @@
         <activity
             android:name=".ui.RecordActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.place_map.PlaceMapActivity"
-            android:exported="false" >
-        </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="false"/>

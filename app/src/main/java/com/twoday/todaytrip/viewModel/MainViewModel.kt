@@ -32,13 +32,18 @@ class MainViewModel: ViewModel() {
     }
 
     fun callIntroDetail() = CoroutineScope(Dispatchers.IO).launch {
-        val introDetail = async {
-            // 콘텐츠 ID 126508: 경복궁
-            // 콘텐츠 타입 ID 12: 관광지
-            TourNetworkClient.tourNetWork.getIntroDetail(contentId = "126508", contentTypeId = "12")
-        }.await()
-        introDetail.response.body.items.item.forEach{
-            Log.d("TourApiTest", "${it.contentId}, ${it.contentTypeId}")
+        try {
+            val introDetail = async {
+                // 콘텐츠 ID 126508: 경복궁
+                // 콘텐츠 타입 ID 12: 관광지
+                TourNetworkClient.tourNetWork.getIntroDetail(contentId = "126508", contentTypeId = "12")
+            }.await()
+            introDetail.response.body.items.item.forEach{
+                Log.d("TourApiTest", "${it.contentId}, ${it.contentTypeId}")
+            }
+        } catch (e: Exception) {
+            Log.e("IntroDetail", "Error fetching data = ${e.message}", e)
         }
     }
+
 }
