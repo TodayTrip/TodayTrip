@@ -131,7 +131,7 @@
         android:layout_marginBottom="5dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:background="@drawable/shape_10_radius"
+        android:background="@drawable/shape_mainblue_10_radius"
         android:backgroundTint="@color/light_gray"
         app:layout_constraintBottom_toTopOf="@+id/cv_route_center_button"
         tools:layout_editor_absoluteX="24dp">
