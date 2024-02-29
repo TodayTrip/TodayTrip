@@ -4,10 +4,18 @@
     <item
         android:id="@+id/navigation_place_list"
         android:icon="@drawable/ic_bottom_bus"
-        android:title="관광 정보" />
+        android:title="정보" />
+    <item
+        android:id="@+id/navigation_map"
+        android:icon="@drawable/ic_bottom_map"
+        android:title="지도" />
     <item
         android:id="@+id/navigation_route"
         android:icon="@drawable/ic_bottom_map"
-        android:title="여행 경로" />
+        android:title="경로" />
+    <item
+        android:id="@+id/navigation_record"
+        android:icon="@drawable/ic_bottom_map"
+        android:title="기록" />
 
 </menu>
