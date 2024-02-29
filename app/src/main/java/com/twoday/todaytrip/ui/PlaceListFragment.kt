@@ -1,17 +1,12 @@
 package com.twoday.todaytrip.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
-import com.twoday.todaytrip.R
 import com.twoday.todaytrip.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
-import com.twoday.todaytrip.ui.place_map.PlaceMapActivity
 
 
 class PlaceListFragment : Fragment() {
