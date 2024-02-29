@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
-import com.twoday.todaytrip.utils.Constants
+import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
 
@@ -79,8 +79,8 @@ class RandomThemeFragment : Fragment() {
         Log.d("themeDestination", themeDestination.toString())
         themeDestination?.let {
             Log.d("themeDestination", it)
-            SharedPreferencesUtil.saveDestination(requireContext(), it, Constants.DESTINATION_KEY)
-            SharedPreferencesUtil.saveDestination(requireContext(), theme, Constants.THEME_KEY)
+            SharedPreferencesUtil.saveDestination(requireContext(), it, PrefConstants.DESTINATION_KEY)
+            SharedPreferencesUtil.saveDestination(requireContext(), theme, PrefConstants.THEME_KEY)
         }
     }
 
