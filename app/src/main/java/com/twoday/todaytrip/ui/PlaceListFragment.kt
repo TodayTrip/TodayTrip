@@ -68,11 +68,11 @@ class PlaceListFragment : Fragment() {
 
     }
 
-    fun setWeather(rainType : String, sky : String, temp : String) {
+    fun setWeather(rainType: String, sky: String, temp: String) {
         // 강수 형태
         var result = ""
-        when(rainType) {
-            "0" -> result = "비안옴"
+        when (rainType) {
+            "0" -> result = "맑음/흐림"
             "1" -> result = "비"
             "2" -> result = "비/눈"
             "3" -> result = "눈"
@@ -85,8 +85,7 @@ class PlaceListFragment : Fragment() {
         binding.tvWeatherInfo2.text = result
 
         // 하늘 상태
-
-        when(sky) {
+        when (sky) {
             "1" -> binding.imgWeather.setImageResource(R.drawable.img_weather_sun)
             "3" -> binding.imgWeather.setImageResource(R.drawable.img_foggy)
             "4" -> binding.imgWeather.setImageResource(R.drawable.img_cloud)
@@ -96,7 +95,7 @@ class PlaceListFragment : Fragment() {
         binding.tvWeatherInfo.text = temp + "°"
     }
 
-    private fun weatherInfo(){
+    private fun weatherInfo() {
         val weather = WeatherClient.weatherNetWork.getWeather(
             dataType = "JSON",
             numOfRows = 12,
@@ -106,19 +105,19 @@ class PlaceListFragment : Fragment() {
             nx = nx,
             ny = ny
         )
-        weather.enqueue(object : retrofit2.Callback<weather>{
+        weather.enqueue(object : retrofit2.Callback<weather> {
             override fun onResponse(call: Call<weather>, response: Response<weather>) {
-                if(response.isSuccessful) {
+                if (response.isSuccessful) {
                     val it: List<Item> = response.body()!!.response.body.items.item
                     var temp = ""
                     var sky = ""
                     var rainType = ""
 
-                    for(i in 0..11) {
-                        when(it[i].category) {
+                    for (i in 0..11) {
+                        when (it[i].category) {
                             "SKY" -> sky = it[i].fcstValue
                             "TMP" -> temp = it[i].fcstValue
-                            "PTY" ->rainType = it[i].fcstValue
+                            "PTY" -> rainType = it[i].fcstValue
                             else -> continue
                         }
                     }
