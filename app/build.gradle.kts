@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
@@ -83,6 +84,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     //Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
-
-//    implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
 }
