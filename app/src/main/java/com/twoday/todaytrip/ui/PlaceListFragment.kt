@@ -1,28 +1,19 @@
 package com.twoday.todaytrip.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager2.widget.ViewPager2
-import com.google.android.material.tabs.TabLayoutMediator
+import androidx.fragment.app.Fragment
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
-import com.twoday.todaytrip.ui.place_map.PlaceMapActivity
 import com.twoday.todaytrip.weather.Item
 import com.twoday.todaytrip.weather.WeatherClient
 import com.twoday.todaytrip.weather.weather
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Response
-import retrofit2.await
 
 
 class PlaceListFragment : Fragment() {
