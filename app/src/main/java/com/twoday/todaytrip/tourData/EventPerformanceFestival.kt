@@ -1,9 +1,11 @@
 package com.twoday.todaytrip.tourData
 
+import com.twoday.todaytrip.tourApi.AreaBasedListItem
+
 class EventPerformanceFestival(
-    override val tourItemInfo: TourItemInfo,
+    private val _tourItemInfo: AreaBasedListItem,
     private val eventPerformanceFestivalInfo: EventPerformanceFestivalInfo
-) : TourItem(tourItemInfo) {
+) : TourItem(tourItemInfo = _tourItemInfo) {
     data class EventPerformanceFestivalInfo(
         val ageLimit: String? = null,
         val bookingPlace: String? = null,
@@ -25,7 +27,21 @@ class EventPerformanceFestival(
         val useFee: String? = null
     )
 
-    override fun getInfoWithLabel(): List<Pair<String, String>> {
+    override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
+        mutableListOf<Pair<String, String>>().apply {
+            eventPerformanceFestivalInfo.eventStartDate?.let {
+                add("행사 시작일" to it)
+            }
+            eventPerformanceFestivalInfo.eventEndDate?.let {
+                add("행사 종료일" to it)
+            }
+            eventPerformanceFestivalInfo.playTime?.let {
+                add("공연 시간" to it)
+            }
+        }.toList()
+
+
+    override fun getDetailInfoWithLabel(): List<Pair<String, String>> {
         val infoWithLabel = mutableListOf<Pair<String, String>>()
         infoWithLabel.run {
             with(eventPerformanceFestivalInfo) {
