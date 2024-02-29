@@ -32,7 +32,7 @@ class PlaceListFragment : Fragment() {
 
     private var base_date = "20240229"  // 발표 일자
     private var base_time = "0800"      // 발표 시각
-    private var nx = "55"               // 예보지점 X 좌표
+    private var nx = "37"               // 예보지점 X 좌표
     private var ny = "127"              // 예보지점 Y 좌표
 
     override fun onCreateView(
@@ -46,32 +46,8 @@ class PlaceListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         initAdapter()
-        CoroutineScope(Dispatchers.IO).launch {
-            val weather = WeatherClient.weatherNetWork.getWeather(
-                dataType = "JSON",
-                numOfRows = 20,
-                pageNo = 1,
-                baseDate = base_date,
-                baseTime = base_time,
-                nx = nx,
-                ny = ny
-            )
-
-            val it: List<Item> = weather.response.body.items.item
-
-//            it.filter { it.category == "SKY" }.forEach {
-//                it.fcstValue
-//            }
-             it.filter { it.category == "T3H" }.forEach {
-                it.fcstValue
-
-                 val temp = binding.tvWeatherInfo
-                 temp.text = it.fcstValue
-                Log.d("asd",it.fcstValue) }
-
-        }
+        weatherInfo()
     }
 
     private fun initAdapter() {
@@ -90,6 +66,70 @@ class PlaceListFragment : Fragment() {
 
     private fun setUpClickListener() {
 
+    }
+
+    fun setWeather(rainType : String, sky : String, temp : String) {
+        // 강수 형태
+        var result = ""
+        when(rainType) {
+            "0" -> result = "비안옴"
+            "1" -> result = "비"
+            "2" -> result = "비/눈"
+            "3" -> result = "눈"
+            "4" -> result = "소나기"
+            "5" -> result = "빗방울"
+            "6" -> result = "빗방울/눈날림"
+            "7" -> result = "눈날림"
+            else -> "오류"
+        }
+        binding.tvWeatherInfo2.text = result
+
+        // 하늘 상태
+
+        when(sky) {
+            "1" -> binding.imgWeather.setImageResource(R.drawable.img_weather_sun)
+            "3" -> binding.imgWeather.setImageResource(R.drawable.img_foggy)
+            "4" -> binding.imgWeather.setImageResource(R.drawable.img_cloud)
+            else -> binding.imgWeather.setImageResource(R.drawable.img_weather_sun)
+        }
+        // 온도
+        binding.tvWeatherInfo.text = temp + "°"
+    }
+
+    private fun weatherInfo(){
+        val weather = WeatherClient.weatherNetWork.getWeather(
+            dataType = "JSON",
+            numOfRows = 12,
+            pageNo = 1,
+            baseDate = base_date,
+            baseTime = base_time,
+            nx = nx,
+            ny = ny
+        )
+        weather.enqueue(object : retrofit2.Callback<weather>{
+            override fun onResponse(call: Call<weather>, response: Response<weather>) {
+                if(response.isSuccessful) {
+                    val it: List<Item> = response.body()!!.response.body.items.item
+                    var temp = ""
+                    var sky = ""
+                    var rainType = ""
+
+                    for(i in 0..11) {
+                        when(it[i].category) {
+                            "SKY" -> sky = it[i].fcstValue
+                            "TMP" -> temp = it[i].fcstValue
+                            "PTY" ->rainType = it[i].fcstValue
+                            else -> continue
+                        }
+                    }
+                    setWeather(rainType, sky, temp)
+                }
+            }
+
+            override fun onFailure(call: Call<weather>, t: Throwable) {
+                Log.d("api fail", t.message.toString())
+            }
+        })
     }
 
     override fun onDestroyView() {

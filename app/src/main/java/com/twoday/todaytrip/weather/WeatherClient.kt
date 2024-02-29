@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object WeatherClient {
-    private const val WEATHER_BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService/getVilageFcst/"
+    private const val WEATHER_BASE_URL = "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/"
     private val gson = GsonBuilder().setLenient().create()
     private fun createOkHttpClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
