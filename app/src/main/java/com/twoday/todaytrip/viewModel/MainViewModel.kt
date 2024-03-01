@@ -28,6 +28,10 @@ class MainViewModel : ViewModel() {
     val restaurantTabList: LiveData<List<TourItem>>
         get() = _restaurantTabList
 
+    private val _cafeTabList = MutableLiveData<List<TourItem>>()
+    val cafeTabList: LiveData<List<TourItem>>
+        get() = _cafeTabList
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
             Log.d(TAG, "call loadTourItemList()")
@@ -52,6 +56,10 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             Log.d(TAG, "call loadRestaurantTabList()")
             loadRestaurantTabList(areaCode!!)
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "call loadCafeTabList()")
+            loadCafeTabList(areaCode!!)
         }
     }
 
@@ -104,6 +112,26 @@ class MainViewModel : ViewModel() {
             MyApplication.appContext!!,
             _restaurantTabList.value!!,
             PrefConstants.RESTAURANT_TAB_LIST_KEY
+        )
+    }
+    private suspend fun loadCafeTabList(areaCode:String) = withContext(Dispatchers.Main) {
+        val loadedCafeList = SharedPreferencesUtil.loadTourItemList(
+            MyApplication.appContext!!,
+            PrefConstants.CAFE_TAB_LIST_KEY
+        )
+        if(loadedCafeList != emptyList<TourItem>()){
+            Log.d(TAG, "load CafeList from SharedPreferences")
+            _cafeTabList.value = loadedCafeList
+            return@withContext
+        }
+        Log.d(TAG, "load CafeList from Tour API")
+        _cafeTabList.value =
+            TourNetworkInterfaceUtils.getCafeTabList(areaCode)
+
+        SharedPreferencesUtil.saveTourItemList(
+            MyApplication.appContext!!,
+            _cafeTabList.value!!,
+            PrefConstants.CAFE_TAB_LIST_KEY
         )
     }
 }

@@ -53,23 +53,24 @@ object TourNetworkInterfaceUtils {
                 "산" -> {
                     val mountainList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
-                        contentTypeId= TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                         category1 = TourCategoryId1.NATURE.id,
                         category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                         category3 = TourCategoryId3.MOUNTAIN.id,
                         numOfRows = 3
                     )
-                    val naturalRecreationForestList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId= TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
-                        numOfRows = 3
-                    )
+                    val naturalRecreationForestList =
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
+                            numOfRows = 3
+                        )
                     val arboretumList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
-                        contentTypeId= TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                         category1 = TourCategoryId1.NATURE.id,
                         category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                         category3 = TourCategoryId3.ARBORETUM.id,
@@ -97,6 +98,7 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
+
                 "바다" -> {
                     val coastalSceneryList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
@@ -140,30 +142,46 @@ object TourNetworkInterfaceUtils {
                     )
                     coastalSceneryList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     portList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     lighthouseList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     islandList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     beachList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                 }
+
                 "역사" -> {
                     val historicalList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
@@ -174,10 +192,14 @@ object TourNetworkInterfaceUtils {
                     )
                     historicalList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                 }
+
                 "휴양" -> {
                     val recreationalList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
@@ -188,10 +210,14 @@ object TourNetworkInterfaceUtils {
                     )
                     recreationalList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                 }
+
                 "체험" -> {
                     val experientialList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
@@ -202,10 +228,14 @@ object TourNetworkInterfaceUtils {
                     )
                     experientialList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            TouristDestination(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                 }
+
                 "레포츠" -> {
                     val leisureSportsList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
@@ -218,6 +248,7 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
+
                 "문화시설" -> {
                     val museumList = TourNetworkClient.tourNetWork.getAreaBasedList(
                         areaCode = areaCode,
@@ -261,30 +292,46 @@ object TourNetworkInterfaceUtils {
                     )
                     museumList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            CulturalFacilities(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     memorialHallList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            CulturalFacilities(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     exhibitionList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            CulturalFacilities(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     artGalleryList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            CulturalFacilities(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                     conventionCenterList.response.body.items.item.forEach {
                         tourInfoTabList.add(
-                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                            CulturalFacilities(
+                                it,
+                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
                         )
                     }
                 }
+
                 else -> {
                     Log.d("getTourInfoTabListWithTheme", "error! theme does not exist!")
                 }
@@ -348,6 +395,24 @@ object TourNetworkInterfaceUtils {
             }
         }
         return@runBlocking restaurantTabList.toList()
+    }
+
+    fun getCafeTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
+        val cafeList = TourNetworkClient.tourNetWork.getAreaBasedList(
+            areaCode = areaCode,
+            contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
+            category1 = TourCategoryId1.FOOD.id,
+            category2 = TourCategoryId2.FOOD.id,
+            category3 = TourCategoryId3.CAFE_AND_TEA.id,
+            numOfRows = 10
+        )
+        val cafeTabList = mutableListOf<TourItem>()
+        cafeList.response.body.items.item.forEach {
+            cafeTabList.add(
+                Restaurant(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+            )
+        }
+        return@runBlocking cafeTabList.toList()
     }
 
     private fun getIntroDetail(contentId: String, contentTypeId: String): List<IntroDetailItem> =
