@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
@@ -19,8 +20,6 @@ import retrofit2.Response
 class PlaceListFragment : Fragment() {
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var ViewPagerAdapter: PagerFragmentStateAdapter
 
     private var base_date = "20240229"  // 발표 일자
     private var base_time = "0800"      // 발표 시각
@@ -43,21 +42,26 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun initAdapter() {
-
-        ViewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
-
-        with(ViewPagerAdapter) {
+        val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
+        with(viewPagerAdapter) {
             addFragment(FirstRecyclerViewFragment())
             addFragment(SecondRecyclerViewFragment())
             addFragment(ThirdRecyclerViewFragment())
+            addFragment(EventRecyclerViewFragment())
         }
+        binding.vpViewpagerMain.adapter = viewPagerAdapter
 
-        binding.vpViewpagerMain.adapter = ViewPagerAdapter
-        setUpClickListener()
-    }
-
-    private fun setUpClickListener() {
-
+        TabLayoutMediator(binding.tlTabLayout, binding.vpViewpagerMain) { tab, position ->
+            tab.text = resources.getText(
+                when (position) {
+                    0 -> R.string.place_list_tourist_destination
+                    1 -> R.string.place_list_restaurant
+                    2 -> R.string.place_list_cafe
+                    3 -> R.string.place_list_event
+                    else -> R.string.place_list_tourist_destination // not reached
+                }
+            )
+        }.attach()
     }
 
     fun setWeather(rainType: String, sky: String, temp: String) {
