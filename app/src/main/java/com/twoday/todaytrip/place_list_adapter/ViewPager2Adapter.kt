@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.adapter
+package com.twoday.todaytrip.place_list_adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

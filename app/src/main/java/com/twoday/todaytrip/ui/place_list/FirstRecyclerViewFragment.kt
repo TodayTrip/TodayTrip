@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.twoday.todaytrip.adapter.FirstRecyclerViewAdapter
+import com.twoday.todaytrip.place_list_adapter.FirstRecyclerViewAdapter
 import com.twoday.todaytrip.databinding.FragmentFirstRecyclerViewBinding
 import com.twoday.todaytrip.viewModel.MainViewModel
 
