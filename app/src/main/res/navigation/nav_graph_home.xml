@@ -14,9 +14,9 @@
 
     <fragment
         android:id="@+id/navigation_map"
-        android:name="com.twoday.todaytrip.ui.route.RouteFragment"
-        android:label="fragment_route"
-        tools:layout="@layout/fragment_route">
+        android:name="com.twoday.todaytrip.ui.place_map.PlaceMapFragment"
+        android:label="fragment_place_map"
+        tools:layout="@layout/fragment_place_map">
     </fragment>
 
     <fragment
@@ -28,8 +28,8 @@
 
     <fragment
         android:id="@+id/navigation_record"
-        android:name="com.twoday.todaytrip.ui.route.RouteFragment"
+        android:name="com.twoday.todaytrip.ui.record.RecordDetailMapFragment"
         android:label="fragment_route"
-        tools:layout="@layout/fragment_route">
+        tools:layout="@layout/fragment_record_detail_map">
     </fragment>
 </navigation>
