@@ -1,26 +1,59 @@
 package com.twoday.todaytrip.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.twoday.todaytrip.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import com.twoday.todaytrip.adapter.FirstRecyclerViewAdapter
+import com.twoday.todaytrip.databinding.FragmentFirstRecyclerViewBinding
+import com.twoday.todaytrip.viewModel.MainViewModel
 
 
 class FirstRecyclerViewFragment : Fragment() {
 
+    private var _binding: FragmentFirstRecyclerViewBinding? = null
+    private val binding = _binding!!
+
+    private val mainModel: MainViewModel by activityViewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                MainViewModel() as T
+        }
+    }
+
+    private lateinit var adapter:FirstRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_first_recycler_view, container, false)
+        _binding = FragmentFirstRecyclerViewBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initRecyclerView()
+        initModelObserver()
+    }
+
+    private fun initRecyclerView(){
+        adapter = FirstRecyclerViewAdapter(listOf())
+        binding.rvFirstRecyclerView.adapter = adapter
+    }
+    private fun initModelObserver(){
+        mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
+            adapter.changeTourItemList(it)
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }
