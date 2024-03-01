@@ -8,17 +8,17 @@
     tools:context=".ui.place_list.FirstRecyclerViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:visibility="invisible"
-        tools:visibility="visible"
         android:id="@+id/rv_first_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_place_list" />
+        tools:listitem="@layout/item_place_list"
+        tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_first_recycler_view_loading"
@@ -41,12 +41,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
-            app:layout_constraintTop_toBottomOf="@id/tv_first_recycler_view_loading"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="8dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_first_recycler_view_loading" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
