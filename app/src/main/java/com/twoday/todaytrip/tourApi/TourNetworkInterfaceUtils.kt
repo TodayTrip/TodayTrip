@@ -162,7 +162,20 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
-                "역사" -> {}
+                "역사" -> {
+                    val historicalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.HISTORICAL_TOURIST_ATTRACTION.id,
+                        numOfRows = 10
+                    )
+                    historicalList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                }
                 "휴양" -> {}
                 "체험" -> {}
                 "레포츠" -> {}

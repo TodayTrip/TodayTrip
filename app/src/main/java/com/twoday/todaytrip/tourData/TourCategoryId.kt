@@ -11,7 +11,7 @@ enum class TourCategoryId1(val id:String){
 }
 enum class TourCategoryId2(val id:String){
     NATURE_TOURIST_ATTRACTION("A0101"), // 자연>자연관광지
-
+    HISTORICAL_TOURIST_ATTRACTION("A0201"), // 인문>역사관광지
     FOOD("A0502") // 음식점>음식점
 }
 enum class TourCategoryId3(val id:String){
