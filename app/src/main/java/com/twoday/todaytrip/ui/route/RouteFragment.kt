@@ -1,6 +1,7 @@
 package com.twoday.todaytrip.ui.route
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -53,39 +54,42 @@ class RouteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val datalist = mutableListOf<RouteListData>()
-        datalist.add(RouteListData("서울역", 1))
-        datalist.add(RouteListData("N서울 타워", 2))
-        datalist.add(RouteListData("청계천", 3))
-        datalist.add(RouteListData("북촌 한옥 마을", 4))
-        datalist.add(RouteListData("경로", 5))
-        datalist.add(RouteListData("경로", 6))
+        datalist.add(RouteListData("서울역", 1, "어딘가"))
+        datalist.add(RouteListData("N서울 타워", 2, "있겠지"))
+        datalist.add(RouteListData("청계천", 3, "아무데나"))
+        datalist.add(RouteListData("북촌 한옥 마을", 4, "가볼까"))
+        datalist.add(RouteListData("경로", 5, "어디든지"))
+        datalist.add(RouteListData("경로", 6, "떠나자"))
 
         adapter.submitList(datalist)
-        binding.rvReouteRecyclerview.adapter = adapter
+        binding.rvRouteRecyclerview.adapter = adapter
 
+        binding.btnRouteFinish.setOnClickListener {
+            val frag = BottomSheetDialog()
+            frag.show(childFragmentManager, frag.tag)
+        }
 
         // itemTouchSimpleCallback 인터페이스로 추가 작업
         itemTouchSimpleCallback.setOnItemMoveListener(object :
             ItemTouchSimpleCallback.OnItemMoveListener {
             override fun onItemMove(from: Int, to: Int) {
-//                adapter.notifyItemMoved(from,to)
             }
         })
 
-        // itemTouchHelper와 recyclerview 연결
-        itemTouchHelper.attachToRecyclerView(binding.rvReouteRecyclerview)
+        // itemTouchHelper와 recyclerview 연결, 아이템 순서변경
+        itemTouchHelper.attachToRecyclerView(binding.rvRouteRecyclerview)
 
-        binding.cvRouteEditFrame.setOnClickListener {
-            if (binding.tvRouteListEdit.isVisible) {
-                binding.tvRouteListEdit.visibility = View.INVISIBLE
-                binding.tvRouteListCompletion.visibility = View.VISIBLE
-            } else {
-                binding.tvRouteListEdit.visibility = View.VISIBLE
-                binding.tvRouteListCompletion.visibility = View.INVISIBLE
-            }
-            Toast.makeText(context, "편집클릭", Toast.LENGTH_SHORT).show()
-
-        }
+//        binding.cvRouteEditFrame.setOnClickListener {
+//            if (binding.tvRouteListEdit.isVisible) {
+//                binding.tvRouteListEdit.visibility = View.INVISIBLE
+//                binding.tvRouteListCompletion.visibility = View.VISIBLE
+//            } else {
+//                binding.tvRouteListEdit.visibility = View.VISIBLE
+//                binding.tvRouteListCompletion.visibility = View.INVISIBLE
+//            }
+//            Toast.makeText(context, "편집클릭", Toast.LENGTH_SHORT).show()
+//
+//        }
 
         adapter.itemClick = object : RouteAdapter.ItemClick {
             override fun onClick(item: RouteListData) {
