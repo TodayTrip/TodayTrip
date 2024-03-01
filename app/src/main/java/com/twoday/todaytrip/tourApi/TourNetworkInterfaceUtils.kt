@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.tourApi
 
+import android.util.Log
 import com.twoday.todaytrip.tourData.CulturalFacilities
 import com.twoday.todaytrip.tourData.LeisureSports
 import com.twoday.todaytrip.tourData.Restaurant
@@ -217,7 +218,76 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
-                "문화시설" -> {}
+                "문화시설" -> {
+                    val museumList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                        category3 = TourCategoryId3.MUSEUM.id,
+                        numOfRows = 2
+                    )
+                    val memorialHallList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                        category3 = TourCategoryId3.MEMORIAL_HALL.id,
+                        numOfRows = 2
+                    )
+                    val exhibitionList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                        category3 = TourCategoryId3.EXHIBITION.id,
+                        numOfRows = 2
+                    )
+                    val artGalleryList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                        category3 = TourCategoryId3.ART_GALLERY.id,
+                        numOfRows = 2
+                    )
+                    val conventionCenterList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                        category3 = TourCategoryId3.CONVENTION_CENTER.id,
+                        numOfRows = 2
+                    )
+                    museumList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    memorialHallList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    exhibitionList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    artGalleryList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    conventionCenterList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            CulturalFacilities(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                }
+                else -> {
+                    Log.d("getTourInfoTabListWithTheme", "error! theme does not exist!")
+                }
             }
             return@runBlocking tourInfoTabList.toList()
         }

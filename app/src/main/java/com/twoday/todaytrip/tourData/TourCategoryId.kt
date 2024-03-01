@@ -14,6 +14,7 @@ enum class TourCategoryId2(val id:String){
     HISTORICAL_TOURIST_ATTRACTION("A0201"), // 인문>역사관광지
     RECREATIONAL_TOURIST_ATTRACTION("A0202"), // 인문>휴양관광지
     EXPERIENTIAL_TOURIST_ATTRACTION("A0203"), //인문>체험관광지
+    CULTURAL_FACILITIES("A0206"), //인문>문화시설
     FOOD("A0502") // 음식점>음식점
 }
 enum class TourCategoryId3(val id:String){
@@ -26,6 +27,12 @@ enum class TourCategoryId3(val id:String){
     ISLAND("A01011300"), // 자연>자연관광지>섬
     LIGHTHOUSE("A01011600"), // 자연>자연관광지>등대
     BEACH("A01011200"), // 자연>자연관광지>해수욕장
+
+    MUSEUM("A02060100"), // 인문>문화시설>박물관
+    MEMORIAL_HALL("A02060200"), // 인문>문화시설>기념관
+    EXHIBITION("A02060300"), // 인문>문화시설>전시관
+    ART_GALLERY("A02060500"), // 인문>문화시설>미술관
+    CONVENTION_CENTER("A02060400"), // 인문>문화시설>컨벤션 센터
 
     KOREAN_FOOD("A05020100"), // 음식점>음식점>한식
     WESTERN_FOOD("A05020200"), // 음식점>음식점>양식
