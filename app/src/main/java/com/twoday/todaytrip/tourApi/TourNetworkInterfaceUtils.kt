@@ -45,15 +45,15 @@ object TourNetworkInterfaceUtils {
             val tourInfoTabList = mutableListOf<TourItem>()
             when (theme) {
                 "산" -> {
-                    val mountainList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.MOUNTAIN.id,
-                        numOfRows = 3
-                    )
-                    val naturalRecreationForestList =
+                    val mountainThemeList = listOf(
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.MOUNTAIN.id,
+                            numOfRows = 3
+                        ),
                         TourNetworkClient.tourNetWork.getAreaBasedList(
                             areaCode = areaCode,
                             contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
@@ -61,112 +61,77 @@ object TourNetworkInterfaceUtils {
                             category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                             category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
                             numOfRows = 3
+                        ),
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.ARBORETUM.id,
+                            numOfRows = 3
                         )
-                    val arboretumList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.ARBORETUM.id,
-                        numOfRows = 3
                     )
-                    mountainList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
-                        }
-                    }
-                    naturalRecreationForestList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
-                        }
-                    }
-                    arboretumList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
+                    mountainThemeList.forEach { areaBasedList ->
+                        areaBasedList.response.body.items.item.forEach { item ->
+                            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                                tourInfoTabList.add(
+                                    TouristDestination(item, it)
+                                )
+                            }
                         }
                     }
                 }
 
                 "바다" -> {
-                    val coastalSceneryList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.COASTAL_SCENERY.id,
-                        numOfRows = 2
+                    val seaThemeList = listOf(
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.COASTAL_SCENERY.id,
+                            numOfRows = 2
+                        ),
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.PORT.id,
+                            numOfRows = 2
+                        ),
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.LIGHTHOUSE.id,
+                            numOfRows = 2
+                        ),
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.ISLAND.id,
+                            numOfRows = 2
+                        ),
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                            category1 = TourCategoryId1.NATURE.id,
+                            category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                            category3 = TourCategoryId3.BEACH.id,
+                            numOfRows = 2
+                        )
                     )
-                    val portList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.PORT.id,
-                        numOfRows = 2
-                    )
-                    val lighthouseList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.LIGHTHOUSE.id,
-                        numOfRows = 2
-                    )
-                    val islandList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.ISLAND.id,
-                        numOfRows = 2
-                    )
-                    val beachList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                        category1 = TourCategoryId1.NATURE.id,
-                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                        category3 = TourCategoryId3.BEACH.id,
-                        numOfRows = 2
-                    )
-                    coastalSceneryList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
-                        }
-                    }
-                    portList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
-                        }
-                    }
-                    lighthouseList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
-                        }
-                    }
-                    islandList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
-                        }
-                    }
-                    beachList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                TouristDestination(item, it)
-                            )
+                    seaThemeList.forEach { areaBasedList ->
+                        areaBasedList.response.body.items.item.forEach { item ->
+                            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                                tourInfoTabList.add(
+                                    TouristDestination(item, it)
+                                )
+                            }
                         }
                     }
                 }
@@ -238,79 +203,52 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "문화시설" -> {
-                    val museumList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                        category1 = TourCategoryId1.HUMANITIES.id,
-                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
-                        category3 = TourCategoryId3.MUSEUM.id,
-                        numOfRows = 2
+                    val culturalThemeList = listOf(
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                            category1 = TourCategoryId1.HUMANITIES.id,
+                            category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                            category3 = TourCategoryId3.MUSEUM.id,
+                            numOfRows = 2
+                        ),
+                        TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                            category1 = TourCategoryId1.HUMANITIES.id,
+                            category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                            category3 = TourCategoryId3.MEMORIAL_HALL.id,
+                            numOfRows = 2
+                        ), TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                            category1 = TourCategoryId1.HUMANITIES.id,
+                            category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                            category3 = TourCategoryId3.EXHIBITION.id,
+                            numOfRows = 2
+                        ), TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                            category1 = TourCategoryId1.HUMANITIES.id,
+                            category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                            category3 = TourCategoryId3.ART_GALLERY.id,
+                            numOfRows = 2
+                        ), TourNetworkClient.tourNetWork.getAreaBasedList(
+                            areaCode = areaCode,
+                            contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                            category1 = TourCategoryId1.HUMANITIES.id,
+                            category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
+                            category3 = TourCategoryId3.CONVENTION_CENTER.id,
+                            numOfRows = 2
+                        )
                     )
-                    val memorialHallList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                        category1 = TourCategoryId1.HUMANITIES.id,
-                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
-                        category3 = TourCategoryId3.MEMORIAL_HALL.id,
-                        numOfRows = 2
-                    )
-                    val exhibitionList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                        category1 = TourCategoryId1.HUMANITIES.id,
-                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
-                        category3 = TourCategoryId3.EXHIBITION.id,
-                        numOfRows = 2
-                    )
-                    val artGalleryList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                        category1 = TourCategoryId1.HUMANITIES.id,
-                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
-                        category3 = TourCategoryId3.ART_GALLERY.id,
-                        numOfRows = 2
-                    )
-                    val conventionCenterList = TourNetworkClient.tourNetWork.getAreaBasedList(
-                        areaCode = areaCode,
-                        contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                        category1 = TourCategoryId1.HUMANITIES.id,
-                        category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
-                        category3 = TourCategoryId3.CONVENTION_CENTER.id,
-                        numOfRows = 2
-                    )
-                    museumList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                CulturalFacilities(item, it)
-                            )
-                        }
-                    }
-                    memorialHallList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                CulturalFacilities(item, it)
-                            )
-                        }
-                    }
-                    exhibitionList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                CulturalFacilities(item, it)
-                            )
-                        }
-                    }
-                    artGalleryList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                CulturalFacilities(item, it)
-                            )
-                        }
-                    }
-                    conventionCenterList.response.body.items.item.forEach { item ->
-                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            tourInfoTabList.add(
-                                CulturalFacilities(item, it)
-                            )
+                    culturalThemeList.forEach { areaBasedList ->
+                        areaBasedList.response.body.items.item.forEach { item ->
+                            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                                tourInfoTabList.add(
+                                    CulturalFacilities(item, it)
+                                )
+                            }
                         }
                     }
                 }
@@ -322,27 +260,30 @@ object TourNetworkInterfaceUtils {
             return@runBlocking tourInfoTabList.toList()
         }
 
-    fun getRestaurantTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
-        val restaurantList =
-            TourNetworkClient.tourNetWork.getAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                category1 = TourCategoryId1.FOOD.id,
-                category2 = TourCategoryId2.FOOD.id,
-                numOfRows = 15
-            )
-        val restaurantTabList = mutableListOf<TourItem>()
-        restaurantList.response.body.items.item
-            .filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
-            .forEach { item ->
-                getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    restaurantTabList.add(Restaurant(item, it))
+    fun getRestaurantTabList(areaCode: String): List<TourItem> =
+        runBlocking(Dispatchers.IO) {
+            val restaurantList =
+                TourNetworkClient.tourNetWork.getAreaBasedList(
+                    areaCode = areaCode,
+                    contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
+                    category1 = TourCategoryId1.FOOD.id,
+                    category2 = TourCategoryId2.FOOD.id,
+                    numOfRows = 15
+                )
+            val restaurantTabList = mutableListOf<TourItem>()
+            restaurantList.response.body.items.item
+                .filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
+                .forEach { item ->
+                    getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                        restaurantTabList.add(Restaurant(item, it))
+                    }
                 }
-            }
-        return@runBlocking restaurantTabList.toList()
-    }
+            return@runBlocking restaurantTabList.toList()
+        }
 
-    fun getCafeTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
+    fun getCafeTabList(areaCode: String)
+
+            : List<TourItem> = runBlocking(Dispatchers.IO) {
         val cafeList = TourNetworkClient.tourNetWork.getAreaBasedList(
             areaCode = areaCode,
             contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
@@ -360,36 +301,40 @@ object TourNetworkInterfaceUtils {
         return@runBlocking cafeTabList.toList()
     }
 
-    fun getEventTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
-        val eventList = TourNetworkClient.tourNetWork.getAreaBasedList(
-            areaCode = areaCode,
-            contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
-            category1 = TourCategoryId1.HUMANITIES.id,
-            category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
-            numOfRows = 5
-        )
-        val festivalList = TourNetworkClient.tourNetWork.getAreaBasedList(
-            areaCode = areaCode,
-            contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
-            category1 = TourCategoryId1.HUMANITIES.id,
-            category2 = TourCategoryId2.FESTIVAL.id,
-            numOfRows = 5
-        )
-        val eventTabList = mutableListOf<TourItem>()
-        eventList.response.body.items.item.forEach { item ->
-            getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                eventTabList.add(EventPerformanceFestival(item, it))
+    fun getEventTabList(areaCode: String): List<TourItem> =
+        runBlocking(Dispatchers.IO) {
+            val eventList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
+                category1 = TourCategoryId1.HUMANITIES.id,
+                category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
+                numOfRows = 5
+            )
+            val festivalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
+                category1 = TourCategoryId1.HUMANITIES.id,
+                category2 = TourCategoryId2.FESTIVAL.id,
+                numOfRows = 5
+            )
+            val eventTabList = mutableListOf<TourItem>()
+            eventList.response.body.items.item.forEach { item ->
+                getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                    eventTabList.add(EventPerformanceFestival(item, it))
+                }
             }
-        }
-        festivalList.response.body.items.item.forEach { item ->
-            getIntroDetail(item.contentId, item.contentTypeId)?.let {
-                eventTabList.add(EventPerformanceFestival(item, it))
+            festivalList.response.body.items.item.forEach { item ->
+                getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                    eventTabList.add(EventPerformanceFestival(item, it))
+                }
             }
+            return@runBlocking eventTabList.toList()
         }
-        return@runBlocking eventTabList.toList()
-    }
 
-    private fun getIntroDetail(contentId: String, contentTypeId: String): IntroDetailItem? =
+    private fun getIntroDetail(
+        contentId: String,
+        contentTypeId: String
+    ): IntroDetailItem? =
         runBlocking(Dispatchers.IO) {
             val introDetail = TourNetworkClient.tourNetWork.getIntroDetail(
                 contentId = contentId,
