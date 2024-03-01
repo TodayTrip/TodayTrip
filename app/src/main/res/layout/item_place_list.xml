@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="4dp"
-    android:background="@drawable/shape_10_radius"
+    android:background="@drawable/shape_white_10_radius"
     android:elevation="5dp"
     android:paddingHorizontal="20dp"
     android:paddingVertical="10dp">
@@ -13,7 +13,7 @@
         android:id="@+id/iv_item_place_list"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@drawable/shape_10_radius"
+        android:background="@drawable/shape_white_10_radius"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/img_default_image"

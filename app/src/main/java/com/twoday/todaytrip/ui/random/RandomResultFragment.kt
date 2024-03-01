@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.random
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
+import com.twoday.todaytrip.ui.MainActivity
+
 class RandomResultFragment : Fragment() {
     private var _binding: FragmentRandomResultBinding? = null
     private val binding get() = _binding!!

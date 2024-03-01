@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.gms.google-services")
 }
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
@@ -72,6 +73,9 @@ dependencies {
     implementation("com.naver.maps:map-sdk:3.17.0")
     implementation("com.google.android.gms:play-services-location:21.1.0")
     // Retrofit
+    implementation("com.google.android.gms:play-services-location:17.0.0")
+    //Retrofit
+    implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
@@ -81,11 +85,14 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    //Firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth-ktx")
+    implementation("com.google.android.gms:play-services-auth:21.0.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     // Lottie animation
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
-    
-    // implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
 }

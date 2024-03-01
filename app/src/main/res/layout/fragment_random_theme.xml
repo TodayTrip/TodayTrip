@@ -4,8 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_blue"
-    tools:context=".ui.RandomOptionFragment">
+    android:background="@color/white"
+    tools:context=".ui.random.RandomOptionFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_step_bar"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_search_bar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_step_bar_point"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/shape_search_bar_point"
+        app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.6" />
 
     <TextView
         android:id="@+id/tv_theme_select_description"
@@ -13,11 +35,13 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="52dp"
-        android:text="어떤 테마 여행을 하고 싶나요?"
-        android:textColor="@color/white"
+        android:text="어떤 테마 여행을 하고 싶은지만 말해주세요!"
+        android:background="@drawable/shape_btn_sub_blue"
+        android:padding="20dp"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/layout_step_bar"/>
 
     <TextView
         android:id="@+id/tv_select_step"
@@ -25,38 +49,19 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="2/3"
-        android:textColor="@color/middle_gray"
+        android:textColor="@color/button_gray"
         app:layout_constraintStart_toStartOf="@+id/tv_theme_select_description"
         app:layout_constraintTop_toBottomOf="@+id/tv_theme_select_description" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_step_bar"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/shape_20_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_step" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/shape_20_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_step" />
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/btn_next"
-        app:layout_constraintTop_toBottomOf="@+id/layout_step_bar">
+        app:layout_constraintTop_toBottomOf="@+id/tv_select_step">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -68,9 +73,9 @@
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="40dp"
-                android:background="@drawable/shape_10_radius"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme2"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -95,7 +100,7 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/shape_10_radius"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme1"
@@ -123,9 +128,9 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
-                android:background="@drawable/shape_10_radius"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme4"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme1"
                 app:layout_constraintTop_toBottomOf="@+id/btn_theme1">
 
@@ -151,15 +156,16 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/shape_10_radius"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme3"
                 app:layout_constraintTop_toTopOf="@+id/btn_theme3">
+
                 <TextView
                     android:id="@+id/tv_theme4"
-                    android:text="근심이\n없어지는 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="근심이\n없어지는 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -178,15 +184,16 @@
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="40dp"
-                android:background="@drawable/shape_10_radius"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme6"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme3"
                 app:layout_constraintTop_toBottomOf="@+id/btn_theme3">
+
                 <TextView
                     android:id="@+id/tv_theme5"
-                    android:text="감각을\n자극하는 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="감각을\n자극하는 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -206,15 +213,16 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/shape_10_radius"
-                app:layout_constraintHorizontal_bias="0.5"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme5"
                 app:layout_constraintTop_toTopOf="@+id/btn_theme5">
+
                 <TextView
                     android:id="@+id/tv_theme6"
-                    android:text="모험심을\n발견하는 곳"
                     style="@style/RandomThemeBlueBoldText"
+                    android:text="모험심을\n발견하는 곳"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -224,7 +232,7 @@
                     android:src="@drawable/img_random_theme_sixth"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme6"/>
+                    app:layout_constraintStart_toEndOf="@+id/tv_theme6" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -232,7 +240,7 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/shape_10_radius"
+                android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="@+id/btn_theme5"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme5"
@@ -253,7 +261,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/tv_theme7" />
             </androidx.constraintlayout.widget.ConstraintLayout>
-
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
@@ -264,16 +271,18 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_btn_white"
+        android:background="@drawable/shape_btn_main_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_back">
 
         <TextView
+            android:id="@+id/tv_btn_next"
             style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="다음"
-            android:textColor="@color/point_yellow"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -287,19 +296,17 @@
         android:layout_width="150dp"
         android:layout_height="50dp"
         android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_btn_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent">
+        android:layout_marginTop="12dp"
+        android:background="@drawable/shape_btn_main_blue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <TextView
             style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="이전으로"
-            android:textColor="@color/point_yellow"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -19,10 +19,11 @@
         app:defaultNavHost="true"
         app:navGraph="@navigation/nav_graph_home"/>
 
-    <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:theme="@style/Theme.MaterialComponents"
+        android:theme="@style/Theme.MaterialComponents.Light"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -54,6 +55,7 @@
             android:id="@+id/fab"
             android:src="@drawable/ic_bottom_map"
             android:background="@color/white"
+            app:backgroundTint="@color/main_blue"
             app:layout_anchor="@id/bottomAppBar"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

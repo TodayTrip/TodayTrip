@@ -13,10 +13,23 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.twoday.todaytrip.ui.route.RouteFragment"
+        android:label="fragment_route"
+        tools:layout="@layout/fragment_route">
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_route"
         android:name="com.twoday.todaytrip.ui.route.RouteFragment"
         android:label="fragment_route"
         tools:layout="@layout/fragment_route">
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_record"
+        android:name="com.twoday.todaytrip.ui.route.RouteFragment"
+        android:label="fragment_route"
+        tools:layout="@layout/fragment_route">
+    </fragment>
 </navigation>
