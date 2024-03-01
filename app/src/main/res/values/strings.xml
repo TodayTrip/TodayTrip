@@ -35,6 +35,7 @@
     <!-- PlaceListFragment -->
     <string name="tourist_destination">관광지</string>
     <string name="restaurant">음식점</string>
-    <string name="event">행사/공연/축제</string>
+    <string name="cafe">카페</string>
+    <string name="event">행사/축제</string>
     <string name="contain">담기</string>
 </resources>
