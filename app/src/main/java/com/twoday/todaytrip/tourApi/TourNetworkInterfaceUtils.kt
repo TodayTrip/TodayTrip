@@ -176,7 +176,20 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
-                "휴양" -> {}
+                "휴양" -> {
+                    val recreationalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.RECREATIONAL_TOURIST_ATTRACTION.id,
+                        numOfRows = 10
+                    )
+                    recreationalList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                }
                 "체험" -> {}
                 "레포츠" -> {}
                 "문화시설" -> {}
