@@ -341,52 +341,18 @@ object TourNetworkInterfaceUtils {
         }
 
     fun getRestaurantTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
-        val restaurantList = listOf(
+        val restaurantList =
             TourNetworkClient.tourNetWork.getAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
                 category1 = TourCategoryId1.FOOD.id,
                 category2 = TourCategoryId2.FOOD.id,
-                category3 = TourCategoryId3.KOREAN_FOOD.id,
-                numOfRows = 2
-            ),
-            TourNetworkClient.tourNetWork.getAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                category1 = TourCategoryId1.FOOD.id,
-                category2 = TourCategoryId2.FOOD.id,
-                category3 = TourCategoryId3.WESTERN_FOOD.id,
-                numOfRows = 2
-            ),
-            TourNetworkClient.tourNetWork.getAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                category1 = TourCategoryId1.FOOD.id,
-                category2 = TourCategoryId2.FOOD.id,
-                category3 = TourCategoryId3.JAPANESE_FOOD.id,
-                numOfRows = 2
-            ),
-            TourNetworkClient.tourNetWork.getAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                category1 = TourCategoryId1.FOOD.id,
-                category2 = TourCategoryId2.FOOD.id,
-                category3 = TourCategoryId3.CHINESE_FOOD.id,
-                numOfRows = 2
-            ),
-            TourNetworkClient.tourNetWork.getAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                category1 = TourCategoryId1.FOOD.id,
-                category2 = TourCategoryId2.FOOD.id,
-                category3 = TourCategoryId3.UNIQUE_FOOD.id,
-                numOfRows = 2
+                numOfRows = 15
             )
-        )
-
         val restaurantTabList = mutableListOf<TourItem>()
-        restaurantList.forEach { areaBasedList ->
-            areaBasedList.response.body.items.item.forEach { item ->
+        restaurantList.response.body.items.item
+            .filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
+            .forEach { item ->
                 restaurantTabList.add(
                     Restaurant(
                         item,
@@ -394,7 +360,6 @@ object TourNetworkInterfaceUtils {
                     )
                 )
             }
-        }
         return@runBlocking restaurantTabList.toList()
     }
 
@@ -417,31 +382,23 @@ object TourNetworkInterfaceUtils {
     }
 
     fun getEventTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
-        val festivalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+        val eventList = TourNetworkClient.tourNetWork.getAreaBasedList(
             areaCode = areaCode,
             contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
             category1 = TourCategoryId1.HUMANITIES.id,
             category2 = TourCategoryId2.FESTIVAL.id,
-            numOfRows = 5
-        )
-        val performanceEventList = TourNetworkClient.tourNetWork.getAreaBasedList(
-            areaCode = areaCode,
-            contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
-            category1 = TourCategoryId1.HUMANITIES.id,
-            category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
-            numOfRows = 5
+            numOfRows = 15
         )
         val eventTabList = mutableListOf<TourItem>()
-        festivalList.response.body.items.item.forEach {
-            eventTabList.add(
-                EventPerformanceFestival(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
-            )
-        }
-        performanceEventList.response.body.items.item.forEach {
-            eventTabList.add(
-                EventPerformanceFestival(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
-            )
-        }
+        eventList.response.body.items.item
+            .filter {
+                (it.category2 == TourCategoryId2.FESTIVAL.id) || (it.category2 == TourCategoryId2.PERFORMANCE_EVENT.id)
+            }
+            .forEach {
+                eventTabList.add(
+                    EventPerformanceFestival(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                )
+            }
         return@runBlocking eventTabList.toList()
     }
 
