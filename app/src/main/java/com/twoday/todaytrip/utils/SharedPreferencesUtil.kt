@@ -24,6 +24,11 @@ object SharedPreferencesUtil {
     }
 
     fun saveTourItemList(context:Context, tourItemList:List<TourItem>, destinationKey: String){
+        if(tourItemList == emptyList<TourItem>()){
+            Log.d("saveTourItemList", "cannot save empty list!")
+            return
+        }
+
         val prefs = getDestPreferences(context)
         val json = Gson().toJson(tourItemList)
         prefs.edit().putString(destinationKey, json).apply()
