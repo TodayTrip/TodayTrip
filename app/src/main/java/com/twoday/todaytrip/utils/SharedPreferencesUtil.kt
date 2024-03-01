@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.tourData.TourItem
 
 object SharedPreferencesUtil {
+    private val TAG = "SharedPreferencesUtil"
     private fun getDestPreferences(context: Context): SharedPreferences {
         return context.getSharedPreferences(PrefConstants.PREFERENCE_DESTINATION_KEY, Context.MODE_PRIVATE)
     }
@@ -15,24 +16,25 @@ object SharedPreferencesUtil {
     fun saveDestination(context: Context, destination: String?, destinationKey: String) {
         val editor = getDestPreferences(context).edit()
         editor.putString(destinationKey, destination)
-        Log.d("SaveDestination", "destination key: ${destinationKey}, saved value: $destination")
+        Log.d(TAG, "SaveDestination) destination key: ${destinationKey}, saved value: $destination")
         editor.apply()
     }
     fun loadDestination(context: Context, destinationKey: String): String? {
-        Log.d("LoadDestination", "destination key: ${destinationKey}, loaded value: ${getDestPreferences(context).getString(destinationKey, null)}")
+        Log.d(TAG, "LoadDestination) destination key: ${destinationKey}, loaded value: ${getDestPreferences(context).getString(destinationKey, null)}")
         return getDestPreferences(context).getString(destinationKey, null)
     }
 
     fun saveTourItemList(context:Context, tourItemList:List<TourItem>, destinationKey: String){
+        Log.d(TAG, "saveTourItemList) destination key: ${destinationKey}, list size: ${tourItemList.size}")
         val prefs = getDestPreferences(context)
         val json = Gson().toJson(tourItemList)
         prefs.edit().putString(destinationKey, json).apply()
     }
     fun loadTourItemList(context:Context, destinationKey: String):List<TourItem>{
+        Log.d(TAG, "loadTourItemList) destination key: ${destinationKey}")
         val prefs = getDestPreferences(context)
         val json = prefs.getString(destinationKey, null)
-
-        return if (json != null) {
+        return if ((json != null) && (json.toString() != "[]")) {
             val type = object : TypeToken<List<TourItem>>() {}.type
             Gson().fromJson(json, type)
         } else {

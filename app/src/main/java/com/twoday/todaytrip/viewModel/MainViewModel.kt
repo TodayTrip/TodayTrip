@@ -94,7 +94,9 @@ class MainViewModel : ViewModel() {
         _tourInfoTabList.value =
             if(theme == null) TourNetworkInterfaceUtils.getTourInfoTabList(areaCode)
             else TourNetworkInterfaceUtils.getTourInfoTabListWithTheme(theme, areaCode)
+        Log.d(TAG, "loaded TourInfoList from Tour API, size: ${_tourInfoTabList.value!!.size}")
 
+        Log.d(TAG, "save TourInfoList to SharedPreferences")
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             _tourInfoTabList.value!!,
@@ -115,7 +117,9 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "load RestaurantList from Tour API")
         _restaurantTabList.value =
             TourNetworkInterfaceUtils.getRestaurantTabList(areaCode)
+        Log.d(TAG, "loaded RestaurantList from Tour API, size: ${_restaurantTabList.value!!.size}")
 
+        Log.d(TAG, "save RestaurantList to SharedPreferences")
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             _restaurantTabList.value!!,
@@ -135,7 +139,9 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "load CafeList from Tour API")
         _cafeTabList.value =
             TourNetworkInterfaceUtils.getCafeTabList(areaCode)
+        Log.d(TAG, "loaded CafeList from Tour API, size: ${_cafeTabList.value!!.size}")
 
+        Log.d(TAG, "save CafeList to SharedPreferences")
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             _cafeTabList.value!!,
@@ -155,7 +161,9 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "load EventList from Tour API")
         _eventTabList.value =
             TourNetworkInterfaceUtils.getEventTabList(areaCode)
+        Log.d(TAG, "loaded EventList from Tour API, size: ${_eventTabList.value!!.size}")
 
+        Log.d(TAG, "save EventList to SharedPreferences")
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             _eventTabList.value!!,
