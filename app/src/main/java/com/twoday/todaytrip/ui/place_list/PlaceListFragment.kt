@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.place_list
 
 import android.os.Bundle
 import android.util.Log
