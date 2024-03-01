@@ -47,7 +47,7 @@ class PlaceListFragment : Fragment() {
             addFragment(FirstRecyclerViewFragment())
             addFragment(SecondRecyclerViewFragment())
             addFragment(ThirdRecyclerViewFragment())
-            addFragment(EventRecyclerViewFragment())
+            addFragment(FourthRecyclerViewFragment())
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
 
