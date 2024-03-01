@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 object TourNetworkInterfaceUtils {
-    fun getTourInfoTabList(areaCode:String): List<TourItem> = runBlocking(Dispatchers.IO) {
+    fun getTourInfoTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
         val touristDestinationList: AreaBasedList = TourNetworkClient.tourNetWork.getAreaBasedList(
             areaCode = areaCode,
             contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
@@ -43,13 +43,69 @@ object TourNetworkInterfaceUtils {
         }
         return@runBlocking tourInfoTabList.toList()
     }
-    fun getTourInfoTabListWithTheme(theme:String, areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO){
-        val tourInfoTabList = mutableListOf<TourItem>()
-        //TODO 테마 별 관광지 정보 가져오기
-        return@runBlocking tourInfoTabList.toList()
-    }
 
-    fun getRestaurantTabList(areaCode:String): List<TourItem> = runBlocking(Dispatchers.IO) {
+    fun getTourInfoTabListWithTheme(theme: String, areaCode: String): List<TourItem> =
+        runBlocking(Dispatchers.IO) {
+            val tourInfoTabList = mutableListOf<TourItem>()
+            when (theme) {
+                "산" -> {
+                    val mountainList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId= TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.MOUNTAIN.id,
+                        numOfRows = 3
+                    )
+                    val naturalRecreationForestList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId= TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
+                        numOfRows = 3
+                    )
+                    val arboretumList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId= TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.ARBORETUM.id,
+                        numOfRows = 3
+                    )
+                    mountainList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(
+                                it, getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
+                        )
+                    }
+                    naturalRecreationForestList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(
+                                it, getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
+                        )
+                    }
+                    arboretumList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(
+                                it, getIntroDetail(it.contentId, it.contentTypeId)[0]
+                            )
+                        )
+                    }
+                }
+                "바다" -> {}
+                "역사" -> {}
+                "휴양" -> {}
+                "체험" -> {}
+                "레포츠" -> {}
+                "문화시설" -> {}
+            }
+            return@runBlocking tourInfoTabList.toList()
+        }
+
+    fun getRestaurantTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
         val restaurantList = listOf(
             TourNetworkClient.tourNetWork.getAreaBasedList(
                 areaCode = areaCode,
