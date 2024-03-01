@@ -190,7 +190,20 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
-                "체험" -> {}
+                "체험" -> {
+                    val experientialList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.HUMANITIES.id,
+                        category2 = TourCategoryId2.EXPERIENTIAL_TOURIST_ATTRACTION.id,
+                        numOfRows = 10
+                    )
+                    experientialList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                }
                 "레포츠" -> {}
                 "문화시설" -> {}
             }
