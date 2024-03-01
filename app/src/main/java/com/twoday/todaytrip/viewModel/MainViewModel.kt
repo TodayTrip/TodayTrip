@@ -30,9 +30,11 @@ class MainViewModel : ViewModel() {
 
     init {
         CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "call loadTourItemList()")
             loadTourItemList()
         }
     }
+
     //TODO 새로운 여행지 선택 시, Shared Preference에 저장된 관광지 정보 삭제
 
     private fun loadTourItemList() {
@@ -44,9 +46,11 @@ class MainViewModel : ViewModel() {
         }
 
         CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "call loadTourInfoTabList()")
             loadTourInfoTabList(theme, areaCode!!)
         }
         CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "call loadRestaurantTabList()")
             loadRestaurantTabList(areaCode!!)
         }
     }
