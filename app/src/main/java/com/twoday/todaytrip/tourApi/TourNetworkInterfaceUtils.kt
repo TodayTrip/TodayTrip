@@ -1,6 +1,7 @@
 package com.twoday.todaytrip.tourApi
 
 import com.twoday.todaytrip.tourData.CulturalFacilities
+import com.twoday.todaytrip.tourData.LeisureSports
 import com.twoday.todaytrip.tourData.Restaurant
 import com.twoday.todaytrip.tourData.TourCategoryId1
 import com.twoday.todaytrip.tourData.TourCategoryId2
@@ -204,7 +205,18 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
-                "레포츠" -> {}
+                "레포츠" -> {
+                    val leisureSportsList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.LEISURE_SPORTS.contentTypeId,
+                        numOfRows = 10
+                    )
+                    leisureSportsList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            LeisureSports(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                }
                 "문화시설" -> {}
             }
             return@runBlocking tourInfoTabList.toList()
