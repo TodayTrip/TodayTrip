@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.random
 
 import android.os.Bundle
 import android.util.Log
@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
@@ -30,13 +31,28 @@ class RandomThemeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpClickListener()
+        setUpButtonClickState(false)
+
+    }
+
+    private fun setUpButtonClickState(status: Boolean) {
+        binding.btnNext.isEnabled = status
+        if(status){
+            binding.btnNext.setBackgroundResource(R.drawable.shape_subblue_8_radius)
+            binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_blue))
+        }else{
+            binding.btnNext.setBackgroundResource(R.drawable.shape_btn_gray)
+            binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.middle_gray))
+        }
     }
 
     private fun setUpClickListener() {
+        binding.btnBack.setOnClickListener {
+            findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_random_option)
+        }
         binding.btnNext.setOnClickListener {
             selectedTheme?.let {
-                val action = RandomThemeFragmentDirections.actionNavigationRandomThemeToNavigationRandomResult()
-                findNavController().navigate(action)
+                findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_random_result)
             }
         }
         binding.btnTheme1.setOnClickListener { selectTheme("산", 0) }
@@ -53,6 +69,7 @@ class RandomThemeFragment : Fragment() {
         selectButton(selectedNumber)
         selectRandomDestination(theme)
     }
+
     private fun selectButton(selectedNumber: Int) {
         val buttons = listOf(
             binding.btnTheme1,
@@ -71,7 +88,7 @@ class RandomThemeFragment : Fragment() {
                 button.setBackgroundResource(R.drawable.shape_without_boarder)
             }
         }
-        binding.btnNext.isEnabled = true
+        setUpButtonClickState(true)
     }
 
     private fun selectRandomDestination(theme: String) {

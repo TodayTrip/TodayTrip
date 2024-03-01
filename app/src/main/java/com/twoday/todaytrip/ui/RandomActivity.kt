@@ -1,8 +1,7 @@
-package com.twoday.todaytrip
+package com.twoday.todaytrip.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.twoday.todaytrip.databinding.ActivityMainBinding
 import com.twoday.todaytrip.databinding.ActivityRandomBinding
 
 class RandomActivity : AppCompatActivity() {

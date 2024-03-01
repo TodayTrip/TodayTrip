@@ -4,20 +4,44 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_blue"
-    tools:context=".ui.RandomOptionFragment">
+    android:background="@color/white"
+    tools:context=".ui.random.RandomOptionFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_step_bar"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/shape_search_bar_background"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_step_bar_point"
+        android:layout_width="0dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/shape_search_bar_point"
+        app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent="0.3" />
 
     <TextView
         android:id="@+id/tv_random_select_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="52dp"
+        android:background="@drawable/shape_btn_sub_blue"
+        android:padding="20dp"
         android:text="시작하기 전 물어볼게요!\n완전 랜덤이 좋아요? or 테마는 선택하고 싶어요?"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_step_bar" />
 
     <TextView
         android:id="@+id/tv_select_step"
@@ -25,39 +49,16 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="1/3"
-        android:textColor="@color/middle_gray"
+        android:textColor="@color/button_gray"
         app:layout_constraintStart_toStartOf="@+id/tv_random_select_description"
         app:layout_constraintTop_toBottomOf="@+id/tv_random_select_description" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_step_bar"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/shape_20_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_step" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/shape_20_radius"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_select_step" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_all_random"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/shape_10_radius"
+        android:background="@drawable/shape_white_10_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
         app:layout_constraintTop_toTopOf="parent">
@@ -78,7 +79,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/shape_10_radius"
+        android:background="@drawable/shape_white_10_radius"
         app:layout_constraintEnd_toEndOf="@+id/layout_step_bar"
         app:layout_constraintTop_toTopOf="@+id/btn_all_random" >
 
@@ -96,7 +97,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="완전 랜덤"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_all_random"
@@ -107,7 +108,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="테마별 랜덤"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_theme_random"
@@ -121,7 +122,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_btn_white"
+        android:background="@drawable/shape_btn_main_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
@@ -133,7 +134,7 @@
         style="@style/SmallBoldText"
         android:text="다음"
         android:textSize="16sp"
-        android:textColor="@color/point_yellow"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
