@@ -19,6 +19,7 @@ import retrofit2.Response
 class PlaceListFragment : Fragment() {
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
+
     private lateinit var ViewPagerAdapter: PagerFragmentStateAdapter
 
     private var base_date = "20240229"  // 발표 일자

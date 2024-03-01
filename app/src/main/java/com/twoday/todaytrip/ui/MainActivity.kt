@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setNavigation()
-        callTourApi()
     }
 
     private fun setNavigation() {
@@ -31,14 +30,5 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_main_fragment) as NavHostFragment
         val navController = navHomeFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
-    }
-
-    private fun callTourApi() {
-        //지역 기반 관광지 정보 조회 api 테스트 코드
-        //model.callAreaBased()
-        //공통 정보 조회 api 테스트 코드
-        //model.callCommonDetail()
-        //소개 정보 조회 api 테스트 코드
-        model.callIntroDetail()
     }
 }
