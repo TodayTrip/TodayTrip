@@ -54,7 +54,7 @@
 
     <fragment
         android:id="@+id/navigation_place_list"
-        android:name="com.twoday.todaytrip.ui.PlaceListFragment"
+        android:name="com.twoday.todaytrip.ui.place_list.PlaceListFragment"
         android:label="fragment_place_list"
         tools:layout="@layout/fragment_place_list">
     </fragment>

@@ -84,6 +84,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         return Bitmap.createScaledBitmap(imageBitmap, width, height, false)
     }
 
+    // 지도에서 가장 멀리 있는 마커 구하는 함수
     private fun findFurthestMarkers(markers: List<Marker>): Pair<Marker, Marker>? {
         if (markers.size < 2) return null
 
@@ -103,6 +104,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         return furthestPair
     }
 
+    // 마커끼리 폴리라인 연결하는 함수
     private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap, markers: MutableList<Marker>) {
         val furthestPair = findFurthestMarkers(markers)
         furthestPair?.let {

@@ -36,8 +36,10 @@
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다.</string>
 
     <!-- PlaceListFragment -->
-    <string name="tourist_destination">관광지</string>
-    <string name="restaurant">음식점</string>
-    <string name="event">행사/공연/축제</string>
-    <string name="contain">담기</string>
+    <string name="place_list_tourist_destination">관광지</string>
+    <string name="place_list_restaurant">음식점</string>
+    <string name="place_list_cafe">카페</string>
+    <string name="place_list_event">행사/축제</string>
+    <!--  ItemPlaceList  -->
+    <string name="item_place_list_add">담기</string>
 </resources>

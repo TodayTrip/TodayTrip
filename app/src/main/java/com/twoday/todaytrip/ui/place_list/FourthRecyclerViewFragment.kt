@@ -1,20 +1,19 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.place_list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.twoday.todaytrip.R
 
-class ThirdRecyclerViewFragment : Fragment() {
+class FourthRecyclerViewFragment : Fragment(){
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_third_recycler_view, container, false)
+        return inflater.inflate(R.layout.fragment_event_recycler_view, container, false)
     }
-
 }

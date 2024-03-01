@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.PlaceListFragment">
+    tools:context=".ui.place_list.PlaceListFragment">
 
     <TextView
         android:id="@+id/tv_travel_address"
@@ -37,7 +37,7 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="100dp"
+        android:layout_marginEnd="80dp"
         android:src="@drawable/img_weather_sun"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -46,8 +46,8 @@
         android:id="@+id/tv_weather_info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:text="5º / 2º  맑음"
+        android:layout_marginStart="8dp"
+        android:text="5º"
         app:layout_constraintBottom_toBottomOf="@+id/img_weather"
         app:layout_constraintStart_toEndOf="@+id/img_weather"
         app:layout_constraintTop_toTopOf="@+id/img_weather" />
@@ -74,34 +74,38 @@
                 android:id="@+id/tl_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/shadow_background"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tabBackground="@color/white"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="#FFD15B"
+                app:tabIndicatorColor="@color/main_blue"
                 app:tabIndicatorFullWidth="false"
                 app:tabIndicatorGravity="bottom"
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/black"
                 app:tabTextAppearance="@style/tab_text"
-                app:tabTextColor="@color/black">
+                app:tabTextColor="@color/middle_gray">
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tourist_destination" />
+                    android:text="@string/place_list_tourist_destination" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/restaurant" />
+                    android:text="@string/place_list_restaurant" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/event" />
+                    android:text="@string/place_list_cafe" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/place_list_event" />
             </com.google.android.material.tabs.TabLayout>
         </LinearLayout>
 
@@ -109,7 +113,6 @@
             android:id="@+id/vp_viewpager_main"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -128,5 +131,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/tv_weather_info2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="맑음"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_weather_info"
+        app:layout_constraintStart_toEndOf="@+id/tv_weather_info"
+        app:layout_constraintTop_toTopOf="@+id/tv_weather_info" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
