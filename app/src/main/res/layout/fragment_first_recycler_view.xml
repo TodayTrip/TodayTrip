@@ -8,6 +8,8 @@
     tools:context=".ui.place_list.FirstRecyclerViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:visibility="invisible"
+        tools:visibility="visible"
         android:id="@+id/rv_first_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,5 +19,34 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_place_list" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_first_recycler_view_loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_first_recycler_view_loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_list_loading_tourist_destination"
+            android:textAppearance="@style/MiddleTitleText"
+            android:textColor="@color/button_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            app:layout_constraintTop_toBottomOf="@id/tv_first_recycler_view_loading"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -37,6 +37,10 @@
     <string name="place_list_restaurant">음식점</string>
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
+    <string name="place_list_loading_tourist_destination">관광지 정보 가져오는 중</string>
+    <string name="place_list_loading_restaurant">음식점 정보 가져오는 중</string>
+    <string name="place_list_loading_cafe">카페 정보 가져오는 중</string>
+    <string name="place_list_loading_event">행사/축제 정보 가져오는 중</string>
     <!--  ItemPlaceList  -->
     <string name="item_place_list_add">담기</string>
 </resources>

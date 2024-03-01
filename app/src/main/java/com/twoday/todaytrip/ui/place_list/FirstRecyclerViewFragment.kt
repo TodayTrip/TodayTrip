@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -48,8 +49,13 @@ class FirstRecyclerViewFragment : Fragment() {
     }
     private fun initModelObserver(){
         mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
+            hideLoadingUI()
             adapter.changeTourItemList(it)
         })
+    }
+    private fun hideLoadingUI(){
+        binding.layoutFirstRecyclerViewLoading.isVisible = false
+        binding.rvFirstRecyclerView.isVisible = true
     }
 
     override fun onDestroyView() {
