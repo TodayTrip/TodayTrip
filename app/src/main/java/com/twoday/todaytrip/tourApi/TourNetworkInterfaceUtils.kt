@@ -45,7 +45,7 @@ object TourNetworkInterfaceUtils {
         return@runBlocking tourInfoTabList.toList()
     }
 
-    private fun getRestaurantTabList(areaCode:String): List<TourItem> = runBlocking(Dispatchers.IO) {
+    fun getRestaurantTabList(areaCode:String): List<TourItem> = runBlocking(Dispatchers.IO) {
         val restaurantList = listOf(
             TourNetworkClient.tourNetWork.getAreaBasedList(
                 areaCode = areaCode,
