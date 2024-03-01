@@ -95,6 +95,4 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
-
-    // implementation("androidx.navigation:navigation-safe-args-gradle-plugin:2.7.7")
 }
