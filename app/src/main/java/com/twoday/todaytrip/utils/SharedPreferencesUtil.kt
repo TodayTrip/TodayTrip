@@ -15,11 +15,11 @@ object SharedPreferencesUtil {
     fun saveDestination(context: Context, destination: String?, destinationKey: String) {
         val editor = getDestPreferences(context).edit()
         editor.putString(destinationKey, destination)
-        Log.d("SaveDestination", "Destination saved: $destination")
+        Log.d("SaveDestination", "destination key: ${destinationKey}, saved value: $destination")
         editor.apply()
     }
     fun loadDestination(context: Context, destinationKey: String): String? {
-        Log.d("LoadDestination", "Loaded destination: ${getDestPreferences(context).getString(destinationKey, null)}")
+        Log.d("LoadDestination", "destination key: ${destinationKey}, loaded value: ${getDestPreferences(context).getString(destinationKey, null)}")
         return getDestPreferences(context).getString(destinationKey, null)
     }
 
