@@ -52,7 +52,7 @@ interface TourNetworkInterface {
         @Query("_type") responseType:String = "json"
     ):IntroDetail
 
-    //공통 정보 조회
+    //공통 정보 조회 (개요 정보)
     /*
     @GET("detailCommon1")
     suspend fun getCommonDetail(
