@@ -2,6 +2,7 @@ package com.twoday.todaytrip.tourApi
 
 import android.util.Log
 import com.twoday.todaytrip.tourData.CulturalFacilities
+import com.twoday.todaytrip.tourData.EventPerformanceFestival
 import com.twoday.todaytrip.tourData.LeisureSports
 import com.twoday.todaytrip.tourData.Restaurant
 import com.twoday.todaytrip.tourData.TourCategoryId1
@@ -413,6 +414,35 @@ object TourNetworkInterfaceUtils {
             )
         }
         return@runBlocking cafeTabList.toList()
+    }
+
+    fun getEventTabList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
+        val festivalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+            areaCode = areaCode,
+            contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
+            category1 = TourCategoryId1.HUMANITIES.id,
+            category2 = TourCategoryId2.FESTIVAL.id,
+            numOfRows = 5
+        )
+        val performanceEventList = TourNetworkClient.tourNetWork.getAreaBasedList(
+            areaCode = areaCode,
+            contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
+            category1 = TourCategoryId1.HUMANITIES.id,
+            category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
+            numOfRows = 5
+        )
+        val eventTabList = mutableListOf<TourItem>()
+        festivalList.response.body.items.item.forEach {
+            eventTabList.add(
+                EventPerformanceFestival(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+            )
+        }
+        performanceEventList.response.body.items.item.forEach {
+            eventTabList.add(
+                EventPerformanceFestival(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+            )
+        }
+        return@runBlocking eventTabList.toList()
     }
 
     private fun getIntroDetail(contentId: String, contentTypeId: String): List<IntroDetailItem> =

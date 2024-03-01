@@ -32,6 +32,10 @@ class MainViewModel : ViewModel() {
     val cafeTabList: LiveData<List<TourItem>>
         get() = _cafeTabList
 
+    private val _eventTabList = MutableLiveData<List<TourItem>>()
+    val eventTabList: LiveData<List<TourItem>>
+        get() = _eventTabList
+
     init {
         CoroutineScope(Dispatchers.IO).launch {
             Log.d(TAG, "call loadTourItemList()")
@@ -60,6 +64,10 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.IO).launch {
             Log.d(TAG, "call loadCafeTabList()")
             loadCafeTabList(areaCode!!)
+        }
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d(TAG, "call loadEventTabList()")
+            loadEventTabList(areaCode!!)
         }
     }
 
@@ -132,6 +140,26 @@ class MainViewModel : ViewModel() {
             MyApplication.appContext!!,
             _cafeTabList.value!!,
             PrefConstants.CAFE_TAB_LIST_KEY
+        )
+    }
+    private suspend fun loadEventTabList(areaCode:String) = withContext(Dispatchers.Main) {
+        val loadedEventList = SharedPreferencesUtil.loadTourItemList(
+            MyApplication.appContext!!,
+            PrefConstants.EVENT_TAB_LIST_KEY
+        )
+        if(loadedEventList != emptyList<TourItem>()){
+            Log.d(TAG, "load EventList from SharedPreferences")
+            _eventTabList.value = loadedEventList
+            return@withContext
+        }
+        Log.d(TAG, "load EventList from Tour API")
+        _eventTabList.value =
+            TourNetworkInterfaceUtils.getEventTabList(areaCode)
+
+        SharedPreferencesUtil.saveTourItemList(
+            MyApplication.appContext!!,
+            _eventTabList.value!!,
+            PrefConstants.EVENT_TAB_LIST_KEY
         )
     }
 }

@@ -14,7 +14,9 @@ enum class TourCategoryId2(val id:String){
     HISTORICAL_TOURIST_ATTRACTION("A0201"), // 인문>역사관광지
     RECREATIONAL_TOURIST_ATTRACTION("A0202"), // 인문>휴양관광지
     EXPERIENTIAL_TOURIST_ATTRACTION("A0203"), //인문>체험관광지
-    CULTURAL_FACILITIES("A0206"), //인문>문화시설
+    CULTURAL_FACILITIES("A0206"), // 인문>문화시설
+    FESTIVAL("A0207"), // 인문>축제
+    PERFORMANCE_EVENT("A0208"), // 인문>공연/행사
     FOOD("A0502") // 음식점>음식점
 }
 enum class TourCategoryId3(val id:String){
