@@ -3,7 +3,6 @@ package com.twoday.todaytrip.tourApi
 import android.util.Log
 import com.twoday.todaytrip.tourData.CulturalFacilities
 import com.twoday.todaytrip.tourData.EventPerformanceFestival
-import com.twoday.todaytrip.tourData.LeisureSports
 import com.twoday.todaytrip.tourData.Restaurant
 import com.twoday.todaytrip.tourData.TourCategoryId1
 import com.twoday.todaytrip.tourData.TourCategoryId2
@@ -28,21 +27,15 @@ object TourNetworkInterfaceUtils {
         )
 
         val tourInfoTabList = mutableListOf<TourItem>()
-        touristDestinationList.response.body.items.item.forEach {
-            tourInfoTabList.add(
-                TouristDestination(
-                    it,
-                    getIntroDetail(it.contentId, it.contentTypeId)[0]
-                )
-            )
+        touristDestinationList.response.body.items.item.forEach { item ->
+            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                tourInfoTabList.add(TouristDestination(item, it))
+            }
         }
-        culturalFacilitiesList.response.body.items.item.forEach {
-            tourInfoTabList.add(
-                CulturalFacilities(
-                    it,
-                    getIntroDetail(it.contentId, it.contentTypeId)[0]
-                )
-            )
+        culturalFacilitiesList.response.body.items.item.forEach { item ->
+            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                tourInfoTabList.add(CulturalFacilities(item, it))
+            }
         }
         return@runBlocking tourInfoTabList.toList()
     }
@@ -77,26 +70,26 @@ object TourNetworkInterfaceUtils {
                         category3 = TourCategoryId3.ARBORETUM.id,
                         numOfRows = 3
                     )
-                    mountainList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it, getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    mountainList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
-                    naturalRecreationForestList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it, getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    naturalRecreationForestList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
-                    arboretumList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it, getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    arboretumList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
                 }
 
@@ -141,45 +134,40 @@ object TourNetworkInterfaceUtils {
                         category3 = TourCategoryId3.BEACH.id,
                         numOfRows = 2
                     )
-                    coastalSceneryList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    coastalSceneryList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
-                    portList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    portList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
-                    lighthouseList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    lighthouseList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
-                    islandList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    islandList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
-                    beachList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    beachList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
                 }
 
@@ -191,13 +179,12 @@ object TourNetworkInterfaceUtils {
                         category2 = TourCategoryId2.HISTORICAL_TOURIST_ATTRACTION.id,
                         numOfRows = 10
                     )
-                    historicalList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    historicalList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
                 }
 
@@ -209,13 +196,12 @@ object TourNetworkInterfaceUtils {
                         category2 = TourCategoryId2.RECREATIONAL_TOURIST_ATTRACTION.id,
                         numOfRows = 10
                     )
-                    recreationalList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    recreationalList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
                 }
 
@@ -227,13 +213,12 @@ object TourNetworkInterfaceUtils {
                         category2 = TourCategoryId2.EXPERIENTIAL_TOURIST_ATTRACTION.id,
                         numOfRows = 10
                     )
-                    experientialList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            TouristDestination(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    experientialList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
                             )
-                        )
+                        }
                     }
                 }
 
@@ -243,10 +228,12 @@ object TourNetworkInterfaceUtils {
                         contentTypeId = TourContentTypeId.LEISURE_SPORTS.contentTypeId,
                         numOfRows = 10
                     )
-                    leisureSportsList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            LeisureSports(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
-                        )
+                    leisureSportsList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                TouristDestination(item, it)
+                            )
+                        }
                     }
                 }
 
@@ -291,45 +278,40 @@ object TourNetworkInterfaceUtils {
                         category3 = TourCategoryId3.CONVENTION_CENTER.id,
                         numOfRows = 2
                     )
-                    museumList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            CulturalFacilities(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    museumList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                CulturalFacilities(item, it)
                             )
-                        )
+                        }
                     }
-                    memorialHallList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            CulturalFacilities(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    memorialHallList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                CulturalFacilities(item, it)
                             )
-                        )
+                        }
                     }
-                    exhibitionList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            CulturalFacilities(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    exhibitionList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                CulturalFacilities(item, it)
                             )
-                        )
+                        }
                     }
-                    artGalleryList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            CulturalFacilities(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    artGalleryList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                CulturalFacilities(item, it)
                             )
-                        )
+                        }
                     }
-                    conventionCenterList.response.body.items.item.forEach {
-                        tourInfoTabList.add(
-                            CulturalFacilities(
-                                it,
-                                getIntroDetail(it.contentId, it.contentTypeId)[0]
+                    conventionCenterList.response.body.items.item.forEach { item ->
+                        getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            tourInfoTabList.add(
+                                CulturalFacilities(item, it)
                             )
-                        )
+                        }
                     }
                 }
 
@@ -353,12 +335,9 @@ object TourNetworkInterfaceUtils {
         restaurantList.response.body.items.item
             .filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
             .forEach { item ->
-                restaurantTabList.add(
-                    Restaurant(
-                        item,
-                        getIntroDetail(item.contentId, item.contentTypeId)[0]
-                    )
-                )
+                getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                    restaurantTabList.add(Restaurant(item, it))
+                }
             }
         return@runBlocking restaurantTabList.toList()
     }
@@ -373,10 +352,10 @@ object TourNetworkInterfaceUtils {
             numOfRows = 10
         )
         val cafeTabList = mutableListOf<TourItem>()
-        cafeList.response.body.items.item.forEach {
-            cafeTabList.add(
-                Restaurant(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
-            )
+        cafeList.response.body.items.item.forEach { item ->
+            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                cafeTabList.add(Restaurant(item, it))
+            }
         }
         return@runBlocking cafeTabList.toList()
     }
@@ -386,28 +365,38 @@ object TourNetworkInterfaceUtils {
             areaCode = areaCode,
             contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
             category1 = TourCategoryId1.HUMANITIES.id,
+            category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
+            numOfRows = 5
+        )
+        val festivalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+            areaCode = areaCode,
+            contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
+            category1 = TourCategoryId1.HUMANITIES.id,
             category2 = TourCategoryId2.FESTIVAL.id,
-            numOfRows = 15
+            numOfRows = 5
         )
         val eventTabList = mutableListOf<TourItem>()
-        eventList.response.body.items.item
-            .filter {
-                (it.category2 == TourCategoryId2.FESTIVAL.id) || (it.category2 == TourCategoryId2.PERFORMANCE_EVENT.id)
+        eventList.response.body.items.item.forEach { item ->
+            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                eventTabList.add(EventPerformanceFestival(item, it))
             }
-            .forEach {
-                eventTabList.add(
-                    EventPerformanceFestival(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
-                )
+        }
+        festivalList.response.body.items.item.forEach { item ->
+            getIntroDetail(item.contentId, item.contentTypeId)?.let {
+                eventTabList.add(EventPerformanceFestival(item, it))
             }
+        }
         return@runBlocking eventTabList.toList()
     }
 
-    private fun getIntroDetail(contentId: String, contentTypeId: String): List<IntroDetailItem> =
+    private fun getIntroDetail(contentId: String, contentTypeId: String): IntroDetailItem? =
         runBlocking(Dispatchers.IO) {
             val introDetail = TourNetworkClient.tourNetWork.getIntroDetail(
                 contentId = contentId,
                 contentTypeId = contentTypeId
             )
-            return@runBlocking introDetail.response.body.items.item
+            if (introDetail.response.body.numOfRows == "0")
+                return@runBlocking null
+            return@runBlocking introDetail.response.body.items.item[0]
         }
 }
