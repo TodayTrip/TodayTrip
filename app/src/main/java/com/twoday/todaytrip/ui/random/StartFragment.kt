@@ -48,7 +48,8 @@ class StartFragment : Fragment() {
 
     private fun setUpClickListener() {
         binding.btnStartTrip.setOnClickListener {
-            performAnonymousLogin()
+            findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
+//            performAnonymousLogin()
         }
     }
 
