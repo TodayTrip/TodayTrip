@@ -23,9 +23,9 @@ object TourNetworkClient {
 
     private fun createOkHttpClient(): OkHttpClient =
         OkHttpClient.Builder()
-            .connectTimeout(50, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
             .addInterceptor(provideOfflineCacheInterceptor())
             .addNetworkInterceptor(provideCacheInterceptor())
             .cache(provideCache())
