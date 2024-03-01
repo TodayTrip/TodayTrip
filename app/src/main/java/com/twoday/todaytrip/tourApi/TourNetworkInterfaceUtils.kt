@@ -12,7 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 
 object TourNetworkInterfaceUtils {
-
     fun getTourInfoTabList(areaCode:String): List<TourItem> = runBlocking(Dispatchers.IO) {
         val touristDestinationList: AreaBasedList = TourNetworkClient.tourNetWork.getAreaBasedList(
             areaCode = areaCode,
@@ -42,6 +41,11 @@ object TourNetworkInterfaceUtils {
                 )
             )
         }
+        return@runBlocking tourInfoTabList.toList()
+    }
+    fun getTourInfoTabListWithTheme(theme:String, areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO){
+        val tourInfoTabList = mutableListOf<TourItem>()
+        //TODO 테마 별 관광지 정보 가져오기
         return@runBlocking tourInfoTabList.toList()
     }
 

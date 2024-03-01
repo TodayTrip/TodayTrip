@@ -10,6 +10,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.PrefConstants.DESTINATION_KEY
+import com.twoday.todaytrip.utils.PrefConstants.THEME_KEY
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -19,11 +20,10 @@ import kotlinx.coroutines.withContext
 class MainViewModel : ViewModel() {
     private val TAG = "MainViewModel"
 
-    private var destAreaCode: String? = null
-
     private val _tourInfoTabList = MutableLiveData<List<TourItem>>()
     val tourInfoTabList: LiveData<List<TourItem>>
         get() = _tourInfoTabList
+
     private val _restaurantTabList = MutableLiveData<List<TourItem>>()
     val restaurantTabList: LiveData<List<TourItem>>
         get() = _restaurantTabList
@@ -33,25 +33,26 @@ class MainViewModel : ViewModel() {
             loadTourItemList()
         }
     }
+    //TODO 새로운 여행지 선택 시, Shared Preference에 저장된 관광지 정보 삭제
 
     private fun loadTourItemList() {
-        destAreaCode = getDestinationAreaCode(getDestination())
-        if (destAreaCode.isNullOrBlank()) {
+        val theme = getTheme()
+        val areaCode = getDestinationAreaCode(getDestination())
+        if (areaCode.isNullOrBlank()) {
             Log.d(TAG, "loadTourITemList) error! no destination area code!")
             return
         }
 
-        // TODO shared preference에 저장된 정보 있는지 확인하기
-        // TODO 완전 랜덤인 지, 테마가 있는지 확인하기
-
         CoroutineScope(Dispatchers.IO).launch {
-            loadTourInfoTabList()
+            loadTourInfoTabList(theme, areaCode!!)
         }
         CoroutineScope(Dispatchers.IO).launch {
-            loadRestaurantTabList()
+            loadRestaurantTabList(areaCode!!)
         }
     }
 
+    private fun getTheme(): String? =
+        SharedPreferencesUtil.loadDestination(MyApplication.appContext!!, THEME_KEY)?:null
     private fun getDestination(): String? =
         SharedPreferencesUtil.loadDestination(MyApplication.appContext!!, DESTINATION_KEY) ?: null
 
@@ -59,10 +60,21 @@ class MainViewModel : ViewModel() {
         if (destination == null) null
         else DestinationData.destinationAreaCodes[destination] ?: null
 
+    private suspend fun loadTourInfoTabList(theme:String?, areaCode:String) = withContext(Dispatchers.Main) {
+        val loadedTourInfoList = SharedPreferencesUtil.loadTourItemList(
+            MyApplication.appContext!!,
+            PrefConstants.TOUR_INFO_TAB_LIST_KEY
+        )
+        if(loadedTourInfoList != emptyList<TourItem>()){
+            Log.d(TAG, "load TourInfoList from Shared Preferences")
+            _tourInfoTabList.value = loadedTourInfoList
+            return@withContext
+        }
+        Log.d(TAG, "load TourInfoList from Tour API")
+        _tourInfoTabList.value =
+            if(theme == null) TourNetworkInterfaceUtils.getTourInfoTabList(areaCode)
+            else TourNetworkInterfaceUtils.getTourInfoTabListWithTheme(theme, areaCode)
 
-    private suspend fun loadTourInfoTabList() = withContext(Dispatchers.Main) {
-        // TODO 테마가 있는 경우, 관광지 탭에 테마에 해당되는 정보만 필터링하기
-        _tourInfoTabList.value = TourNetworkInterfaceUtils.getTourInfoTabList(destAreaCode!!)
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             _tourInfoTabList.value!!,
@@ -70,9 +82,20 @@ class MainViewModel : ViewModel() {
         )
     }
 
-    private suspend fun loadRestaurantTabList() = withContext(Dispatchers.Main) {
+    private suspend fun loadRestaurantTabList(areaCode:String) = withContext(Dispatchers.Main) {
+        val loadedRestaurantList = SharedPreferencesUtil.loadTourItemList(
+            MyApplication.appContext!!,
+            PrefConstants.RESTAURANT_TAB_LIST_KEY
+        )
+        if(loadedRestaurantList != emptyList<TourItem>()){
+            Log.d(TAG, "load RestaurantList from SharedPreferences")
+            _restaurantTabList.value = loadedRestaurantList
+            return@withContext
+        }
+        Log.d(TAG, "load RestaurantList from Tour API")
         _restaurantTabList.value =
-            TourNetworkInterfaceUtils.getRestaurantTabList(destAreaCode!!)
+            TourNetworkInterfaceUtils.getRestaurantTabList(areaCode)
+
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             _restaurantTabList.value!!,
