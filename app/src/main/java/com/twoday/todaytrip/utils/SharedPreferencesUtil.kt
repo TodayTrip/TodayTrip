@@ -24,11 +24,6 @@ object SharedPreferencesUtil {
     }
 
     fun saveTourItemList(context:Context, tourItemList:List<TourItem>, destinationKey: String){
-        if(tourItemList == emptyList<TourItem>()){
-            Log.d("saveTourItemList", "cannot save empty list!")
-            return
-        }
-
         val prefs = getDestPreferences(context)
         val json = Gson().toJson(tourItemList)
         prefs.edit().putString(destinationKey, json).apply()
@@ -43,5 +38,13 @@ object SharedPreferencesUtil {
         } else {
             emptyList()
         }
+    }
+
+    fun eraseTourItemList(context: Context){
+        Log.d("eraseTourItemList", "erase all TourItem lists in Shared Preference")
+        saveTourItemList(context, emptyList(),  PrefConstants.TOUR_INFO_TAB_LIST_KEY)
+        saveTourItemList(context, emptyList(),  PrefConstants.RESTAURANT_TAB_LIST_KEY)
+        saveTourItemList(context, emptyList(),  PrefConstants.CAFE_TAB_LIST_KEY)
+        saveTourItemList(context, emptyList(),  PrefConstants.EVENT_TAB_LIST_KEY)
     }
 }
