@@ -17,7 +17,7 @@ import com.twoday.todaytrip.viewModel.MainViewModel
 class FirstRecyclerViewFragment : Fragment() {
 
     private var _binding: FragmentFirstRecyclerViewBinding? = null
-    private val binding = _binding!!
+    private val binding get() = _binding!!
 
     private val mainModel: MainViewModel by activityViewModels {
         object : ViewModelProvider.Factory {
