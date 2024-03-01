@@ -2,7 +2,6 @@ package com.twoday.todaytrip.tourApi
 
 import android.util.Log
 import com.google.common.net.HttpHeaders.CACHE_CONTROL
-import com.twoday.todaytrip.BuildConfig
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.utils.NetworkUtil
 import okhttp3.Cache
@@ -21,15 +20,20 @@ import java.util.concurrent.TimeUnit
 object TourNetworkClient {
     private const val TOUR_BASE_URL = "https://apis.data.go.kr/B551011/KorService1/"
 
-    private fun createOkHttpClient(): OkHttpClient =
-        OkHttpClient.Builder()
+    private fun createOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+
+        return OkHttpClient.Builder()
             .connectTimeout(100, TimeUnit.SECONDS)
             .readTimeout(100, TimeUnit.SECONDS)
             .writeTimeout(100, TimeUnit.SECONDS)
             .addInterceptor(provideOfflineCacheInterceptor())
             .addNetworkInterceptor(provideCacheInterceptor())
+            .addNetworkInterceptor(loggingInterceptor)
             .cache(provideCache())
             .build()
+    }
 
     private fun provideCache(): Cache? {
         var cache: Cache? = null
@@ -43,6 +47,7 @@ object TourNetworkClient {
         }
         return cache
     }
+
     private fun provideCacheInterceptor(): Interceptor {
         return Interceptor { chain ->
             val response: Response = chain.proceed(chain.request())
@@ -56,6 +61,7 @@ object TourNetworkClient {
                 .build()
         }
     }
+
     private fun provideOfflineCacheInterceptor(): Interceptor {
         return Interceptor { chain ->
             var request = chain.request()
