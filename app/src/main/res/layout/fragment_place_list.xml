@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".ui.PlaceListFragment">
+    tools:context=".ui.place_list.PlaceListFragment">
 
     <TextView
         android:id="@+id/tv_travel_address"
@@ -90,22 +90,22 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/tourist_destination" />
+                    android:text="@string/place_list_tourist_destination" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/restaurant" />
+                    android:text="@string/place_list_restaurant" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/cafe" />
+                    android:text="@string/place_list_cafe" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/event" />
+                    android:text="@string/place_list_event" />
             </com.google.android.material.tabs.TabLayout>
         </LinearLayout>
 

@@ -53,7 +53,7 @@
         android:layout_height="28dp"
         android:layout_marginBottom="4dp"
         android:background="@drawable/button_round"
-        android:text="@string/contain"
+        android:text="@string/item_place_list_add"
         android:textColor="@color/white"
         android:textAppearance="@style/TinyText"
         app:layout_constraintBottom_toBottomOf="parent"
