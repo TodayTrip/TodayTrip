@@ -95,7 +95,73 @@ object TourNetworkInterfaceUtils {
                         )
                     }
                 }
-                "바다" -> {}
+                "바다" -> {
+                    val coastalSceneryList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.COASTAL_SCENERY.id,
+                        numOfRows = 2
+                    )
+                    val portList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.PORT.id,
+                        numOfRows = 2
+                    )
+                    val lighthouseList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.LIGHTHOUSE.id,
+                        numOfRows = 2
+                    )
+                    val islandList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.ISLAND.id,
+                        numOfRows = 2
+                    )
+                    val beachList = TourNetworkClient.tourNetWork.getAreaBasedList(
+                        areaCode = areaCode,
+                        contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                        category1 = TourCategoryId1.NATURE.id,
+                        category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                        category3 = TourCategoryId3.BEACH.id,
+                        numOfRows = 2
+                    )
+                    coastalSceneryList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    portList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    lighthouseList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    islandList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                    beachList.response.body.items.item.forEach {
+                        tourInfoTabList.add(
+                            TouristDestination(it, getIntroDetail(it.contentId, it.contentTypeId)[0])
+                        )
+                    }
+                }
                 "역사" -> {}
                 "휴양" -> {}
                 "체험" -> {}
