@@ -2,6 +2,10 @@ package com.twoday.todaytrip.tourApi
 
 import com.google.gson.annotations.SerializedName
 
+data class AreaBasedListSize(
+    val totalCnt:String
+)
+
 data class AreaBasedList(
     val response: AreaBasedListResponse
 )
