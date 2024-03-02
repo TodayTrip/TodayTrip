@@ -55,7 +55,6 @@ object TourNetworkInterfaceUtils {
     fun getTourInfoTabListWithTheme(theme: String, areaCode: String): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val tourInfoTabList = mutableListOf<TourItem>()
-
             when (theme) {
                 "산" -> {
                     Log.d(TAG, "theme = 산, loading AreaBasedLists from API")
@@ -72,7 +71,6 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
-
                 "바다" -> {
                     Log.d(TAG, "theme = 바다, loading AreaBasedLists from API")
                     val seaThemeList = getSeaThemeList(areaCode)
@@ -88,7 +86,6 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
-
                 "역사" -> {
                     Log.d(TAG, "theme = 역사, loading AreaBasedLists from API")
                     val historicalList = async {
@@ -111,7 +108,6 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
-
                 "휴양" -> {
                     Log.d(TAG, "theme = 휴양, loading AreaBasedLists from API")
                     val recreationalList = async {
@@ -445,15 +441,6 @@ object TourNetworkInterfaceUtils {
         category3: String? = null,
         numOfRows: Int
     ): AreaBasedList? {
-        if (TourNetworkClient.tourNetWork.getAreaBasedListSize(
-                areaCode = areaCode,
-                contentTypeId = contentTypeId,
-                category1 = category1,
-                category2 = category2,
-                category3 = category3
-            ).totalCnt == "0"
-        ) return null
-
         return TourNetworkClient.tourNetWork.getAreaBasedList(
             areaCode = areaCode,
             contentTypeId = contentTypeId,
@@ -472,7 +459,7 @@ object TourNetworkInterfaceUtils {
             contentId = contentId,
             contentTypeId = contentTypeId
         )
-        if (introDetail.response.body.numOfRows == "0")
+        if (introDetail.response.body.totalCount == "0")
             return null
         return introDetail.response.body.items.item[0]
     }
