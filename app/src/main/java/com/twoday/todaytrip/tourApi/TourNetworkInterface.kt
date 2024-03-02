@@ -9,7 +9,7 @@ const val MOBILE_NAME = "TodayTrip"
 const val TOUR_API_KEY: String = BuildConfig.TOUR_API_KEY
 
 interface TourNetworkInterface {
-    //지역 기반 관광 정보 조회
+    // 지역 기반 관광 정보 조회
     @GET("areaBasedList1")
     suspend fun getAreaBasedList(
         // 필수 파라미터
@@ -35,7 +35,7 @@ interface TourNetworkInterface {
         // 대표 이미지가 필수인 정렬 구분(O=제목 순, Q=수정 순, R=생성일 순)
     ): AreaBasedList
 
-    //소개 정보 조회
+    // 소개 정보 조회
     @GET("detailIntro1")
     suspend fun getIntroDetail(
         //필수 파라미터

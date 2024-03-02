@@ -449,21 +449,18 @@ object TourNetworkInterfaceUtils {
                 category3 = category3,
                 numOfRows = numOfRows
             )
+            Log.d(TAG, "getAreaBasedList) totalCount: ${areaBasedList.response.body.totalCount}")
+
             if(areaBasedList.response.body.totalCount == 0)
                 null
-            else areaBasedList
+            else
+                areaBasedList
         }catch(e:IllegalStateException) {
-        Log.d(TAG, "Error in getAreaBasedList, cat1 = ${category1}, cat2 = ${category2}, cat3 = ${category3}")
-        e.printStackTrace()
-        Log.d(TAG, "retry getAreBasedList...")
-        try {
-            getAreaBasedList(areaCode, contentTypeId, category1, category2, category3, numOfRows)
-        }catch (e:IllegalStateException){
-            Log.d(TAG, "Error in getAreaBasedList **again**, cat1 = ${category1}, cat2 = ${category2}, cat3 = ${category3}")
+            Log.d(TAG, "getAreaBasedList) IllegalStateException!")
             e.printStackTrace()
+
             null
         }
-    }
 
     private suspend fun getIntroDetail(
         contentId: String,
@@ -473,20 +470,16 @@ object TourNetworkInterfaceUtils {
             contentId = contentId,
             contentTypeId = contentTypeId
         )
+        Log.d(TAG, "getIntroDetail) totalCount: ${introDetail.response.body.totalCount}")
+
         if (introDetail.response.body.totalCount == 0)
             null
         else
             introDetail.response.body.items.item[0]
     }catch (e:Exception){
-        Log.d(TAG, "Error in getIntroDetail, contentId:${contentId}, contentTypeId: ${contentTypeId}")
+        Log.d(TAG, "getIntroDetail) IllegalStateException!")
         e.printStackTrace()
-        Log.d(TAG, "retry getIntroDetail...")
-        try{
-            getIntroDetail(contentId,contentTypeId)
-        }catch (e:IllegalStateException){
-            Log.d(TAG, "Error in getIntroDetail **again**, contentId:${contentId}, contentTypeId: ${contentTypeId}")
-            e.printStackTrace()
-            null
-        }
+
+        null
     }
 }
