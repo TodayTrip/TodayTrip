@@ -22,6 +22,21 @@ import java.util.concurrent.TimeUnit
 object TourNetworkClient {
     private const val TOUR_BASE_URL = "https://apis.data.go.kr/B551011/KorService1/"
 
+    private val tourRetrofit = Retrofit.Builder()
+        .baseUrl(TOUR_BASE_URL)
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder()
+                    .setLenient()
+                    .create()
+            )
+        )
+        .client(createOkHttpClient())
+        .build()
+
+    val tourNetWork: TourNetworkInterface =
+        tourRetrofit.create(TourNetworkInterface::class.java)
+
     private fun createOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
@@ -78,19 +93,4 @@ object TourNetworkClient {
             chain.proceed(request)
         }
     }
-
-    private val tourRetrofit = Retrofit.Builder()
-        .baseUrl(TOUR_BASE_URL)
-        .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder()
-                    .setLenient()
-                    .create()
-            )
-        )
-        .client(createOkHttpClient())
-        .build()
-
-    val tourNetWork: TourNetworkInterface =
-        tourRetrofit.create(TourNetworkInterface::class.java)
 }
