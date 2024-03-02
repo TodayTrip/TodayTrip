@@ -2,6 +2,8 @@ package com.twoday.todaytrip.tourApi
 
 import android.util.Log
 import com.google.common.net.HttpHeaders.CACHE_CONTROL
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.utils.NetworkUtil
 import okhttp3.Cache
@@ -79,7 +81,13 @@ object TourNetworkClient {
 
     private val tourRetrofit = Retrofit.Builder()
         .baseUrl(TOUR_BASE_URL)
-        .addConverterFactory(GsonConverterFactory.create())
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder()
+                    .setLenient()
+                    .create()
+            )
+        )
         .client(createOkHttpClient())
         .build()
 
