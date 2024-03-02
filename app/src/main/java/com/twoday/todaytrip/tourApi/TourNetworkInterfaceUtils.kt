@@ -440,27 +440,50 @@ object TourNetworkInterfaceUtils {
         category2: String? = null,
         category3: String? = null,
         numOfRows: Int
-    ): AreaBasedList? {
-        return TourNetworkClient.tourNetWork.getAreaBasedList(
-            areaCode = areaCode,
-            contentTypeId = contentTypeId,
-            category1 = category1,
-            category2 = category2,
-            category3 = category3,
-            numOfRows = numOfRows
-        )
+    ): AreaBasedList? = try{
+            TourNetworkClient.tourNetWork.getAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = contentTypeId,
+                category1 = category1,
+                category2 = category2,
+                category3 = category3,
+                numOfRows = numOfRows
+            )
+        }catch(e:IllegalStateException) {
+        Log.d(TAG, "Error in getAreaBasedList, cat1 = ${category1}, cat2 = ${category2}, cat3 = ${category3}")
+        e.printStackTrace()
+        Log.d(TAG, "retry getAreBasedList...")
+        try {
+            getAreaBasedList(areaCode, contentTypeId, category1, category2, category3, numOfRows)
+        }catch (e:IllegalStateException){
+            Log.d(TAG, "Error in getAreaBasedList **again**, cat1 = ${category1}, cat2 = ${category2}, cat3 = ${category3}")
+            e.printStackTrace()
+            null
+        }
     }
 
     private suspend fun getIntroDetail(
         contentId: String,
         contentTypeId: String
-    ): IntroDetailItem? {
+    ): IntroDetailItem? = try {
         val introDetail = TourNetworkClient.tourNetWork.getIntroDetail(
             contentId = contentId,
             contentTypeId = contentTypeId
         )
         if (introDetail.response.body.totalCount == "0")
-            return null
-        return introDetail.response.body.items.item[0]
+            null
+        else
+            introDetail.response.body.items.item[0]
+    }catch (e:Exception){
+        Log.d(TAG, "Error in getIntroDetail, contentId:${contentId}, contentTypeId: ${contentTypeId}")
+        e.printStackTrace()
+        Log.d(TAG, "retry getIntroDetail...")
+        try{
+            getIntroDetail(contentId,contentTypeId)
+        }catch (e:IllegalStateException){
+            Log.d(TAG, "Error in getIntroDetail **again**, contentId:${contentId}, contentTypeId: ${contentTypeId}")
+            e.printStackTrace()
+            null
+        }
     }
 }

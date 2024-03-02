@@ -75,7 +75,7 @@ class RandomResultViewModel : ViewModel() {
     private fun loadTourInfoTabList(theme: String?, areaCode: String) =
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
-            if (theme == null)
+            if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.getTourInfoTabList(areaCode)
             else
                 TourNetworkInterfaceUtils.getTourInfoTabListWithTheme(theme, areaCode),
