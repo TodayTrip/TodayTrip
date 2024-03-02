@@ -441,7 +441,7 @@ object TourNetworkInterfaceUtils {
         category3: String? = null,
         numOfRows: Int
     ): AreaBasedList? = try{
-            TourNetworkClient.tourNetWork.getAreaBasedList(
+            val areaBasedList = TourNetworkClient.tourNetWork.getAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = contentTypeId,
                 category1 = category1,
@@ -449,6 +449,9 @@ object TourNetworkInterfaceUtils {
                 category3 = category3,
                 numOfRows = numOfRows
             )
+            if(areaBasedList.response.body.totalCount == 0)
+                null
+            else areaBasedList
         }catch(e:IllegalStateException) {
         Log.d(TAG, "Error in getAreaBasedList, cat1 = ${category1}, cat2 = ${category2}, cat3 = ${category3}")
         e.printStackTrace()
@@ -470,7 +473,7 @@ object TourNetworkInterfaceUtils {
             contentId = contentId,
             contentTypeId = contentTypeId
         )
-        if (introDetail.response.body.totalCount == "0")
+        if (introDetail.response.body.totalCount == 0)
             null
         else
             introDetail.response.body.items.item[0]

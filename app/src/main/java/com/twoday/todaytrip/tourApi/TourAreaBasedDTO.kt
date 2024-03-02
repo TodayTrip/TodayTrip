@@ -14,7 +14,10 @@ data class AreaBasedListResponseHeader(
     val resultMsg: String
 )
 data class AreaBasedListResponseBody(
-    val items: AreaBasedListItems
+    val items: AreaBasedListItems,
+    val numOfRows:Int,
+    val pageNo:Int,
+    val totalCount:Int
 )
 data class AreaBasedListItems(
     val item: List<AreaBasedListItem>
