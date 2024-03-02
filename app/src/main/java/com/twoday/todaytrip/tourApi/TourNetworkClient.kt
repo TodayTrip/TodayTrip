@@ -78,9 +78,10 @@ object TourNetworkClient {
     }
 
     private val tourRetrofit = Retrofit.Builder()
-        .baseUrl(TOUR_BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(
-            createOkHttpClient()
-        ).build()
+        .baseUrl(TOUR_BASE_URL)
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(createOkHttpClient())
+        .build()
 
     val tourNetWork: TourNetworkInterface =
         tourRetrofit.create(TourNetworkInterface::class.java)
