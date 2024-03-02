@@ -47,13 +47,14 @@ class RandomResultFragment : Fragment() {
             }
         })
     }
+    /*
     private fun setUpClickListener() {
         binding.btnTripResult.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
         }
     }
-
+    */
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
