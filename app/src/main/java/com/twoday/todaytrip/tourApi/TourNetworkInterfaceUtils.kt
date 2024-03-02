@@ -367,13 +367,13 @@ object TourNetworkInterfaceUtils {
             val restaurantList = getAreaBasedList(
                     areaCode = areaCode,
                     contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                    category1 = TourCategoryId1.FOOD.id,
-                    category2 = TourCategoryId2.FOOD.id,
                     numOfRows = 15
                 )
             val restaurantTabList = mutableListOf<TourItem>()
             restaurantList?.response?.body?.items?.item
-                ?.filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
+                ?.filter {
+                    (it.category3.isNullOrBlank()) && (it.category3 != TourCategoryId3.CAFE_AND_TEA.id)
+                }
                 ?.forEach { item ->
                     getIntroDetail(item.contentId, item.contentTypeId)?.let {
                         restaurantTabList.add(Restaurant(item, it))
