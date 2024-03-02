@@ -21,6 +21,49 @@
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:visibility="invisible"
+        tools:visibility="visible"
+        android:id="@+id/layout_first_recycler_view_no_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_first_recycler_view_no_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_list_tourist_destination_no_result"
+            android:textAppearance="@style/MiddleTitleText"
+            android:textColor="@color/button_gray"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_first_recycler_view_no_result"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_place_list_no_result"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_first_recycler_view_no_result"
+            app:tint="@color/main_blue" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/place_list_retry"
+            android:textAppearance="@style/MiddleTitleBoldText"
+            android:textColor="@color/main_blue"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_first_recycler_view_no_result" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_first_recycler_view_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,13 +83,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_first_recycler_view_loading" />
+            app:layout_constraintTop_toBottomOf="@id/tv_first_recycler_view_loading"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/anim_place_list_loading"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
