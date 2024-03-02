@@ -364,8 +364,7 @@ object TourNetworkInterfaceUtils {
 
     fun getRestaurantTabList(areaCode: String): List<TourItem> =
         runBlocking(Dispatchers.IO) {
-            val restaurantList =
-                TourNetworkClient.tourNetWork.getAreaBasedList(
+            val restaurantList = getAreaBasedList(
                     areaCode = areaCode,
                     contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
                     category1 = TourCategoryId1.FOOD.id,
@@ -373,9 +372,9 @@ object TourNetworkInterfaceUtils {
                     numOfRows = 15
                 )
             val restaurantTabList = mutableListOf<TourItem>()
-            restaurantList.response.body.items.item
-                .filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
-                .forEach { item ->
+            restaurantList?.response?.body?.items?.item
+                ?.filter { it.category3 != TourCategoryId3.CAFE_AND_TEA.id }
+                ?.forEach { item ->
                     getIntroDetail(item.contentId, item.contentTypeId)?.let {
                         restaurantTabList.add(Restaurant(item, it))
                     }
@@ -386,7 +385,7 @@ object TourNetworkInterfaceUtils {
     fun getCafeTabList(areaCode: String)
 
             : List<TourItem> = runBlocking(Dispatchers.IO) {
-        val cafeList = TourNetworkClient.tourNetWork.getAreaBasedList(
+        val cafeList = getAreaBasedList(
             areaCode = areaCode,
             contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
             category1 = TourCategoryId1.FOOD.id,
@@ -395,7 +394,7 @@ object TourNetworkInterfaceUtils {
             numOfRows = 10
         )
         val cafeTabList = mutableListOf<TourItem>()
-        cafeList.response.body.items.item.forEach { item ->
+        cafeList?.response?.body?.items?.item?.forEach { item ->
             getIntroDetail(item.contentId, item.contentTypeId)?.let {
                 cafeTabList.add(Restaurant(item, it))
             }
@@ -405,14 +404,14 @@ object TourNetworkInterfaceUtils {
 
     fun getEventTabList(areaCode: String): List<TourItem> =
         runBlocking(Dispatchers.IO) {
-            val eventList = TourNetworkClient.tourNetWork.getAreaBasedList(
+            val eventList = getAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
                 category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
                 numOfRows = 5
             )
-            val festivalList = TourNetworkClient.tourNetWork.getAreaBasedList(
+            val festivalList = getAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
@@ -420,12 +419,12 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 5
             )
             val eventTabList = mutableListOf<TourItem>()
-            eventList.response.body.items.item.forEach { item ->
+            eventList?.response?.body?.items?.item?.forEach { item ->
                 getIntroDetail(item.contentId, item.contentTypeId)?.let {
                     eventTabList.add(EventPerformanceFestival(item, it))
                 }
             }
-            festivalList.response.body.items.item.forEach { item ->
+            festivalList?.response?.body?.items?.item?.forEach { item ->
                 getIntroDetail(item.contentId, item.contentTypeId)?.let {
                     eventTabList.add(EventPerformanceFestival(item, it))
                 }
@@ -440,8 +439,9 @@ object TourNetworkInterfaceUtils {
         category2: String? = null,
         category3: String? = null,
         numOfRows: Int
-    ): AreaBasedList? = try{
-            val areaBasedList = TourNetworkClient.tourNetWork.getAreaBasedList(
+    ): AreaBasedList? {
+        try {
+            val areaBasedResponse = TourNetworkClient.tourNetWork.getAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = contentTypeId,
                 category1 = category1,
@@ -449,37 +449,34 @@ object TourNetworkInterfaceUtils {
                 category3 = category3,
                 numOfRows = numOfRows
             )
-            Log.d(TAG, "getAreaBasedList) totalCount: ${areaBasedList.response.body.totalCount}")
-
-            if(areaBasedList.response.body.totalCount == 0)
-                null
-            else
-                areaBasedList
-        }catch(e:IllegalStateException) {
-            Log.d(TAG, "getAreaBasedList) IllegalStateException!")
-            e.printStackTrace()
-
-            null
+            if (areaBasedResponse.response.body.totalCount == 0){
+                Log.d(TAG, "getAreaBasedList) totalCount = 0")
+                return null
+            }
+            return areaBasedResponse
+        } catch (e: Exception) {
+            Log.d(TAG, "getAreaBasedList) error!")
+            return null
         }
+    }
 
     private suspend fun getIntroDetail(
         contentId: String,
         contentTypeId: String
-    ): IntroDetailItem? = try {
-        val introDetail = TourNetworkClient.tourNetWork.getIntroDetail(
-            contentId = contentId,
-            contentTypeId = contentTypeId
-        )
-        Log.d(TAG, "getIntroDetail) totalCount: ${introDetail.response.body.totalCount}")
-
-        if (introDetail.response.body.totalCount == 0)
-            null
-        else
-            introDetail.response.body.items.item[0]
-    }catch (e:Exception){
-        Log.d(TAG, "getIntroDetail) IllegalStateException!")
-        e.printStackTrace()
-
-        null
+    ): IntroDetailItem?{
+        try {
+            val introDetailResponse = TourNetworkClient.tourNetWork.getIntroDetail(
+                contentId = contentId,
+                contentTypeId = contentTypeId
+            )
+            if (introDetailResponse.response.body.totalCount == 0) {
+                Log.d(TAG, "getIntroDetail) totalCount = 0")
+                return null
+            }
+            return introDetailResponse.response.body.items.item[0]
+        }catch (e:Exception){
+            Log.d(TAG, "getIntroDetail) error!")
+            return null
+        }
     }
 }
