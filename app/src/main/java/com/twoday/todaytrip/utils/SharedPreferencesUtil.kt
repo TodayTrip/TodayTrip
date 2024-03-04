@@ -24,6 +24,23 @@ object SharedPreferencesUtil {
         return getDestPreferences(context).getString(destinationKey, null)
     }
 
+    fun saveContentIDList(context:Context, contentIdList:List<String>, destinationKey: String){
+        val prefs = getDestPreferences(context)
+        val json = Gson().toJson(contentIdList)
+        prefs.edit().putString(destinationKey, json).apply()
+    }
+    fun loadContentIdList(context:Context, destinationKey: String):List<String>{
+        val prefs = getDestPreferences(context)
+        val json = prefs.getString(destinationKey, null)
+        return if ((json != null) && (json.toString() != "[]")) {
+            val type = object : TypeToken<List<String>>() {}.type
+            Gson().fromJson(json, type)
+        } else {
+            emptyList()
+        }
+    }
+
+
     fun saveTourItemList(context:Context, tourItemList:List<TourItem>, destinationKey: String){
         Log.d(TAG, "saveTourItemList) destination key: ${destinationKey}, list size: ${tourItemList.size}")
         val prefs = getDestPreferences(context)
