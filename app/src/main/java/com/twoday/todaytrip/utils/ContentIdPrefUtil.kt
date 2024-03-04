@@ -2,6 +2,7 @@ package com.twoday.todaytrip.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
@@ -24,6 +25,11 @@ object ContentIdPrefUtil {
     fun removeContentId(contentId: String) = saveContentIdList(
         loadContentIdList().filter { it != contentId }
     )
+
+    fun resetContentIdListPref(){
+        Log.d(TAG, "resetContentIdListPref) called")
+        saveContentIdList(emptyList())
+    }
 
     private fun getContentIdListPreferences(): SharedPreferences =
         MyApplication.appContext!!.getSharedPreferences(
