@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.LocationTrackingMode
 import com.naver.maps.map.MapFragment
 import com.naver.maps.map.NaverMap
@@ -34,10 +36,14 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var locationSource: FusedLocationSource
     private val LOCATION_PERMISSION_REQUEST_CODE = 500
 
+
+
     private val PERMISSIONS = listOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
+
+    private lateinit var tabLayout: TabLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,9 +75,46 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 //        naverMap.uiSettings.isLocationButtonEnabled = true
 //        naverMap.locationTrackingMode = LocationTrackingMode.Face
         naverMap.cameraPosition = CameraPosition(LatLng(20.38, 150.55), 9.0)
+        naverMap.setContentPadding(0, 0, 0, 200)
+        val coord = LatLng(37.5670135, 126.9783740)
+        val cameraPosition = CameraPosition(
+            LatLng(37.5666102, 126.9783881), // 대상 지점
+            16.0, // 줌 레벨
+            20.0, // 기울임 각도
+            180.0 // 베어링 각도
+        )
+        val cameraUpdate = CameraUpdate.scrollTo(LatLng(37.5666102, 126.9783881))
+        naverMap.moveCamera(cameraUpdate)
     }
 
     private fun initView() {
+
+        tabLayout = binding.tlPlaceMapCategoryTab
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener{
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                if (tab != null) {
+                    when (tab.position) {
+                        0 -> {
+                        }
+                        1 -> {
+                        }
+                        2 -> {
+                        }
+                        else -> {
+                        }
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                TODO("Not yet implemented")
+            }
+
+        })
 
         initMap()
     }
@@ -95,6 +138,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                 }
         mapFragment.getMapAsync(this)
         locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
+
     }
 
     private fun checkPermission() {

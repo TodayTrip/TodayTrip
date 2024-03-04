@@ -1,13 +1,19 @@
 package com.twoday.todaytrip.ui.place_map
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.PlaceData
 import com.twoday.todaytrip.databinding.ItemPlaceMapEachBinding
+import com.twoday.todaytrip.tourData.TourItem
 
 class PlaceMapAdapter : ListAdapter<PlaceData, PlaceMapAdapter.ViewHolder>(object : DiffUtil.ItemCallback<PlaceData>() {
+
+    var placeList = mutableListOf<TourItem>()
+
+
     override fun areItemsTheSame(oldItem: PlaceData, newItem: PlaceData): Boolean =
         oldItem.placeId == newItem.placeId
 
@@ -17,7 +23,7 @@ class PlaceMapAdapter : ListAdapter<PlaceData, PlaceMapAdapter.ViewHolder>(objec
 
 }) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
+        return ViewHolder(ItemPlaceMapEachBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
