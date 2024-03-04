@@ -85,12 +85,14 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.android.gms:play-services-auth:21.0.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    implementation("com.google.firebase:firebase-storage-ktx")
+    implementation("com.google.firebase:firebase-database-ktx:20.3.1")
     // Lottie animation
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
