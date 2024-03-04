@@ -3,14 +3,15 @@ package com.twoday.todaytrip.place_list_adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
-class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
-    RecyclerView.Adapter<FirstRecyclerViewAdapter.Holder>() {
+class FirstRecyclerViewAdapter:
+    ListAdapter<TourItem, FirstRecyclerViewAdapter.Holder>(TourItemDiffCallback) {
     private val TAG = "FirstRecyclerViewAdapter"
 
     val onTourItemClickListener:OnTourItemClickListener? = null
@@ -20,22 +21,12 @@ class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
             ItemPlaceListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
     }
-
-    override fun getItemCount(): Int = tourItemList.size
-
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.run{
-            initOnClickListener(tourItemList[position])
-            bind(tourItemList[position])
+            initOnClickListener(getItem(position))
+            bind(getItem(position))
         }
     }
-
-    fun changeTourItemList(newTourItemList: List<TourItem>) {
-        Log.d(TAG, "change tour item list")
-        tourItemList = newTourItemList
-        notifyDataSetChanged()
-    }
-
 
     inner class Holder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
         private val firstImageView = binding.ivItemPlaceList
@@ -56,7 +47,7 @@ class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
         }
 
         fun initOnClickListener(tourItem:TourItem){
-            this.itemView.setOnClickListener {
+            this.addButton.setOnClickListener {
                 onTourItemClickListener?.onTourItemClick(tourItem)
             }
         }

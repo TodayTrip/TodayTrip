@@ -47,7 +47,7 @@ class FirstRecyclerViewFragment : Fragment() {
     }
 
     private fun initRecyclerView(){
-        adapter = FirstRecyclerViewAdapter(listOf())
+        adapter = FirstRecyclerViewAdapter()
         binding.rvFirstRecyclerView.adapter = adapter
     }
     private fun initNoResultOnClickListener(){
@@ -58,7 +58,7 @@ class FirstRecyclerViewFragment : Fragment() {
     }
     private fun initModelObserver(){
         mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
-            adapter.changeTourItemList(it)
+            adapter.submitList(it)
             if(it.isEmpty())
                 setNoResultUI()
             else
