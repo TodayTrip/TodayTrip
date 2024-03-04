@@ -4,12 +4,22 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil
 import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveCafeList
 import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveEventList
@@ -30,7 +40,6 @@ class MainViewModel : ViewModel() {
         loadDestinationAreaCode(loadDestination())
     }
 
-
     private val _tourInfoTabList = MutableLiveData<List<TourItem>>()
     val tourInfoTabList: LiveData<List<TourItem>>
         get() = _tourInfoTabList
@@ -46,6 +55,10 @@ class MainViewModel : ViewModel() {
     private val _eventTabList = MutableLiveData<List<TourItem>>()
     val eventTabList: LiveData<List<TourItem>>
         get() = _eventTabList
+
+    private val storageRef = FirebaseStorage.getInstance().reference
+    private val databaseRef = FirebaseDatabase.getInstance().reference
+
 
     init {
         loadTourItemList()
@@ -101,3 +114,27 @@ class MainViewModel : ViewModel() {
         saveEventList(eventList)
     }
 }
+
+data class AreaBasedListItem(
+    val title: String,
+    val contentId: String,
+    val contentTypeId: String,
+    val createdTime: String,
+    val modifiedTime: String,
+    val tel: String = "",
+    val address: String = "",
+    val addressDetail: String = "",
+    val zipcode: String = "",
+    val mapX: String = "",
+    val mapY: String = "",
+    val mapLevel: String = "",
+    val areaCode: String = "",
+    val siGunGuCode: String = "",
+    val category1: String = "",
+    val category2: String = "",
+    val category3: String = "",
+    val firstImage: String? = null, // 이미지 URL을 nullable로 변경
+    val firstImageThumbnail: String? = null,
+    val bookTour: String = "",
+    val copyrightType: String = ""
+)
