@@ -1,6 +1,5 @@
 package com.twoday.todaytrip.viewModel
 
-import android.content.ContentValues.TAG
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -13,13 +12,19 @@ import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.PrefConstants
-import com.twoday.todaytrip.utils.PrefConstants.DESTINATION_KEY
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveCafeList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveEventList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveRestaurantList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveTouristAttractionList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -32,9 +37,8 @@ class MainViewModel : ViewModel() {
         loadTheme()
     }
     private val areaCode by lazy{
-        getDestinationAreaCode(loadDestination())
+        loadDestinationAreaCode(loadDestination())
     }
-
 
     private val _tourInfoTabList = MutableLiveData<List<TourItem>>()
     val tourInfoTabList: LiveData<List<TourItem>>
@@ -44,9 +48,6 @@ class MainViewModel : ViewModel() {
     val restaurantTabList: LiveData<List<TourItem>>
         get() = _restaurantTabList
 
-    private val storageRef = FirebaseStorage.getInstance().reference
-    private val databaseRef = FirebaseDatabase.getInstance().reference
-
     private val _cafeTabList = MutableLiveData<List<TourItem>>()
     val cafeTabList: LiveData<List<TourItem>>
         get() = _cafeTabList
@@ -55,164 +56,64 @@ class MainViewModel : ViewModel() {
     val eventTabList: LiveData<List<TourItem>>
         get() = _eventTabList
 
+    private val storageRef = FirebaseStorage.getInstance().reference
+    private val databaseRef = FirebaseDatabase.getInstance().reference
+
+
     init {
-        _tourInfoTabList.value = SharedPreferencesUtil
-            .loadTourItemList(MyApplication.appContext!!, PrefConstants.TOUR_INFO_TAB_LIST_KEY)
-        _restaurantTabList.value = SharedPreferencesUtil
-            .loadTourItemList(MyApplication.appContext!!, PrefConstants.RESTAURANT_TAB_LIST_KEY)
-        _cafeTabList.value = SharedPreferencesUtil
-            .loadTourItemList(MyApplication.appContext!!, PrefConstants.CAFE_TAB_LIST_KEY)
-        _eventTabList.value = SharedPreferencesUtil
-            .loadTourItemList(MyApplication.appContext!!, PrefConstants.EVENT_TAB_LIST_KEY)
+        loadTourItemList()
     }
 
-    private fun loadTheme(): String? =
+    private fun loadTheme(): String =
         SharedPreferencesUtil.loadDestination(
             MyApplication.appContext!!,
             PrefConstants.THEME_KEY)
-            ?: null
-        // TODO shared preference에 저장된 정보 있는지 확인하기
-        // TODO 완전 랜덤인 지, 테마가 있는지 확인하기
+            ?: ""
 
-//        loadTourInfoTabList()
-//        loadRestaurantTabList()
-//        uploadData(createSampleItem())
-        //loadCafeTabList()
-        //loadEventPerformanceFestivalTabList()
-    }
-
-    private fun loadDestination(): String? =
+    private fun loadDestination(): String =
         SharedPreferencesUtil.loadDestination(
             MyApplication.appContext!!,
             PrefConstants.DESTINATION_KEY
-        ) ?: null
-//    private fun uploadData(areaBasedListItem: AreaBasedListItem) {
-//        // realtime database의 저장 경로
-//        val storagePath = "touristSites/${System.currentTimeMillis()}.jpg"
-//        uploadWebImageToStorage(areaBasedListItem.firstImage,storagePath)
-//    }
+        ) ?: ""
 
-    // 코루틴을 사용하여 이미지 다운로드 및 업로드
-//    private fun uploadWebImageToStorage(imageUrl: String?, storagePath: String) {
-//        Log.d("imageUrl", imageUrl!!)
-//        viewModelScope.launch(Dispatchers.IO) {
-//            try {
-////                // 이미지 URL에서 이미지 데이터 다운로드
-////                val url = URL(imageUrl)
-////                val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
-////                connection.doInput = true
-////                connection.connect()
-////                val inputStream: InputStream = connection.inputStream
-////                val imageData = inputStream.readBytes()
-////                // Firebase Storage에 이미지 업로드
-////                val imageRef = storageRef.child(storagePath)
-////                imageRef.putBytes(imageData).addOnSuccessListener { taskSnapshot ->
-////                    // 이미지 업로드 성공 처리
-////                    taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUri ->
-////                        Log.d("imageData", downloadUri.toString())
-//////                        val downloadUrl = downloadUri.toString()
-////                        // Realtime Database에 저장
-////                        saveAreaBasedListItem(createSampleItem())
-////                    }
-////                }.addOnFailureListener {
-////                    // 이미지 업로드 실패 처리
-////                }
-//            } catch (e: Exception) {
-//                // 이미지 다운로드 또는 업로드 중 발생한 예외 처리
-//                withContext(Dispatchers.Main) {
-//                    Log.d("이미지 업로드 실패",e.message.toString())
-//                }
-//            }
-//        }
-//    }
+    private fun loadDestinationAreaCode(destination: String): String =
+        if (destination.isNullOrBlank()) ""
+        else DestinationData.destinationAreaCodes[destination] ?: ""
 
-//    fun saveAreaBasedListItem(item: AreaBasedListItem) {
-//        // 고유한 키를 생성하여 데이터를 저장할 위치를 정합니다.
-//        val key = databaseRef.child("areaBasedList").push().key
-//
-//        if (key != null) {
-//            // 'areaBasedList' 노드 아래에 새 항목을 저장합니다.
-//            databaseRef.child("areaBasedList").child(key).setValue(item)
-//                .addOnSuccessListener {
-//                    // 데이터 저장 성공 시 처리
-//                    Log.d(TAG, "Item saved successfully")
-//                }
-//                .addOnFailureListener { e ->
-//                    // 데이터 저장 실패 시 처리
-//                    Log.e(TAG, "Failed to save item", e)
-//                }
-//        }
-//    }
-
-    private fun createSampleItem(): AreaBasedListItem {
-        return AreaBasedListItem(
-            title = "남산 서울타워",
-            contentId = "126508",
-            contentTypeId = "12",
-            createdTime = "20210316000000",
-            modifiedTime = "20210316000000",
-            tel = "02-3455-9277",
-            address = "서울특별시 용산구 남산공원길 105",
-            addressDetail = "",
-            zipcode = "04340",
-            mapX = "126.988205",
-            mapY = "37.551169",
-            mapLevel = "1",
-            areaCode = "1",
-            siGunGuCode = "23",
-            category1 = "A02",
-            category2 = "A0201",
-            category3 = "A02010600",
-            firstImage = "http://tong.visitkorea.or.kr/cms/resource/76/1587376_image2_1.jpg",
-            firstImageThumbnail = null,
-            bookTour = "0",
-            copyrightType = "C"
-        )
-    }
-    private fun getDestination(): String? =
-        SharedPreferencesUtil.loadDestination(MyApplication.appContext!!, DESTINATION_KEY) ?: null
-
-    private fun getDestinationAreaCode(destination: String?): String? =
-        if (destination == null) null
-        else DestinationData.destinationAreaCodes[destination] ?: null
-
-    fun retryTourInfoTabList() {
-        if (areaCode.isNullOrBlank()) {
-            Log.d(TAG, "loadTourITemList) error! no destination area code!")
-            return
-        }
-        CoroutineScope(Dispatchers.IO).launch {
-            loadTourInfoTabList(theme, areaCode!!)
-        }
-    }
-    private suspend fun loadTourInfoTabList(theme: String?, areaCode: String) {
-        withContext(Dispatchers.Main){
-            _tourInfoTabList.value =
-                if (theme.isNullOrBlank())
-                    TourNetworkInterfaceUtils.getTourInfoTabList(areaCode)
-                else
-                    TourNetworkInterfaceUtils.getTourInfoTabListWithTheme(theme, areaCode)
-        }
-    private fun loadTourInfoTabList() {
-        // TODO 테마가 있는 경우, 관광지 탭에 테마에 해당되는 정보만 필터링하기
-        _tourInfoTabList.value = TourNetworkInterfaceUtils.getTourInfoTabList(destAreaCode!!)
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            _tourInfoTabList.value!!,
-            PrefConstants.TOUR_INFO_TAB_LIST_KEY
-        )
+    private fun loadTourItemList(){
+        _tourInfoTabList.value = SharedPreferencesUtil
+            .loadTourItemList(MyApplication.appContext!!, PrefConstants.TOURIST_ATTRACTION_LIST_KEY)
+        _restaurantTabList.value = SharedPreferencesUtil
+            .loadTourItemList(MyApplication.appContext!!, PrefConstants.RESTAURANT_LIST_KEY)
+        _cafeTabList.value = SharedPreferencesUtil
+            .loadTourItemList(MyApplication.appContext!!, PrefConstants.CAFE_LIST_KEY)
+        _eventTabList.value = SharedPreferencesUtil
+            .loadTourItemList(MyApplication.appContext!!, PrefConstants.EVENT_LIST_KEY)
     }
 
-    private fun loadRestaurantTabList() {
-        _restaurantTabList.value = TourNetworkInterfaceUtils.getRestaurantTabList(destAreaCode!!)
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            _restaurantTabList.value!!,
-            PrefConstants.RESTAURANT_TAB_LIST_KEY
-        )
+    fun fetchAndSaveTouristAttractionList() {
+        val touristAttractionList =
+            if (theme.isNullOrBlank())
+                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode)
+            else
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
+        saveTouristAttractionList(touristAttractionList)
+    }
+
+    fun fetchAndSaveRestaurantList() {
+        val restaurantList = TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
+        saveRestaurantList(restaurantList)
+    }
+    fun fetchAndSaveCafeList() {
+        val cafeList = TourNetworkInterfaceUtils.getCafeTabList(areaCode)
+        saveCafeList(cafeList)
+
+    }
+    fun fetchAndSaveEventList() {
+        val eventList = TourNetworkInterfaceUtils.getEventTabList(areaCode)
+        saveEventList(eventList)
     }
 }
-
 
 data class AreaBasedListItem(
     val title: String,

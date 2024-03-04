@@ -11,7 +11,7 @@ const val TOUR_API_KEY: String = BuildConfig.TOUR_API_KEY
 interface TourNetworkInterface {
     // 지역 기반 관광 정보 조회
     @GET("areaBasedList1")
-    suspend fun getAreaBasedList(
+    suspend fun fetchAreaBasedList(
         // 필수 파라미터
         @Query("serviceKey") serviceKey: String = TOUR_API_KEY,
         @Query("MobileOS") os: String = MOBILE_OS,
@@ -37,7 +37,7 @@ interface TourNetworkInterface {
 
     // 소개 정보 조회
     @GET("detailIntro1")
-    suspend fun getIntroDetail(
+    suspend fun fetchIntroDetail(
         //필수 파라미터
         @Query("contentId") contentId: String, // 공통 정보를 조회할 장소의 ID
         @Query("contentTypeId") contentTypeId: String, // 공통 정보를 조회할 장소의 컨텐츠 타입 ID
@@ -50,31 +50,4 @@ interface TourNetworkInterface {
         @Query("pageNo") pageNo:Int? = null,
         @Query("_type") responseType:String = "json"
     ):IntroDetail
-
-    //공통 정보 조회 (개요 정보)
-    /*
-    @GET("detailCommon1")
-    suspend fun getCommonDetail(
-        //필수 파라미터
-        @Query("contentId") contentId: String, //공통 정보를 조회할 장소의 ID
-
-        @Query("serviceKey") serviceKey: String = TOUR_API_KEY,
-        @Query("MobileOS") os: String = MOBILE_OS,
-        @Query("MobileApp") appName: String = MOBILE_NAME,
-        //선택 파라미터
-        @Query("contentTypeId") contentTypeId: String? = null,
-
-        @Query("defaultYN") defaultYN: String? = "N",
-        @Query("firstImageYN") firstImageYN: String? = "N",
-        @Query("areacodeYN") areaCodeYN: String? = "N",
-        @Query("catcodeYN") categoryCodeYN: String? = "N",
-        @Query("addrinfoYN") addressInfoYN: String? = "N",
-        @Query("mapinfoYN") mapInfoYN: String? = "N",
-        @Query("overviewYN") overviewYN: String? = "Y",
-
-        @Query("numOfRows") numOfRows: Int? = null,
-        @Query("pageNo") pageNo: Int? = null,
-        @Query("_type") responseType: String = "json"
-    ): CommonDetail
-    */
 }

@@ -21,7 +21,7 @@ class PlaceListFragment : Fragment() {
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
-    private var base_date = "20240229"  // 발표 일자
+    private var base_date = "20240304"  // 발표 일자
     private var base_time = "0800"      // 발표 시각
     private var nx = "37"               // 예보지점 X 좌표
     private var ny = "127"              // 예보지점 Y 좌표
