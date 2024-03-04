@@ -4,6 +4,7 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
         maven("https://naver.jfrog.io/artifactory/maven/")
+        maven ("https://jitpack.io")
     }
 }
 dependencyResolutionManagement {
@@ -12,6 +13,7 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven("https://naver.jfrog.io/artifactory/maven/")
+        maven ("https://jitpack.io")
     }
 }
 

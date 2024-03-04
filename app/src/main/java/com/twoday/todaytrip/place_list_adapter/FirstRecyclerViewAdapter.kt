@@ -43,6 +43,7 @@ class FirstRecyclerViewAdapter :
                     .placeholder(R.drawable.img_default_image)
                     .into(firstImageView)
             }
+            firstImageView.clipToOutline = true
             titleTextView.text = item.getTitle()
             addressTextView.text = item.getAddress()
             setAddButtonUI(item.isAdded)
