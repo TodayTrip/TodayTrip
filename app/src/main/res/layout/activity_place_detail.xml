@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.place_detail.PlaceDetailActivity">
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp_place_detail_pic"
+    <ImageView
+        android:id="@+id/iv_place_detail_pic"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:orientation="horizontal"
+        android:src="@drawable/img_shop_default"
+        android:scaleType="centerCrop"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
