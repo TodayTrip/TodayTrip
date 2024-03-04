@@ -3,6 +3,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <!-- RandomActivity   -->
+    <string name="login_fail">로그인에 실패하였습니다.\n다시 시도해주세요</string>
+
     <!--  RecordActivity  -->
     <string name="record_title">나의 여행 기록</string>
     <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>
@@ -37,6 +40,16 @@
     <string name="place_list_restaurant">음식점</string>
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
+    <string name="place_list_tourist_destination_no_result">관광지 정보를 불러오지 못했습니다.</string>
+    <string name="place_list_restaurant_no_result">음식점 정보를 불러오지 못했습니다.</string>
+    <string name="place_list_cafe_no_result">카페 정보를 불러오지 못했습니다.</string>
+    <string name="place_list_event_no_result">행사/축제 정보를 불러오지 못했습니다.</string>
+    <string name="place_list_retry">다시 시도하기</string>
+    <string name="place_list_loading_tourist_destination">관광지 정보 불러오는 중</string>
+    <string name="place_list_loading_restaurant">음식점 정보 불러오는 중</string>
+    <string name="place_list_loading_cafe">카페 정보 불러오는 중</string>
+    <string name="place_list_loading_event">행사/축제 정보 불러오는 중</string>
+
     <!--  ItemPlaceList  -->
     <string name="item_place_list_add">담기</string>
 </resources>

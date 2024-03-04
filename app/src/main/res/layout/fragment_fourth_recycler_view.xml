@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginHorizontal="16dp"
-    tools:context=".ui.place_list.SecondRecyclerViewFragment">
+    tools:context=".ui.place_list.FourthRecyclerViewFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_second_recycler_view"
+        android:id="@+id/rv_fourth_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="invisible"
@@ -21,7 +21,7 @@
         tools:visibility="visible" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_second_recycler_view_loading"
+        android:id="@+id/layout_fourth_recycler_view_loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,10 +30,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/tv_second_recycler_view_loading"
+            android:id="@+id/tv_fourth_recycler_view_loading"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/place_list_loading_restaurant"
+            android:text="@string/place_list_loading_event"
             android:textAppearance="@style/MiddleTitleText"
             android:textColor="@color/button_gray"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,7 +46,7 @@
             android:layout_marginTop="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_second_recycler_view_loading" />
+            app:layout_constraintTop_toBottomOf="@id/tv_fourth_recycler_view_loading" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
