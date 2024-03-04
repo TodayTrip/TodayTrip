@@ -11,8 +11,8 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.PrefConstants
-import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weather.Item
 import com.twoday.todaytrip.weather.WeatherClient
 import com.twoday.todaytrip.weather.weather
@@ -45,8 +45,7 @@ class PlaceListFragment : Fragment() {
 
         initAdapter()
         searchArea()
-        weatherInfo()
-
+        //weatherInfo()
     }
 
     private fun initAdapter() {
@@ -171,10 +170,7 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun searchArea(): String? {
-        val area = SharedPreferencesUtil.loadDestination(
-            MyApplication.appContext!!,
-            PrefConstants.DESTINATION_KEY
-        )
+        val area = DestinationPrefUtil.loadDestination()
         return area
     }
 
