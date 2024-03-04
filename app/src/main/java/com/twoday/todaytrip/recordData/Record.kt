@@ -7,7 +7,7 @@ import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
 
 data class Record(
-    val route: List<Pair<TourItem, List<String>>> // Pair<장소, 장소에 추가한 사진 URL 목록>
+    val route: List<Pair<TourItem, String>> // Pair<장소, 장소에 추가한 사진 URL>
 ){
     val destination:String
     val travelDate:String
