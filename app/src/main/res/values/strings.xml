@@ -36,16 +36,16 @@
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다.</string>
 
     <!-- PlaceListFragment -->
-    <string name="place_list_tourist_destination">관광지</string>
+    <string name="place_list_tourist_attraction">관광지</string>
     <string name="place_list_restaurant">음식점</string>
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
-    <string name="place_list_tourist_destination_no_result">관광지 정보를 불러오지 못했습니다.</string>
+    <string name="place_list_tourist_attraction_no_result">관광지 정보를 불러오지 못했습니다.</string>
     <string name="place_list_restaurant_no_result">음식점 정보를 불러오지 못했습니다.</string>
     <string name="place_list_cafe_no_result">카페 정보를 불러오지 못했습니다.</string>
     <string name="place_list_event_no_result">행사/축제 정보를 불러오지 못했습니다.</string>
     <string name="place_list_retry">다시 시도하기</string>
-    <string name="place_list_loading_tourist_destination">관광지 정보 불러오는 중</string>
+    <string name="place_list_loading_tourist_attraction">관광지 정보 불러오는 중</string>
     <string name="place_list_loading_restaurant">음식점 정보 불러오는 중</string>
     <string name="place_list_loading_cafe">카페 정보 불러오는 중</string>
     <string name="place_list_loading_event">행사/축제 정보 불러오는 중</string>

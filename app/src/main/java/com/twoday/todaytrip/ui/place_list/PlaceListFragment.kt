@@ -5,8 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.MyApplication
@@ -22,7 +20,6 @@ import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 
@@ -55,21 +52,21 @@ class PlaceListFragment : Fragment() {
     private fun initAdapter() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
         with(viewPagerAdapter) {
-            addFragment(FirstRecyclerViewFragment())
-            addFragment(SecondRecyclerViewFragment())
-            addFragment(ThirdRecyclerViewFragment())
-            addFragment(FourthRecyclerViewFragment())
+            addFragment(TouristAttractionRecyclerViewFragment())
+            addFragment(RestaurantRecyclerViewFragment())
+            addFragment(CafeRecyclerViewFragment())
+            addFragment(EventRecyclerViewFragment())
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
 
         TabLayoutMediator(binding.tlTabLayout, binding.vpViewpagerMain) { tab, position ->
             tab.text = resources.getText(
                 when (position) {
-                    0 -> R.string.place_list_tourist_destination
+                    0 -> R.string.place_list_tourist_attraction
                     1 -> R.string.place_list_restaurant
                     2 -> R.string.place_list_cafe
                     3 -> R.string.place_list_event
-                    else -> R.string.place_list_tourist_destination // not reached
+                    else -> R.string.place_list_tourist_attraction // not reached
                 }
             )
         }.attach()
