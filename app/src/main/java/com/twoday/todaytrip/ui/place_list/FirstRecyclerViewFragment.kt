@@ -53,7 +53,7 @@ class FirstRecyclerViewFragment : Fragment() {
     private fun initNoResultOnClickListener(){
         binding.layoutFirstRecyclerViewNoResult.setOnClickListener {
             setLoadingUI(true)
-            mainModel.retryTourInfoTabList()
+            mainModel.fetchAndSaveTouristAttractionList()
         }
     }
     private fun initModelObserver(){

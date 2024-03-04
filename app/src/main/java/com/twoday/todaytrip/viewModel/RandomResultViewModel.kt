@@ -67,7 +67,7 @@ class RandomResultViewModel : ViewModel() {
             PrefConstants.DESTINATION_KEY
         ) ?: ""
     private fun loadDestinationAreaCode(destination: String?): String =
-        if (destination == null) ""
+        if (destination.isNullOrBlank()) ""
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
     private fun fetchAndSaveTouristAttractionList() {
