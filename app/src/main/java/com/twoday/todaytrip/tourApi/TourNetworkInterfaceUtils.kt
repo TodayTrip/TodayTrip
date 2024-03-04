@@ -372,7 +372,7 @@ object TourNetworkInterfaceUtils {
             val restaurantTabList = mutableListOf<TourItem>()
             restaurantList?.response?.body?.items?.item
                 ?.filter {
-                    (it.category3.isNullOrBlank()) && (it.category3 != TourCategoryId3.CAFE_AND_TEA.id)
+                    (!it.category3.isNullOrBlank()) && (it.category3 != TourCategoryId3.CAFE_AND_TEA.id)
                 }
                 ?.forEach { item ->
                     getIntroDetail(item.contentId, item.contentTypeId)?.let {
