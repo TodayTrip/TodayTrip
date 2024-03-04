@@ -10,8 +10,8 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
 
-class ThirdRecyclerViewAdapter(var tourItemList: List<TourItem>) :
-    RecyclerView.Adapter<ThirdRecyclerViewAdapter.Holder>() {
+class CafeRecyclerViewAdapter(var tourItemList: List<TourItem>) :
+    RecyclerView.Adapter<CafeRecyclerViewAdapter.Holder>() {
     private val TAG = "FirstRecyclerViewAdapter"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =

@@ -15,7 +15,7 @@ import com.google.firebase.auth.auth
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentStartBinding
-import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 //TODO 여행지 초기화 작업 필요할 듯
 class StartFragment : Fragment() {
@@ -77,9 +77,7 @@ class StartFragment : Fragment() {
         ).show()
     }
 
-    private fun initTourItemList() {
-        SharedPreferencesUtil.resetTourItemList(MyApplication.appContext!!)
-    }
+    private fun initTourItemList() = TourItemPrefUtil.resetTourItemListPref()
 
     override fun onDestroyView() {
         super.onDestroyView()
