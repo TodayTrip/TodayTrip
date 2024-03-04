@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.ui.route
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,19 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ItemSavePhotoListBinding
 
-class SavePhotoAdapter :
-    ListAdapter<SavePhotoData, SavePhotoAdapter.itemViewHolder>(object :
-        DiffUtil.ItemCallback<SavePhotoData>() {
-        override fun areItemsTheSame(oldItem: SavePhotoData, newItem: SavePhotoData): Boolean {
-            // 비디오 id가 같은지 확인
-            return (oldItem.name == newItem.name) && (oldItem.num == newItem.num)
-        }
+class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
+    RecyclerView.Adapter<SavePhotoAdapter.itemViewHolder>(){
 
-        override fun areContentsTheSame(oldItem: SavePhotoData, newItem: SavePhotoData): Boolean {
-            // 모든 필드가 같은지 확인 (data class의 equals 사용)
-            return oldItem == newItem
-        }
-    }) {
 
     interface ItemClick {
         fun onClick(item:SavePhotoData)
@@ -40,13 +31,17 @@ class SavePhotoAdapter :
 
     override fun onBindViewHolder(holder: SavePhotoAdapter.itemViewHolder, position: Int) {
         holder.num.text = (position+1).toString()
-        holder.bind(getItem(position))
+        holder.bind(item[position])
         if (position == itemCount - 1) {
             holder.visi.visibility = View.INVISIBLE
         }
         holder.image.setOnClickListener {
-            itemClick?.onClick(getItem(position))
+            itemClick?.onClick(item[position])
         }
+    }
+
+    override fun getItemCount(): Int {
+        return item.size
     }
 
     inner class itemViewHolder(binding: ItemSavePhotoListBinding) :

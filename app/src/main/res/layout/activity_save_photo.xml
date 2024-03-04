@@ -65,7 +65,7 @@
 
 
   <androidx.constraintlayout.widget.ConstraintLayout
-      android:id="@+id/btn_route_finish"
+      android:id="@+id/layout_route_finish_button"
       android:layout_width="match_parent"
       android:layout_height="44dp"
       android:background="@drawable/shape_white_10_radius"
@@ -95,7 +95,7 @@
       android:layout_width="match_parent"
       android:layout_height="0dp"
       android:layout_marginBottom="5dp"
-      app:layout_constraintBottom_toTopOf="@+id/btn_route_finish"
+      app:layout_constraintBottom_toTopOf="@+id/layout_route_finish_button"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/tv_route_list_title"

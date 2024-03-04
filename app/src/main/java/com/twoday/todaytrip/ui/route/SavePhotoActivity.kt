@@ -14,6 +14,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
+import com.twoday.todaytrip.ui.RecordActivity
 
 
 class SavePhotoActivity : AppCompatActivity() {
@@ -22,10 +23,14 @@ class SavePhotoActivity : AppCompatActivity() {
         ActivitySavePhotoBinding.inflate(layoutInflater)
     }
 
-    //    private lateinit var adapter: SavePhotoAdapter
-    private val adapter: SavePhotoAdapter by lazy {
-        SavePhotoAdapter()
-    }
+        private lateinit var adapter: SavePhotoAdapter
+//    private val adapter: SavePhotoAdapter by lazy {
+//        SavePhotoAdapter()
+//    }
+
+    private val PICK_IMAGE_FROM_GALLERY = 1000
+    private val PICK_IMAGE_FROM_GALLERY_PERMISSION = 1010
+
 
 //    val PERMISSIONS_REQUEST_CODE = 100
 //    var REQUIRED_PERMISSIONS = arrayOf<String>( READ_EXTERNAL_STORAGE)
@@ -158,7 +163,7 @@ class SavePhotoActivity : AppCompatActivity() {
         )
 
 
-        adapter.submitList(datalist)
+        adapter = SavePhotoAdapter(datalist)
         binding.rvSavephotoRecyclerview.adapter = adapter
 
         adapter.itemClick = object : SavePhotoAdapter.ItemClick {
@@ -167,8 +172,28 @@ class SavePhotoActivity : AppCompatActivity() {
 //                val intent = Intent(Intent.ACTION_PICK)
 //                intent.type = "image/*"
 //                startActivityForResult(intent, REQUEST_GET_IMAGE)
+
+//                when {
+//                    // 갤러리 접근 권한이 있는 겨우
+//                    ContextCompat.checkSelfPermission(this,
+//                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+//                    ) == PackageManager.PERMISSION_GRANTED -> showGallery(this@MainActivity)
+//
+//                    // 갤러리 접근 권한이 없는 경우 && 교육용 팝업을 보여줘야 하는 경우
+//                    shouldShowRequestPermissionRationale(android.Manifest.permission.READ_EXTERNAL_STORAGE)
+//                    -> showPermissionContextPopup()
+//
+//                    // 권한 요청 하기
+//                    else -> requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE),
+//                        PICK_IMAGE_FROM_GALLERY_PERMISSION)
+//                }
                 Toast.makeText(this@SavePhotoActivity, "클릭", Toast.LENGTH_SHORT).show()
             }
+        }
+
+        binding.layoutRouteFinishButton.setOnClickListener{
+            val intent = Intent(this,RecordActivity::class.java)
+            startActivity(intent)
         }
 
 //        recyclerAdapter = RecyclerAdapter(this, dataList){ position, item ->
@@ -182,4 +207,47 @@ class SavePhotoActivity : AppCompatActivity() {
 //        main_recyclerVIew.adapter = recyclerAdapter
 //        main_recyclerVIew.layoutManager = LinearLayoutManager(this)
     }
+//    private fun showGallery(activity: Activity) {
+//        val intent = Intent(Intent.ACTION_PICK)
+//        intent.type = "image/*"
+//        activity.startActivityForResult(intent, PICK_IMAGE_FROM_GALLERY)
+//    }
+//
+//    private fun showPermissionContextPopup() {
+//        AlertDialog.Builder(this)
+//            .setTitle("권한이 필요합니다.")
+//            .setMessage("갤러리 접근 권한이 필요합니다.")
+//            .setPositiveButton("동의하기") { _, _ ->
+//                requestPermissions(arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), PICK_IMAGE_FROM_GALLERY_PERMISSION)
+//            }
+//            .setNegativeButton("취소하기") { _, _ -> }
+//            .create()
+//            .show()
+//    }
+//
+//    // 사진 선택(갤러리에서 나온) 이후 실행되는 함수
+//    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//        super.onActivityResult(requestCode, resultCode, data)
+//        if (requestCode == PICK_IMAGE_FROM_GALLERY && resultCode == Activity.RESULT_OK)
+//            data?.let { it -> binding.imageView.load(it.data) }
+//    }
+//
+//    // 권한 요청 승인 이후 실행되는 함수
+//    override fun onRequestPermissionsResult(
+//        requestCode: Int,
+//        permissions: Array<out String>,
+//        grantResults: IntArray
+//    ) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+//
+//        when(requestCode){
+//            PICK_IMAGE_FROM_GALLERY_PERMISSION ->{
+//                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+//                    showGallery(this@MainActivity)
+//                else
+//                    Toast.makeText(this, "권한을 거부하셨습니다.", Toast.LENGTH_SHORT).show()
+//
+//            }
+//        }
+//    }
 }
