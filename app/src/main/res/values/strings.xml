@@ -52,4 +52,5 @@
 
     <!--  ItemPlaceList  -->
     <string name="item_place_list_add">담기</string>
+    <string name="item_place_list_remove">빼기</string>
 </resources>
