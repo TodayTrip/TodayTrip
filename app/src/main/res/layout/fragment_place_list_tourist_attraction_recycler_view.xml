@@ -43,6 +43,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:layout_marginTop="12dp"
             android:id="@+id/iv_tourist_attraction_recycler_view_no_result"
             android:layout_width="80dp"
             android:layout_height="80dp"
