@@ -13,10 +13,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.place_list_adapter.FirstRecyclerViewAdapter
 import com.twoday.todaytrip.databinding.FragmentFirstRecyclerViewBinding
+import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
+import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
-class FirstRecyclerViewFragment : Fragment() {
+class FirstRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     private val TAG = "FirstRecyclerViewFragment"
 
     private var _binding: FragmentFirstRecyclerViewBinding? = null
@@ -47,18 +49,26 @@ class FirstRecyclerViewFragment : Fragment() {
     }
 
     private fun initRecyclerView(){
-        adapter = FirstRecyclerViewAdapter(listOf())
+        adapter = FirstRecyclerViewAdapter().apply{
+            onTourItemClickListener = this@FirstRecyclerViewFragment
+        }
         binding.rvFirstRecyclerView.adapter = adapter
     }
+    override fun onTourItemClick(tourItem: TourItem) {
+        Log.d(TAG, "onTourItemClick) contentId: ${tourItem.getContentId()}")
+        tourItem.isAdded = !tourItem.isAdded
+        // TODO isAdded 변경 SharedPreference에 저장하기
+    }
+
     private fun initNoResultOnClickListener(){
         binding.layoutFirstRecyclerViewNoResult.setOnClickListener {
             setLoadingUI(true)
-            mainModel.retryTourInfoTabList()
+            mainModel.fetchAndSaveTouristAttractionList()
         }
     }
     private fun initModelObserver(){
         mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
-            adapter.changeTourItemList(it)
+            adapter.submitList(it.toMutableList())
             if(it.isEmpty())
                 setNoResultUI()
             else
