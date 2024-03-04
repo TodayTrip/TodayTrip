@@ -11,9 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
 import com.twoday.todaytrip.databinding.FragmentPlaceListEventRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.CafeRecyclerViewAdapter
 import com.twoday.todaytrip.place_list_adapter.EventRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
@@ -60,7 +58,7 @@ class EventRecyclerViewFragment : Fragment(){
         }
     }
     private fun initModelObserver(){
-        mainModel.eventTabList.observe(viewLifecycleOwner, Observer {
+        mainModel.eventList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
             if(it.isEmpty())
                 setNoResultUI()

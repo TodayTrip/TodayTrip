@@ -58,7 +58,7 @@ class RestaurantRecyclerViewFragment : Fragment(){
         }
     }
     private fun initModelObserver(){
-        mainModel.restaurantTabList.observe(viewLifecycleOwner, Observer {
+        mainModel.restaurantList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
             if(it.isEmpty())
                 setNoResultUI()

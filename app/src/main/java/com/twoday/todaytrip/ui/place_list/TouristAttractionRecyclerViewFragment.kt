@@ -58,7 +58,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(){
         }
     }
     private fun initModelObserver(){
-        mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
+        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
             if(it.isEmpty())
                 setNoResultUI()

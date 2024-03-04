@@ -58,7 +58,7 @@ class CafeRecyclerViewFragment : Fragment(){
         }
     }
     private fun initModelObserver(){
-        mainModel.cafeTabList.observe(viewLifecycleOwner, Observer {
+        mainModel.cafeList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
             if(it.isEmpty())
                 setNoResultUI()
