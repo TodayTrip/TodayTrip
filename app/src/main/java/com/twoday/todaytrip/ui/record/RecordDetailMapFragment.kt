@@ -16,6 +16,7 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordDetailMapBinding
+import com.twoday.todaytrip.utils.MapUtils.combineImages
 import com.twoday.todaytrip.utils.MapUtils.createBoundsForAllMarkers
 import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
@@ -36,7 +37,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     private val locations = listOf(
         LatLng(37.4979, 127.0276), // 서울 시청
         LatLng(37.5124, 127.0589), // 광화문
-        LatLng(37.5145, 127.0573),  // 동대문
+        LatLng(37.2942, 127.2024),  // 동대문
         LatLng(37.5273, 127.0390),
         LatLng(37.5195, 127.0378),
         LatLng(37.5089, 127.0468)
@@ -72,11 +73,15 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
+        val markerIconBitmap = resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+        val photoBitmap = resizeMapIcons(requireContext(), R.drawable.img_pic_marker, 80, 80)
+        val combinedBitmap = combineImages(markerIconBitmap, photoBitmap)
+
         locations.forEach { latLng ->
             Log.d("latLng", latLng.toString())
             val marker = Marker().apply {
                 position = latLng
-                icon = OverlayImage.fromBitmap(resizeMapIcons(requireContext(), R.drawable.ic_marker, 100, 100))
+                icon = OverlayImage.fromBitmap(combinedBitmap)
                 map = naverMap
             }
             markers.add(marker) // 마커 리스트에 추가
