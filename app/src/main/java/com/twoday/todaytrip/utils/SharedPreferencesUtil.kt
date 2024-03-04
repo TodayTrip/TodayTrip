@@ -42,11 +42,26 @@ object SharedPreferencesUtil {
         }
     }
 
-    fun eraseTourItemList(context: Context){
-        Log.d("eraseTourItemList", "erase all TourItem lists in Shared Preference")
-        saveTourItemList(context, emptyList(),  PrefConstants.TOUR_INFO_TAB_LIST_KEY)
-        saveTourItemList(context, emptyList(),  PrefConstants.RESTAURANT_TAB_LIST_KEY)
-        saveTourItemList(context, emptyList(),  PrefConstants.CAFE_TAB_LIST_KEY)
-        saveTourItemList(context, emptyList(),  PrefConstants.EVENT_TAB_LIST_KEY)
+    fun resetTourItemList(context: Context){
+        saveTourItemList(
+            context,
+            emptyList(),
+            PrefConstants.TOURIST_ATTRACTION_LIST_KEY
+        )
+        saveTourItemList(
+            context,
+            emptyList(),
+            PrefConstants.RESTAURANT_LIST_KEY
+        )
+        saveTourItemList(
+            context,
+            emptyList(),
+            PrefConstants.CAFE_LIST_KEY
+        )
+        saveTourItemList(
+            context,
+            emptyList(),
+            PrefConstants.EVENT_LIST_KEY
+        )
     }
 }
