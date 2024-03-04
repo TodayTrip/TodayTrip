@@ -10,15 +10,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.twoday.todaytrip.R
-import com.twoday.todaytrip.databinding.FragmentFirstRecyclerViewBinding
-import com.twoday.todaytrip.databinding.FragmentThirdRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.SecondRecyclerViewAdapter
-import com.twoday.todaytrip.place_list_adapter.ThirdRecyclerViewAdapter
+import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
+import com.twoday.todaytrip.place_list_adapter.CafeRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
-class ThirdRecyclerViewFragment : Fragment() {
-    private var _binding: FragmentThirdRecyclerViewBinding? = null
+class CafeRecyclerViewFragment : Fragment() {
+    private var _binding: FragmentPlaceListCafeRecyclerViewBinding? = null
     private val binding get() = _binding!!
 
     private val mainModel: MainViewModel by activityViewModels {
@@ -28,13 +25,13 @@ class ThirdRecyclerViewFragment : Fragment() {
         }
     }
 
-    private lateinit var adapter: ThirdRecyclerViewAdapter
+    private lateinit var adapter: CafeRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentThirdRecyclerViewBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentPlaceListCafeRecyclerViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,8 +42,8 @@ class ThirdRecyclerViewFragment : Fragment() {
     }
 
     private fun initRecyclerView(){
-        adapter = ThirdRecyclerViewAdapter(listOf())
-        binding.rvThirdRecyclerView.adapter = adapter
+        adapter = CafeRecyclerViewAdapter(listOf())
+        binding.rvCafeRecyclerView.adapter = adapter
     }
     private fun initModelObserver(){
         mainModel.cafeTabList.observe(viewLifecycleOwner, Observer {
@@ -55,8 +52,8 @@ class ThirdRecyclerViewFragment : Fragment() {
         })
     }
     private fun hideLoadingUI(){
-        binding.layoutThirdRecyclerViewLoading.isVisible = false
-        binding.rvThirdRecyclerView.isVisible = true
+        binding.layoutCafeRecyclerViewLoading.isVisible = false
+        binding.rvCafeRecyclerView.isVisible = true
     }
 
     override fun onDestroyView() {

@@ -1,24 +1,21 @@
 package com.twoday.todaytrip.ui.place_list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.twoday.todaytrip.R
-import com.twoday.todaytrip.databinding.FragmentFirstRecyclerViewBinding
-import com.twoday.todaytrip.databinding.FragmentSecondRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.FirstRecyclerViewAdapter
-import com.twoday.todaytrip.place_list_adapter.SecondRecyclerViewAdapter
+import com.twoday.todaytrip.databinding.FragmentPlaceListEventRecyclerViewBinding
+import com.twoday.todaytrip.place_list_adapter.EventRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
-class SecondRecyclerViewFragment : Fragment() {
-    private var _binding: FragmentSecondRecyclerViewBinding? = null
+class EventRecyclerViewFragment : Fragment(){
+    private var _binding: FragmentPlaceListEventRecyclerViewBinding? = null
     private val binding get() = _binding!!
 
     private val mainModel: MainViewModel by activityViewModels {
@@ -28,15 +25,14 @@ class SecondRecyclerViewFragment : Fragment() {
         }
     }
 
-    private lateinit var adapter:SecondRecyclerViewAdapter
+    private lateinit var adapter: EventRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?,
+        savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentSecondRecyclerViewBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentPlaceListEventRecyclerViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -45,18 +41,18 @@ class SecondRecyclerViewFragment : Fragment() {
     }
 
     private fun initRecyclerView(){
-        adapter = SecondRecyclerViewAdapter(listOf())
-        binding.rvSecondRecyclerView.adapter = adapter
+        adapter = EventRecyclerViewAdapter(listOf())
+        binding.rvEventRecyclerView.adapter = adapter
     }
     private fun initModelObserver(){
-        mainModel.restaurantTabList.observe(viewLifecycleOwner, Observer {
+        mainModel.eventTabList.observe(viewLifecycleOwner, Observer {
             hideLoadingUI()
             adapter.changeTourItemList(it)
         })
     }
     private fun hideLoadingUI(){
-        binding.layoutSecondRecyclerViewLoading.isVisible = false
-        binding.rvSecondRecyclerView.isVisible = true
+        binding.layoutEventRecyclerViewLoading.isVisible = false
+        binding.rvEventRecyclerView.isVisible = true
     }
 
     override fun onDestroyView() {
