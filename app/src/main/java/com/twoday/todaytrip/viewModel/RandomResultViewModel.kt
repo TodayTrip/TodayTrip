@@ -9,6 +9,11 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveCafeList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveEventList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveRestaurantList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveTouristAttractionList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,47 +81,20 @@ class RandomResultViewModel : ViewModel() {
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode)
             else
                 TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
-
         saveTouristAttractionList(touristAttractionList)
     }
-    private fun saveTouristAttractionList(touristAttractionList:List<TourItem>) =
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            touristAttractionList,
-            PrefConstants.TOURIST_ATTRACTION_LIST_KEY
-        )
 
     private fun fetchAndSaveRestaurantList() {
         val restaurantList = TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
         saveRestaurantList(restaurantList)
     }
-    private fun saveRestaurantList(restaurantList:List<TourItem>) =
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            restaurantList,
-            PrefConstants.RESTAURANT_LIST_KEY
-        )
-
     private fun fetchAndSaveCafeList() {
         val cafeList = TourNetworkInterfaceUtils.getCafeTabList(areaCode)
         saveCafeList(cafeList)
 
     }
-    private fun saveCafeList(cafeList: List<TourItem>) =
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            cafeList,
-            PrefConstants.CAFE_LIST_KEY
-        )
-
     private fun fetchAndSaveEventList() {
         val eventList = TourNetworkInterfaceUtils.getEventTabList(areaCode)
         saveEventList(eventList)
     }
-    private fun saveEventList(eventList:List<TourItem>) =
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            eventList,
-            PrefConstants.EVENT_LIST_KEY
-        )
 }
