@@ -179,6 +179,20 @@
 <!--                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_summary"-->
 <!--                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_summary" />-->
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_place_detail_extra_info_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="16dp"
+                    android:paddingHorizontal="16dp"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_info"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_place_detail_add_path_btn"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    />
+
                 <TextView
                     android:id="@+id/tv_place_detail_add_path_btn"
                     style="@style/RandomThemeBlueBoldText"
@@ -195,7 +209,7 @@
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_place_detail_info" />
+                    app:layout_constraintTop_toBottomOf="@id/rv_place_detail_extra_info_list" />
 
                 <TextView
                     android:id="@+id/tv_place_detail_my_memory_title"
