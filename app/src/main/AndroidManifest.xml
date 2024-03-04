@@ -28,20 +28,13 @@
             android:value="ootzd3244r" />
         <activity
             android:name=".ui.RecordDetailActivity"
-            android:exported="false">
-
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.RecordActivity"
-            android:exported="false" >
-
-
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".ui.RandomActivity"
             android:exported="true">

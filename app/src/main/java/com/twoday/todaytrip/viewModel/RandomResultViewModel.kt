@@ -1,14 +1,19 @@
 package com.twoday.todaytrip.viewModel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
+import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveCafeList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveEventList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveRestaurantList
+import com.twoday.todaytrip.utils.TourItemSharedPreferenceUtil.saveTouristAttractionList
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,6 +21,12 @@ import kotlinx.coroutines.withContext
 
 class RandomResultViewModel : ViewModel() {
     private val TAG = "RandomResultViewModel"
+    private val theme by lazy{
+        loadTheme()
+    }
+    private val areaCode by lazy{
+        loadDestinationAreaCode(loadDestination())
+    }
 
     private val _isTourDataListReady = MutableLiveData<Boolean>()
     val isTourDataListReady: LiveData<Boolean>
@@ -24,86 +35,66 @@ class RandomResultViewModel : ViewModel() {
     init {
         _isTourDataListReady.value = false
         CoroutineScope(Dispatchers.IO).launch {
-            loadTourItemList()
+            fetchAndSaveTourItemList()
         }
     }
 
-    private suspend fun loadTourItemList() {
-        val theme = getTheme()
-        val areaCode = getDestinationAreaCode(getDestination())
-        if (areaCode.isNullOrBlank()) {
-            Log.d(TAG, "loadTourITemList) error! no destination area code!")
-            return
+    private suspend fun fetchAndSaveTourItemList() {
+        val touristAttractionJob = CoroutineScope(Dispatchers.IO).launch {
+            fetchAndSaveTouristAttractionList()
+        }
+        val restaurantListJob = CoroutineScope(Dispatchers.IO).launch {
+            fetchAndSaveRestaurantList()
+        }
+        val cafeListJob = CoroutineScope(Dispatchers.IO).launch {
+            fetchAndSaveCafeList()
+        }
+        val eventListJob = CoroutineScope(Dispatchers.IO).launch {
+            fetchAndSaveEventList()
         }
 
-        val tourInfoJob = CoroutineScope(Dispatchers.IO).launch {
-            loadTourInfoTabList(theme, areaCode!!)
-        }
-        val restaurantJob = CoroutineScope(Dispatchers.IO).launch {
-            loadRestaurantTabList(areaCode!!)
-        }
-        val cafeJob = CoroutineScope(Dispatchers.IO).launch {
-            loadCafeTabList(areaCode!!)
-        }
-        val eventJob = CoroutineScope(Dispatchers.IO).launch {
-            loadEventTabList(areaCode!!)
-        }
+        touristAttractionJob.join()
+        restaurantListJob.join()
+        cafeListJob.join()
+        eventListJob.join()
 
-        tourInfoJob.join()
-        restaurantJob.join()
-        cafeJob.join()
-        eventJob.join()
         withContext(Dispatchers.Main) {
             _isTourDataListReady.value = true
         }
     }
 
-    private fun getTheme(): String? =
+    private fun loadTheme(): String =
         SharedPreferencesUtil.loadDestination(MyApplication.appContext!!, PrefConstants.THEME_KEY)
-            ?: null
-
-    private fun getDestination(): String? =
+            ?: ""
+    private fun loadDestination(): String =
         SharedPreferencesUtil.loadDestination(
             MyApplication.appContext!!,
             PrefConstants.DESTINATION_KEY
-        ) ?: null
+        ) ?: ""
+    private fun loadDestinationAreaCode(destination: String?): String =
+        if (destination.isNullOrBlank()) ""
+        else DestinationData.destinationAreaCodes[destination] ?: ""
 
-    private fun getDestinationAreaCode(destination: String?): String? =
-        if (destination == null) null
-        else DestinationData.destinationAreaCodes[destination] ?: null
-
-    private fun loadTourInfoTabList(theme: String?, areaCode: String) {
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
+    private fun fetchAndSaveTouristAttractionList() {
+        val touristAttractionList =
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.getTourInfoTabList(areaCode)
+                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode)
             else
-                TourNetworkInterfaceUtils.getTourInfoTabListWithTheme(theme, areaCode),
-            PrefConstants.TOUR_INFO_TAB_LIST_KEY
-        )
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
+        saveTouristAttractionList(touristAttractionList)
     }
 
-    private fun loadRestaurantTabList(areaCode: String) {
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            TourNetworkInterfaceUtils.getRestaurantTabList(areaCode),
-            PrefConstants.RESTAURANT_TAB_LIST_KEY
-        )
+    private fun fetchAndSaveRestaurantList() {
+        val restaurantList = TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
+        saveRestaurantList(restaurantList)
     }
+    private fun fetchAndSaveCafeList() {
+        val cafeList = TourNetworkInterfaceUtils.getCafeTabList(areaCode)
+        saveCafeList(cafeList)
 
-    private fun loadCafeTabList(areaCode: String) {
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            TourNetworkInterfaceUtils.getCafeTabList(areaCode),
-            PrefConstants.CAFE_TAB_LIST_KEY
-        )
     }
-
-    private fun loadEventTabList(areaCode: String) {
-        SharedPreferencesUtil.saveTourItemList(
-            MyApplication.appContext!!,
-            TourNetworkInterfaceUtils.getEventTabList(areaCode),
-            PrefConstants.EVENT_TAB_LIST_KEY
-        )
+    private fun fetchAndSaveEventList() {
+        val eventList = TourNetworkInterfaceUtils.getEventTabList(areaCode)
+        saveEventList(eventList)
     }
 }

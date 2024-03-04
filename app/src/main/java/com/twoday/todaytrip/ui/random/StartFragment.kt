@@ -2,10 +2,10 @@ package com.twoday.todaytrip.ui.random
 
 import android.app.Activity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
@@ -21,6 +21,7 @@ import com.twoday.todaytrip.utils.SharedPreferencesUtil
 class StartFragment : Fragment() {
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
+
     // FirebaseAuth 인스턴스를 변수로 선언
     private lateinit var auth: FirebaseAuth
 
@@ -51,9 +52,8 @@ class StartFragment : Fragment() {
     private fun setUpClickListener() {
         binding.btnStartTrip.setOnClickListener {
 //            findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
+            initTourItemList()
             performAnonymousLogin()
-
-            SharedPreferencesUtil.eraseTourItemList(MyApplication.appContext!!)
         }
     }
 
@@ -75,6 +75,10 @@ class StartFragment : Fragment() {
             getString(message),
             Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+    private fun initTourItemList() {
+        SharedPreferencesUtil.resetTourItemList(MyApplication.appContext!!)
     }
 
     override fun onDestroyView() {
