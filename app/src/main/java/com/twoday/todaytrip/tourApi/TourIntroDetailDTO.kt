@@ -15,9 +15,9 @@ data class IntroDetailResponseHeader(
 )
 data class IntroDetailResponseBody(
     val items: IntroDetailItems,
-    val numOfRows:String,
-    val pageNo:String,
-    val totalCount:String
+    val numOfRows:Int,
+    val pageNo:Int,
+    val totalCount:Int
 )
 data class IntroDetailItems(
     val item: List<IntroDetailItem>

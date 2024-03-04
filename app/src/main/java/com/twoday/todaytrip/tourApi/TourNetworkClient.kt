@@ -1,35 +1,96 @@
 package com.twoday.todaytrip.tourApi
 
-import com.twoday.todaytrip.BuildConfig
+import android.util.Log
+import com.google.common.net.HttpHeaders.CACHE_CONTROL
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.twoday.todaytrip.MyApplication
+import com.twoday.todaytrip.utils.NetworkUtil
+import okhttp3.Cache
+import okhttp3.CacheControl
+import okhttp3.Interceptor
+import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.File
 import java.util.concurrent.TimeUnit
+
 
 object TourNetworkClient {
     private const val TOUR_BASE_URL = "https://apis.data.go.kr/B551011/KorService1/"
 
-    private fun createOkHttpClient(): OkHttpClient {
-        val interceptor = HttpLoggingInterceptor()
+    private val tourRetrofit = Retrofit.Builder()
+        .baseUrl(TOUR_BASE_URL)
+        .addConverterFactory(
+            GsonConverterFactory.create(
+                GsonBuilder()
+                    .setLenient()
+                    .create()
+            )
+        )
+        .client(createOkHttpClient())
+        .build()
 
-        if (BuildConfig.DEBUG)
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
-        else
-            interceptor.level = HttpLoggingInterceptor.Level.NONE
+    val tourNetWork: TourNetworkInterface =
+        tourRetrofit.create(TourNetworkInterface::class.java)
+
+    private fun createOkHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
 
         return OkHttpClient.Builder()
-            .connectTimeout(20, TimeUnit.SECONDS)
-            .readTimeout(20, TimeUnit.SECONDS)
-            .writeTimeout(20, TimeUnit.SECONDS)
-            .addNetworkInterceptor(interceptor)
+            .connectTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .addInterceptor(provideOfflineCacheInterceptor())
+            .addNetworkInterceptor(provideCacheInterceptor())
+            .addNetworkInterceptor(loggingInterceptor)
+            .cache(provideCache())
             .build()
     }
 
-    private val tourRetrofit = Retrofit.Builder()
-        .baseUrl(TOUR_BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(
-            createOkHttpClient()
-        ).build()
+    private fun provideCache(): Cache? {
+        var cache: Cache? = null
+        try {
+            cache = Cache(
+                File(MyApplication.appContext!!.cacheDir, "http-cache"),
+                10 * 1024 * 1024
+            ) // 10 MB
+        } catch (e: Exception) {
+            Log.d("TourNetworkClient", "Could not create Cache!")
+        }
+        return cache
+    }
 
-    val tourNetWork: TourNetworkInterface = tourRetrofit.create(TourNetworkInterface::class.java)
+    private fun provideCacheInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            val response: Response = chain.proceed(chain.request())
+
+            // re-write response header to force use of cache
+            val cacheControl: CacheControl = CacheControl.Builder()
+                .maxAge(2, TimeUnit.MINUTES)
+                .build()
+            response.newBuilder()
+                .header(CACHE_CONTROL, cacheControl.toString())
+                .build()
+        }
+    }
+
+    private fun provideOfflineCacheInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            var request = chain.request()
+            if (!NetworkUtil.isNetworkAvailable()) {
+                val cacheControl: CacheControl = CacheControl.Builder()
+                    .maxStale(7, TimeUnit.DAYS)
+                    .build()
+                request = request.newBuilder()
+                    .cacheControl(cacheControl)
+                    .build()
+            }
+            chain.proceed(request)
+        }
+    }
 }

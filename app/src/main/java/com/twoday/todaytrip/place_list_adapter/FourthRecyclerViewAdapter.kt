@@ -1,23 +1,17 @@
-package com.twoday.todaytrip.adapter
+package com.twoday.todaytrip.place_list_adapter
 
-import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
 
-class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
-    RecyclerView.Adapter<FirstRecyclerViewAdapter.Holder>() {
+class FourthRecyclerViewAdapter(var tourItemList: List<TourItem>) :
+    RecyclerView.Adapter<FourthRecyclerViewAdapter.Holder>() {
     private val TAG = "FirstRecyclerViewAdapter"
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
