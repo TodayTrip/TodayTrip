@@ -9,9 +9,12 @@ import androidx.core.view.isGone
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.adapter.PagerFragmentStateAdapter
+import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.utils.PrefConstants
+import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weather.Item
 import com.twoday.todaytrip.weather.WeatherClient
 import com.twoday.todaytrip.weather.weather
@@ -44,6 +47,7 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
+        searchArea()
         weatherInfo()
 
     }
@@ -166,6 +170,14 @@ class PlaceListFragment : Fragment() {
         }
 
         return currentTime
+    }
+
+    private fun searchArea(): String? {
+        val area = SharedPreferencesUtil.loadDestination(
+            MyApplication.appContext!!,
+            PrefConstants.DESTINATION_KEY
+        )
+        return area
     }
 
     override fun onDestroyView() {
