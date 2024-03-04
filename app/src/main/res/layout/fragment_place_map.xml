@@ -116,7 +116,7 @@
 <!--        app:layout_constraintStart_toEndOf="@+id/iv_place_map_back"-->
 <!--        app:layout_constraintTop_toTopOf="@+id/iv_place_map_back" />-->
 
-    <androidx.viewpager2.widget.ViewPager2
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/vp_place_map_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

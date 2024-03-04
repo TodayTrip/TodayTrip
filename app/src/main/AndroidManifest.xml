@@ -18,25 +18,26 @@
         android:theme="@style/Theme.TodayTrip"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".ui.place_detail.PlaceDetailActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="ootzd3244r" />
 
         <activity
             android:name=".ui.RecordDetailActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".ui.RecordActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".ui.RandomActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
