@@ -1,20 +1,22 @@
 package com.twoday.todaytrip.ui.route
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.ItemTouchHelper
+import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.util.FusedLocationSource
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 
-class RouteFragment : Fragment() {
+
+class RouteFragment : Fragment(), OnMapReadyCallback {
 
     //    private lateinit var adapter: RouteAdapter
     private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
@@ -27,6 +29,9 @@ class RouteFragment : Fragment() {
 
 //    private val itemTouchHelper by lazy { ItemTouchHelper(ItemTouchCallback(RouteAdapter)) }
 
+
+    private lateinit var map: NaverMap
+    private lateinit var locationSource: FusedLocationSource
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -54,15 +59,19 @@ class RouteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val datalist = mutableListOf<RouteListData>()
-        datalist.add(RouteListData("서울역", 1, "어딘가"))
-        datalist.add(RouteListData("N서울 타워", 2, "있겠지"))
-        datalist.add(RouteListData("청계천", 3, "아무데나"))
-        datalist.add(RouteListData("북촌 한옥 마을", 4, "가볼까"))
-        datalist.add(RouteListData("경로", 5, "어디든지"))
-        datalist.add(RouteListData("경로", 6, "떠나자"))
+//        datalist.add(RouteListData("서울역", "어딘가"))
+//        datalist.add(RouteListData("N서울 타워",  "있겠지"))
+//        datalist.add(RouteListData("청계천",  "아무데나"))
+//        datalist.add(RouteListData("북촌 한옥 마을", "가볼까"))
+//        datalist.add(RouteListData("경로",  "어디든지"))
+//        datalist.add(RouteListData("경로",  "떠나자"))
 
         adapter.submitList(datalist)
         binding.rvRouteRecyclerview.adapter = adapter
+        //리싸이클러뷰에 아무것도 없을시 아이콘 띄움
+        if (datalist.isNotEmpty()){
+            binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
+        }
 
         binding.btnRouteFinish.setOnClickListener {
             val frag = BottomSheetDialog()
@@ -73,6 +82,10 @@ class RouteFragment : Fragment() {
         itemTouchSimpleCallback.setOnItemMoveListener(object :
             ItemTouchSimpleCallback.OnItemMoveListener {
             override fun onItemMove(from: Int, to: Int) {
+//                adapter.notifyItemMoved(from,to)
+//                adapter.submitList(datalist)
+                binding.rvRouteRecyclerview.adapter = adapter
+
             }
         })
 
@@ -95,8 +108,7 @@ class RouteFragment : Fragment() {
             override fun onClick(item: RouteListData) {
 
 //                (activity as? MainActivity)?.removeFavorites(item)
-                adapter.notifyDataSetChanged()
-
+//                adapter.notifyDataSetChanged()
 
                 Log.d("favoritefragment", "remove  ${item}")
 
@@ -114,4 +126,38 @@ class RouteFragment : Fragment() {
                 }
             }
     }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        this.map = naverMap
+        naverMap.locationSource = locationSource
+        naverMap.uiSettings.isLocationButtonEnabled = true
+        naverMap.locationTrackingMode = LocationTrackingMode.Face
+    }
+
+//    private fun bindModify() {
+//        findViewById(R.id.btn_modify).setOnClickListener(object : OnClickListener() {
+//            fun onClick(v: View?) {
+//                val recyclerItem: PhRecyclerItem = mRecyclerAdapter.getSelected()
+//                if (recyclerItem == null) {
+//                    Toast.makeText(
+//                        this@PhMainActivity,
+//                        R.string.err_no_selected_item,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    return
+//                }
+//
+//                // Recycler item 수정
+//                recyclerItem.setName(recyclerItem.getName() + " is modified")
+//
+//                // List 반영
+//                // mRecyclerAdapter.notifyDataSetChanged();
+//                val checkedPosition: Int = mRecyclerAdapter.getCheckedPosition()
+//                mRecyclerAdapter.notifyItemChanged(checkedPosition)
+//
+//                // 선택 항목 초기화
+//                mRecyclerAdapter.clearSelected()
+//            }
+//        })
+//    }
 }

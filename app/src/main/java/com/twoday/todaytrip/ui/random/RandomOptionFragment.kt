@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.random
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
-import com.twoday.todaytrip.utils.Constants
+import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.SharedPreferencesUtil
 
@@ -69,10 +69,10 @@ class RandomOptionFragment : Fragment() {
         SharedPreferencesUtil.saveDestination(
             requireContext(),
             randomDestination,
-            Constants.DESTINATION_KEY
+            PrefConstants.DESTINATION_KEY
         )
         //TODO 올랜덤일 때 테마는 공백 문자열이 좋을지 null이 좋을지?
-        SharedPreferencesUtil.saveDestination(requireContext(), null, Constants.THEME_KEY)
+        SharedPreferencesUtil.saveDestination(requireContext(), null, PrefConstants.THEME_KEY)
     }
 
     override fun onDestroyView() {

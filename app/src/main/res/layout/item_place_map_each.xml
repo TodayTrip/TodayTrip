@@ -44,6 +44,7 @@
             android:layout_marginStart="16dp"
             android:text="가게이름"
             style="@style/TabTitleText"
+            android:textStyle="bold"
             app:layout_constraintStart_toEndOf="@+id/cv_item_place_map_pic"
             app:layout_constraintTop_toTopOf="@+id/cv_item_place_map_pic"
             />
@@ -65,15 +66,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             />
 
-        <ImageView
-            android:id="@+id/iv_item_place_map_pin"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="8dp"
-            android:src="@drawable/ic_pin_outline"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
+<!--        <ImageView-->
+<!--            android:id="@+id/iv_item_place_map_pin"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_margin="8dp"-->
+<!--            android:src="@drawable/ic_pin_outline"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

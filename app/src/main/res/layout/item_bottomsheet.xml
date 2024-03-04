@@ -4,7 +4,7 @@
     android:id="@+id/item_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#ffffffff"
+    android:background="@drawable/shape_bottomsheet_frame"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="56dp"
@@ -14,7 +14,7 @@
         android:id="@+id/tv_bottom_sheet_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:text="현재까지의 경로가 기록됩니다."
         android:textSize="24sp"
         android:textStyle="bold"
@@ -39,12 +39,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_title" />
 
+    <ImageView
+        android:id="@+id/iv_bottom_sheet_cancel"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/img_bottom_sheet_cancel"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_bottom_sheet_button"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_margin="20dp"
-        android:background="@drawable/shape_10_radius"
+        android:background="@drawable/shape_white_10_radius"
         android:backgroundTint="@color/main_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

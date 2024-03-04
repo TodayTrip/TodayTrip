@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/start_background"
-    tools:context=".ui.StartFragment">
+    tools:context=".ui.random.StartFragment">
 
 
     <ImageView
@@ -23,7 +23,7 @@
         android:id="@+id/textView"
         style="@style/LargeTitleBoldText"
         android:layout_marginBottom="24dp"
-        android:text="상상 못한 곳으로 떠날래?"
+        android:text="오늘 여행을 시작해볼까요?"
         android:textColor="@color/main_blue"
         app:layout_constraintBottom_toTopOf="@+id/btn_start_trip"
         app:layout_constraintEnd_toEndOf="parent"
@@ -37,7 +37,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="200dp"
-        android:background="@drawable/shape_btn_main_blue"
+        android:background="@drawable/shape_btn_sub_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -47,8 +47,8 @@
             style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="시작하기"
-            android:textColor="@color/point_yellow"
+            android:text="가입 하기"
+            android:textColor="@color/dark_blue"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -40,7 +40,7 @@
         android:layout_height="67dp"
         android:layout_marginStart="51dp"
         android:layout_marginEnd="5dp"
-        android:background="@drawable/shape_10_radius"
+        android:background="@drawable/shape_white_10_radius"
         android:backgroundTint="@color/white"
         android:elevation="10dp"
         android:padding="8dp"

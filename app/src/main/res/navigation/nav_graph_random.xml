@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_start"
-        android:name="com.twoday.todaytrip.ui.StartFragment"
+        android:name="com.twoday.todaytrip.ui.random.StartFragment"
         android:label="fragment_start"
         tools:layout="@layout/fragment_start">
         <action
@@ -17,7 +17,7 @@
 
     <fragment
         android:id="@+id/navigation_random_option"
-        android:name="com.twoday.todaytrip.ui.RandomOptionFragment"
+        android:name="com.twoday.todaytrip.ui.random.RandomOptionFragment"
         android:label="fragment_random_option"
         tools:layout="@layout/fragment_random_option">
         <action
@@ -30,18 +30,21 @@
 
     <fragment
         android:id="@+id/navigation_random_theme"
-        android:name="com.twoday.todaytrip.ui.RandomThemeFragment"
+        android:name="com.twoday.todaytrip.ui.random.RandomThemeFragment"
         android:label="fragment_random_theme"
         tools:layout="@layout/fragment_random_theme">
         <action
             android:id="@+id/action_navigation_random_theme_to_navigation_random_result"
             app:destination="@id/navigation_random_result">
         </action>
+        <action
+            android:id="@+id/action_navigation_random_theme_to_navigation_random_option"
+            app:destination="@id/navigation_random_option" />
     </fragment>
 
     <fragment
         android:id="@+id/navigation_random_result"
-        android:name="com.twoday.todaytrip.ui.RandomResultFragment"
+        android:name="com.twoday.todaytrip.ui.random.RandomResultFragment"
         android:label="fragment_random_result"
         tools:layout="@layout/fragment_random_result">
         <action
@@ -51,7 +54,7 @@
 
     <fragment
         android:id="@+id/navigation_place_list"
-        android:name="com.twoday.todaytrip.ui.PlaceListFragment"
+        android:name="com.twoday.todaytrip.ui.place_list.PlaceListFragment"
         android:label="fragment_place_list"
         tools:layout="@layout/fragment_place_list">
     </fragment>
