@@ -1,114 +1,110 @@
 package com.twoday.todaytrip.ui.place_map
 
-import android.Manifest
-import android.content.pm.PackageManager
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraPosition
-import com.naver.maps.map.LocationTrackingMode
-import com.naver.maps.map.MapFragment
+import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
-import com.naver.maps.map.util.FusedLocationSource
-import com.twoday.todaytrip.R
+import com.naver.maps.map.overlay.Marker
 import com.twoday.todaytrip.databinding.FragmentPlaceMapBinding
+import com.twoday.todaytrip.viewModel.PlaceMapViewModel
 
 class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
-    companion object {
-        fun newInstance() = PlaceMapFragment()
-    }
-
     private var _binding: FragmentPlaceMapBinding? = null
     private val binding get() = _binding!!
+    private val placeMapAdapter by lazy { PlaceMapAdapter() }
+    private val viewModel by lazy {
+        ViewModelProvider(this@PlaceMapFragment)[PlaceMapViewModel::class.java]
+    }
+    private lateinit var naverMap: NaverMap
+    private lateinit var mapView: MapView
+    // 마커 리스트 생성
+    private val markers = mutableListOf<Marker>()
 
-    private lateinit var viewModel: PlaceMapViewModel
-
-    private lateinit var map: NaverMap
-    private lateinit var locationSource: FusedLocationSource
-    private val LOCATION_PERMISSION_REQUEST_CODE = 500
-
-    private val PERMISSIONS = listOf(
-        Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
+    // 임의의 위치 데이터 목록
+    private val locations = listOf(
+        LatLng(37.4979, 127.0276), // 서울 시청
+        LatLng(37.5124, 127.0589), // 광화문
+        LatLng(37.2942, 127.2024),  // 동대문
+        LatLng(37.5273, 127.0390),
+        LatLng(37.5195, 127.0378),
+        LatLng(37.5089, 127.0468)
     )
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_place_map, container, false)
+        _binding = FragmentPlaceMapBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-        initViewModel()
-        setListener()
+        // mapView 변수 초기화
+        mapView = binding.mvPlaceMap
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
+        setupImageRecyclerView()
     }
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(PlaceMapViewModel::class.java)
-        // TODO: Use the ViewModel
+
+    private fun setupImageRecyclerView() {
+        binding.rvPlaceMap.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = placeMapAdapter
+        }
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapView.onResume()
+    }
+
+    override fun onPause() {
+        mapView.onPause()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        mapView.onStop()
+        super.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mapView.onDestroy()
+        _binding = null
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
-
-    override fun onMapReady(naverMap: NaverMap) {
-        this.map = naverMap
-//        naverMap.locationSource = locationSource
-//        naverMap.uiSettings.isLocationButtonEnabled = true
-//        naverMap.locationTrackingMode = LocationTrackingMode.Face
-        naverMap.cameraPosition = CameraPosition(LatLng(20.38, 150.55), 9.0)
-    }
-
-    private fun initView() {
-
-        initMap()
-    }
-
-    private fun initViewModel() {
-
-    }
-
-    private fun setListener() {
-        val clickListener = View.OnClickListener {
-            childFragmentManager.popBackStack()
-        }
-    }
-
-    private fun initMap() {
-        val mapFragment =
-            childFragmentManager.findFragmentById(R.id.fcv_place_map_full_map) as MapFragment?
-                ?: MapFragment.newInstance().also {
-                    childFragmentManager.beginTransaction().add(R.id.fcv_place_map_full_map, it)
-                        .commit()
-                }
-        mapFragment.getMapAsync(this)
-        locationSource = FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE)
-    }
-
-    private fun checkPermission() {
-        for (permission in PERMISSIONS) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    permission
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-
-            } else {
-
-            }
-        }
-    }
-
 }
