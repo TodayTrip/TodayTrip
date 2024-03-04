@@ -2,16 +2,34 @@ package com.twoday.todaytrip.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
 
 object ContentIdPrefUtil {
-    fun loadAddedContentIdList() = loadContentIdList(PrefConstants.ADDED_CONTENT_ID_LIST_KEY)
-    fun saveAddedContentIdList(contentIdList: List<String>) = saveContentIDList(
+    private val TAG = "ContentIdPrefUtil"
+
+    fun loadContentIdList() = loadContentIdList(PrefConstants.ADDED_CONTENT_ID_LIST_KEY)
+    fun saveContentIdList(contentIdList: List<String>) = saveContentIDList(
         contentIdList,
         PrefConstants.ADDED_CONTENT_ID_LIST_KEY
     )
+
+    fun isSavedContentId(contentId: String): Boolean = loadContentIdList().contains(contentId)
+    fun addContentId(contentId:String) = saveContentIdList(
+        loadContentIdList().toMutableList().apply{
+            add(contentId)
+        }
+    )
+    fun removeContentId(contentId: String) = saveContentIdList(
+        loadContentIdList().filter { it != contentId }
+    )
+
+    fun resetContentIdListPref(){
+        Log.d(TAG, "resetContentIdListPref) called")
+        saveContentIdList(emptyList())
+    }
 
     private fun getContentIdListPreferences(): SharedPreferences =
         MyApplication.appContext!!.getSharedPreferences(
