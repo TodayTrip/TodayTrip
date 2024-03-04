@@ -53,7 +53,7 @@ class RandomResultViewModel : ViewModel() {
         restaurantJob.join()
         cafeJob.join()
         eventJob.join()
-        withContext(Dispatchers.Main){
+        withContext(Dispatchers.Main) {
             _isTourDataListReady.value = true
         }
     }
@@ -72,7 +72,7 @@ class RandomResultViewModel : ViewModel() {
         if (destination == null) null
         else DestinationData.destinationAreaCodes[destination] ?: null
 
-    private fun loadTourInfoTabList(theme: String?, areaCode: String) =
+    private fun loadTourInfoTabList(theme: String?, areaCode: String) {
         SharedPreferencesUtil.saveTourItemList(
             MyApplication.appContext!!,
             if (theme.isNullOrBlank())
@@ -81,28 +81,29 @@ class RandomResultViewModel : ViewModel() {
                 TourNetworkInterfaceUtils.getTourInfoTabListWithTheme(theme, areaCode),
             PrefConstants.TOUR_INFO_TAB_LIST_KEY
         )
-}
+    }
 
-private fun loadRestaurantTabList(areaCode: String) {
-    SharedPreferencesUtil.saveTourItemList(
-        MyApplication.appContext!!,
-        TourNetworkInterfaceUtils.getRestaurantTabList(areaCode),
-        PrefConstants.RESTAURANT_TAB_LIST_KEY
-    )
-}
+    private fun loadRestaurantTabList(areaCode: String) {
+        SharedPreferencesUtil.saveTourItemList(
+            MyApplication.appContext!!,
+            TourNetworkInterfaceUtils.getRestaurantTabList(areaCode),
+            PrefConstants.RESTAURANT_TAB_LIST_KEY
+        )
+    }
 
-private fun loadCafeTabList(areaCode: String){
-    SharedPreferencesUtil.saveTourItemList(
-        MyApplication.appContext!!,
-        TourNetworkInterfaceUtils.getCafeTabList(areaCode),
-        PrefConstants.CAFE_TAB_LIST_KEY
-    )
-}
+    private fun loadCafeTabList(areaCode: String) {
+        SharedPreferencesUtil.saveTourItemList(
+            MyApplication.appContext!!,
+            TourNetworkInterfaceUtils.getCafeTabList(areaCode),
+            PrefConstants.CAFE_TAB_LIST_KEY
+        )
+    }
 
-private suspend fun loadEventTabList(areaCode: String) {
-    SharedPreferencesUtil.saveTourItemList(
-        MyApplication.appContext!!,
-        TourNetworkInterfaceUtils.getEventTabList(areaCode),
-        PrefConstants.EVENT_TAB_LIST_KEY
-    )
+    private fun loadEventTabList(areaCode: String) {
+        SharedPreferencesUtil.saveTourItemList(
+            MyApplication.appContext!!,
+            TourNetworkInterfaceUtils.getEventTabList(areaCode),
+            PrefConstants.EVENT_TAB_LIST_KEY
+        )
+    }
 }

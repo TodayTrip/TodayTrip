@@ -1,6 +1,7 @@
 package com.twoday.todaytrip.ui.place_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.twoday.todaytrip.viewModel.MainViewModel
 
 
 class FirstRecyclerViewFragment : Fragment() {
+    private val TAG = "FirstRecyclerViewFragment"
 
     private var _binding: FragmentFirstRecyclerViewBinding? = null
     private val binding get() = _binding!!
@@ -40,6 +42,7 @@ class FirstRecyclerViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        initNoResultOnClickListener()
         initModelObserver()
     }
 
@@ -47,15 +50,31 @@ class FirstRecyclerViewFragment : Fragment() {
         adapter = FirstRecyclerViewAdapter(listOf())
         binding.rvFirstRecyclerView.adapter = adapter
     }
+    private fun initNoResultOnClickListener(){
+        binding.layoutFirstRecyclerViewNoResult.setOnClickListener {
+            setLoadingUI(true)
+            mainModel.retryTourInfoTabList()
+        }
+    }
     private fun initModelObserver(){
         mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
-            hideLoadingUI()
             adapter.changeTourItemList(it)
+            if(it.isEmpty())
+                setNoResultUI()
+            else
+                setLoadingUI(false)
         })
     }
-    private fun hideLoadingUI(){
+    private fun setNoResultUI(){
+        binding.layoutFirstRecyclerViewNoResult.isVisible = true
         binding.layoutFirstRecyclerViewLoading.isVisible = false
-        binding.rvFirstRecyclerView.isVisible = true
+    }
+    private fun setLoadingUI(isLoading:Boolean){
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
+        binding.layoutFirstRecyclerViewNoResult.isVisible = false
+
+        binding.layoutFirstRecyclerViewLoading.isVisible = isLoading
+        binding.rvFirstRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {
