@@ -18,7 +18,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
-class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListener {
+class TouristAttractionRecyclerViewFragment : Fragment(){
     private val TAG = "FirstRecyclerViewFragment"
 
     private var _binding: FragmentPlaceListTouristAttractionRecyclerViewBinding? = null
@@ -49,15 +49,8 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     }
 
     private fun initRecyclerView(){
-        adapter = TouristAttractionRecyclerViewAdapter().apply{
-            onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
-        }
+        adapter = TouristAttractionRecyclerViewAdapter()
         binding.rvTouristAttractionRecyclerView.adapter = adapter
-    }
-    override fun onTourItemClick(tourItem: TourItem) {
-        Log.d(TAG, "onTourItemClick) contentId: ${tourItem.getContentId()}")
-        tourItem.isAdded = !tourItem.isAdded
-        // TODO isAdded 변경 SharedPreference에 저장하기
     }
 
     private fun initNoResultOnClickListener(){
