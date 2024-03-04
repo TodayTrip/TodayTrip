@@ -170,6 +170,7 @@ class PlaceListFragment : Fragment() {
         }
 
         return currentTime
+
     }
 
     private fun searchArea(): String? {
