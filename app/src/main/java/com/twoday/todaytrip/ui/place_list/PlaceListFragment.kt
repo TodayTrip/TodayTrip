@@ -30,11 +30,6 @@ class PlaceListFragment : Fragment() {
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
-    private var base_date = "20240301"  // 발표 일자
-    private var base_time = "0800"      // 발표 시각
-    private var nx = "37"               // 예보지점 X 좌표
-    private var ny = "127"              // 예보지점 Y 좌표
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -47,7 +42,6 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        searchArea()
         weatherInfo()
 
     }
@@ -76,45 +70,44 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun weatherInfo() {
-        var cal = Calendar.getInstance()
-        var timeToDate = cal.time
+        val cal = Calendar.getInstance()
+        val timeToDate = cal.time
         val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(timeToDate)
+        var base_time = getBaseTime(timeH)
+        var base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(timeToDate)
+        val coordinates = localLocation(searchArea().toString())!!
+        val latitude = coordinates.latitude
+        val longitude = coordinates.longitude
 
-        base_time = getBaseTime(timeH)
 
-        // 3시간 마다 불러올 수 있기 때문에 오전 12시나 1시 같은 경우는 하루 전날의 데이터를 써야함
-        if (base_time.toInt() == 0) {
+        // 오전 12시나 1시인 경우 전날 데이터 사용
+        if (base_time == "0000") {
             cal.add(Calendar.DATE, -1)
-            base_date.format(timeToDate)
+            base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(cal.time)
             base_time = "2300"
-        } else {
-            base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(timeToDate)
-            base_time = getBaseTime(timeH)
         }
 
-        val weather = WeatherClient.weatherNetWork.getWeather(
+        WeatherClient.weatherNetWork.getWeather(
             dataType = "JSON",
             numOfRows = 12,
             pageNo = 1,
             baseDate = base_date,
             baseTime = base_time,
-            nx = nx,
-            ny = ny
-        )
-        weather.enqueue(object : retrofit2.Callback<weather> {
+            nx = latitude,
+            ny = longitude
+        ).enqueue(object : retrofit2.Callback<weather> {
             override fun onResponse(call: Call<weather>, response: Response<weather>) {
                 if (response.isSuccessful) {
-                    val it: List<Item> = response.body()!!.response.body.items.item
+                    val it: List<Item> = response.body()?.response?.body?.items?.item ?: return
                     var temp = ""
                     var sky = ""
                     var rainType = ""
 
-                    for (i in 0..11) {
-                        when (it[i].category) {
-                            "SKY" -> sky = it[i].fcstValue
-                            "TMP" -> temp = it[i].fcstValue
-                            "PTY" -> rainType = it[i].fcstValue
-                            else -> continue
+                    it.forEach { item ->
+                        when (item.category) {
+                            "SKY" -> sky = item.fcstValue
+                            "TMP" -> temp = item.fcstValue
+                            "PTY" -> rainType = item.fcstValue
                         }
                     }
                     setWeather(rainType, sky, temp)
@@ -128,7 +121,7 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun setWeather(rainType: String, sky: String, temp: String) {
-        // 강수 형태
+        // 강수 형태 설정
         var result = ""
         when (rainType) {
             "0" -> binding.tvWeatherInfo2.visibility = View.GONE
@@ -143,34 +136,31 @@ class PlaceListFragment : Fragment() {
         }
         binding.tvWeatherInfo2.text = result
 
-        // 하늘 상태
-        when (sky) {
-            "1" -> binding.imgWeather.setImageResource(R.drawable.img_weather_sun)
-            "3" -> binding.imgWeather.setImageResource(R.drawable.img_foggy)
-            "4" -> binding.imgWeather.setImageResource(R.drawable.img_cloud)
-            else -> binding.imgWeather.setImageResource(R.drawable.img_weather_sun)
+        // 하늘 상태 설정
+        val skyImageResource = when (sky) {
+            "1" -> R.drawable.img_weather_sun
+            "3" -> R.drawable.img_foggy
+            "4" -> R.drawable.img_cloud
+            else -> R.drawable.img_weather_sun
         }
-        // 온도
-        binding.tvWeatherInfo.text = temp + "°"
+        binding.imgWeather.setImageResource(skyImageResource)
+
+        // 온도 설정
+        binding.tvWeatherInfo.text = "$temp°"
     }
 
     private fun getBaseTime(h: String): String {
-        var currentTime = ""
-
-        currentTime = when {
-            h.toInt() in 2..4 -> "0200"
-            h.toInt() in 5..7 -> "0500"
-            h.toInt() in 8..10 -> "0800"
-            h.toInt() in 11..13 -> "1100"
-            h.toInt() in 14..16 -> "1400"
-            h.toInt() in 17..19 -> "1700"
-            h.toInt() in 20..22 -> "2000"
-            h.toInt() in 23..23 -> "2300"
+        return when (h.toInt()) {
+            in 2..4 -> "0200"
+            in 5..7 -> "0500"
+            in 8..10 -> "0800"
+            in 11..13 -> "1100"
+            in 14..16 -> "1400"
+            in 17..19 -> "1700"
+            in 20..22 -> "2000"
+            23 -> "2300"
             else -> "0000"
         }
-
-        return currentTime
-
     }
 
     private fun searchArea(): String? {
@@ -179,6 +169,30 @@ class PlaceListFragment : Fragment() {
             PrefConstants.DESTINATION_KEY
         )
         return area
+    }
+
+    private data class Coordinates(val latitude: String, val longitude: String)
+
+    private fun localLocation(location: String): Coordinates? {
+        return when (location) {
+            "서울" -> Coordinates("37.5665", "126.9780")
+            "인천" -> Coordinates("37.4561", "126.7059")
+            "전북" -> Coordinates("35.8201", "127.1091")
+            "전남" -> Coordinates("34.8159", "126.4628")
+            "경북" -> Coordinates("36.5758", "128.5060")
+            "경남" -> Coordinates("35.2373", "128.6920")
+            "충북" -> Coordinates("36.6357", "127.4913")
+            "충남" -> Coordinates("36.6584", "126.6722")
+            "강원" -> Coordinates("37.8228", "128.1555")
+            "대구" -> Coordinates("35.8714", "128.6014")
+            "부산" -> Coordinates("35.1796", "129.0756")
+            "대전" -> Coordinates("36.3504", "127.3845")
+            "제주" -> Coordinates("33.4890", "126.4983")
+            "경기" -> Coordinates("37.4138", "127.5183")
+            "광주" -> Coordinates("35.1595", "126.8526")
+            "울산" -> Coordinates("35.5384", "129.3114")
+            else -> null
+        }
     }
 
     override fun onDestroyView() {
