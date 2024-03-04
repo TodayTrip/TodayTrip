@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
 import com.twoday.todaytrip.place_list_adapter.TouristAttractionRecyclerViewAdapter
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
-import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
