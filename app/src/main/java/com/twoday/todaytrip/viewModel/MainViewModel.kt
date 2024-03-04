@@ -5,12 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class MainViewModel : ViewModel() {
@@ -25,25 +23,24 @@ class MainViewModel : ViewModel() {
         )
     }
 
-    private val _tourInfoTabList = MutableLiveData<List<TourItem>>()
-    val tourInfoTabList: LiveData<List<TourItem>>
-        get() = _tourInfoTabList
+    private val _touristAttractionList = MutableLiveData<List<TourItem>>()
+    val touristAttractionList: LiveData<List<TourItem>>
+        get() = _touristAttractionList
 
-    private val _restaurantTabList = MutableLiveData<List<TourItem>>()
-    val restaurantTabList: LiveData<List<TourItem>>
-        get() = _restaurantTabList
+    private val _restaurantList = MutableLiveData<List<TourItem>>()
+    val restaurantList: LiveData<List<TourItem>>
+        get() = _restaurantList
 
-    private val _cafeTabList = MutableLiveData<List<TourItem>>()
-    val cafeTabList: LiveData<List<TourItem>>
-        get() = _cafeTabList
+    private val _cafeList = MutableLiveData<List<TourItem>>()
+    val cafeList: LiveData<List<TourItem>>
+        get() = _cafeList
 
-    private val _eventTabList = MutableLiveData<List<TourItem>>()
-    val eventTabList: LiveData<List<TourItem>>
-        get() = _eventTabList
+    private val _eventList = MutableLiveData<List<TourItem>>()
+    val eventList: LiveData<List<TourItem>>
+        get() = _eventList
 
     private val storageRef = FirebaseStorage.getInstance().reference
     private val databaseRef = FirebaseDatabase.getInstance().reference
-
 
     init {
         loadTourItemList()
@@ -54,10 +51,10 @@ class MainViewModel : ViewModel() {
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
     private fun loadTourItemList(){
-        _tourInfoTabList.value = TourItemPrefUtil.loadTouristAttractionList()
-        _restaurantTabList.value = TourItemPrefUtil.loadRestaurantList()
-        _cafeTabList.value = TourItemPrefUtil.loadCafeList()
-        _eventTabList.value = TourItemPrefUtil.loadEventList()
+        _touristAttractionList.value = TourItemPrefUtil.loadTouristAttractionList()
+        _restaurantList.value = TourItemPrefUtil.loadRestaurantList()
+        _cafeList.value = TourItemPrefUtil.loadCafeList()
+        _eventList.value = TourItemPrefUtil.loadEventList()
     }
 
     fun fetchAndSaveTouristAttractionList() {

@@ -1,11 +1,12 @@
 package com.twoday.todaytrip.ui.place_list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
@@ -14,7 +15,10 @@ import com.twoday.todaytrip.databinding.FragmentPlaceListRestaurantRecyclerViewB
 import com.twoday.todaytrip.place_list_adapter.RestaurantRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
-class RestaurantRecyclerViewFragment : Fragment() {
+
+class RestaurantRecyclerViewFragment : Fragment(){
+    private val TAG = "RestaurantRecyclerViewFragment"
+
     private var _binding: FragmentPlaceListRestaurantRecyclerViewBinding? = null
     private val binding get() = _binding!!
 
@@ -25,7 +29,7 @@ class RestaurantRecyclerViewFragment : Fragment() {
         }
     }
 
-    private lateinit var adapter:RestaurantRecyclerViewAdapter
+    private lateinit var adapter: RestaurantRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -38,22 +42,40 @@ class RestaurantRecyclerViewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
+        initNoResultOnClickListener()
         initModelObserver()
     }
 
     private fun initRecyclerView(){
-        adapter = RestaurantRecyclerViewAdapter(listOf())
+        adapter = RestaurantRecyclerViewAdapter()
         binding.rvRestaurantRecyclerView.adapter = adapter
     }
+
+    private fun initNoResultOnClickListener(){
+        binding.layoutRestaurantRecyclerViewNoResult.setOnClickListener {
+            setLoadingUI(true)
+            mainModel.fetchAndSaveRestaurantList()
+        }
+    }
     private fun initModelObserver(){
-        mainModel.restaurantTabList.observe(viewLifecycleOwner, Observer {
-            hideLoadingUI()
-            adapter.changeTourItemList(it)
+        mainModel.restaurantList.observe(viewLifecycleOwner, Observer {
+            adapter.submitList(it.toMutableList())
+            if(it.isEmpty())
+                setNoResultUI()
+            else
+                setLoadingUI(false)
         })
     }
-    private fun hideLoadingUI(){
+    private fun setNoResultUI(){
+        binding.layoutRestaurantRecyclerViewNoResult.isVisible = true
         binding.layoutRestaurantRecyclerViewLoading.isVisible = false
-        binding.rvRestaurantRecyclerView.isVisible = true
+    }
+    private fun setLoadingUI(isLoading:Boolean){
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
+        binding.layoutRestaurantRecyclerViewNoResult.isVisible = false
+
+        binding.layoutRestaurantRecyclerViewLoading.isVisible = isLoading
+        binding.rvRestaurantRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {
