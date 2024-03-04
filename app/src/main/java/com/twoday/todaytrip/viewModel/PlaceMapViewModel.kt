@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.place_map
+package com.twoday.todaytrip.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
