@@ -9,10 +9,12 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
-
 class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
     RecyclerView.Adapter<FirstRecyclerViewAdapter.Holder>() {
     private val TAG = "FirstRecyclerViewAdapter"
+
+    val onTourItemClickListener:OnTourItemClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
             ItemPlaceListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -22,7 +24,10 @@ class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
     override fun getItemCount(): Int = tourItemList.size
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(tourItemList[position])
+        holder.run{
+            initOnClickListener(tourItemList[position])
+            bind(tourItemList[position])
+        }
     }
 
     fun changeTourItemList(newTourItemList: List<TourItem>) {
@@ -48,6 +53,12 @@ class FirstRecyclerViewAdapter(var tourItemList: List<TourItem>) :
             }
             titleTextView.text = item.getTitle()
             addressTextView.text = item.getAddress()
+        }
+
+        fun initOnClickListener(tourItem:TourItem){
+            this.itemView.setOnClickListener {
+                onTourItemClickListener?.onTourItemClick(tourItem)
+            }
         }
     }
 }
