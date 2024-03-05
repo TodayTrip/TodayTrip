@@ -21,6 +21,7 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil.loadCafeList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadEventList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadTouristAttractionList
+import com.twoday.todaytrip.viewModel.PlaceMapViewModel
 
 class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 

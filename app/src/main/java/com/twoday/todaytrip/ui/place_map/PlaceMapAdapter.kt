@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
 import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.TourItemPrefUtil
