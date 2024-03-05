@@ -1,13 +1,13 @@
 package com.twoday.todaytrip.ui.place_map
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
@@ -33,6 +33,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
+
     // 마커 리스트 생성
     private val markers = mutableListOf<Marker>()
 
@@ -57,6 +58,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         setupTabLayout()
         setupLatLng()
     }
+
     private fun observeFurthestPairAndConnectMarkers() {
         viewModel.findFurthestMarkers(markers) // LiveData를 업데이트하도록 요청
         viewModel.furthestPair.observe(viewLifecycleOwner, Observer { furthestPair ->
@@ -65,6 +67,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             }
         })
     }
+
     private fun setupLatLng() {
 //        loadTouristAttractionList()[0].getLongitude()
 //        loadTouristAttractionList()[0].getLatitude()
@@ -72,12 +75,14 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 //
 //        }
     }
+
     private fun createLocationsList(): List<LatLng> {
         Log.d("경도위도", locations.toString())
         return loadTouristAttractionList().map {
             LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
         }
     }
+
     private fun setupImageRecyclerView() {
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -113,13 +118,18 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     // 마커끼리 폴리라인 연결하는 함수
-    private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap, markers: MutableList<Marker>, furthestPair: Pair<Marker, Marker>) {
+    private fun connectMarkersSequentiallyFromFurthest(
+        naverMap: NaverMap,
+        markers: MutableList<Marker>,
+        furthestPair: Pair<Marker, Marker>
+    ) {
         var currentMarker = furthestPair.first // 시작점으로 설정할 마커
         val connectedMarkers = mutableListOf(currentMarker)
         markers.remove(currentMarker)
 
         while (markers.isNotEmpty()) {
-            val closestMarker = markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
+            val closestMarker =
+                markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
             closestMarker?.let { marker ->
                 MapUtils.drawPolyline(naverMap, listOf(currentMarker.position, marker.position))
                 currentMarker = marker
