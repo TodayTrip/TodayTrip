@@ -4,7 +4,7 @@ import android.util.Log
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
 
-data class TouristDestination(
+class TouristDestination(
     private val _tourItemInfo: AreaBasedListItem,
     private val touristDestinationInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
