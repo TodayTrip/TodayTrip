@@ -11,17 +11,19 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
 import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
     TourItemDiffCallback()
 ) {
+    init {
+        submitList(TourItemPrefUtil.loadTouristAttractionList())
+    }
     var onTourItemClickListener: OnTourItemClickListener? = null
     class TourItemDiffCallback : DiffUtil.ItemCallback<TourItem>() {
         override fun areItemsTheSame(oldItem: TourItem, newItem: TourItem): Boolean {
-            // 객체의 고유 식별자를 비교
             return oldItem.getContentId() == newItem.getContentId()
         }
-
         override fun areContentsTheSame(oldItem: TourItem, newItem: TourItem): Boolean {
             return oldItem.getAddress() == newItem.getAddress()
         }
@@ -34,10 +36,10 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.run {
-//            initOnClickListener(getItem(position))
-            bind(getItem(position))
-        }
+//        holder.run {
+////            initOnClickListener(getItem(position))
+//            bind(getItem(position))
+//        }
         val item = getItem(position) // ListAdapter에서는 getItem() 메서드 사용
         holder.bind(item)
     }
@@ -51,16 +53,12 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
         private val addButton = binding.btnItemPlaceListMapAdd
 
         fun bind(item: TourItem) {
-            item.getThumbnailImage()?.let { url ->
-                Glide.with(MyApplication.appContext!!)
-                    .load(url)
-                    .placeholder(R.drawable.img_default_image)
-                    .into(firstImageView)
-            }
-            firstImageView.clipToOutline = true
-            titleTextView.text = item.getTitle()
-            addressTextView.text = item.getAddress()
-            setAddButtonUI(item.isAdded)
+            binding.tvItemPlaceListTitle.text = item.getTitle()
+            binding.tvItemPlaceListAddress.text = item.getAddress()
+            Glide.with(MyApplication.appContext!!)
+                .load(item.getThumbnailImage())
+                .placeholder(R.drawable.img_default_image)
+                .into(binding.ivItemPlaceList)
         }
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {
@@ -85,5 +83,4 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
             )
         }
     }
-
 }
