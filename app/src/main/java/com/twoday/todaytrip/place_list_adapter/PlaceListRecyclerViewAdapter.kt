@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.place_list_adapter
 
+import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -76,7 +77,7 @@ class PlaceListRecyclerViewAdapter :
                 }
                 with(timeTextViewList[index]) {
                     isVisible = true
-                    text = pair.second
+                    text = Html.fromHtml(pair.second)
                 }
             }
 
