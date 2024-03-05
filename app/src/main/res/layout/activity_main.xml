@@ -40,8 +40,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="16dp"
-                android:background="@android:color/transparent"
+                android:background="@drawable/bg_no_ripple"
                 app:itemRippleColor="@color/transparent"
+                app:itemIconTint="@color/selector_nav_bar_icon"
+                app:itemTextColor="@color/selector_nav_bar_icon"
                 android:outlineProvider="none"
                 android:outlineSpotShadowColor="@android:color/transparent"
                 app:menu="@menu/nav_menu" />
@@ -51,10 +53,12 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_unknown_destination"
-            app:fabCustomSize="60dp"
-            android:background="@color/white"
-            app:backgroundTint="@color/main_blue"
+            android:src="@drawable/ic_question"
+            app:maxImageSize="48dp"
+            app:fabCustomSize="64dp"
+            android:background="@android:color/white"
+            android:tint="@android:color/white"
+            android:backgroundTint="@color/main_blue"
             app:layout_anchor="@id/bottomAppBar"/>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
