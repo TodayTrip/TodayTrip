@@ -11,7 +11,6 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.tourData.TouristDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
 class TouristAttractionRecyclerViewAdapter :
@@ -68,9 +67,6 @@ class TouristAttractionRecyclerViewAdapter :
 
             titleTextView.text = item.getTitle()
             addressTextView.text = item.getAddress()
-
-            Log.d(TAG, "${item is TouristDestination}")
-            Log.d(TAG, "${item is TourItem}")
 
             item.getTimeInfoWithLabel().forEachIndexed { index, pair ->
                 Log.d(TAG, "getTimeInfoWithLabel) index: $index, pair: $pair")

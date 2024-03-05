@@ -95,4 +95,6 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
 }
