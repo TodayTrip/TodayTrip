@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListEventRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.EventRecyclerViewAdapter
+import com.twoday.todaytrip.place_list_adapter.PlaceListRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -29,7 +29,7 @@ class EventRecyclerViewFragment : Fragment(){
         }
     }
 
-    private lateinit var adapter: EventRecyclerViewAdapter
+    private lateinit var adapter: PlaceListRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -47,7 +47,7 @@ class EventRecyclerViewFragment : Fragment(){
     }
 
     private fun initRecyclerView(){
-        adapter = EventRecyclerViewAdapter()
+        adapter = PlaceListRecyclerViewAdapter()
         binding.rvEventRecyclerView.adapter = adapter
     }
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.TouristAttractionRecyclerViewAdapter
+import com.twoday.todaytrip.place_list_adapter.PlaceListRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -29,7 +29,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(){
         }
     }
 
-    private lateinit var adapter:TouristAttractionRecyclerViewAdapter
+    private lateinit var adapter:PlaceListRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -47,7 +47,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(){
     }
 
     private fun initRecyclerView(){
-        adapter = TouristAttractionRecyclerViewAdapter()
+        adapter = PlaceListRecyclerViewAdapter()
         binding.rvTouristAttractionRecyclerView.adapter = adapter
     }
 
