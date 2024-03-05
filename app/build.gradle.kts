@@ -97,4 +97,6 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
+    // Coil
+    implementation("io.coil-kt:coil:2.0.0-rc03")
 }
