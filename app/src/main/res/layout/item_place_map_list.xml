@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="4dp"
     android:background="@drawable/shape_white_10_radius"
-    android:elevation="5dp"
-    android:paddingHorizontal="20dp"
-    android:paddingVertical="10dp">
+    android:elevation="5dp">
 
     <ImageView
         android:id="@+id/iv_item_place_list"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/shape_white_10_radius"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
@@ -25,37 +26,37 @@
         android:id="@+id/tv_item_place_list_title"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="16dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="TextView"
         android:textAppearance="@style/MiddleTitleBoldText"
         app:layout_constraintStart_toEndOf="@+id/iv_item_place_list"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/iv_item_place_list" />
 
     <TextView
         android:id="@+id/tv_item_place_list_address"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="1"
         android:text="TextView"
         android:textAppearance="@style/TabTitleText"
-        app:layout_constraintStart_toEndOf="@+id/iv_item_place_list"
+        app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_title" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_item_place_list_map_add"
-        android:layout_width="44dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="4dp"
+        android:layout_width="56dp"
+        android:layout_height="32dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/button_round"
         android:text="@string/item_place_list_add"
-        android:textColor="@color/white"
+        android:textSize="16sp"
         android:textAppearance="@style/TinyText"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
