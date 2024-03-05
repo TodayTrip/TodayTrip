@@ -73,8 +73,10 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
-        val markerIconBitmap = resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
-        val photoBitmap = resizeMapIcons(requireContext(), R.drawable.img_pic_marker, 80, 80)
+        val markerIconBitmap =
+            resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+        val photoBitmap =
+            resizeMapIcons(requireContext(), R.drawable.img_pic_marker, 80, 80)
         val combinedBitmap = combineImages(markerIconBitmap, photoBitmap)
 
         locations.forEach { latLng ->
