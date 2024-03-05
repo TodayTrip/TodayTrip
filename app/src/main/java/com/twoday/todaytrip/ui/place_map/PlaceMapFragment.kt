@@ -148,28 +148,30 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private fun onMarkerReady() {
         clearMarkers()
 
-        val markerIconBitmap =
-            resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+        if(locations.isNotEmpty()){
+            val markerIconBitmap =
+                resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
 
 
-        Log.d("onMarkerReady 안 locations", locations.toString())
-        locations.forEach { latLng ->
-            Log.d("latLng", latLng.toString())
-            val marker = Marker().apply {
-                position = latLng
-                icon = OverlayImage.fromBitmap(markerIconBitmap)
-                map = naverMap
+            Log.d("onMarkerReady 안 locations", locations.toString())
+            locations.forEach { latLng ->
+                Log.d("latLng", latLng.toString())
+                val marker = Marker().apply {
+                    position = latLng
+                    icon = OverlayImage.fromBitmap(markerIconBitmap)
+                    map = naverMap
+                }
+                markers.add(marker) // 마커 리스트에 추가
             }
-            markers.add(marker) // 마커 리스트에 추가
+
+            Log.d("markers", markers.size.toString())
+
+            val bounds = createBoundsForAllMarkers(markers)
+
+            // 마커를 추가 한 후 아래 함수를 호출해야 함
+            observeFurthestPairAndConnectMarkers()
+            updateCameraToBounds(naverMap, bounds, 250)
         }
-
-        Log.d("markers", markers.size.toString())
-
-        val bounds = createBoundsForAllMarkers(markers)
-
-        // 마커를 추가 한 후 아래 함수를 호출해야 함
-        observeFurthestPairAndConnectMarkers()
-        updateCameraToBounds(naverMap, bounds, 250)
     }
 
     private fun clearMarkers() {
