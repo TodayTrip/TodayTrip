@@ -18,7 +18,7 @@ class RouteAdapter :
         DiffUtil.ItemCallback<RouteListData>() {
         override fun areItemsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
             // 비디오 id가 같은지 확인
-            return (oldItem.num == newItem.num)
+            return (oldItem.name == newItem.name)
         }
 
         override fun areContentsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {

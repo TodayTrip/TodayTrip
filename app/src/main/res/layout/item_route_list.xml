@@ -42,10 +42,10 @@
         android:layout_marginEnd="5dp"
         android:background="@drawable/shape_white_10_radius"
         android:backgroundTint="@color/white"
-        android:elevation="10dp"
+        android:elevation="5dp"
         android:padding="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/iv_save_photo_stamp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -89,15 +89,6 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <ImageView
-        android:id="@+id/iv_save_photo_stamp"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="19dp"
-        android:src="@drawable/img_route_list_stemp"
-        app:layout_constraintBottom_toBottomOf="@+id/cv_save_photo_text_frame"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cv_save_photo_text_frame" />
 
 
     <View

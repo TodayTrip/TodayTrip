@@ -10,7 +10,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
 import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 
 class RandomOptionFragment : Fragment() {
     private var _binding: FragmentRandomOptionBinding? = null
@@ -66,13 +66,8 @@ class RandomOptionFragment : Fragment() {
     // 전체 랜덤 시 여행지 랜덤 선택하는 함수, 테마 Sharf에는 null로 저장
     private fun selectRandomDestination() {
         val randomDestination = DestinationData.allRandomDestination.random()
-        SharedPreferencesUtil.saveDestination(
-            requireContext(),
-            randomDestination,
-            PrefConstants.DESTINATION_KEY
-        )
-        //TODO 올랜덤일 때 테마는 공백 문자열이 좋을지 null이 좋을지?
-        SharedPreferencesUtil.saveDestination(requireContext(), null, PrefConstants.THEME_KEY)
+        DestinationPrefUtil.saveDestination(randomDestination)
+        DestinationPrefUtil.saveTheme("")
     }
 
     override fun onDestroyView() {

@@ -14,6 +14,8 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.util.FusedLocationSource
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 
 class RouteFragment : Fragment(), OnMapReadyCallback {
@@ -33,17 +35,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     private lateinit var map: NaverMap
     private lateinit var locationSource: FusedLocationSource
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-//            param1 = it.getString(ARG_PARAM1)
-//            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -58,18 +52,32 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val datalist = mutableListOf<RouteListData>()
-        datalist.add(RouteListData("서울역", "어딘가"))
-        datalist.add(RouteListData("N서울 타워",  "있겠지"))
-        datalist.add(RouteListData("청계천",  "아무데나"))
-        datalist.add(RouteListData("북촌 한옥 마을", "가볼까"))
-        datalist.add(RouteListData("경로",  "어디든지"))
-        datalist.add(RouteListData("경로",  "떠나자"))
+        val contentIdList = ContentIdPrefUtil.loadContentIdList()
+        val tour = TourItemPrefUtil.loadTouristAttractionList()
+        val rest = TourItemPrefUtil.loadRestaurantList()
+        val cafe = TourItemPrefUtil.loadCafeList()
+        val event = TourItemPrefUtil.loadEventList()
+        val tourLIst = tour + rest + cafe + event
+        val dataSet:MutableList<RouteListData> = mutableListOf()
 
-        adapter.submitList(datalist)
+        //순서 변경하면 변경사항 저장되게하기
+        //담은 아이템 RecyclerView에 띄우기
+        if(contentIdList.isNotEmpty()) {
+            var count = 0
+            contentIdList.forEach {
+                val place = tourLIst.find { it.getContentId() == contentIdList[count] }
+                Log.d("sdc","최초카운트 = $count")
+                dataSet.add(RouteListData(place?.getTitle() ?: "", place?.getAddress() ?: ""))
+                if (contentIdList.size-1 > count) {
+                    count += 1
+                }
+            }
+        }
+
+        adapter.submitList(dataSet)
         binding.rvRouteRecyclerview.adapter = adapter
         //리싸이클러뷰에 아무것도 없을시 아이콘 띄움
-        if (datalist.isNotEmpty()){
+        if (dataSet.isNotEmpty()){
             binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
         }
 
@@ -101,7 +109,6 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
 //                binding.tvRouteListCompletion.visibility = View.INVISIBLE
 //            }
 //            Toast.makeText(context, "편집클릭", Toast.LENGTH_SHORT).show()
-//
 //        }
 
         adapter.itemClick = object : RouteAdapter.ItemClick {

@@ -11,17 +11,15 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.twoday.todaytrip.place_list_adapter.FirstRecyclerViewAdapter
-import com.twoday.todaytrip.databinding.FragmentFirstRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
-import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
+import com.twoday.todaytrip.place_list_adapter.TouristAttractionRecyclerViewAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
-class FirstRecyclerViewFragment : Fragment(), OnTourItemClickListener {
+class TouristAttractionRecyclerViewFragment : Fragment(){
     private val TAG = "FirstRecyclerViewFragment"
 
-    private var _binding: FragmentFirstRecyclerViewBinding? = null
+    private var _binding: FragmentPlaceListTouristAttractionRecyclerViewBinding? = null
     private val binding get() = _binding!!
 
     private val mainModel: MainViewModel by activityViewModels {
@@ -31,12 +29,12 @@ class FirstRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter:FirstRecyclerViewAdapter
+    private lateinit var adapter:TouristAttractionRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentFirstRecyclerViewBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentPlaceListTouristAttractionRecyclerViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -49,25 +47,18 @@ class FirstRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecyclerView(){
-        adapter = FirstRecyclerViewAdapter().apply{
-            onTourItemClickListener = this@FirstRecyclerViewFragment
-        }
-        binding.rvFirstRecyclerView.adapter = adapter
-    }
-    override fun onTourItemClick(tourItem: TourItem) {
-        Log.d(TAG, "onTourItemClick) contentId: ${tourItem.getContentId()}")
-        tourItem.isAdded = !tourItem.isAdded
-        // TODO isAdded 변경 SharedPreference에 저장하기
+        adapter = TouristAttractionRecyclerViewAdapter()
+        binding.rvTouristAttractionRecyclerView.adapter = adapter
     }
 
     private fun initNoResultOnClickListener(){
-        binding.layoutFirstRecyclerViewNoResult.setOnClickListener {
+        binding.layoutTouristAttractionRecyclerViewNoResult.setOnClickListener {
             setLoadingUI(true)
             mainModel.fetchAndSaveTouristAttractionList()
         }
     }
     private fun initModelObserver(){
-        mainModel.tourInfoTabList.observe(viewLifecycleOwner, Observer {
+        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
             if(it.isEmpty())
                 setNoResultUI()
@@ -76,15 +67,15 @@ class FirstRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         })
     }
     private fun setNoResultUI(){
-        binding.layoutFirstRecyclerViewNoResult.isVisible = true
-        binding.layoutFirstRecyclerViewLoading.isVisible = false
+        binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = true
+        binding.layoutTouristAttractionRecyclerViewLoading.isVisible = false
     }
     private fun setLoadingUI(isLoading:Boolean){
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutFirstRecyclerViewNoResult.isVisible = false
+        binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = false
 
-        binding.layoutFirstRecyclerViewLoading.isVisible = isLoading
-        binding.rvFirstRecyclerView.isVisible = !isLoading
+        binding.layoutTouristAttractionRecyclerViewLoading.isVisible = isLoading
+        binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

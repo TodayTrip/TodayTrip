@@ -9,12 +9,11 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
-class FirstRecyclerViewAdapter :
-    ListAdapter<TourItem, FirstRecyclerViewAdapter.Holder>(TourItemDiffCallback) {
-    private val TAG = "FirstRecyclerViewAdapter"
-
-    var onTourItemClickListener: OnTourItemClickListener? = null
+class EventRecyclerViewAdapter :
+    ListAdapter<TourItem, EventRecyclerViewAdapter.Holder>(TourItemDiffCallback) {
+    private val TAG = "EventRecyclerViewAdapter"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
@@ -28,6 +27,14 @@ class FirstRecyclerViewAdapter :
             bind(getItem(position))
         }
     }
+
+    override fun submitList(list: MutableList<TourItem>?) {
+        list?.forEach {
+            it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
+        }
+        super.submitList(list)
+    }
+
     inner class Holder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
         private val firstImageView = binding.ivItemPlaceList
         private val titleTextView = binding.tvItemPlaceListTitle
@@ -46,12 +53,13 @@ class FirstRecyclerViewAdapter :
             firstImageView.clipToOutline = true
             titleTextView.text = item.getTitle()
             addressTextView.text = item.getAddress()
+
             setAddButtonUI(item.isAdded)
         }
 
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {
-                onTourItemClickListener?.onTourItemClick(item)
+                OnTourItemClickListener.onTourItemClick(item)
                 setAddButtonUI(item.isAdded)
             }
         }
