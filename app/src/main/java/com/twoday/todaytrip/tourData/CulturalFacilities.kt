@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.tourData
 
+import android.util.Log
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
 
@@ -7,11 +8,13 @@ class CulturalFacilities(
     private val _tourItemInfo: AreaBasedListItem,
     private val culturalFacilitiesInfo: IntroDetailItem
 ) : TourItem(tourItemInfo = _tourItemInfo) {
-    override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
-        listOf(
+    override fun getTimeInfoWithLabel(): List<Pair<String, String>>{
+        Log.d("CulturalFacilities","getTimeInfoWithLabel()")
+        return listOf(
             ("이용 시간" to culturalFacilitiesInfo.usetimeculture ?: "정보 없음") as Pair<String, String>,
             ("쉬는날" to culturalFacilitiesInfo.restdateculture ?: "정보 없음") as Pair<String, String>
         )
+    }
 
     override fun getDetailInfoWithLabel(): List<Pair<String, String>> {
         val detailInfoWithLabel = mutableListOf<Pair<String, String>>()
