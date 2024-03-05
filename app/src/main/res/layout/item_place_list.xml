@@ -3,16 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="4dp"
+    android:layout_margin="4dp"
     android:background="@drawable/shape_white_10_radius"
     android:elevation="5dp"
-    android:paddingHorizontal="20dp"
-    android:paddingVertical="10dp">
+    android:padding="16dp">
 
     <ImageView
         android:id="@+id/iv_item_place_list"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:background="@drawable/shape_white_10_radius"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
@@ -23,41 +22,114 @@
 
     <TextView
         android:id="@+id/tv_item_place_list_title"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="4dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="TextView"
-        android:textAppearance="@style/MiddleTitleBoldText"
+        android:text="장소 이름 장소 이름 장소 이름 "
+        android:textAppearance="@style/SmallBoldText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_item_place_list"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_item_place_list_address"
-        android:layout_width="200dp"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="6dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:text="TextView"
-        android:textAppearance="@style/TabTitleText"
+        android:text="주소 주소 주소 주소 주소 주소 주소 주소 "
+        android:textAppearance="@style/SmallText"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/iv_item_place_list"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_title" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_item_place_list_add"
-        android:layout_width="44dp"
-        android:layout_height="28dp"
-        android:layout_marginBottom="4dp"
-        android:background="@drawable/button_round"
-        android:text="@string/item_place_list_add"
-        android:textColor="@color/white"
-        android:textAppearance="@style/TinyText"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        android:id="@+id/tv_item_place_list_time_label1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
+        android:text="레이블1"
+        android:textAppearance="@style/SmallText"
+        android:textColor="@color/button_gray"
+        app:layout_constraintStart_toEndOf="@id/iv_item_place_list"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_place_list_address" />
 
+    <TextView
+        android:id="@+id/tv_item_place_list_time1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="시간1"
+        android:textAppearance="@style/SmallText"
+        android:textColor="@color/button_gray"
+        app:layout_constraintStart_toEndOf="@id/tv_item_place_list_time_label1"
+        app:layout_constraintTop_toTopOf="@id/tv_item_place_list_time_label1" />
+
+    <TextView
+        android:id="@+id/tv_item_place_list_time_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="레이블2"
+        android:textAppearance="@style/SmallText"
+        android:textColor="@color/button_gray"
+        app:layout_constraintStart_toEndOf="@id/iv_item_place_list"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_place_list_time_label1" />
+
+    <TextView
+        android:id="@+id/tv_item_place_list_time2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="시간2"
+        android:textAppearance="@style/SmallText"
+        android:textColor="@color/button_gray"
+        app:layout_constraintStart_toEndOf="@id/tv_item_place_list_time_label2"
+        app:layout_constraintTop_toTopOf="@id/tv_item_place_list_time_label2" />
+
+    <TextView
+        android:id="@+id/tv_item_place_list_time_label3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:text="레이블3"
+        android:textAppearance="@style/SmallText"
+        android:textColor="@color/button_gray"
+        app:layout_constraintStart_toEndOf="@id/iv_item_place_list"
+        app:layout_constraintTop_toBottomOf="@id/tv_item_place_list_time_label2" />
+
+    <TextView
+        android:id="@+id/tv_item_place_list_time3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="시간3"
+        android:textAppearance="@style/SmallText"
+        android:textColor="@color/button_gray"
+        app:layout_constraintStart_toEndOf="@id/tv_item_place_list_time_label3"
+        app:layout_constraintTop_toTopOf="@id/tv_item_place_list_time_label3" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_item_place_list_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_btn_main_blue"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:id="@+id/tv_item_place_list_add"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/item_place_list_add"
+            android:textAppearance="@style/SmallText"
+            android:textColor="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
