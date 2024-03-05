@@ -48,7 +48,7 @@ class PlaceListFragment : Fragment() {
 
         initAdapter()
         searchArea()
-        weatherInfo()
+//        weatherInfo()
 
     }
 

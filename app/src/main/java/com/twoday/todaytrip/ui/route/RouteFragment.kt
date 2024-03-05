@@ -59,12 +59,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState)
 
         val datalist = mutableListOf<RouteListData>()
-//        datalist.add(RouteListData("서울역", "어딘가"))
-//        datalist.add(RouteListData("N서울 타워",  "있겠지"))
-//        datalist.add(RouteListData("청계천",  "아무데나"))
-//        datalist.add(RouteListData("북촌 한옥 마을", "가볼까"))
-//        datalist.add(RouteListData("경로",  "어디든지"))
-//        datalist.add(RouteListData("경로",  "떠나자"))
+        datalist.add(RouteListData("서울역", "어딘가"))
+        datalist.add(RouteListData("N서울 타워",  "있겠지"))
+        datalist.add(RouteListData("청계천",  "아무데나"))
+        datalist.add(RouteListData("북촌 한옥 마을", "가볼까"))
+        datalist.add(RouteListData("경로",  "어디든지"))
+        datalist.add(RouteListData("경로",  "떠나자"))
 
         adapter.submitList(datalist)
         binding.rvRouteRecyclerview.adapter = adapter

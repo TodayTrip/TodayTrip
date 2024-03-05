@@ -15,7 +15,7 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
 
 
     interface ItemClick {
-        fun onClick(item:SavePhotoData)
+        fun onClick(item:SavePhotoData,position: Int)
     }
 
     var itemClick: ItemClick? = null
@@ -36,7 +36,7 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
             holder.visi.visibility = View.INVISIBLE
         }
         holder.image.setOnClickListener {
-            itemClick?.onClick(item[position])
+            itemClick?.onClick(item[position],position)
         }
     }
 
