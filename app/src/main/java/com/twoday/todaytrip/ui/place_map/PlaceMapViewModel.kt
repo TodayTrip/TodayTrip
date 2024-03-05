@@ -6,28 +6,31 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.twoday.todaytrip.PlaceData
+import com.twoday.todaytrip.tourData.TourItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.lang.Exception
 
 class PlaceMapViewModel : ViewModel() {
 
-    private val _placeCardList: MutableLiveData<List<PlaceData>> =
-        MutableLiveData(List(10) { PlaceData() })
-    val placeCardList: LiveData<List<PlaceData>>
-        get() = _placeCardList
+    private val currentDestination: String? = null
+    private val isAddedToRoute: Boolean = false
+
+//    private val _placeCardList: MutableLiveData<List<TourItem>> =
+//        MutableLiveData(List(10) { TourItem() })
+//    val placeCardList: LiveData<List<TourItem>>
+//        get() = _placeCardList
 
     init {
         updatePlaceList()
     }
 
-    private fun getPlaceData(): List<PlaceData> {
-        TODO("Not yet implemented")
-    }
+//    private fun getPlaceData(): List<TourItem> {
+//    }
 
     private fun updatePlaceList() = viewModelScope.launch(Dispatchers.IO) {
         try {
-            val result = getPlaceData()
+//            val result = getPlaceData()
 //            _placeCardList.postValue(
 //                result.map {  }
 //            )

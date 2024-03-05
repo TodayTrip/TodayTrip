@@ -19,7 +19,7 @@ class PlaceDetailViewModel(
     private val currentDestination: String? = null
     private val isAddedToRoute: Boolean = false
 
-    private val placeId: String? = null
+//    private val placeId: String? = null
 
     private var _placeItemData = MutableLiveData<TourItem>()
     val placeItemData: LiveData<TourItem> get() = _placeItemData
@@ -32,6 +32,9 @@ class PlaceDetailViewModel(
     }
 
     fun getPlaceInfo() {
+//        _placeItemData.postValue(
+//            tourItem.getDetailInfoWithLabel()
+//        )
         tourItem.getThumbnailImage()
         //glide-> 이미지뷰
         tourItem.getTitle()
