@@ -12,6 +12,8 @@ sealed interface TourItem{
     fun getTitle() = tourItemInfo.title
     fun getAddress() = tourItemInfo.address ?: "주소 정보 없음"
     fun getThumbnailImage() = tourItemInfo.firstImageThumbnail?: null
+    fun getLongitude() = tourItemInfo.mapX
+    fun getLatitude() = tourItemInfo.mapY
     abstract fun getTimeInfoWithLabel(): List<Pair<String, String>>
     abstract fun getDetailInfoWithLabel(): List<Pair<String, String>>
     fun getContentId() = tourItemInfo.contentId
