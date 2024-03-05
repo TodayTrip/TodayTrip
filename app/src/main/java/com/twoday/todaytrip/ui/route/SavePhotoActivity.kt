@@ -36,6 +36,8 @@ class SavePhotoActivity : AppCompatActivity() {
     private val datalist = mutableListOf<SavePhotoData>()
     private val currentList: MutableList<Uri> = mutableListOf()
 
+//    private lateinit var uri: Uri
+
 
 
 
@@ -99,9 +101,14 @@ class SavePhotoActivity : AppCompatActivity() {
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 activityResult.launch(intent)
-                val uridata = currentList.get(0)
-                datalist[position] = SavePhotoData(uridata,"d","d")
+//                val uridata = currentList.get(0)
+//                datalist[position] = SavePhotoData(uridata,"d","d")
                 Toast.makeText(this@SavePhotoActivity, "클릭", Toast.LENGTH_SHORT).show()
+
+
+
+//                datalist[position].image = uri
+//                adapter.notifyItemChanged(position)
             }
         }
 
@@ -115,10 +122,10 @@ class SavePhotoActivity : AppCompatActivity() {
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()){
         if(it.resultCode == RESULT_OK && it.data != null) {
-            val uri = it.data!!.data
+            val uri = it.data!!.data!!
             Glide.with(this).
                     load(uri).into(binding.imgLoad)
-            uri?.let { it1 -> currentList.add(0, it1) }
+//            uri?.let { it1 -> currentList.add(0, it1) }
         }
     }
 

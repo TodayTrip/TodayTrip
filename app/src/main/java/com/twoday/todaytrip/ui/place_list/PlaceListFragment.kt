@@ -52,9 +52,9 @@ class PlaceListFragment : Fragment() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
         with(viewPagerAdapter) {
             addFragment(TouristAttractionRecyclerViewFragment())
-//            addFragment(RestaurantRecyclerViewFragment())
-//            addFragment(CafeRecyclerViewFragment())
-//            addFragment(EventRecyclerViewFragment())
+            addFragment(RestaurantRecyclerViewFragment())
+            addFragment(CafeRecyclerViewFragment())
+            addFragment(EventRecyclerViewFragment())
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
 
