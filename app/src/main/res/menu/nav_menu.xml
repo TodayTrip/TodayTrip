@@ -10,6 +10,9 @@
         android:icon="@drawable/ic_bottom_map"
         android:title="지도" />
     <item
+        android:id="@+id/navigation_empty"
+        android:title=""/>
+    <item
         android:id="@+id/navigation_route"
         android:icon="@drawable/ic_bottom_map"
         android:title="경로" />
