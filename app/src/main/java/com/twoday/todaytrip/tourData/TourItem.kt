@@ -14,4 +14,6 @@ open class TourItem(
 
     fun getContentId() = tourItemInfo.contentId
     fun getContentTypeId() = tourItemInfo.contentTypeId
+    fun getLongitude() = tourItemInfo.mapX
+    fun getLatitude() = tourItemInfo.mapY
 }
