@@ -23,7 +23,7 @@ class RestaurantRecyclerViewAdapter :
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.run {
-            initOnClickListener(getItem(position))
+            //initOnClickListener(getItem(position))
             bind(getItem(position))
         }
     }
@@ -41,7 +41,7 @@ class RestaurantRecyclerViewAdapter :
         private val addressTextView = binding.tvItemPlaceListAddress
 
         //TODO 영업시간, 휴무일 표시하기
-        private val addButton = binding.btnItemPlaceListAdd
+        //private val addButton = binding.btnItemPlaceListAdd
 
         fun bind(item: TourItem) {
             item.getThumbnailImage()?.let { url ->
@@ -54,9 +54,10 @@ class RestaurantRecyclerViewAdapter :
             titleTextView.text = item.getTitle()
             addressTextView.text = item.getAddress()
 
-            setAddButtonUI(item.isAdded)
+            //setAddButtonUI(item.isAdded)
         }
 
+        /*
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {
                 OnTourItemClickListener.onTourItemClick(item)
@@ -80,5 +81,7 @@ class RestaurantRecyclerViewAdapter :
                 )
             )
         }
+
+         */
     }
 }
