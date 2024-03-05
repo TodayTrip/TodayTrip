@@ -6,9 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
-import com.google.android.gms.common.api.internal.ActivityLifecycleObserver
 import com.twoday.todaytrip.MyApplication
-import com.twoday.todaytrip.PlaceData
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener

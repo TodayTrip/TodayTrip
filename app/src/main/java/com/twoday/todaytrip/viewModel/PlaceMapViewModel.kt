@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.map.overlay.Marker
-import com.twoday.todaytrip.PlaceData
+import com.twoday.todaytrip.ui.place_detail.PlaceData
 
 class PlaceMapViewModel : ViewModel() {
 
