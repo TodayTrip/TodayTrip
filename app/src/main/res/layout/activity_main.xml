@@ -39,6 +39,8 @@
                 android:id="@+id/bottom_navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
                 android:layout_marginRight="16dp"
                 android:background="@color/transparent"
                 android:outlineProvider="none"
@@ -56,10 +58,10 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:backgroundTint="@color/main_blue"
-            app:srcCompat="@drawable/ic_question"
+            app:srcCompat="@drawable/ic_q"
             app:tint="@color/white"
             app:fabCustomSize="64dp"
             app:layout_anchor="@id/bottomAppBar"
-            app:maxImageSize="48dp" />
+            app:maxImageSize="40dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
