@@ -28,6 +28,9 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentRecordDetailMapBinding? = null
     private val binding get() = _binding!!
 
+    private val viewModel by lazy {
+        ViewModelProvider(this@RecordDetailMapFragment)[RecordDetailViewModel::class.java]
+    }
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
     // 마커 리스트 생성
@@ -42,9 +45,6 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         LatLng(37.5195, 127.0378),
         LatLng(37.5089, 127.0468)
     )
-    private val viewModel by lazy {
-        ViewModelProvider(this@RecordDetailMapFragment)[RecordDetailViewModel::class.java]
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

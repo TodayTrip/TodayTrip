@@ -72,8 +72,19 @@
             app:layout_constraintTop_toTopOf="@+id/tv_weather_info" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <ImageView
+        android:id="@+id/iv_place_list_fragment_blur"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/blur_top"
+        android:scaleType="fitXY"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/layout_place_list_fragment"
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_place_list_fragment"
         android:layout_width="match_parent"
         android:layout_height="500dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -140,17 +151,17 @@
             app:layout_constraintTop_toBottomOf="@+id/asd" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fb_map_floating"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="100dp"
-        android:backgroundTint="#282B32"
-        android:src="@drawable/ic_map"
-        app:fabCustomSize="40dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:tint="@color/white" />
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fb_map_floating"-->
+<!--        android:layout_width="40dp"-->
+<!--        android:layout_height="40dp"-->
+<!--        android:layout_marginEnd="32dp"-->
+<!--        android:layout_marginBottom="100dp"-->
+<!--        android:backgroundTint="#282B32"-->
+<!--        android:src="@drawable/ic_map"-->
+<!--        app:fabCustomSize="40dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:tint="@color/white" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

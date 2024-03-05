@@ -32,6 +32,7 @@
 
     <!--  PlaceDetailActivity  -->
     <string name="place_detail_add_to_path">경로에 추가하기</string>
+    <string name="place_detail_remove_from_path">경로에 추가하기</string>
     <string name="place_detail_my_memory">이 장소의 추억</string>
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다.</string>
 
