@@ -1,12 +1,15 @@
 package com.twoday.todaytrip.tourData
 
+import android.os.Parcelable
 import android.util.Log
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface TourItem{
+sealed interface TourItem: Parcelable{
     var isAdded: Boolean
     val tourItemInfo: AreaBasedListItem
     fun getTitle() = tourItemInfo.title
@@ -19,10 +22,11 @@ sealed interface TourItem{
     fun getContentId() = tourItemInfo.contentId
     fun getContentTypeId() = tourItemInfo.contentTypeId
 
+    @Parcelize
     @Serializable
     class TouristDestination(
-        private val _tourItemInfo: AreaBasedListItem,
-        private val touristDestinationInfo: IntroDetailItem
+        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val touristDestinationInfo: @RawValue IntroDetailItem
     ) : TourItem{
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -79,11 +83,11 @@ sealed interface TourItem{
             return detailInfoWithLabel.toList()
         }
     }
-
+    @Parcelize
     @Serializable
     class CulturalFacilities(
-        private val _tourItemInfo: AreaBasedListItem,
-        private val culturalFacilitiesInfo: IntroDetailItem
+        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val culturalFacilitiesInfo: @RawValue IntroDetailItem
     ) : TourItem{
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -137,11 +141,11 @@ sealed interface TourItem{
             return detailInfoWithLabel.toList()
         }
     }
-
+    @Parcelize
     @Serializable
     class Restaurant(
-        private val _tourItemInfo: AreaBasedListItem,
-        private val restaurantInfo: IntroDetailItem
+        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val restaurantInfo: @RawValue IntroDetailItem
     ) : TourItem{
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -202,10 +206,11 @@ sealed interface TourItem{
             return infoWithLabel.toList()
         }
     }
+    @Parcelize
     @Serializable
     class LeisureSports(
-        private val _tourItemInfo: AreaBasedListItem,
-        private val leisureSportsInfo: IntroDetailItem
+        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val leisureSportsInfo: @RawValue IntroDetailItem
     ) : TourItem{
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -258,10 +263,11 @@ sealed interface TourItem{
             return infoWithLabel.toList()
         }
     }
+    @Parcelize
     @Serializable
     class EventPerformanceFestival(
-        private val _tourItemInfo: AreaBasedListItem,
-        private val eventPerformanceFestivalInfo: IntroDetailItem
+        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val eventPerformanceFestivalInfo: @RawValue IntroDetailItem
     ) : TourItem{
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo

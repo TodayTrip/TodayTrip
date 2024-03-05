@@ -5,7 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
+
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
@@ -45,7 +47,6 @@ android {
         buildConfig = true
     }
 }
-
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
