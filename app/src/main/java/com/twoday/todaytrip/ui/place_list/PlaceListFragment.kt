@@ -5,16 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.PrefConstants
-import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weather.Item
 import com.twoday.todaytrip.weather.WeatherClient
 import com.twoday.todaytrip.weather.weather
@@ -22,7 +20,6 @@ import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 
@@ -49,21 +46,21 @@ class PlaceListFragment : Fragment() {
     private fun initAdapter() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
         with(viewPagerAdapter) {
-            addFragment(FirstRecyclerViewFragment())
-            addFragment(SecondRecyclerViewFragment())
-            addFragment(ThirdRecyclerViewFragment())
-            addFragment(FourthRecyclerViewFragment())
+            addFragment(TouristAttractionRecyclerViewFragment())
+            addFragment(RestaurantRecyclerViewFragment())
+            addFragment(CafeRecyclerViewFragment())
+            addFragment(EventRecyclerViewFragment())
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
 
         TabLayoutMediator(binding.tlTabLayout, binding.vpViewpagerMain) { tab, position ->
             tab.text = resources.getText(
                 when (position) {
-                    0 -> R.string.place_list_tourist_destination
+                    0 -> R.string.place_list_tourist_attraction
                     1 -> R.string.place_list_restaurant
                     2 -> R.string.place_list_cafe
                     3 -> R.string.place_list_event
-                    else -> R.string.place_list_tourist_destination // not reached
+                    else -> R.string.place_list_tourist_attraction // not reached
                 }
             )
         }.attach()
@@ -79,6 +76,7 @@ class PlaceListFragment : Fragment() {
         val latitude = coordinates.latitude
         val longitude = coordinates.longitude
 
+        binding.tvTravelAddress.text = coordinates.name
 
         // 오전 12시나 1시인 경우 전날 데이터 사용
         if (base_time == "0000") {
@@ -124,7 +122,7 @@ class PlaceListFragment : Fragment() {
         // 강수 형태 설정
         var result = ""
         when (rainType) {
-            "0" -> binding.tvWeatherInfo2.visibility = View.GONE
+            "0" -> View.GONE
             "1" -> result = "비"
             "2" -> result = "비/눈"
             "3" -> result = "눈"
@@ -151,6 +149,7 @@ class PlaceListFragment : Fragment() {
 
     private fun getBaseTime(h: String): String {
         return when (h.toInt()) {
+            in 0..1 -> "0000"
             in 2..4 -> "0200"
             in 5..7 -> "0500"
             in 8..10 -> "0800"
@@ -164,33 +163,30 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun searchArea(): String? {
-        val area = SharedPreferencesUtil.loadDestination(
-            MyApplication.appContext!!,
-            PrefConstants.DESTINATION_KEY
-        )
+        val area = DestinationPrefUtil.loadDestination()
         return area
     }
 
-    private data class Coordinates(val latitude: String, val longitude: String)
+    private data class Coordinates(val latitude: String, val longitude: String, val name:String)
 
     private fun localLocation(location: String): Coordinates? {
         return when (location) {
-            "서울" -> Coordinates("37.5665", "126.9780")
-            "인천" -> Coordinates("37.4561", "126.7059")
-            "전북" -> Coordinates("35.8201", "127.1091")
-            "전남" -> Coordinates("34.8159", "126.4628")
-            "경북" -> Coordinates("36.5758", "128.5060")
-            "경남" -> Coordinates("35.2373", "128.6920")
-            "충북" -> Coordinates("36.6357", "127.4913")
-            "충남" -> Coordinates("36.6584", "126.6722")
-            "강원" -> Coordinates("37.8228", "128.1555")
-            "대구" -> Coordinates("35.8714", "128.6014")
-            "부산" -> Coordinates("35.1796", "129.0756")
-            "대전" -> Coordinates("36.3504", "127.3845")
-            "제주" -> Coordinates("33.4890", "126.4983")
-            "경기" -> Coordinates("37.4138", "127.5183")
-            "광주" -> Coordinates("35.1595", "126.8526")
-            "울산" -> Coordinates("35.5384", "129.3114")
+            "서울" -> Coordinates("37.5665", "126.9780", "서울")
+            "인천" -> Coordinates("37.4561", "126.7059", "인천")
+            "전북" -> Coordinates("35.8201", "127.1091", "전라북도")
+            "전남" -> Coordinates("34.8159", "126.4628", "전라남도")
+            "경북" -> Coordinates("36.5758", "128.5060", "경상북도")
+            "경남" -> Coordinates("35.2373", "128.6920", "경상남도")
+            "충북" -> Coordinates("36.6357", "127.4913", "충청북도")
+            "충남" -> Coordinates("36.6584", "126.6722", "충청남도")
+            "강원" -> Coordinates("37.8228", "128.1555", "강원도")
+            "대구" -> Coordinates("35.8714", "128.6014", "대구")
+            "부산" -> Coordinates("35.1796", "129.0756", "부산")
+            "대전" -> Coordinates("36.3504", "127.3845", "대전")
+            "제주" -> Coordinates("33.4890", "126.4983", "제주도")
+            "경기" -> Coordinates("37.4138", "127.5183", "경기도")
+            "광주" -> Coordinates("35.1595", "126.8526", "광주")
+            "울산" -> Coordinates("35.5384", "129.3114", "울산")
             else -> null
         }
     }

@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="160dp"
         android:text="경상남도 거제시"
         android:textAppearance="@style/address"
         android:textSize="30sp"
@@ -23,23 +23,24 @@
     <ImageView
         android:id="@+id/iv_local"
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:src="@drawable/img_travel_man"
+        android:layout_height="200dp"
+        android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         />
 
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintBottom_toBottomOf="@+id/iv_local"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
             android:id="@+id/img_weather"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="60dp"
             android:layout_marginBottom="12dp"
@@ -69,7 +70,6 @@
             app:layout_constraintStart_toEndOf="@+id/tv_weather_info"
             app:layout_constraintTop_toTopOf="@+id/tv_weather_info" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -108,7 +108,7 @@
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/place_list_tourist_destination" />
+                    android:text="@string/place_list_tourist_attraction" />
 
                 <com.google.android.material.tabs.TabItem
                     android:layout_width="wrap_content"

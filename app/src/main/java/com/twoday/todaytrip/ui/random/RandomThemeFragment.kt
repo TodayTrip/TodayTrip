@@ -12,7 +12,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
 import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 
 class RandomThemeFragment : Fragment() {
     private var _binding: FragmentRandomThemeBinding? = null
@@ -96,8 +96,8 @@ class RandomThemeFragment : Fragment() {
         Log.d("themeDestination", themeDestination.toString())
         themeDestination?.let {
             Log.d("themeDestination", it)
-            SharedPreferencesUtil.saveDestination(requireContext(), it, PrefConstants.DESTINATION_KEY)
-            SharedPreferencesUtil.saveDestination(requireContext(), theme, PrefConstants.THEME_KEY)
+            DestinationPrefUtil.saveDestination(it)
+            DestinationPrefUtil.saveTheme(theme)
         }
     }
 

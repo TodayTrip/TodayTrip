@@ -15,7 +15,8 @@ import com.google.firebase.auth.auth
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentStartBinding
-import com.twoday.todaytrip.utils.SharedPreferencesUtil
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 //TODO 여행지 초기화 작업 필요할 듯
 class StartFragment : Fragment() {
@@ -52,7 +53,7 @@ class StartFragment : Fragment() {
     private fun setUpClickListener() {
         binding.btnStartTrip.setOnClickListener {
 //            findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
-            initTourItemList()
+            resetSharedPref()
             performAnonymousLogin()
         }
     }
@@ -77,8 +78,9 @@ class StartFragment : Fragment() {
         ).show()
     }
 
-    private fun initTourItemList() {
-        SharedPreferencesUtil.resetTourItemList(MyApplication.appContext!!)
+    private fun resetSharedPref(){
+        TourItemPrefUtil.resetTourItemListPref()
+        ContentIdPrefUtil.resetContentIdListPref()
     }
 
     override fun onDestroyView() {
