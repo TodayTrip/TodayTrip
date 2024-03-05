@@ -9,11 +9,6 @@ import com.twoday.todaytrip.ui.place_detail.PlaceData
 
 class PlaceMapViewModel : ViewModel() {
 
-    private val _placeCardList: MutableLiveData<List<PlaceData>> =
-        MutableLiveData(List(10) { PlaceData() })
-    val placeCardList: LiveData<List<PlaceData>>
-        get() = _placeCardList
-
     // 가장 먼 거리의 마커쌍을 저장하는 라이브 데이터
     private val _furthestPair = MutableLiveData<Pair<Marker, Marker>?>()
     val furthestPair: LiveData<Pair<Marker, Marker>?>
@@ -21,10 +16,6 @@ class PlaceMapViewModel : ViewModel() {
             Log.d("furthestPair", "RecordDetailViewModel에서 furthestPair 라이브데이터")
             return _furthestPair
         }
-
-    private fun getPlaceData(): List<PlaceData> {
-        TODO("Not yet implemented")
-    }
 
     // 지도에서 가장 멀리 있는 마커 구하는 함수
     fun findFurthestMarkers(markers: List<Marker>) {
