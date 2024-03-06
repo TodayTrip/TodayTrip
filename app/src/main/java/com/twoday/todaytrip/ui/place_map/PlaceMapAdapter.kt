@@ -36,12 +36,10 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-//        holder.run {
-////            initOnClickListener(getItem(position))
-//            bind(getItem(position))
-//        }
-        val item = getItem(position) // ListAdapter에서는 getItem() 메서드 사용
-        holder.bind(item)
+        holder.run {
+            initOnClickListener(getItem(position))
+            bind(getItem(position))
+        }
     }
 
     inner class Holder(val binding: ItemPlaceMapListBinding) : RecyclerView.ViewHolder(binding.root) {
