@@ -152,8 +152,6 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             val markerIconBitmap =
                 resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
 
-
-            Log.d("onMarkerReady 안 locations", locations.toString())
             locations.forEach { latLng ->
                 Log.d("latLng", latLng.toString())
                 val marker = Marker().apply {
