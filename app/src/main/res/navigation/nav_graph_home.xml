@@ -28,8 +28,8 @@
 
     <fragment
         android:id="@+id/navigation_record"
-        android:name="com.twoday.todaytrip.ui.record.RecordDetailMapFragment"
+        android:name="com.twoday.todaytrip.ui.record.RecordFragment"
         android:label="fragment_route"
-        tools:layout="@layout/fragment_record_detail_map">
+        tools:layout="@layout/fragment_record">
     </fragment>
 </navigation>
