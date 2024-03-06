@@ -110,4 +110,14 @@
       app:layout_constraintBottom_toTopOf="@+id/rv_savephoto_recyclerview"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintTop_toBottomOf="@+id/cv_route_map_frame" />
+
+  <ImageButton
+      android:id="@+id/iv_tooltip"
+      android:layout_width="30dp"
+      android:layout_height="30dp"
+      android:src="@drawable/ic_route_photo"
+      app:layout_constraintBottom_toTopOf="@+id/rv_savephoto_recyclerview"
+      app:layout_constraintEnd_toStartOf="@+id/img_load"
+      app:layout_constraintTop_toBottomOf="@+id/cv_route_map_frame" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
