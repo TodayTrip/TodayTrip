@@ -53,14 +53,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/container_route_map"
+        <com.naver.maps.map.MapView
+            android:id="@+id/mv_route"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.naver.maps.map.MapFragment"
-            android:src="@mipmap/ic_launcher"
-            android:scaleType="centerCrop" />
-
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
 
 
