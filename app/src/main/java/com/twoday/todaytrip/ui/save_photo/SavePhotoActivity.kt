@@ -1,18 +1,14 @@
-package com.twoday.todaytrip.ui.route
+package com.twoday.todaytrip.ui.save_photo
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
-import com.twoday.todaytrip.recordData.Record
-import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.RecordActivity
+import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil

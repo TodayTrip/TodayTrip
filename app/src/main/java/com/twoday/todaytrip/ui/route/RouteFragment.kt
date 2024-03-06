@@ -1,42 +1,53 @@
 package com.twoday.todaytrip.ui.route
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class RouteFragment : Fragment(), OnMapReadyCallback {
+    private val TAG = "RouteFragment"
 
-    //    private lateinit var adapter: RouteAdapter
-    private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
-    private val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
+    private lateinit var binding: FragmentRouteBinding
+
+    private lateinit var dataSet: List<RouteListData>
     private val adapter: RouteAdapter by lazy {
         RouteAdapter()
     }
-    private lateinit var binding: FragmentRouteBinding
-//    private lateinit var mContext: Context
 
-//    private val itemTouchHelper by lazy { ItemTouchHelper(ItemTouchCallback(RouteAdapter)) }
-
-
-    private lateinit var map: NaverMap
+    private lateinit var naverMap: NaverMap
+    private lateinit var mapView: MapView
     private lateinit var locationSource: FusedLocationSource
+
+    private val markers = mutableListOf<Marker>()
+    private var locations: MutableList<LatLng> = mutableListOf()
+
+    private val viewModel by lazy {
+        ViewModelProvider(this@RouteFragment)[RouteViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentRouteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,111 +55,126 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataSet = initDataSet()
-        adapter.submitList(dataSet)
+        // mapView 변수 초기화
+        mapView = binding.mvRoute
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
+        initDataSet()
+        initRouteRecyclerView()
+        initItemTouchSimpleCallback()
+        initRouteFinishButton()
+    }
+
+    private fun initDataSet() {
+        val contentIdList = ContentIdPrefUtil.loadContentIdList()
+        val tourList = TourItemPrefUtil.loadAllTourItemList()
+
+        val loadedDataSet = mutableListOf<RouteListData>()
+        contentIdList.forEach { contentId ->
+            val tourItem = tourList.find { it.getContentId() == contentId }!!
+            locations.add(
+                LatLng(
+                    tourItem.getLatitude()?.toDouble() ?: 0.0,
+                    tourItem.getLongitude()?.toDouble() ?: 0.0
+                )
+            )
+            loadedDataSet.add(RouteListData(tourItem.getTitle(), tourItem.getAddress()))
+        }
+        dataSet = loadedDataSet.toList()
+    }
+
+    private fun initRouteRecyclerView() {
         binding.rvRouteRecyclerview.adapter = adapter
-        //리싸이클러뷰에 아무것도 없을시 아이콘 띄움
-        if (dataSet.isNotEmpty()){
+        adapter.submitList(dataSet)
+        if (dataSet.isNotEmpty()) {
             binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
         }
+    }
 
+    private fun initItemTouchSimpleCallback() {
+        val itemTouchHelper = ItemTouchHelper(ItemTouchSimpleCallback())
+        itemTouchHelper.attachToRecyclerView(
+            binding.rvRouteRecyclerview
+        )
+    }
+
+    private fun initRouteFinishButton() {
         binding.btnRouteFinish.setOnClickListener {
             val frag = BottomSheetDialog()
             frag.show(childFragmentManager, frag.tag)
         }
-
-        // itemTouchSimpleCallback 인터페이스로 추가 작업
-        itemTouchSimpleCallback.setOnItemMoveListener(object :
-            ItemTouchSimpleCallback.OnItemMoveListener {
-            override fun onItemMove(from: Int, to: Int) {
-//                adapter.notifyItemMoved(from,to)
-//                adapter.submitList(datalist)
-                binding.rvRouteRecyclerview.adapter = adapter
-
-            }
-        })
-
-        // itemTouchHelper와 recyclerview 연결, 아이템 순서변경
-        itemTouchHelper.attachToRecyclerView(binding.rvRouteRecyclerview)
-
-//        binding.cvRouteEditFrame.setOnClickListener {
-//            if (binding.tvRouteListEdit.isVisible) {
-//                binding.tvRouteListEdit.visibility = View.INVISIBLE
-//                binding.tvRouteListCompletion.visibility = View.VISIBLE
-//            } else {
-//                binding.tvRouteListEdit.visibility = View.VISIBLE
-//                binding.tvRouteListCompletion.visibility = View.INVISIBLE
-//            }
-//            Toast.makeText(context, "편집클릭", Toast.LENGTH_SHORT).show()
-//        }
-
-        adapter.itemClick = object : RouteAdapter.ItemClick {
-            override fun onClick(item: RouteListData) {
-
-//                (activity as? MainActivity)?.removeFavorites(item)
-//                adapter.notifyDataSetChanged()
-
-                Log.d("favoritefragment", "remove  ${item}")
-
-            }
-        }
-    }
-
-    override fun onResume() {
-        adapter.submitList(initDataSet())
-        super.onResume()
-    }
-
-    private fun initDataSet():List<RouteListData>{
-        val contentIdList = ContentIdPrefUtil.loadContentIdList()
-        val tourList = TourItemPrefUtil.loadAllTourItemList()
-        val dataSet:MutableList<RouteListData> = mutableListOf()
-
-        if(contentIdList.isNotEmpty()) {
-            var count = 0
-            contentIdList.forEach {
-                val place = tourList.find { it.getContentId() == contentIdList[count] }
-                Log.d("sdc","최초카운트 = $count")
-                dataSet.add(RouteListData(place?.getTitle() ?: "", place?.getAddress() ?: ""))
-                if (contentIdList.size-1 > count) {
-                    count += 1
-                }
-            }
-        }
-        return dataSet
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        this.map = naverMap
-        naverMap.locationSource = locationSource
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.locationTrackingMode = LocationTrackingMode.Face
+        this.naverMap = naverMap
+        onMarkerReady()
     }
 
-//    private fun bindModify() {
-//        findViewById(R.id.btn_modify).setOnClickListener(object : OnClickListener() {
-//            fun onClick(v: View?) {
-//                val recyclerItem: PhRecyclerItem = mRecyclerAdapter.getSelected()
-//                if (recyclerItem == null) {
-//                    Toast.makeText(
-//                        this@PhMainActivity,
-//                        R.string.err_no_selected_item,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    return
-//                }
-//
-//                // Recycler item 수정
-//                recyclerItem.setName(recyclerItem.getName() + " is modified")
-//
-//                // List 반영
-//                // mRecyclerAdapter.notifyDataSetChanged();
-//                val checkedPosition: Int = mRecyclerAdapter.getCheckedPosition()
-//                mRecyclerAdapter.notifyItemChanged(checkedPosition)
-//
-//                // 선택 항목 초기화
-//                mRecyclerAdapter.clearSelected()
-//            }
-//        })
-//    }
+    private fun onMarkerReady() {
+        if (locations.isNotEmpty()) {
+            val markerIconBitmap =
+                MapUtils.resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+
+            locations.forEach { latLng ->
+                val marker = Marker().apply {
+                    position = latLng
+                    icon = OverlayImage.fromBitmap(markerIconBitmap)
+                    map = naverMap
+                }
+                markers.add(marker) // 마커 리스트에 추가
+            }
+            val bounds = MapUtils.createBoundsForAllMarkers(markers)
+//            observeFurthestPairAndConnectMarkers()
+            MapUtils.updateCameraToBounds(naverMap, bounds, 130)
+
+            if (locations.size == 1) {
+                naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
+            }
+        } else {
+            // TODO : locations에 저장된 값이 없을 때 현재 선택한 지역이 카메라에 보이게 수정
+        }
+
+        connectMarkersSequentiallyFromFurthest(naverMap)
+    }
+
+    // 저장된 순서대로 마커끼리 폴리라인 연결하는 함수
+    private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap) {
+        if (locations.size > 1) {
+            val markerPositions = locations.map { location ->
+                LatLng(location.latitude, location.longitude)
+            }
+            drawPolyline(naverMap, markerPositions)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+    override fun onResume() {
+        initDataSet()
+        adapter.submitList(dataSet)
+
+        mapView.onResume()
+        super.onResume()
+    }
+    override fun onPause() {
+        mapView.onPause()
+        super.onPause()
+    }
+    override fun onStop() {
+        mapView.onStop()
+        super.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
+    }
 }

@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
 
