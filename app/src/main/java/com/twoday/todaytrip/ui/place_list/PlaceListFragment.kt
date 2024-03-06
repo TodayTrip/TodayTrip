@@ -31,7 +31,7 @@ import java.util.Date
 import java.util.Locale
 
 
-class PlaceListFragment : Fragment(){
+class PlaceListFragment : Fragment() {
     private val TAG = "PlaceListFragment"
 
     private var _binding: FragmentPlaceListBinding? = null
@@ -129,7 +129,7 @@ class PlaceListFragment : Fragment(){
                             "PTY" -> rainType = item.fcstValue
                         }
                     }
-                    Log.d("iop",sky)
+                    Log.d("iop", sky)
                     setWeather(rainType, sky, temp)
                 }
             }
@@ -191,7 +191,12 @@ class PlaceListFragment : Fragment(){
         return area
     }
 
-    private data class Coordinates(val latitude: String, val longitude: String, val name:String, val image: Int)
+    private data class Coordinates(
+        val latitude: String,
+        val longitude: String,
+        val name: String,
+        val image: Int,
+    )
 
     private fun localLocation(location: String): Coordinates? {
         return when (location) {
