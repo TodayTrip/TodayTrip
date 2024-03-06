@@ -1,9 +1,13 @@
 package com.twoday.todaytrip.ui.route
 
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -15,8 +19,13 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.createBalloon
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
+import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.MapUtils.drawPolyline
@@ -64,6 +73,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         initRouteRecyclerView()
         initItemTouchSimpleCallback()
         initRouteFinishButton()
+        initToolTip()
     }
 
     private fun initDataSet() {
@@ -100,9 +110,46 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initRouteFinishButton() {
-        binding.btnRouteFinish.setOnClickListener {
-            val frag = BottomSheetDialog()
-            frag.show(childFragmentManager, frag.tag)
+        binding.layoutRouteFinishButton.setOnClickListener {
+//            val frag = BottomSheetDialog()
+            if (dataSet.isNotEmpty()) {
+//                frag.show(childFragmentManager, frag.tag)
+                activity?.let {
+                    val intent = Intent(context, SavePhotoActivity::class.java)
+                    startActivity(intent)
+                }
+            } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun initToolTip() {
+        //tooltip 버튼
+        binding.ivTooltip.setOnClickListener {
+            val balloon = context?.let { it1 ->
+                createBalloon(it1) {
+                    setWidthRatio(1.0f)
+                    setHeight(BalloonSizeSpec.WRAP)
+                    setText("기록이 저정되며 해당탭이 초기화 됩니다\n저장한 기록은 기록 탭에서 보실 수 있습니다")
+                    setTextColorResource(R.color.black)
+                    setTextSize(15f)
+                    setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
+                    setArrowSize(10)
+                    setArrowPosition(0.5f)
+                    setPadding(12)
+                    setMarginLeft(20)
+                    setMarginRight(20)
+                    setCornerRadius(8f)
+                    elevation
+                    setBackgroundColorResource(R.color.white)
+                    setBalloonAnimation(BalloonAnimation.ELASTIC)
+                    setLifecycleOwner(lifecycleOwner)
+                    build()
+                }
+            }
+            balloon?.showAlignBottom(binding.ivTooltip)
+            Handler(Looper.getMainLooper()).postDelayed({
+                balloon?.dismiss()
+            }, 3000)
         }
     }
 
@@ -152,6 +199,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         super.onStart()
         mapView.onStart()
     }
+
     override fun onResume() {
         initDataSet()
         adapter.submitList(dataSet)
@@ -159,10 +207,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         mapView.onResume()
         super.onResume()
     }
+
     override fun onPause() {
         mapView.onPause()
         super.onPause()
     }
+
     override fun onStop() {
         mapView.onStop()
         super.onStop()

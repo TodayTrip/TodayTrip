@@ -98,7 +98,6 @@
     <View
         android:layout_width="2dp"
         android:layout_height="60dp"
-        android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/cv_save_photo_pocket_frame"
         app:layout_constraintEnd_toEndOf="@+id/cv_save_photo_pocket_frame"
         app:layout_constraintStart_toStartOf="@+id/cv_save_photo_pocket_frame"
@@ -108,7 +107,6 @@
         android:id="@+id/vi_route_last_view"
         android:layout_width="2dp"
         android:layout_height="30dp"
-        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/cv_save_photo_pocket_frame"
         app:layout_constraintStart_toStartOf="@+id/cv_save_photo_pocket_frame"
         app:layout_constraintTop_toBottomOf="@+id/cv_save_photo_pocket_frame" />
