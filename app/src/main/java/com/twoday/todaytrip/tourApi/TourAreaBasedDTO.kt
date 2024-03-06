@@ -1,6 +1,9 @@
 package com.twoday.todaytrip.tourApi
 
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.Serializable
 
 data class AreaBasedList(
     val response: AreaBasedListResponse
@@ -22,6 +25,8 @@ data class AreaBasedListResponseBody(
 data class AreaBasedListItems(
     val item: List<AreaBasedListItem>
 )
+
+@Serializable
 data class AreaBasedListItem(
     //장소 이름 (필수)
     val title:String,
@@ -77,4 +82,4 @@ data class AreaBasedListItem(
     val bookTour:String, // 교과서 속 여행지 여부
     @SerializedName("cpyrhtDivCd")
     val copyrightType:String //저작권 유형
-)
+) : java.io.Serializable

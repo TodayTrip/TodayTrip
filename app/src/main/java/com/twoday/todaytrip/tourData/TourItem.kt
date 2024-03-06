@@ -25,8 +25,8 @@ sealed interface TourItem: Parcelable{
     @Parcelize
     @Serializable
     class TouristDestination(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
-        private val touristDestinationInfo: @RawValue IntroDetailItem
+        private val _tourItemInfo: AreaBasedListItem,
+        private val touristDestinationInfo: IntroDetailItem
     ) : TourItem{
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo

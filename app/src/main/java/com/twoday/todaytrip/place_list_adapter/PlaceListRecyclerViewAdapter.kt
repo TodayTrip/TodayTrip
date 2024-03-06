@@ -18,6 +18,8 @@ class PlaceListRecyclerViewAdapter :
     ListAdapter<TourItem, PlaceListRecyclerViewAdapter.Holder>(TourItemDiffCallback) {
     private val TAG = "PlaceListRecyclerViewAdapter"
 
+    var onTourItemClickListener:OnTourItemClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
             ItemPlaceListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -85,8 +87,13 @@ class PlaceListRecyclerViewAdapter :
         }
 
         fun initOnClickListener(item: TourItem) {
+            this.itemView.setOnClickListener {
+                Log.d(TAG, "itemView.setOnClickListener) called")
+                onTourItemClickListener?.onTourItemClick(item)
+            }
+
             this.addLayout.setOnClickListener {
-                OnTourItemClickListener.onTourItemClick(item)
+                OnTourItemAddClickListener.onTourItemAddClick(item)
                 setAddButtonUI(item.isAdded)
             }
         }
