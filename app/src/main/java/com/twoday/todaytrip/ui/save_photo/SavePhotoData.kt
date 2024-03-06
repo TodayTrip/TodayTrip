@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.route
+package com.twoday.todaytrip.ui.save_photo
 
 import android.net.Uri
 import com.twoday.todaytrip.tourData.TourItem

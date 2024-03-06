@@ -6,6 +6,7 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
+import java.util.Collections
 
 object ContentIdPrefUtil {
     private val TAG = "ContentIdPrefUtil"
@@ -17,16 +18,28 @@ object ContentIdPrefUtil {
     )
 
     fun isSavedContentId(contentId: String): Boolean = loadContentIdList().contains(contentId)
-    fun addContentId(contentId:String) = saveContentIdList(
-        loadContentIdList().toMutableList().apply{
+
+    fun addContentId(contentId: String) = saveContentIdList(
+        loadContentIdList().toMutableList().apply {
             add(contentId)
         }
     )
+
     fun removeContentId(contentId: String) = saveContentIdList(
         loadContentIdList().filter { it != contentId }
     )
 
-    fun resetContentIdListPref(){
+    fun swapContentId(selectedPosition:Int, targetPosition:Int) {
+        val contentIdList = loadContentIdList().toMutableList()
+        Collections.swap(
+            contentIdList,
+            selectedPosition,
+            targetPosition
+        )
+        saveContentIdList(contentIdList)
+    }
+
+    fun resetContentIdListPref() {
         Log.d(TAG, "resetContentIdListPref) called")
         saveContentIdList(emptyList())
     }
@@ -36,11 +49,13 @@ object ContentIdPrefUtil {
             PrefConstants.PREFERENCE_CONTENT_ID_LIST_KEY,
             Context.MODE_PRIVATE
         )
+
     private fun saveContentIDList(contentIdList: List<String>, destinationKey: String) {
         val prefs = getContentIdListPreferences()
         val json = Gson().toJson(contentIdList)
         prefs.edit().putString(destinationKey, json).apply()
     }
+
     private fun loadContentIdList(destinationKey: String): List<String> {
         val prefs = getContentIdListPreferences()
         val json = prefs.getString(destinationKey, null)
