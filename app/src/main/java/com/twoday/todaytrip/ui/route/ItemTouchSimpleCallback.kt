@@ -2,6 +2,7 @@ package com.twoday.todaytrip.ui.route
 
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import java.util.Collections
 
 class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
@@ -24,8 +25,8 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
 
         val dataSet = routeAdapter.currentList.toMutableList()
         Collections.swap(dataSet, fromPosition, toPosition)
+        ContentIdPrefUtil.swapContentId(fromPosition, toPosition)
         routeAdapter.apply{
-            //submitList(dataSet)
             notifyItemMoved(fromPosition, toPosition)
         }
         return true
