@@ -1,15 +1,11 @@
 package com.twoday.todaytrip.tourApi
 
 import android.util.Log
-import com.twoday.todaytrip.tourData.CulturalFacilities
-import com.twoday.todaytrip.tourData.EventPerformanceFestival
-import com.twoday.todaytrip.tourData.Restaurant
 import com.twoday.todaytrip.tourData.TourCategoryId1
 import com.twoday.todaytrip.tourData.TourCategoryId2
 import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.tourData.TouristDestination
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -29,7 +25,7 @@ object TourNetworkInterfaceUtils {
         }?.let { areaBasedList ->
             areaBasedList.response.body.items.item.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    touristAttractionList.add(TouristDestination(item, it))
+                    touristAttractionList.add(TourItem.TouristDestination(item, it))
                 }
             }
         }
@@ -42,7 +38,7 @@ object TourNetworkInterfaceUtils {
         }?.let { areaBasedList ->
             areaBasedList.response.body.items.item.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    touristAttractionList.add(CulturalFacilities(item, it))
+                    touristAttractionList.add(TourItem.CulturalFacilities(item, it))
                 }
             }
         }
@@ -59,78 +55,85 @@ object TourNetworkInterfaceUtils {
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 "바다" -> {
                     fetchSeaThemeList(areaCode).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 "역사" -> {
                     fetchHistoricalTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 "휴양" -> {
                     fetchRecreationalTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 "체험" -> {
                     fetchExperientialTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 "레포츠" -> {
                     fetchLeisureSportsTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 "문화시설" -> {
                     fetchCulturalThemeList(areaCode).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    CulturalFacilities(item, it)
+                                    TourItem.CulturalFacilities(item, it)
                                 )
                             }
                         }
                     }
                 }
+
                 else -> {
                     Log.d(TAG, "error! theme does not exist!")
                 }
@@ -177,6 +180,7 @@ object TourNetworkInterfaceUtils {
                 arboretumList.await()
             )
         }
+
     private fun fetchSeaThemeList(areaCode: String)
             : List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
@@ -238,6 +242,7 @@ object TourNetworkInterfaceUtils {
                 beachList.await()
             )
         }
+
     private fun fetchHistoricalTheme(areaCode: String): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
@@ -248,6 +253,7 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10
             )
         }
+
     private fun fetchRecreationalTheme(areaCode: String): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
@@ -258,8 +264,9 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10
             )
         }
-    private fun fetchExperientialTheme(areaCode:String): AreaBasedList? =
-        runBlocking(Dispatchers.IO){
+
+    private fun fetchExperientialTheme(areaCode: String): AreaBasedList? =
+        runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
@@ -268,14 +275,16 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10
             )
         }
-    private fun fetchLeisureSportsTheme(areaCode: String):AreaBasedList? =
-        runBlocking(Dispatchers.IO){
+
+    private fun fetchLeisureSportsTheme(areaCode: String): AreaBasedList? =
+        runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.LEISURE_SPORTS.contentTypeId,
                 numOfRows = 10
             )
         }
+
     private fun fetchCulturalThemeList(areaCode: String): List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
             val museumList = async {
@@ -351,7 +360,7 @@ object TourNetworkInterfaceUtils {
                 }
                 ?.forEach { item ->
                     fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                        restaurantTabList.add(Restaurant(item, it))
+                        restaurantTabList.add(TourItem.Restaurant(item, it))
                     }
                 }
             return@runBlocking restaurantTabList.toList()
@@ -371,7 +380,7 @@ object TourNetworkInterfaceUtils {
         val cafeTabList = mutableListOf<TourItem>()
         cafeList?.response?.body?.items?.item?.forEach { item ->
             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                cafeTabList.add(Restaurant(item, it))
+                cafeTabList.add(TourItem.Restaurant(item, it))
             }
         }
         return@runBlocking cafeTabList.toList()
@@ -396,12 +405,12 @@ object TourNetworkInterfaceUtils {
             val eventTabList = mutableListOf<TourItem>()
             eventList?.response?.body?.items?.item?.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    eventTabList.add(EventPerformanceFestival(item, it))
+                    eventTabList.add(TourItem.EventPerformanceFestival(item, it))
                 }
             }
             festivalList?.response?.body?.items?.item?.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    eventTabList.add(EventPerformanceFestival(item, it))
+                    eventTabList.add(TourItem.EventPerformanceFestival(item, it))
                 }
             }
             return@runBlocking eventTabList.toList()
@@ -428,6 +437,15 @@ object TourNetworkInterfaceUtils {
                 Log.d(TAG, "getAreaBasedList) totalCount = 0")
                 return null
             }
+            areaBasedResponse.response.body.items.item
+                .toMutableList()
+                .run {
+                    val filteredList = this.filter {
+                        (!it.mapX.isNullOrBlank()) && (!it.mapY.isNullOrBlank())
+                    }
+                    clear()
+                    addAll(filteredList)
+                }
             return areaBasedResponse
         } catch (e: Exception) {
             Log.d(TAG, "getAreaBasedList) error!")
