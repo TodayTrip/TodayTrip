@@ -1,5 +1,6 @@
-package com.twoday.todaytrip.ui.route
+package com.twoday.todaytrip.ui.save_photo
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,13 +20,13 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SavePhotoAdapter.ItemViewHolder {
+    ): ItemViewHolder {
         val binding =
             ItemSavePhotoListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: SavePhotoAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.num.text = (position + 1).toString()
         holder.bind(item[position])
         if (position == itemCount - 1) {
@@ -38,6 +39,11 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
 
     override fun getItemCount(): Int {
         return item.size
+    }
+
+    fun addImageUri(uri: Uri, position: Int) {
+        item[position].imageUri = uri.toString()
+        notifyItemChanged(position)
     }
 
     inner class ItemViewHolder(binding: ItemSavePhotoListBinding) :
@@ -54,12 +60,12 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
             title.text = item.tourItem.getTitle()
             address.text = item.tourItem.getAddress()
 
-            if(!item.imageUrl.isNullOrBlank()) {
+            if(!item.imageUri.isNullOrBlank()) {
                 icon.isVisible = false
                 iconText.isVisible = false
 
                 Glide.with(image)
-                    .load(item.imageUrl)
+                    .load(item.imageUri)
                     .into(image)
             }
         }

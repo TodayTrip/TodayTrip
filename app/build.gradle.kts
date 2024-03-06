@@ -85,7 +85,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
-    annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
     //Firebase
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-analytics")
@@ -101,4 +101,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
     // Coil
     implementation("io.coil-kt:coil:2.0.0-rc03")
+    //balloon
+    implementation ("com.github.skydoves:balloon:1.4.6")
 }

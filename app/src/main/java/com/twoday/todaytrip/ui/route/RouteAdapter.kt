@@ -1,47 +1,20 @@
 package com.twoday.todaytrip.ui.route
 
-import android.icu.text.Transliterator.Position
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.databinding.ItemRouteListBinding
 
-
 class RouteAdapter :
-    ListAdapter<RouteListData, RouteAdapter.ViewHolder>(object :
-        DiffUtil.ItemCallback<RouteListData>() {
-        override fun areItemsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
-            return (oldItem.name == newItem.name)
-        }
-        override fun areContentsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
-            return oldItem == newItem
-        }
-    })
-{
+    ListAdapter<RouteListData, RouteAdapter.ViewHolder>(RouteListDataDiffCallback) {
+
     interface ItemClick {
         fun onClick(item: RouteListData)
     }
 
     var itemClick: ItemClick? = null
-
-    inner class ViewHolder(binding: ItemRouteListBinding) : RecyclerView.ViewHolder(binding.root) {
-        val name = binding.tvSavePhotoRoadText
-        val num = binding.tvSavePhotoPocketNumber
-        val visi = binding.viRouteLastView
-        val address = binding.tvSavePhotoAddress
-        val option = binding.ivSavePhotoOption
-        fun bind(item: RouteListData) {
-            name.text = item.name
-            address.text = item.address
-//            cancel.isVisible = item.cancel
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
@@ -51,23 +24,19 @@ class RouteAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
-        holder.name.text = currentItem.name
-        holder.num.text = (position + 1).toString()
-        holder.bind(getItem(position))
-//        notifyItemMoved()
+        holder.bind(currentItem)
+//        if (position == itemCount - 1) {
+//            holder.visi.visibility = View.INVISIBLE
+//        }
+    }
 
-//        holder.cancel.isVisible = !currentItem.cancel //홀더에 아이콘이 visivle인지 확인하고 클릭시 boolean반대값을 적용
-//        item.favorite = !item.favorite //클릭시 boolean 값변경
-
-        if (position == itemCount - 1) {
-            holder.visi.visibility = View.INVISIBLE
+    inner class ViewHolder(binding: ItemRouteListBinding) : RecyclerView.ViewHolder(binding.root) {
+        val name = binding.tvSavePhotoRoadText
+        val address = binding.tvSavePhotoAddress
+        val option = binding.ivSavePhotoOption
+        fun bind(item: RouteListData) {
+            name.text = item.name
+            address.text = item.address
         }
-    }
-
-    private fun notifyItemMoved() {
-    }
-
-    fun editVisiblity() {
-
     }
 }

@@ -9,6 +9,11 @@ import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.ui.MainActivity
+import com.twoday.todaytrip.ui.record.Record
+import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.RecordPrefUtil
 
 class BottomSheetDialog : BottomSheetDialogFragment() {
 
@@ -24,8 +29,11 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         //여행종료 버튼
         view?.findViewById<ConstraintLayout>(R.id.layout_bottom_sheet_button)?.setOnClickListener {
-            val intent = Intent(context, SavePhotoActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
+            val savePhotoDataList = (activity as SavePhotoActivity).savePhotoDataList
+            RecordPrefUtil.addRecord(Record(savePhotoDataList))
+            ContentIdPrefUtil.resetContentIdListPref()
             dismiss()
         }
 
