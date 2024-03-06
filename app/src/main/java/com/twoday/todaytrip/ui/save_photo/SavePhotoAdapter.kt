@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.route
+package com.twoday.todaytrip.ui.save_photo
 
 import android.view.LayoutInflater
 import android.view.View
@@ -19,13 +19,13 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): SavePhotoAdapter.ItemViewHolder {
+    ): ItemViewHolder {
         val binding =
             ItemSavePhotoListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ItemViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: SavePhotoAdapter.ItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.num.text = (position + 1).toString()
         holder.bind(item[position])
         if (position == itemCount - 1) {

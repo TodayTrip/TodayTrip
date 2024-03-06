@@ -1,11 +1,8 @@
-package com.twoday.todaytrip.recordData
+package com.twoday.todaytrip.ui.record
 
-import com.twoday.todaytrip.MyApplication
-import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.route.SavePhotoData
+import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 import com.twoday.todaytrip.utils.DateTimeUtil
 import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.PrefConstants
 import kotlinx.serialization.Serializable
 
 @Serializable
