@@ -16,18 +16,16 @@ import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class RouteFragment : Fragment(), OnMapReadyCallback {
+    private val TAG = "RouteFragment"
 
-    //    private lateinit var adapter: RouteAdapter
+    private lateinit var binding: FragmentRouteBinding
+
+    private lateinit var dataSet: List<RouteListData>
     private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
     private val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
     private val adapter: RouteAdapter by lazy {
         RouteAdapter()
     }
-    private lateinit var binding: FragmentRouteBinding
-//    private lateinit var mContext: Context
-
-//    private val itemTouchHelper by lazy { ItemTouchHelper(ItemTouchCallback(RouteAdapter)) }
-
 
     private lateinit var map: NaverMap
     private lateinit var locationSource: FusedLocationSource
@@ -36,7 +34,6 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentRouteBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -44,25 +41,14 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val dataSet = initDataSet()
-        adapter.submitList(dataSet)
-        binding.rvRouteRecyclerview.adapter = adapter
-        //리싸이클러뷰에 아무것도 없을시 아이콘 띄움
-        if (dataSet.isNotEmpty()){
-            binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
-        }
-
-        binding.btnRouteFinish.setOnClickListener {
-            val frag = BottomSheetDialog()
-            frag.show(childFragmentManager, frag.tag)
-        }
+        initDataSet()
+        initRouteRecyclerView()
+        initRouteFinishButton()
 
         // itemTouchSimpleCallback 인터페이스로 추가 작업
         itemTouchSimpleCallback.setOnItemMoveListener(object :
             ItemTouchSimpleCallback.OnItemMoveListener {
             override fun onItemMove(from: Int, to: Int) {
-//                adapter.notifyItemMoved(from,to)
-//                adapter.submitList(datalist)
                 binding.rvRouteRecyclerview.adapter = adapter
 
             }
@@ -71,51 +57,44 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         // itemTouchHelper와 recyclerview 연결, 아이템 순서변경
         itemTouchHelper.attachToRecyclerView(binding.rvRouteRecyclerview)
 
-//        binding.cvRouteEditFrame.setOnClickListener {
-//            if (binding.tvRouteListEdit.isVisible) {
-//                binding.tvRouteListEdit.visibility = View.INVISIBLE
-//                binding.tvRouteListCompletion.visibility = View.VISIBLE
-//            } else {
-//                binding.tvRouteListEdit.visibility = View.VISIBLE
-//                binding.tvRouteListCompletion.visibility = View.INVISIBLE
-//            }
-//            Toast.makeText(context, "편집클릭", Toast.LENGTH_SHORT).show()
-//        }
-
         adapter.itemClick = object : RouteAdapter.ItemClick {
             override fun onClick(item: RouteListData) {
-
-//                (activity as? MainActivity)?.removeFavorites(item)
-//                adapter.notifyDataSetChanged()
-
                 Log.d("favoritefragment", "remove  ${item}")
-
             }
         }
     }
 
     override fun onResume() {
-        adapter.submitList(initDataSet())
+        initDataSet()
+        adapter.submitList(dataSet)
         super.onResume()
     }
 
-    private fun initDataSet():List<RouteListData>{
+    private fun initDataSet() {
         val contentIdList = ContentIdPrefUtil.loadContentIdList()
         val tourList = TourItemPrefUtil.loadAllTourItemList()
-        val dataSet:MutableList<RouteListData> = mutableListOf()
 
-        if(contentIdList.isNotEmpty()) {
-            var count = 0
-            contentIdList.forEach {
-                val place = tourList.find { it.getContentId() == contentIdList[count] }
-                Log.d("sdc","최초카운트 = $count")
-                dataSet.add(RouteListData(place?.getTitle() ?: "", place?.getAddress() ?: ""))
-                if (contentIdList.size-1 > count) {
-                    count += 1
-                }
-            }
+        val loadedDataSet = mutableListOf<RouteListData>()
+        contentIdList.forEach {contentId ->
+            val tourItem = tourList.find { it.getContentId() == contentId }!!
+            loadedDataSet.add(RouteListData(tourItem.getTitle(), tourItem.getAddress()))
         }
-        return dataSet
+        dataSet = loadedDataSet.toList()
+    }
+
+    private fun initRouteRecyclerView() {
+        binding.rvRouteRecyclerview.adapter = adapter
+        adapter.submitList(dataSet)
+        if (dataSet.isNotEmpty()) {
+            binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun initRouteFinishButton() {
+        binding.btnRouteFinish.setOnClickListener {
+            val frag = BottomSheetDialog()
+            frag.show(childFragmentManager, frag.tag)
+        }
     }
 
     override fun onMapReady(naverMap: NaverMap) {
@@ -124,31 +103,4 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         naverMap.uiSettings.isLocationButtonEnabled = true
         naverMap.locationTrackingMode = LocationTrackingMode.Face
     }
-
-//    private fun bindModify() {
-//        findViewById(R.id.btn_modify).setOnClickListener(object : OnClickListener() {
-//            fun onClick(v: View?) {
-//                val recyclerItem: PhRecyclerItem = mRecyclerAdapter.getSelected()
-//                if (recyclerItem == null) {
-//                    Toast.makeText(
-//                        this@PhMainActivity,
-//                        R.string.err_no_selected_item,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//                    return
-//                }
-//
-//                // Recycler item 수정
-//                recyclerItem.setName(recyclerItem.getName() + " is modified")
-//
-//                // List 반영
-//                // mRecyclerAdapter.notifyDataSetChanged();
-//                val checkedPosition: Int = mRecyclerAdapter.getCheckedPosition()
-//                mRecyclerAdapter.notifyItemChanged(checkedPosition)
-//
-//                // 선택 항목 초기화
-//                mRecyclerAdapter.clearSelected()
-//            }
-//        })
-//    }
 }
