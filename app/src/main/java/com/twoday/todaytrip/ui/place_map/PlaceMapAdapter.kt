@@ -59,6 +59,7 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
                 .load(item.getThumbnailImage())
                 .placeholder(R.drawable.img_default_image)
                 .into(binding.ivItemPlaceList)
+            binding.ivItemPlaceList.clipToOutline = true
         }
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {
