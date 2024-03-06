@@ -10,9 +10,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
+import com.twoday.todaytrip.recordData.Record
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.RecordActivity
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 
@@ -72,9 +74,8 @@ class SavePhotoActivity : AppCompatActivity() {
 
     private fun initRouteFinishButton(){
         binding.layoutRouteFinishButton.setOnClickListener {
-            // TODO (1) 여행 기록 Shared Preference에 저장하기
-            // TODO (2) 여행 경로 Shared Preference 지우기
-            // (3) 여행 경로 화면으로 돌아가기
+            RecordPrefUtil.addRecord(Record(savePhotoDataList))
+            ContentIdPrefUtil.resetContentIdListPref()
             finish()
         }
     }
