@@ -32,7 +32,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
             val intent = Intent(context, MainActivity::class.java)
             startActivity(intent)
             val savePhotoDataList = (activity as SavePhotoActivity).savePhotoDataList
-            RecordPrefUtil.addRecord(Record(savePhotoDataList))
+            RecordPrefUtil.addRecord(Record(savePhotoDataList = savePhotoDataList))
             ContentIdPrefUtil.resetContentIdListPref()
             dismiss()
         }

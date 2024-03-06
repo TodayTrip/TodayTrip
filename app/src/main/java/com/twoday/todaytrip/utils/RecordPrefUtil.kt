@@ -49,7 +49,7 @@ object RecordPrefUtil {
                         // SavePhotoData JSON 직렬화 -> Triple에 저장하기
                         Triple(
                             it.tourItem.getContentTypeId(),
-                            it.imageUrl,
+                            it. imageUri,
                             Gson().toJson(it.tourItem)
                         )
                     }
