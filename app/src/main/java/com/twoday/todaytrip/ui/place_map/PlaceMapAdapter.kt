@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
+import com.twoday.todaytrip.place_list_adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
@@ -19,7 +19,7 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
     init {
         submitList(TourItemPrefUtil.loadTouristAttractionList())
     }
-    var onTourItemClickListener: OnTourItemClickListener? = null
+    var onTourItemClickListener: OnTourItemAddClickListener? = null
     class TourItemDiffCallback : DiffUtil.ItemCallback<TourItem>() {
         override fun areItemsTheSame(oldItem: TourItem, newItem: TourItem): Boolean {
             return oldItem.getContentId() == newItem.getContentId()
@@ -61,7 +61,7 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
         }
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {
-                onTourItemClickListener?.onTourItemClick(item)
+                onTourItemClickListener?.onTourItemAddClick(item)
                 setAddButtonUI(item.isAdded)
             }
         }

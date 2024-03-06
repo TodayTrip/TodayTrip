@@ -5,7 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
+
 val properties = Properties()
 properties.load(project.rootProject.file("local.properties").inputStream())
 
@@ -43,9 +45,9 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
+        dataBinding = true
     }
 }
-
 dependencies {
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -95,6 +97,8 @@ dependencies {
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
-    //Coil
+    // Serialization
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
+    // Coil
     implementation("io.coil-kt:coil:2.0.0-rc03")
 }

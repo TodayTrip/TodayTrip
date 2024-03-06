@@ -28,9 +28,9 @@ object WeatherClient {
     }
 
     private val weatherRetrofit = Retrofit.Builder()
-        .baseUrl(WEATHER_BASE_URL).addConverterFactory(GsonConverterFactory.create(gson)).client(
-            createOkHttpClient()
-        ).build()
+        .baseUrl(WEATHER_BASE_URL).addConverterFactory(GsonConverterFactory.create())
+        .client(createOkHttpClient())
+        .build()
 
     val weatherNetWork: WeatherInterface = weatherRetrofit.create(WeatherInterface::class.java)
 }
