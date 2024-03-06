@@ -2,7 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="8dp"
+    android:layout_marginVertical="4dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
@@ -10,7 +10,7 @@
         android:layout_width="16dp"
         android:layout_height="16dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="3dp"
         android:src="@drawable/ic_detail_small_right_arrow"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,14 +34,16 @@
     <TextView
         android:id="@+id/tv_item_place_detail_extra_info"
         style="@style/SmallText"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
         android:text="와이파이"
         android:textStyle="normal"
         android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_item_place_detail_extra_info"
         app:layout_constraintStart_toEndOf="@+id/tv_item_place_detail_extra_info_title"
+        app:layout_constraintEnd_toEndOf="parent"
         />
 
 

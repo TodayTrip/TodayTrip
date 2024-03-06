@@ -98,6 +98,7 @@ class PlaceDetailActivity : AppCompatActivity() {
         with(binding) {
             tvPlaceDetailTitle.text = tourItem?.getTitle()
             tvPlaceDetailLoca.text = tourItem?.getAddress()
+//            tvPlaceDetailTime.text = tourItem?.getTimeInfoWithLabel()?.get(0)?.second ?: "00:00"
             Glide.with(applicationContext.applicationContext)
                 .load(tourItem?.getImage())
                 .into(ivPlaceDetailPic)

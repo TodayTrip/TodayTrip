@@ -73,6 +73,7 @@
                         android:layout_marginTop="16dp"
                         android:maxWidth="320dp"
                         android:text="가게명"
+                        android:textColor="@color/black"
 
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -92,40 +93,44 @@
                     <TextView
                         android:id="@+id/tv_place_detail_loca"
                         style="@style/SmallBoldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="-4dp"
                         android:text="주소"
                         android:textStyle="normal"
                         android:textColor="@color/black"
 
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_place_detail_loca"
                         app:layout_constraintStart_toEndOf="@+id/iv_place_detail_loca"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/iv_place_detail_loca" />
 
-                    <ImageView
-                        android:id="@+id/iv_place_detail_time"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_time"
+<!--                    <ImageView-->
+<!--                        android:id="@+id/iv_place_detail_time"-->
+<!--                        android:layout_width="16dp"-->
+<!--                        android:layout_height="16dp"-->
+<!--                        android:layout_marginTop="16dp"-->
+<!--                        android:src="@drawable/ic_time"-->
 
-                        app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_loca" />
+<!--                        app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"-->
+<!--                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />-->
 
-                    <TextView
-                        android:id="@+id/tv_place_detail_time"
-                        style="@style/SmallBoldText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:text="영업시간"
-                        android:textStyle="normal"
-                        android:textColor="@color/black"
+<!--                    <TextView-->
+<!--                        android:id="@+id/tv_place_detail_time"-->
+<!--                        style="@style/SmallBoldText"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginStart="8dp"-->
+<!--                        android:layout_marginEnd="16dp"-->
+<!--                        android:layout_marginTop="-4dp"-->
+<!--                        android:text="영업시간"-->
+<!--                        android:textStyle="normal"-->
+<!--                        android:textColor="@color/black"-->
 
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_place_detail_time"
-                        app:layout_constraintStart_toEndOf="@+id/iv_place_detail_time"
-                        app:layout_constraintTop_toTopOf="@+id/iv_place_detail_time" />
+<!--                        app:layout_constraintStart_toEndOf="@+id/iv_place_detail_time"-->
+<!--                        app:layout_constraintEnd_toEndOf="parent"-->
+<!--                        app:layout_constraintTop_toTopOf="@+id/iv_place_detail_time" />-->
 
                     <ImageView
                         android:id="@+id/iv_place_detail_info"
@@ -134,21 +139,23 @@
                         android:layout_marginTop="16dp"
                         android:src="@drawable/ic_info"
 
-                        app:layout_constraintStart_toStartOf="@id/iv_place_detail_time"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_time" />
+                        app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />
 
                     <TextView
                         android:id="@+id/tv_place_detail_info"
                         style="@style/SmallBoldText"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginTop="-4dp"
                         android:text="추가정보"
                         android:textStyle="normal"
                         android:textColor="@color/black"
 
-                        app:layout_constraintBottom_toBottomOf="@+id/iv_place_detail_info"
                         app:layout_constraintStart_toEndOf="@+id/iv_place_detail_info"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/iv_place_detail_info" />
 
                     <androidx.recyclerview.widget.RecyclerView
