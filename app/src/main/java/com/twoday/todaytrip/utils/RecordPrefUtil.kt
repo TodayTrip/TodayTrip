@@ -4,13 +4,12 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.JsonElement
 import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
-import com.twoday.todaytrip.recordData.Record
+import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.route.SavePhotoData
+import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 import kotlinx.serialization.json.Json
 
 object RecordPrefUtil {
