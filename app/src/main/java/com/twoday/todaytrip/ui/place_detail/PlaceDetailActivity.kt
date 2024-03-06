@@ -26,10 +26,9 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     //private val viewModel: PlaceDetailViewModel by viewModels()
 
-    //대표사진 한장만
 //    private val placePhotoAdapter by lazy { PlaceDetailPhotoAdapter() }
-    private val placeInfoAdapter by lazy { PlaceDetailExtraInfoAdapter() }
-    private val placeMemoryAdapter by lazy { PlaceDetailMyMemoryAdapter() }
+    private lateinit var placeInfoAdapter: PlaceDetailExtraInfoAdapter
+//    private val placeMemoryAdapter by lazy { PlaceDetailMyMemoryAdapter() }
 
     //getExtra(장소 TourItem parcelable)
     private val tourItem:TourItem? by lazy{
@@ -64,6 +63,7 @@ class PlaceDetailActivity : AppCompatActivity() {
             }
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlaceDetailBinding.inflate(layoutInflater)
@@ -73,19 +73,33 @@ class PlaceDetailActivity : AppCompatActivity() {
 
         initView()
         //initViewModel()
+//        tourItem?.let { initOnClickListener(it) }
     }
 
     private fun initView() {
 //        val introPhotoRecyclerView = binding.rvPlaceDetailPic
         val extraInfoRecyclerView = binding.rvPlaceDetailExtraInfoList
-        val myMemoryRecyclerView = binding.rvPlaceDetailMyMemoryList
+//        val myMemoryRecyclerView = binding.rvPlaceDetailMyMemoryList
 //        introPhotoRecyclerView.adapter = placePhotoAdapter
+
+        placeInfoAdapter = PlaceDetailExtraInfoAdapter(tourItem!!.getDetailInfoWithLabel())
         extraInfoRecyclerView.adapter = placeInfoAdapter
-        myMemoryRecyclerView.adapter = placeMemoryAdapter
+        Log.d("PlaceDetailInfo", "itemCount = ${placeInfoAdapter.itemCount}")
+//        myMemoryRecyclerView.adapter = placeMemoryAdapter
+
+        tourItem?.getDetailInfoWithLabel()
+
+        with(binding) {
+            tvPlaceDetailTitle.text = tourItem?.getTitle()
+            tvPlaceDetailLoca.text = tourItem?.getAddress()
+            Glide.with(applicationContext.applicationContext)
+                .load(tourItem?.getImage())
+                .into(ivPlaceDetailPic)
+        }
+
     }
 
 
-//    @SuppressLint("SetTextI18n")
 //    private fun initViewModel() =viewModel.also { vm ->
 //        vm.placeItemData.observe(this, Observer {
 //            it.getContentId()

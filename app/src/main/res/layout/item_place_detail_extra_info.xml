@@ -15,16 +15,31 @@
         />
 
     <TextView
-        android:id="@+id/tv_item_place_detail_extra_info"
+        android:id="@+id/tv_item_place_detail_extra_info_title"
         style="@style/SmallBoldText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="기타 정보  와이파이"
+        android:text="기타 정보"
+        android:textColor="@color/black"
         android:textStyle="normal"
         app:layout_constraintTop_toTopOf="@+id/iv_item_place_detail_extra_info"
         app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_detail_extra_info"
         app:layout_constraintStart_toEndOf="@+id/iv_item_place_detail_extra_info"
+        />
+
+    <TextView
+        android:id="@+id/tv_item_place_detail_extra_info"
+        style="@style/SmallText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="와이파이"
+        android:textStyle="normal"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/iv_item_place_detail_extra_info"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_detail_extra_info"
+        app:layout_constraintStart_toEndOf="@+id/tv_item_place_detail_extra_info_title"
         />
 
 
