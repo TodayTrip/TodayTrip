@@ -21,8 +21,6 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentRouteBinding
 
     private lateinit var dataSet: List<RouteListData>
-    private val itemTouchSimpleCallback = ItemTouchSimpleCallback()
-    private val itemTouchHelper = ItemTouchHelper(itemTouchSimpleCallback)
     private val adapter: RouteAdapter by lazy {
         RouteAdapter()
     }
@@ -43,25 +41,8 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
 
         initDataSet()
         initRouteRecyclerView()
+        initItemTouchSimpleCallback()
         initRouteFinishButton()
-
-        // itemTouchSimpleCallback 인터페이스로 추가 작업
-        itemTouchSimpleCallback.setOnItemMoveListener(object :
-            ItemTouchSimpleCallback.OnItemMoveListener {
-            override fun onItemMove(from: Int, to: Int) {
-                binding.rvRouteRecyclerview.adapter = adapter
-
-            }
-        })
-
-        // itemTouchHelper와 recyclerview 연결, 아이템 순서변경
-        itemTouchHelper.attachToRecyclerView(binding.rvRouteRecyclerview)
-
-        adapter.itemClick = object : RouteAdapter.ItemClick {
-            override fun onClick(item: RouteListData) {
-                Log.d("favoritefragment", "remove  ${item}")
-            }
-        }
     }
 
     override fun onResume() {
@@ -88,6 +69,13 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         if (dataSet.isNotEmpty()) {
             binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
         }
+    }
+
+    private fun initItemTouchSimpleCallback(){
+        val itemTouchHelper = ItemTouchHelper(ItemTouchSimpleCallback())
+        itemTouchHelper.attachToRecyclerView(
+            binding.rvRouteRecyclerview
+        )
     }
 
     private fun initRouteFinishButton() {

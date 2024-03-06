@@ -102,6 +102,8 @@
         app:layout_constraintTop_toBottomOf="@+id/tv_route_list_title"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="3"
+        android:background="@color/white"
+        android:foreground="?attr/selectableItemBackground"
         tools:listitem="@layout/item_route_list" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
