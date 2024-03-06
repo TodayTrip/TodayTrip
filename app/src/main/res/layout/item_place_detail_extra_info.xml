@@ -2,16 +2,18 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:id="@+id/iv_item_place_detail_extra_info"
         android:layout_width="16dp"
         android:layout_height="16dp"
-        android:src="@drawable/ic_store_info"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="4dp"
+        android:src="@drawable/ic_detail_small_right_arrow"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <TextView
@@ -20,6 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:gravity="top"
         android:text="기타 정보"
         android:textColor="@color/black"
         android:textStyle="normal"
@@ -37,8 +40,7 @@
         android:text="와이파이"
         android:textStyle="normal"
         android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="@+id/iv_item_place_detail_extra_info"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_detail_extra_info"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tv_item_place_detail_extra_info_title"
         />
 

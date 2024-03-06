@@ -37,7 +37,8 @@ class PlaceDetailExtraInfoAdapter(
         private val infoText = binding.tvItemPlaceDetailExtraInfo
         fun onBind(placeInfo: Pair<String, String>) {
             labelText.text = placeInfo.first
-            Log.d("placeDetailInfo", "placeInfo = ${placeInfo.second}")
+            Log.d("placeDetailInfo", "placeInfoFirst = ${placeInfo.first}")
+            Log.d("placeDetailInfo", "placeInfoSecond = ${placeInfo.second}")
             infoText.text = Html.fromHtml(placeInfo.second)
 //            infoText.text = placeInfo.second
         }

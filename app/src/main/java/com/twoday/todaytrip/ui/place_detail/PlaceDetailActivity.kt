@@ -26,37 +26,43 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     //private val viewModel: PlaceDetailViewModel by viewModels()
 
-//    private val placePhotoAdapter by lazy { PlaceDetailPhotoAdapter() }
+    //    private val placePhotoAdapter by lazy { PlaceDetailPhotoAdapter() }
     private lateinit var placeInfoAdapter: PlaceDetailExtraInfoAdapter
 //    private val placeMemoryAdapter by lazy { PlaceDetailMyMemoryAdapter() }
 
     //getExtra(장소 TourItem parcelable)
-    private val tourItem:TourItem? by lazy{
-        when(intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)){
-            TourContentTypeId.TOURIST_DESTINATION.contentTypeId ->{
+    private val tourItem: TourItem? by lazy {
+        when (intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)) {
+            TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId ->{
+
+            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.CulturalFacilities>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.RESTAURANT.contentTypeId ->{
+
+            TourContentTypeId.RESTAURANT.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.Restaurant>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.LEISURE_SPORTS.contentTypeId ->{
+
+            TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.LeisureSports>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId ->{
+
+            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.EventPerformanceFestival>(EXTRA_TOUR_ITEM)
             }
+
             else -> {
                 null
             }
         }
     }
-    companion object{
+
+    companion object {
         const val EXTRA_CONTENT_TYPE_ID = "extra_content_type_id"
         const val EXTRA_TOUR_ITEM = "extra_tour_item"
-        fun newIntent(context: Context, contentTypeId:String, tourItem:TourItem): Intent =
+        fun newIntent(context: Context, contentTypeId: String, tourItem: TourItem): Intent =
             Intent(context, PlaceDetailActivity::class.java).apply {
                 putExtra(EXTRA_CONTENT_TYPE_ID, contentTypeId)
                 putExtra(EXTRA_TOUR_ITEM, tourItem)
@@ -73,7 +79,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 
         initView()
         //initViewModel()
-//        tourItem?.let { initOnClickListener(it) }
+        tourItem?.let { initOnClickListener(it) }
     }
 
     private fun initView() {
@@ -120,6 +126,9 @@ class PlaceDetailActivity : AppCompatActivity() {
 //    }
 
     fun initOnClickListener(item: TourItem) {
+        binding.ivPlaceDetailBack.setOnClickListener {
+            if (!isFinishing) finish()
+        }
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             OnTourItemAddClickListener.onTourItemAddClick(item)
             setAddButtonUI(item.isAdded)
