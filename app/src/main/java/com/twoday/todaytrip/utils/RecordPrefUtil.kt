@@ -41,7 +41,7 @@ object RecordPrefUtil {
         // (1) SavePhotoData JSON 직렬화 -> Triple에 담기
         val serializedRecordList = recordList.map { record ->
             record.savePhotoDataList.map {
-                Triple(it.tourItem.getContentTypeId(), it.imageUrl, Gson().toJson(it.tourItem))
+                Triple(it.tourItem.getContentTypeId(), it.imageUri, Gson().toJson(it.tourItem))
             }
         }
         // (2) List<List<Triple>> 직렬화

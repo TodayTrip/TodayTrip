@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.ui.save_photo
 
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,6 +41,11 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
         return item.size
     }
 
+    fun addImageUri(uri: Uri, position: Int) {
+        item[position].imageUri = uri.toString()
+        notifyItemChanged(position)
+    }
+
     inner class ItemViewHolder(binding: ItemSavePhotoListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         val title = binding.tvSavePhotoRoadText
@@ -54,12 +60,12 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
             title.text = item.tourItem.getTitle()
             address.text = item.tourItem.getAddress()
 
-            if(!item.imageUrl.isNullOrBlank()) {
+            if(!item.imageUri.isNullOrBlank()) {
                 icon.isVisible = false
                 iconText.isVisible = false
 
                 Glide.with(image)
-                    .load(item.imageUrl)
+                    .load(item.imageUri)
                     .into(image)
             }
         }
