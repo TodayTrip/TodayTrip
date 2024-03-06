@@ -61,6 +61,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 "바다" -> {
                     fetchSeaThemeList(areaCode).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
@@ -72,6 +73,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 "역사" -> {
                     fetchHistoricalTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
@@ -83,6 +85,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 "휴양" -> {
                     fetchRecreationalTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
@@ -94,6 +97,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 "체험" -> {
                     fetchExperientialTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
@@ -105,6 +109,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 "레포츠" -> {
                     fetchLeisureSportsTheme(areaCode)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
@@ -116,6 +121,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 "문화시설" -> {
                     fetchCulturalThemeList(areaCode).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
@@ -127,6 +133,7 @@ object TourNetworkInterfaceUtils {
                         }
                     }
                 }
+
                 else -> {
                     Log.d(TAG, "error! theme does not exist!")
                 }
@@ -173,6 +180,7 @@ object TourNetworkInterfaceUtils {
                 arboretumList.await()
             )
         }
+
     private fun fetchSeaThemeList(areaCode: String)
             : List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
@@ -234,6 +242,7 @@ object TourNetworkInterfaceUtils {
                 beachList.await()
             )
         }
+
     private fun fetchHistoricalTheme(areaCode: String): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
@@ -244,6 +253,7 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10
             )
         }
+
     private fun fetchRecreationalTheme(areaCode: String): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
@@ -254,8 +264,9 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10
             )
         }
-    private fun fetchExperientialTheme(areaCode:String): AreaBasedList? =
-        runBlocking(Dispatchers.IO){
+
+    private fun fetchExperientialTheme(areaCode: String): AreaBasedList? =
+        runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
@@ -264,14 +275,16 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10
             )
         }
-    private fun fetchLeisureSportsTheme(areaCode: String):AreaBasedList? =
-        runBlocking(Dispatchers.IO){
+
+    private fun fetchLeisureSportsTheme(areaCode: String): AreaBasedList? =
+        runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.LEISURE_SPORTS.contentTypeId,
                 numOfRows = 10
             )
         }
+
     private fun fetchCulturalThemeList(areaCode: String): List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
             val museumList = async {
@@ -424,6 +437,16 @@ object TourNetworkInterfaceUtils {
                 Log.d(TAG, "getAreaBasedList) totalCount = 0")
                 return null
             }
+            areaBasedResponse.response.body.items.item
+                .toMutableList()
+                .run {
+                    clear()
+                    addAll(
+                        this.filter {
+                            (!it.mapX.isNullOrBlank()) && (!it.mapY.isNullOrBlank())
+                        }
+                    )
+                }
             return areaBasedResponse
         } catch (e: Exception) {
             Log.d(TAG, "getAreaBasedList) error!")
