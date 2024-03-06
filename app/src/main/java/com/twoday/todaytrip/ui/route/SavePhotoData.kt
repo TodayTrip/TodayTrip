@@ -1,10 +1,9 @@
 package com.twoday.todaytrip.ui.route
 
 import android.net.Uri
+import com.twoday.todaytrip.tourData.TourItem
 
 data class SavePhotoData(
-    var image: Uri,
-    val name: String,
-    val address: String,
-
+    val tourItem: TourItem,
+    val imageUrl: String? = null
 )

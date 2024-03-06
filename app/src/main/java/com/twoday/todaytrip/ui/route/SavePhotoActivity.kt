@@ -10,7 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
+import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.RecordActivity
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 
 class SavePhotoActivity : AppCompatActivity() {
@@ -21,16 +24,32 @@ class SavePhotoActivity : AppCompatActivity() {
     }
 
     private lateinit var adapter: SavePhotoAdapter
-
-    private val datalist = mutableListOf<SavePhotoData>()
-    private val currentList: MutableList<Uri> = mutableListOf()
+    private val savePhotoDataList = mutableListOf<SavePhotoData>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        adapter = SavePhotoAdapter(datalist)
+        initSavePhotoDataList()
+        initSavePhotoRecylerView()
+        initRouteFinishButton()
+    }
+
+    private fun initSavePhotoDataList(){
+        val allTourItemList = TourItemPrefUtil.loadAllTourItemList()
+        val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
+
+        addedContentIdList.forEach {contentID ->
+            val tourItem = allTourItemList.find{
+                it.getContentId() == contentID
+            }!!
+            savePhotoDataList.add(SavePhotoData(tourItem))
+        }
+    }
+
+    private fun initSavePhotoRecylerView(){
+        adapter = SavePhotoAdapter(savePhotoDataList)
         binding.rvSavephotoRecyclerview.adapter = adapter
 
         adapter.itemClick = object : SavePhotoAdapter.ItemClick {
@@ -41,19 +60,22 @@ class SavePhotoActivity : AppCompatActivity() {
                 Toast.makeText(this@SavePhotoActivity, "클릭", Toast.LENGTH_SHORT).show()
             }
         }
-
-        binding.layoutRouteFinishButton.setOnClickListener {
-            val intent = Intent(this, RecordActivity::class.java)
-            startActivity(intent)
-        }
     }
-
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == RESULT_OK && it.data != null) {
             val uri = it.data!!.data!!
             Glide.with(this).load(uri).into(binding.imgLoad)
+        }
+    }
+
+    private fun initRouteFinishButton(){
+        binding.layoutRouteFinishButton.setOnClickListener {
+            // TODO (1) 여행 기록 Shared Preference에 저장하기
+            // TODO (2) 여행 경로 Shared Preference 지우기
+            // (3) 여행 경로 화면으로 돌아가기
+            finish()
         }
     }
 }
