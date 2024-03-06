@@ -48,9 +48,9 @@ sealed interface TourItem: Parcelable{
             detailInfoWithLabel.run {
                 with(touristDestinationInfo) {
                     // 필수로 표시 될 관광지 정보
-                    add(("이용 시간" to usetime ?: "정보 없음") as Pair<String, String>)
-                    add(("개장일" to opendate ?: "정보 없음") as Pair<String, String>)
-                    add(("주차 시설" to parking ?: "정보 없음") as Pair<String, String>)
+                    add(("이용 시간" to (usetime ?: "정보 없음")) as Pair<String, String>)
+                    add(("개장일" to (opendate ?: "정보 없음")) as Pair<String, String>)
+                    add(("주차 시설" to (parking ?: "정보 없음")) as Pair<String, String>)
                     // 있으면 표시, 없으면 표시되지 않을 관광지 정보
                     if (!accomcount.isNullOrBlank()) add("수용 인원" to accomcount)
                     if (!chkbabycarriage.isNullOrBlank()) add("유모차 대여" to chkbabycarriage)
@@ -92,10 +92,10 @@ sealed interface TourItem: Parcelable{
             detailInfoWithLabel.run{
                 with(culturalFacilitiesInfo) {
                     // 필수로 표시 될 문화시설 정보
-                    add(("이용 요금" to usefee ?: "정보 없음") as Pair<String, String>)
-                    add(("이용 시간" to usetimeculture ?: "정보 없음") as Pair<String, String>)
-                    add(("쉬는날" to restdateculture ?: "정보 없음") as Pair<String, String>)
-                    add(("주차 시설" to parkingculture ?: "정보 없음") as Pair<String, String>)
+                    add(("이용 요금" to (usefee ?: "정보 없음")) as Pair<String, String>)
+                    add(("이용 시간" to (usetimeculture ?: "정보 없음")) as Pair<String, String>)
+                    add(("쉬는날" to (restdateculture ?: "정보 없음")) as Pair<String, String>)
+                    add(("주차 시설" to (parkingculture ?: "정보 없음")) as Pair<String, String>)
                     // 있으면 표시, 없으면 표시되지 않을 문화시설 정보
                     if (!parkingfee.isNullOrBlank()) add("주차 요금" to parkingfee)
                     if (!accomcountculture.isNullOrBlank()) add("수용 인원" to accomcountculture)
@@ -134,10 +134,10 @@ sealed interface TourItem: Parcelable{
             infoWithLabel.run {
                 with(restaurantInfo) {
                     // 필수로 표시 될 문화시설 정보
-                    add(("영업 시간" to opentimefood ?: "정보 없음") as Pair<String, String>)
-                    add(("쉬는날" to restdatefood ?: "정보 없음") as Pair<String, String>)
-                    add(("주차 시설" to parkingfood ?: "정보 없음") as Pair<String, String>)
-                    add(("대표 메뉴" to firstmenu ?: "정보 없음") as Pair<String, String>)
+                    add(("영업 시간" to (opentimefood ?: "정보 없음")) as Pair<String, String>)
+                    add(("쉬는날" to (restdatefood ?: "정보 없음")) as Pair<String, String>)
+                    add(("주차 시설" to (parkingfood ?: "정보 없음")) as Pair<String, String>)
+                    add(("대표 메뉴" to (firstmenu ?: "정보 없음")) as Pair<String, String>)
                     // 있으면 표시, 없으면 표시되지 않을 문화시설 정보
                     if (!treatmenu.isNullOrBlank()) add("취급 메뉴" to treatmenu)
                     if (!packing.isNullOrBlank()) add("포장 가능" to packing)
@@ -226,7 +226,7 @@ sealed interface TourItem: Parcelable{
             infoWithLabel.run {
                 with(eventPerformanceFestivalInfo) {
                     // 필수로 표시 될 행사/공연/축제 정보
-                    add(("이용 요금" to usefee ?: "정보 없음") as Pair<String, String>)
+                    add(("이용 요금" to (usefee ?: "정보 없음")) as Pair<String, String>)
                     // 있으면 표시, 없으면 표시되지 않을 행사/공연/축제 정보
                     if (!agelimit.isNullOrBlank()) add("관람 가능 연령" to agelimit)
                     if (!bookingplace.isNullOrBlank()) add("예매처" to bookingplace)
