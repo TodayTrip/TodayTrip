@@ -1,25 +1,43 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.record
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.db.williamchart.data.AxisType
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.databinding.ActivityRecordBinding
+import com.twoday.todaytrip.databinding.FragmentRecordBinding
 import com.twoday.todaytrip.utils.RecordPrefUtil
 
-class RecordActivity : AppCompatActivity() {
+class RecordFragment : Fragment() {
     private val TAG = "RecordActivity"
-
-    private var _binding: ActivityRecordBinding? = null
+    private var _binding: FragmentRecordBinding? = null
     private val binding get() = _binding!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityRecordBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    }
+    val recordList = RecordPrefUtil.loadRecordList()
+//        Log.d(TAG, "${recordList.size}")
+//        if(recordList.isNotEmpty())
+//            Log.d(TAG, "${recordList[0].destination}, ${recordList[0].travelDate}, ${recordList[0].savePhotoDataList.size}")
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = FragmentRecordBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    private fun initView() {
         // Shared Preference test code
         val recordList = RecordPrefUtil.loadRecordList()
         Log.d(TAG, "${recordList.size}")
@@ -44,4 +62,5 @@ class RecordActivity : AppCompatActivity() {
             animate(exampleDataSet)
         }
     }
+
 }
