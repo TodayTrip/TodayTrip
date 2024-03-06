@@ -70,7 +70,7 @@ class SavePhotoActivity : AppCompatActivity() {
 
     private fun initRouteFinishButton(){
         binding.layoutRouteFinishButton.setOnClickListener {
-            RecordPrefUtil.addRecord(Record(savePhotoDataList))
+            RecordPrefUtil.addRecord(Record(savePhotoDataList = savePhotoDataList))
             ContentIdPrefUtil.resetContentIdListPref()
             finish()
         }
