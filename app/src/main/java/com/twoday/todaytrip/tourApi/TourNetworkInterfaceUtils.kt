@@ -1,15 +1,11 @@
 package com.twoday.todaytrip.tourApi
 
 import android.util.Log
-import com.twoday.todaytrip.tourData.CulturalFacilities
-import com.twoday.todaytrip.tourData.EventPerformanceFestival
-import com.twoday.todaytrip.tourData.Restaurant
 import com.twoday.todaytrip.tourData.TourCategoryId1
 import com.twoday.todaytrip.tourData.TourCategoryId2
 import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.tourData.TouristDestination
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -29,7 +25,7 @@ object TourNetworkInterfaceUtils {
         }?.let { areaBasedList ->
             areaBasedList.response.body.items.item.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    touristAttractionList.add(TouristDestination(item, it))
+                    touristAttractionList.add(TourItem.TouristDestination(item, it))
                 }
             }
         }
@@ -42,7 +38,7 @@ object TourNetworkInterfaceUtils {
         }?.let { areaBasedList ->
             areaBasedList.response.body.items.item.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    touristAttractionList.add(CulturalFacilities(item, it))
+                    touristAttractionList.add(TourItem.CulturalFacilities(item, it))
                 }
             }
         }
@@ -59,7 +55,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
@@ -70,7 +66,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
@@ -81,7 +77,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
@@ -92,7 +88,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
@@ -103,7 +99,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
@@ -114,7 +110,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TouristDestination(item, it)
+                                    TourItem.TouristDestination(item, it)
                                 )
                             }
                         }
@@ -125,7 +121,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    CulturalFacilities(item, it)
+                                    TourItem.CulturalFacilities(item, it)
                                 )
                             }
                         }
@@ -351,7 +347,7 @@ object TourNetworkInterfaceUtils {
                 }
                 ?.forEach { item ->
                     fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                        restaurantTabList.add(Restaurant(item, it))
+                        restaurantTabList.add(TourItem.Restaurant(item, it))
                     }
                 }
             return@runBlocking restaurantTabList.toList()
@@ -371,7 +367,7 @@ object TourNetworkInterfaceUtils {
         val cafeTabList = mutableListOf<TourItem>()
         cafeList?.response?.body?.items?.item?.forEach { item ->
             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                cafeTabList.add(Restaurant(item, it))
+                cafeTabList.add(TourItem.Restaurant(item, it))
             }
         }
         return@runBlocking cafeTabList.toList()
@@ -396,12 +392,12 @@ object TourNetworkInterfaceUtils {
             val eventTabList = mutableListOf<TourItem>()
             eventList?.response?.body?.items?.item?.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    eventTabList.add(EventPerformanceFestival(item, it))
+                    eventTabList.add(TourItem.EventPerformanceFestival(item, it))
                 }
             }
             festivalList?.response?.body?.items?.item?.forEach { item ->
                 fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    eventTabList.add(EventPerformanceFestival(item, it))
+                    eventTabList.add(TourItem.EventPerformanceFestival(item, it))
                 }
             }
             return@runBlocking eventTabList.toList()

@@ -13,6 +13,9 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
+import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.PrefConstants
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
@@ -27,7 +30,9 @@ import java.util.Date
 import java.util.Locale
 
 
-class PlaceListFragment : Fragment() {
+class PlaceListFragment : Fragment(){
+    private val TAG = "PlaceListFragment"
+
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
