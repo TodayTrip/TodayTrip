@@ -26,26 +26,33 @@
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="ootzd3244r" />
+
         <activity
             android:name=".ui.place_detail.PlaceDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.RecordDetailActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.RecordActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false"/>
-        <activity
-            android:name=".ui.RandomActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.RandomActivity"
+            android:exported="true">
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
         </activity>
     </application>
 
