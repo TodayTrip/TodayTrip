@@ -1,18 +1,25 @@
 package com.twoday.todaytrip.ui.route
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
-import com.naver.maps.map.LocationTrackingMode
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.naver.maps.map.util.FusedLocationSource
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class RouteFragment : Fragment(), OnMapReadyCallback {
@@ -25,8 +32,17 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         RouteAdapter()
     }
 
-    private lateinit var map: NaverMap
+    private lateinit var naverMap: NaverMap
+    private lateinit var mapView: MapView
     private lateinit var locationSource: FusedLocationSource
+
+    private val markers = mutableListOf<Marker>()
+    private var locations: MutableList<LatLng> = mutableListOf()
+
+    private val viewModel by lazy {
+        ViewModelProvider(this@RouteFragment)[RouteViewModel::class.java]
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,16 +55,15 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // mapView 변수 초기화
+        mapView = binding.mvRoute
+        mapView.onCreate(savedInstanceState)
+        mapView.getMapAsync(this)
+
         initDataSet()
         initRouteRecyclerView()
         initItemTouchSimpleCallback()
         initRouteFinishButton()
-    }
-
-    override fun onResume() {
-        initDataSet()
-        adapter.submitList(dataSet)
-        super.onResume()
     }
 
     private fun initDataSet() {
@@ -56,8 +71,14 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         val tourList = TourItemPrefUtil.loadAllTourItemList()
 
         val loadedDataSet = mutableListOf<RouteListData>()
-        contentIdList.forEach {contentId ->
+        contentIdList.forEach { contentId ->
             val tourItem = tourList.find { it.getContentId() == contentId }!!
+            locations.add(
+                LatLng(
+                    tourItem.getLatitude()?.toDouble() ?: 0.0,
+                    tourItem.getLongitude()?.toDouble() ?: 0.0
+                )
+            )
             loadedDataSet.add(RouteListData(tourItem.getTitle(), tourItem.getAddress()))
         }
         dataSet = loadedDataSet.toList()
@@ -71,7 +92,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
         }
     }
 
-    private fun initItemTouchSimpleCallback(){
+    private fun initItemTouchSimpleCallback() {
         val itemTouchHelper = ItemTouchHelper(ItemTouchSimpleCallback())
         itemTouchHelper.attachToRecyclerView(
             binding.rvRouteRecyclerview
@@ -86,9 +107,74 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onMapReady(naverMap: NaverMap) {
-        this.map = naverMap
-        naverMap.locationSource = locationSource
-        naverMap.uiSettings.isLocationButtonEnabled = true
-        naverMap.locationTrackingMode = LocationTrackingMode.Face
+        this.naverMap = naverMap
+        onMarkerReady()
+    }
+
+    private fun onMarkerReady() {
+        if (locations.isNotEmpty()) {
+            val markerIconBitmap =
+                MapUtils.resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+
+            locations.forEach { latLng ->
+                val marker = Marker().apply {
+                    position = latLng
+                    icon = OverlayImage.fromBitmap(markerIconBitmap)
+                    map = naverMap
+                }
+                markers.add(marker) // 마커 리스트에 추가
+            }
+            val bounds = MapUtils.createBoundsForAllMarkers(markers)
+//            observeFurthestPairAndConnectMarkers()
+            MapUtils.updateCameraToBounds(naverMap, bounds, 130)
+
+            if (locations.size == 1) {
+                naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
+            }
+        } else {
+            // TODO : locations에 저장된 값이 없을 때 현재 선택한 지역이 카메라에 보이게 수정
+        }
+
+        connectMarkersSequentiallyFromFurthest(naverMap)
+    }
+
+    // 저장된 순서대로 마커끼리 폴리라인 연결하는 함수
+    private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap) {
+        if (locations.size > 1) {
+            val markerPositions = locations.map { location ->
+                LatLng(location.latitude, location.longitude)
+            }
+            drawPolyline(naverMap, markerPositions)
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+    override fun onResume() {
+        initDataSet()
+        adapter.submitList(dataSet)
+
+        mapView.onResume()
+        super.onResume()
+    }
+    override fun onPause() {
+        mapView.onPause()
+        super.onPause()
+    }
+    override fun onStop() {
+        mapView.onStop()
+        super.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 }
