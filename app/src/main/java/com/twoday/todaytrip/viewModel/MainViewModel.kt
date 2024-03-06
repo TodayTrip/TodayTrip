@@ -3,8 +3,8 @@ package com.twoday.todaytrip.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
+//import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.storage.FirebaseStorage
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
@@ -39,8 +39,8 @@ class MainViewModel : ViewModel() {
     val eventList: LiveData<List<TourItem>>
         get() = _eventList
 
-    private val storageRef = FirebaseStorage.getInstance().reference
-    private val databaseRef = FirebaseDatabase.getInstance().reference
+//    private val storageRef = FirebaseStorage.getInstance().reference
+//    private val databaseRef = FirebaseDatabase.getInstance().reference
 
     init {
         loadTourItemList()

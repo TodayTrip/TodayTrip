@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_save_photo_pocket_frame"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@color/black"
+        app:cardCornerRadius="100dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cv_save_photo_text_frame"
+        app:layout_constraintEnd_toStartOf="@+id/cv_save_photo_text_frame"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cv_save_photo_text_frame">
+
+        <View
+            android:id="@+id/vi_save_photo_pocket_color"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/main_blue" />
+
+        <TextView
+            android:id="@+id/tv_save_photo_pocket_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="1"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cv_save_photo_text_frame"
+        android:layout_width="0dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="51dp"
+        android:layout_marginEnd="5dp"
+        android:background="@drawable/shape_white_10_radius"
+        android:backgroundTint="@color/white"
+        android:elevation="10dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/iv_save_photo_stamp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_save_photo_frame"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_white_10_radius"
+            android:backgroundTint="@color/light_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/iv_save_photo_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_route_photo"
+                app:layout_constraintBottom_toTopOf="@+id/tv_save_photo_plustext"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_save_photo_plustext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center"
+                android:text="사진추가"
+                android:textSize="12sp"
+                android:letterSpacing="-0.04"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iv_save_photo_icon" />
+
+            <ImageView
+                android:id="@+id/iv_save_photo_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_save_photo_road_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:text="경로1"
+            android:textSize="16sp"
+            android:letterSpacing="-0.04"
+            app:layout_constraintBottom_toTopOf="@+id/tv_save_photo_address"
+            app:layout_constraintStart_toEndOf="@+id/layout_save_photo_frame"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="spread" />
+
+        <TextView
+            android:id="@+id/tv_save_photo_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="주소"
+            android:textSize="12sp"
+            android:letterSpacing="-0.04"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/layout_save_photo_frame"
+            app:layout_constraintTop_toBottomOf="@+id/tv_save_photo_road_text" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <ImageView
+        android:id="@+id/iv_save_photo_stamp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_marginEnd="19dp"
+        android:src="@drawable/img_route_list_stemp"
+        app:layout_constraintBottom_toBottomOf="@+id/cv_save_photo_text_frame"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cv_save_photo_text_frame" />
+
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="60dp"
+        android:background="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/cv_save_photo_pocket_frame"
+        app:layout_constraintEnd_toEndOf="@+id/cv_save_photo_pocket_frame"
+        app:layout_constraintStart_toStartOf="@+id/cv_save_photo_pocket_frame"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/vi_route_last_view"
+        android:layout_width="2dp"
+        android:layout_height="30dp"
+        android:background="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/cv_save_photo_pocket_frame"
+        app:layout_constraintStart_toStartOf="@+id/cv_save_photo_pocket_frame"
+        app:layout_constraintTop_toBottomOf="@+id/cv_save_photo_pocket_frame" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

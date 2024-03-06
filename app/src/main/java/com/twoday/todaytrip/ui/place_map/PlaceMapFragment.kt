@@ -1,13 +1,13 @@
 package com.twoday.todaytrip.ui.place_map
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
@@ -15,8 +15,12 @@ import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceMapBinding
-import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.MapUtils.createBoundsForAllMarkers
+import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
+import com.twoday.todaytrip.utils.MapUtils.updateCameraToBounds
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadCafeList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadEventList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
@@ -33,10 +37,14 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
+
     // 마커 리스트 생성
     private val markers = mutableListOf<Marker>()
 
-    private val locations by lazy { createLocationsList() }
+    private var locations =
+        loadTouristAttractionList().map {
+            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+        }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +56,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // mapView 변수 초기화
         mapView = binding.mvPlaceMap
         mapView.onCreate(savedInstanceState)
@@ -55,29 +64,12 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
         setupImageRecyclerView()
         setupTabLayout()
-        setupLatLng()
     }
+
     private fun observeFurthestPairAndConnectMarkers() {
         viewModel.findFurthestMarkers(markers) // LiveData를 업데이트하도록 요청
-        viewModel.furthestPair.observe(viewLifecycleOwner, Observer { furthestPair ->
-            furthestPair?.let {
-                connectMarkersSequentiallyFromFurthest(naverMap, markers, it)
-            }
-        })
     }
-    private fun setupLatLng() {
-//        loadTouristAttractionList()[0].getLongitude()
-//        loadTouristAttractionList()[0].getLatitude()
-//        loadTouristAttractionList().forEach {
-//
-//        }
-    }
-    private fun createLocationsList(): List<LatLng> {
-        Log.d("경도위도", locations.toString())
-        return loadTouristAttractionList().map {
-            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
-        }
-    }
+
     private fun setupImageRecyclerView() {
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -89,10 +81,50 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
-                    0 -> placeMapAdapter.submitList(loadTouristAttractionList())
-                    1 -> placeMapAdapter.submitList(loadRestaurantList())
-                    2 -> placeMapAdapter.submitList(loadCafeList())
-                    3 -> placeMapAdapter.submitList(loadEventList())
+                    0 -> {
+                        Log.d("locations0", locations.toString())
+                        locations = emptyList()
+                        locations =
+                            loadTouristAttractionList().map {
+                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+                            }
+                        onMarkerReady()
+                        placeMapAdapter.submitList(loadTouristAttractionList())
+                    }
+
+                    1 -> {
+                        Log.d("locations1", locations.toString())
+                        locations = emptyList()
+                        locations =
+                            loadRestaurantList().map {
+                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+                            }
+                        onMarkerReady()
+                        placeMapAdapter.submitList(loadRestaurantList())
+                    }
+
+                    2 -> {
+                        Log.d("locations2", locations.toString())
+                        locations = emptyList()
+                        locations =
+                            loadCafeList().map {
+                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+                            }
+                        onMarkerReady()
+                        placeMapAdapter.submitList(loadCafeList())
+                    }
+
+                    3 -> {
+                        Log.d("locations3", locations.toString())
+                        locations = emptyList()
+                        locations =
+                            loadEventList().map {
+                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+                            }
+                        onMarkerReady()
+                        placeMapAdapter.submitList(loadEventList())
+                    }
+
                     else -> placeMapAdapter.submitList(loadTouristAttractionList())
                 }
             }
@@ -110,24 +142,45 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
+        onMarkerReady()
     }
 
-    // 마커끼리 폴리라인 연결하는 함수
-    private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap, markers: MutableList<Marker>, furthestPair: Pair<Marker, Marker>) {
-        var currentMarker = furthestPair.first // 시작점으로 설정할 마커
-        val connectedMarkers = mutableListOf(currentMarker)
-        markers.remove(currentMarker)
+    private fun onMarkerReady() {
+        clearMarkers()
 
-        while (markers.isNotEmpty()) {
-            val closestMarker = markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
-            closestMarker?.let { marker ->
-                MapUtils.drawPolyline(naverMap, listOf(currentMarker.position, marker.position))
-                currentMarker = marker
-                connectedMarkers.add(marker)
-                markers.remove(marker)
+        if(locations.isNotEmpty()){
+            val markerIconBitmap =
+                resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+
+
+            Log.d("onMarkerReady 안 locations", locations.toString())
+            locations.forEach { latLng ->
+                Log.d("latLng", latLng.toString())
+                val marker = Marker().apply {
+                    position = latLng
+                    icon = OverlayImage.fromBitmap(markerIconBitmap)
+                    map = naverMap
+                }
+                markers.add(marker) // 마커 리스트에 추가
             }
+
+            Log.d("markers", markers.size.toString())
+
+            val bounds = createBoundsForAllMarkers(markers)
+
+            // 마커를 추가 한 후 아래 함수를 호출해야 함
+            observeFurthestPairAndConnectMarkers()
+            updateCameraToBounds(naverMap, bounds, 250)
         }
     }
+
+    private fun clearMarkers() {
+        markers.forEach { marker ->
+            marker.map = null // 마커를 지도에서 제거
+        }
+        markers.clear() // 마커 리스트 비우기
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -162,11 +215,6 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     override fun onDestroyView() {
         super.onDestroyView()
         mapView.onDestroy()
-        _binding = null
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
         _binding = null
     }
 }

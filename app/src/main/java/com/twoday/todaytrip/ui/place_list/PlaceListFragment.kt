@@ -6,14 +6,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isGone
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
+import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.PrefConstants
+//import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weather.Item
 import com.twoday.todaytrip.weather.WeatherClient
 import com.twoday.todaytrip.weather.weather
@@ -21,10 +27,13 @@ import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 
-class PlaceListFragment : Fragment() {
+class PlaceListFragment : Fragment(){
+    private val TAG = "PlaceListFragment"
+
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
@@ -40,6 +49,7 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
+
         weatherInfo()
 
     }
