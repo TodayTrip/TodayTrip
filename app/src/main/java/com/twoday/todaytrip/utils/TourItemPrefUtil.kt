@@ -94,6 +94,9 @@ object TourItemPrefUtil {
                 TourContentTypeId.LEISURE_SPORTS.contentTypeId ->{
                     object : TypeToken<TourItem.LeisureSports>() {}.type
                 }
+                TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId ->{
+                    object : TypeToken<TourItem.EventPerformanceFestival>() {}.type
+                }
                 else -> {
                     object : TypeToken<TourItem.TouristDestination>() {}.type
                 }
