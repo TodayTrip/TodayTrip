@@ -106,9 +106,6 @@ class PlaceListFragment : Fragment(){
             base_time = getBaseTime(timeH)
         }
 
-        Log.d("asd", latitude)
-        Log.d("zxc", longitude)
-
         WeatherClient.weatherNetWork.getWeather(
             dataType = "JSON",
             numOfRows = 12,

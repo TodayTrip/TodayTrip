@@ -15,6 +15,13 @@ import kotlinx.serialization.json.encodeToJsonElement
 object TourItemPrefUtil {
     private val TAG = "TourItemPrefUtil"
 
+    fun loadAllTourItemList():List<TourItem> = mutableListOf<TourItem>().apply{
+            addAll(loadTouristAttractionList())
+            addAll(loadRestaurantList())
+            addAll(loadCafeList())
+            addAll(loadEventList())
+        }
+
     fun loadTouristAttractionList() = loadTourItemList(PrefConstants.TOURIST_ATTRACTION_LIST_KEY)
     fun saveTouristAttractionList(touristAttractionList:List<TourItem>) = saveTourItemList(
             touristAttractionList,

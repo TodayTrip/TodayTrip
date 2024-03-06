@@ -440,12 +440,11 @@ object TourNetworkInterfaceUtils {
             areaBasedResponse.response.body.items.item
                 .toMutableList()
                 .run {
+                    val filteredList = this.filter {
+                        (!it.mapX.isNullOrBlank()) && (!it.mapY.isNullOrBlank())
+                    }
                     clear()
-                    addAll(
-                        this.filter {
-                            (!it.mapX.isNullOrBlank()) && (!it.mapY.isNullOrBlank())
-                        }
-                    )
+                    addAll(filteredList)
                 }
             return areaBasedResponse
         } catch (e: Exception) {
