@@ -30,109 +30,55 @@ import com.skydoves.balloon.createBalloon
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
 import com.twoday.todaytrip.ui.RecordActivity
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.TourItemPrefUtil
 import okhttp3.internal.notifyAll
 
 
 class SavePhotoActivity : AppCompatActivity() {
+    private val TAG = "SavePhotoActivity"
 
     private val binding: ActivitySavePhotoBinding by lazy {
         ActivitySavePhotoBinding.inflate(layoutInflater)
     }
 
-        private lateinit var adapter: SavePhotoAdapter
-//    private val adapter: SavePhotoAdapter by lazy {
-//        SavePhotoAdapter()
-//    }
-
-    private val datalist = mutableListOf<SavePhotoData>()
-    private val currentList: MutableList<SavePhotoData> = mutableListOf()
-    private var uri = "".toUri()
-
-//    private lateinit var uri: Uri
-
-
-
+    private lateinit var adapter: SavePhotoAdapter
+    private val savePhotoDataList = mutableListOf<SavePhotoData>()
+    private var position = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-//        val datalist = mutableListOf<SavePhotoData>()
-        datalist.add(
-            SavePhotoData(
-                "".toUri(),
-                "서울역",
-                "어딘가"
-            )
-        )
-        datalist.add(
-            SavePhotoData(
-                "".toUri(),
-                "N서울 타워",
-                "있겠지"
-            )
-        )
-        datalist.add(
-            SavePhotoData(
-                "".toUri(),
-                "청계천",
-                "아무데나"
-            )
-        )
-        datalist.add(
-            SavePhotoData(
-                "".toUri(),
-                "북촌 한옥 마을",
-                "가볼까"
-            )
-        )
-        datalist.add(
-            SavePhotoData(
-                "".toUri(),
-                "경로",
-                "어디든지"
-            )
-        )
-        datalist.add(
-            SavePhotoData(
-                "".toUri(),
-                "경로",
-                "떠나자"
-            )
-        )
+        initSavePhotoDataList()
+        initSavePhotoRecylerView()
+        initRouteFinishButton()
+    }
 
+    private fun initSavePhotoDataList(){
+        val allTourItemList = TourItemPrefUtil.loadAllTourItemList()
+        val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
 
-        adapter = SavePhotoAdapter(datalist)
+        addedContentIdList.forEach {contentID ->
+            val tourItem = allTourItemList.find{
+                it.getContentId() == contentID
+            }!!
+            savePhotoDataList.add(SavePhotoData(tourItem))
+        }
+    }
+
+    private fun initSavePhotoRecylerView(){
+        adapter = SavePhotoAdapter(savePhotoDataList)
         binding.rvSavephotoRecyclerview.adapter = adapter
 
         adapter.itemClick = object : SavePhotoAdapter.ItemClick {
-            override fun onClick(item: SavePhotoData,position: Int) {
-
+            override fun onClick(item: SavePhotoData, position: Int) {
+                this@SavePhotoActivity.position = position
                 val intent = Intent(Intent.ACTION_PICK)
                 intent.type = "image/*"
                 activityResult.launch(intent)
-//                val uridata = currentList.get(0)
-//                datalist[position] = SavePhotoData(uridata,"d","d")
                 Toast.makeText(this@SavePhotoActivity, "클릭", Toast.LENGTH_SHORT).show()
-
-                val place = datalist.find { it.position == position }
-                currentList.add(SavePhotoData(uri,place?.name ?: "", place?.address ?: ""))
-                val name = currentList.get(0).name
-                val address = currentList.get(0).address
-                datalist.set(position,SavePhotoData(uri,name,address))
-//                Log.d("sdc","초기화 전 currentlist = ${currentList[position]}")
-                currentList.clear()
-//                Log.d("sdc","name = $name")
-//                Log.d("sdc","address = $address")
-//                Log.d("sdc","datalist = ${datalist[position]}")
-//                Log.d("sdc","초기화 후 currentlist = ${currentList[position]}")
-
-
-
-
-//                datalist[position].image = uri
-//                adapter.notifyItemChanged(position)
             }
         }
 
@@ -169,23 +115,21 @@ class SavePhotoActivity : AppCompatActivity() {
             }, 3000)
         }
     }
-
     private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()){
-        if(it.resultCode == RESULT_OK && it.data != null) {
-//            uri = it.data!!.data!!
-//            grantUriPermission(
-//                "com.twoday.todaytrip",
-//                uri,
-//                Intent.FLAG_GRANT_READ_URI_PERMISSION
-//            )
-//            Glide.with(this).
-//                    load(uri).into(binding.imgLoad)
-            binding.imgLoad.load(uri)
-//            uri?.let { it1 -> currentList.add(0, it1) }
+        ActivityResultContracts.StartActivityForResult()
+    ) {
+        if (it.resultCode == RESULT_OK && it.data != null) {
+            val uri = it.data!!.data!!
+            Glide.with(this).load(uri).into(binding.imgLoad)
+            adapter.addImageUri(uri, position)
         }
     }
 
-
-
+    private fun initRouteFinishButton(){
+        binding.layoutRouteFinishButton.setOnClickListener {
+            RecordPrefUtil.addRecord(Record(savePhotoDataList))
+            ContentIdPrefUtil.resetContentIdListPref()
+            finish()
+        }
+    }
 }

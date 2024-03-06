@@ -17,16 +17,13 @@ class RouteAdapter :
     ListAdapter<RouteListData, RouteAdapter.ViewHolder>(object :
         DiffUtil.ItemCallback<RouteListData>() {
         override fun areItemsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
-            // 비디오 id가 같은지 확인
             return (oldItem.name == newItem.name)
         }
-
         override fun areContentsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
-            // 모든 필드가 같은지 확인 (data class의 equals 사용)
             return oldItem == newItem
         }
-    }) {
-
+    })
+{
     interface ItemClick {
         fun onClick(item: RouteListData)
     }
@@ -55,7 +52,7 @@ class RouteAdapter :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
         holder.name.text = currentItem.name
-        holder.num.text = (position+1).toString()
+        holder.num.text = (position + 1).toString()
         holder.bind(getItem(position))
 //        notifyItemMoved()
 
@@ -66,6 +63,7 @@ class RouteAdapter :
             holder.visi.visibility = View.INVISIBLE
         }
     }
+
     private fun notifyItemMoved() {
     }
 
