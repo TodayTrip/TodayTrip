@@ -150,12 +150,3 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     }
 
 }
-
-
-//private fun observeMarkerSequence() {
-//    viewModel.markerSequence.observe(viewLifecycleOwner, Observer { sequence ->
-//        sequence?.let {
-//            drawPolyline(naverMap, it)
-//        }
-//    })
-//}
