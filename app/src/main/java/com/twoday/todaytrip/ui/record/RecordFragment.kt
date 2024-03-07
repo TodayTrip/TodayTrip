@@ -93,7 +93,10 @@ class RecordFragment : Fragment() {
 
     private fun initRecordRecyclerView(){
         recordAdapter = RecordAdapter()
-        binding.rvRecord.adapter = recordAdapter
+        binding.rvRecord.run{
+            adapter = recordAdapter
+            addItemDecoration(GridSpaceItemDecoration(2, 8))
+        }
     }
     private fun setRecordRecyclerViewVisibility(isVisible:Boolean){
         binding.rvRecord.isVisible = isVisible

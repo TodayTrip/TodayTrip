@@ -10,13 +10,14 @@
         android:layout_height="match_parent"
         android:background="@drawable/shape_circle"
         android:clipToOutline="true"
-        android:padding="30dp"
-        android:scaleType="centerInside" />
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"/>
 
     <ImageView
+        android:id="@+id/iv_item_record_image_mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.1"
+        android:alpha="0.5"
         android:background="@drawable/shape_circle"
         android:backgroundTint="@color/button_gray"
         android:clipToOutline="true" />
@@ -34,7 +35,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="부산"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,15 +49,14 @@
             android:src="@drawable/ic_item_record_more"
             app:layout_constraintBottom_toBottomOf="@id/tv_item_record_title"
             app:layout_constraintStart_toEndOf="@id/tv_item_record_title"
-            app:layout_constraintTop_toTopOf="@id/tv_item_record_title"
-            app:tint="@color/black" />
+            app:layout_constraintTop_toTopOf="@id/tv_item_record_title" />
 
         <TextView
             android:id="@+id/tv_item_record_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2024/02/26"
-            android:textColor="@color/button_gray"
+            android:textColor="@color/light_gray"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

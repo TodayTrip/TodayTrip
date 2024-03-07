@@ -8,9 +8,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemRecordBinding
 
-class RecordAdapter: ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallback) {
+class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallback) {
+    private val TAG = "RecordAdapter"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemRecordBinding.inflate(
@@ -27,19 +29,26 @@ class RecordAdapter: ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallbac
         super.submitList(list?.sortedBy { it.travelDate }?.reversed())
     }
 
-    inner class Holder(binding: ItemRecordBinding): ViewHolder(binding.root){
+    inner class Holder(binding: ItemRecordBinding) : ViewHolder(binding.root) {
         private val imageView: ImageView = binding.ivItemRecordImage
         private val titleTextView: TextView = binding.tvItemRecordTitle
         private val dateTextView: TextView = binding.tvItemRecordDate
 
-        fun bind(record: Record){
-            record.savePhotoDataList[0].imageUri?.let{
-                Glide.with(MyApplication.appContext!!)
-                    .load(it)
-                    .into(imageView)
-                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
-                imageView.clipToOutline = true
+        fun bind(record: Record) {
+            val savePhotoDataWithImage = record.savePhotoDataList.find {
+                !it.imageUri.isNullOrBlank()
             }
+            if (savePhotoDataWithImage != null) {
+                Glide.with(MyApplication.appContext!!)
+                    .load(savePhotoDataWithImage.imageUri!!)
+                    .placeholder(R.drawable.ic_launcher)
+                    .into(imageView)
+            }
+            else{
+                imageView.setImageResource(R.drawable.ic_launcher)
+            }
+            imageView.clipToOutline = true
+
             titleTextView.text = record.destination
             dateTextView.text = record.travelDate
         }
