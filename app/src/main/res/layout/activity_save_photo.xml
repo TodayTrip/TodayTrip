@@ -62,7 +62,7 @@
       android:layout_marginBottom="20dp"
       android:layout_marginStart="24dp"
       android:layout_marginEnd="24dp"
-      android:background="@drawable/shape_mainblue_10_radius"
+      android:background="@drawable/shape_main_blue_10_radius"
       android:backgroundTint="@color/light_gray"
       app:layout_constraintBottom_toBottomOf="parent"
       app:layout_constraintEnd_toEndOf="parent"
@@ -96,7 +96,7 @@
         android:id="@+id/iv_route_empty"
         android:layout_width="60dp"
         android:layout_height="60dp"
-        android:src="@drawable/ic_route_list_empty"
+        android:src="@drawable/ic_route_empty"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
