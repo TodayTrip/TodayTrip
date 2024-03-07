@@ -26,7 +26,7 @@
         android:layout_marginTop="4dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_shop_default"
+        android:src="@drawable/img_place_detail_pic_default"
         app:layout_constraintTop_toBottomOf="@+id/tv_item_place_detail_memory_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

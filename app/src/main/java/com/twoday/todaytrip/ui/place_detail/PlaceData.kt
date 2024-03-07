@@ -1,4 +1,4 @@
-package com.twoday.todaytrip
+package com.twoday.todaytrip.ui.place_detail
 
 data class PlaceData(
     val placeId: String? = null,
