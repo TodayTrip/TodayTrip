@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layout_place_detail"
     app:layoutDescription="@xml/activity_place_detail_scene"
     tools:context=".ui.place_detail.PlaceDetailActivity">
 
@@ -14,27 +15,47 @@
         android:layout_height="260dp"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
+        android:clickable="false"
         android:src="@drawable/img_place_detail_pic_default"
 
         app:layout_constraintBottom_toTopOf="@+id/nsv_place_detail_scroll_area"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_back_bg" />
+
+    <ImageView
+        android:id="@+id/iv_place_detail_top_blur"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        android:alpha="0.0"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iv_place_detail_back_bg"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/selector_place_detail_white_circle"
+        app:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
+        app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
+        />
 
     <ImageView
         android:id="@+id/iv_place_detail_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_place_detail_white_circle"
+        android:layout_marginTop="14dp"
+        android:background="@color/transparent"
         android:elevation="1dp"
         android:paddingStart="6dp"
-        android:paddingTop="8dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="4dp"
         android:src="@drawable/ic_place_detail_back"
-
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,7 +76,7 @@
             android:orientation="vertical">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layout_place_detail"
+                android:id="@+id/layout_place_detail_scroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
