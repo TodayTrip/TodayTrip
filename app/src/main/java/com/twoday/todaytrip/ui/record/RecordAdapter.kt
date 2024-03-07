@@ -18,7 +18,7 @@ class RecordAdapter: ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallbac
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(getItem(position))
+        //holder.bind(getItem(position))
     }
 
     inner class Holder(binding: ItemRecordBinding): ViewHolder(binding.root){
