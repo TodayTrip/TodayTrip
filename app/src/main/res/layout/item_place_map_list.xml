@@ -55,7 +55,7 @@
         android:layout_height="32dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/button_round"
+        android:background="@drawable/shape_main_blue_10_radius"
         android:text="@string/item_place_list_add"
         android:textSize="16sp"
         android:textAppearance="@style/TinyText"

@@ -6,19 +6,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isGone
-import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
-import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.PrefConstants
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weather.Item
 import com.twoday.todaytrip.weather.WeatherClient
@@ -27,7 +20,6 @@ import retrofit2.Call
 import retrofit2.Response
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
 
@@ -158,10 +150,10 @@ class PlaceListFragment : Fragment() {
 
         // 하늘 상태 설정
         val skyImageResource = when (sky) {
-            "1" -> R.drawable.img_weather_sun
-            "3" -> R.drawable.img_foggy
-            "4" -> R.drawable.img_cloud
-            else -> R.drawable.img_weather_sun
+            "1" -> R.drawable.ic_place_list_weather_sun
+            "3" -> R.drawable.ic_place_list_weather_foggy
+            "4" -> R.drawable.ic_place_list_weather_cloud
+            else -> R.drawable.ic_place_list_weather_sun
         }
         binding.imgWeather.setImageResource(skyImageResource)
 
@@ -203,7 +195,7 @@ class PlaceListFragment : Fragment() {
             "서울" -> Coordinates("60", "127", "서울", listOf(R.drawable.img_seoul1, R.drawable.img_seoul2, R.drawable.img_seoul3, R.drawable.img_seoul4).random())
             "인천" -> Coordinates("55", "124", "인천", listOf(R.drawable.img_incheon1, R.drawable.img_incheon2, R.drawable.img_incheon3).random())
             "전북" -> Coordinates("63", "89", "전라북도", listOf(R.drawable.img_jeonbuk1, R.drawable.img_jeonbuk2).random())
-            "전남" -> Coordinates("51", "67", "전라남도", listOf(R.drawable.img_jeobnam1, R.drawable.img_jeobnam2, R.drawable.img_jeobnam3,R.drawable.img_jeobnam4,R.drawable.img_jeobnam5).random())
+            "전남" -> Coordinates("51", "67", "전라남도", listOf(R.drawable.img_jeonnam1, R.drawable.img_jeonnam2, R.drawable.img_jeonnam3,R.drawable.img_jeonnam4,R.drawable.img_jeonnam5).random())
             "경북" -> Coordinates("89", "91", "경상북도", listOf(R.drawable.img_gyeongbuk1, R.drawable.img_gyeongbuk2, R.drawable.img_gyeongbuk3).random())
             "경남" -> Coordinates("91", "77", "경상남도", listOf(R.drawable.img_gyeongnam1, R.drawable.img_gyeongnam2, R.drawable.img_gyeongnam3).random())
             "충북" -> Coordinates("69", "107", "충청북도", listOf(R.drawable.img_chungbuk1, R.drawable.img_chungbuk2, R.drawable.img_chungbuk3,R.drawable.img_chungbuk4,R.drawable.img_chungbuk5).random())

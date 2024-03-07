@@ -14,7 +14,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:background="@drawable/shape_search_bar_background"
+        android:background="@drawable/shape_light_gray_step_bar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="10dp"
         android:layout_marginTop="32dp"
-        android:background="@drawable/shape_search_bar_point"
+        android:background="@drawable/shape_main_blue_step_bar"
         app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent="0.3" />
@@ -122,7 +122,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_btn_main_blue"
+        android:background="@drawable/shape_main_blue_8_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
