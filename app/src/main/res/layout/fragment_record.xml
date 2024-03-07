@@ -7,13 +7,14 @@
     android:background="@color/white"
     android:paddingHorizontal="16dp"
     android:paddingTop="16dp"
-    tools:context=".ui.RecordActivity">
+    tools:context=".ui.record.RecordFragment">
 
     <TextView
         android:id="@+id/tv_record_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/record_title"
+        android:textColor="@color/black"
         android:textSize="30sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -23,6 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/record_sub_title"
+        android:textColor="@color/black"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_title" />
@@ -135,18 +137,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner_record_order"
         tools:listitem="@layout/item_record" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_record_new_travel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
-        android:background="@drawable/shape_main_blue_10_radius"
-        android:backgroundTint="@color/main_blue"
-        android:elevation="10dp"
-        android:outlineProvider="bounds"
-        android:text="@string/record_new_travel"
-        android:textColor="@color/white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
