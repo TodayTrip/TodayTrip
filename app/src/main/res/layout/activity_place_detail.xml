@@ -22,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@drawable/blur_top"
+        android:src="@drawable/img_place_list_blur"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,7 +35,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:elevation="1dp"
-        android:src="@drawable/ic_back"
+        android:src="@drawable/ic_place_detail_back"
 
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -93,7 +93,7 @@
                     android:layout_height="16dp"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_location"
+                    android:src="@drawable/ic_place_detail_location"
 
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_title" />
@@ -116,7 +116,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_time"
+                    android:src="@drawable/ic_place_detail_time"
 
                     app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"
                     app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_loca" />
@@ -139,7 +139,7 @@
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_info"
+                    android:src="@drawable/ic_place_detail_info"
 
                     app:layout_constraintStart_toStartOf="@id/iv_place_detail_time"
                     app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_time" />
@@ -202,7 +202,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="24dp"
-                    android:background="@drawable/shape_btn_main_blue"
+                    android:background="@drawable/shape_main_blue_8_radius"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="@string/place_detail_add_to_path"

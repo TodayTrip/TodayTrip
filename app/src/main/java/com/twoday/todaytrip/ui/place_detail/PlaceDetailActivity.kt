@@ -6,11 +6,8 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
@@ -116,8 +113,8 @@ class PlaceDetailActivity : AppCompatActivity() {
     private fun setAddButtonUI(isAdded: Boolean) {
         binding.tvPlaceDetailAddPathBtn.background =
             MyApplication.appContext!!.resources.getDrawable(
-                if (isAdded) R.drawable.shape_white_with_border_radius_10
-                else R.drawable.shape_mainblue_10_radius
+                if (isAdded) R.drawable.shape_main_blue_border_10_radius
+                else R.drawable.shape_main_blue_10_radius
             )
         binding.tvPlaceDetailAddPathBtn.text = MyApplication.appContext!!.resources.getText(
             if (isAdded) R.string.place_detail_remove_from_path

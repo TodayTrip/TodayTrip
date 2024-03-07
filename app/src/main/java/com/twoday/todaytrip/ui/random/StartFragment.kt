@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentStartBinding
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
@@ -46,7 +45,7 @@ class StartFragment : Fragment() {
 
     private fun initView() {
         Glide.with(this)
-            .load(R.drawable.start_walk_gif)
+            .load(R.drawable.gif_start_walk)
             .into(binding.ivStartWalkGif)
     }
 
