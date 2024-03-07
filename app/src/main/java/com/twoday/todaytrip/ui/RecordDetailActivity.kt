@@ -8,8 +8,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
-import com.twoday.todaytrip.ui.record.RecordDetailListFragment
-import com.twoday.todaytrip.ui.record.RecordDetailMapFragment
+import com.twoday.todaytrip.ui.record_detail.RecordDetailListFragment
+import com.twoday.todaytrip.ui.record_detail.RecordDetailMapFragment
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordDetailActivity : AppCompatActivity() {
