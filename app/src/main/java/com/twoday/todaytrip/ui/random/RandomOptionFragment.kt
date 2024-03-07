@@ -27,7 +27,7 @@ class RandomOptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnAllRandom.setBackgroundResource(R.drawable.shape_yellow_border_10_radius)
+        binding.btnOptionSelect.isEnabled = false
         setUpClickListener()
     }
 
@@ -52,6 +52,9 @@ class RandomOptionFragment : Fragment() {
     private fun selectButton(isAllRandom: Boolean) {
         isSelectedAllRandomBtn = isAllRandom
         isSelectedThemeRandomBtn = !isAllRandom
+
+        binding.btnOptionSelect.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
+        binding.btnOptionSelect.isEnabled = true
 
         binding.btnAllRandom.apply {
             setBackgroundResource(
