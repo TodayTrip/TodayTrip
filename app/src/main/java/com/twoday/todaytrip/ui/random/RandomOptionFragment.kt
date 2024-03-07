@@ -54,11 +54,15 @@ class RandomOptionFragment : Fragment() {
         isSelectedThemeRandomBtn = !isAllRandom
 
         binding.btnAllRandom.apply {
-            setBackgroundResource(if (isAllRandom) R.drawable.shape_yellow_border_10_radius else R.drawable.shape_without_boarder)
+            setBackgroundResource(
+                if (isAllRandom) R.drawable.shape_yellow_border_10_radius
+                else R.drawable.shape_white_10_radius)
         }
 
         binding.btnThemeRandom.apply {
-            setBackgroundResource(if (!isAllRandom) R.drawable.shape_yellow_border_10_radius else R.drawable.shape_without_boarder)
+            setBackgroundResource(
+                if (!isAllRandom) R.drawable.shape_yellow_border_10_radius
+                else R.drawable.shape_white_10_radius)
         }
     }
 
