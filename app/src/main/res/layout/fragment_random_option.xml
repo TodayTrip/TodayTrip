@@ -34,7 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="52dp"
-        android:background="@drawable/shape_btn_sub_blue"
+        android:background="@drawable/shape_sub_blue_8_radius"
         android:padding="20dp"
         android:text="시작하기 전 물어볼게요!\n완전 랜덤이 좋아요? or 테마는 선택하고 싶어요?"
         android:textColor="@color/black"

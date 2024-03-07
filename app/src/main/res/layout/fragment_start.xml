@@ -37,7 +37,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="200dp"
-        android:background="@drawable/shape_btn_sub_blue"
+        android:background="@drawable/shape_sub_blue_8_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

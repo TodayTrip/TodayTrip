@@ -36,7 +36,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="52dp"
         android:text="어떤 테마 여행을 하고 싶은지만 말해주세요!"
-        android:background="@drawable/shape_btn_sub_blue"
+        android:background="@drawable/shape_sub_blue_8_radius"
         android:padding="20dp"
         android:textColor="@color/black"
         android:textSize="16sp"
