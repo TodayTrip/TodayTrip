@@ -25,7 +25,5 @@ class RecordAdapter: ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallbac
         val imageView: ImageView = binding.ivItemRecordImage
         val titleTextView: TextView = binding.tvItemRecordTitle
         val dateTextView: TextView = binding.tvItemRecordDate
-
-        fun bind(record:)
     }
 }
