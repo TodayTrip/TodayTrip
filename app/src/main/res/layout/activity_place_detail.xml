@@ -85,7 +85,7 @@
                         android:layout_height="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_location"
+                        android:src="@drawable/ic_place_detail_location"
 
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_title" />
