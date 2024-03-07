@@ -1,31 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    app:layoutDescription="@xml/activity_place_detail_scene"
     tools:context=".ui.place_detail.PlaceDetailActivity">
+
 
     <ImageView
         android:id="@+id/iv_place_detail_pic"
         android:layout_width="match_parent"
-        android:layout_height="240dp"
+        android:layout_height="260dp"
+        android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/img_place_detail_pic_default"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/nsv_place_detail_scroll_area"
-        />
-
-    <ImageView
-        android:id="@+id/iv_place_detail_top_blur"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:src="@drawable/img_place_detail_blur"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -34,15 +25,18 @@
         android:id="@+id/iv_place_detail_back"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:padding="4dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/selector_place_detail_white_circle"
         android:elevation="1dp"
+        android:paddingStart="6dp"
+        android:paddingTop="8dp"
+        android:paddingEnd="10dp"
+        android:paddingBottom="8dp"
         android:src="@drawable/ic_place_detail_back"
 
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tint="@color/white" />
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <androidx.core.widget.NestedScrollView
@@ -50,189 +44,185 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical">
 
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/layout_place_detail"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_place_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_place_detail_title"
+                    style="@style/MiddleTitleBoldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:maxWidth="320dp"
+                    android:text="가게명"
+                    android:textColor="@color/black"
+                    android:textSize="24dp"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_place_detail_loca"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_place_detail_location"
+
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_title" />
+
+                <TextView
+                    android:id="@+id/tv_place_detail_loca"
+                    style="@style/SmallBoldText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="주소"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_loca"
+                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_loca" />
+
+                <ImageView
+                    android:id="@+id/iv_place_detail_info"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginTop="16dp"
+                    android:src="@drawable/ic_place_detail_info"
+
+                    app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />
+
+                <TextView
+                    android:id="@+id/tv_place_detail_info"
+                    style="@style/SmallBoldText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="-4dp"
+                    android:layout_marginEnd="16dp"
+                    android:text="추가정보"
+                    android:textColor="@color/black"
+                    android:textStyle="normal"
+
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_info"
+                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_info" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_place_detail_extra_info_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    android:paddingHorizontal="16dp"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_info" />
 
-                    <TextView
-                        android:id="@+id/tv_place_detail_title"
-                        style="@style/MiddleTitleBoldText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:maxWidth="320dp"
-                        android:text="가게명"
-                        android:textColor="@color/black"
+                <!--                    <TextView-->
+                <!--                        android:id="@+id/tv_place_detail_add_path_btn_original"-->
+                <!--                        style="@style/RandomThemeBlueBoldText"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:layout_marginStart="24dp"-->
+                <!--                        android:layout_marginTop="20dp"-->
+                <!--                        android:layout_marginEnd="24dp"-->
+                <!--                        android:background="@drawable/shape_main_blue_8_radius"-->
+                <!--                        android:gravity="center"-->
+                <!--                        android:padding="8dp"-->
+                <!--                        android:text="@string/place_detail_add_to_path"-->
+                <!--                        android:textColor="@color/white"-->
 
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+                <!--                        app:layout_constraintStart_toStartOf="parent"-->
+                <!--                        app:layout_constraintTop_toBottomOf="@id/rv_place_detail_extra_info_list" />-->
 
-                    <ImageView
-                        android:id="@+id/iv_place_detail_loca"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_place_detail_location"
+                <TextView
+                    android:id="@+id/tv_place_detail_my_memory_title"
+                    style="@style/MiddleTitleBoldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:text="@string/place_detail_my_memory"
+                    android:textColor="@color/black"
 
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_title" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rv_place_detail_extra_info_list" />
 
-                    <TextView
-                        android:id="@+id/tv_place_detail_loca"
-                        style="@style/SmallBoldText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="-4dp"
-                        android:text="주소"
-                        android:textStyle="normal"
-                        android:textColor="@color/black"
+                <TextView
+                    android:id="@+id/tv_place_detail_no_photo"
+                    style="@style/TinyText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="56dp"
+                    android:layout_marginBottom="56dp"
+                    android:text="@string/place_detail_no_photo"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
 
-                        app:layout_constraintStart_toEndOf="@+id/iv_place_detail_loca"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/iv_place_detail_loca" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_place_detail_my_memory_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="60dp"
+                    android:nestedScrollingEnabled="false"
+                    android:orientation="vertical"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
 
-<!--                    <ImageView-->
-<!--                        android:id="@+id/iv_place_detail_time"-->
-<!--                        android:layout_width="16dp"-->
-<!--                        android:layout_height="16dp"-->
-<!--                        android:layout_marginTop="16dp"-->
-<!--                        android:src="@drawable/ic_time"-->
-
-<!--                        app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"-->
-<!--                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />-->
-
-<!--                    <TextView-->
-<!--                        android:id="@+id/tv_place_detail_time"-->
-<!--                        style="@style/SmallBoldText"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_marginStart="8dp"-->
-<!--                        android:layout_marginEnd="16dp"-->
-<!--                        android:layout_marginTop="-4dp"-->
-<!--                        android:text="영업시간"-->
-<!--                        android:textStyle="normal"-->
-<!--                        android:textColor="@color/black"-->
-
-<!--                        app:layout_constraintStart_toEndOf="@+id/iv_place_detail_time"-->
-<!--                        app:layout_constraintEnd_toEndOf="parent"-->
-<!--                        app:layout_constraintTop_toTopOf="@+id/iv_place_detail_time" />-->
-
-                    <ImageView
-                        android:id="@+id/iv_place_detail_info"
-                        android:layout_width="16dp"
-                        android:layout_height="16dp"
-                        android:layout_marginTop="16dp"
-                        android:src="@drawable/ic_place_detail_info"
-
-                        app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />
-
-                    <TextView
-                        android:id="@+id/tv_place_detail_info"
-                        style="@style/SmallBoldText"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_marginTop="-4dp"
-                        android:text="추가정보"
-                        android:textStyle="normal"
-                        android:textColor="@color/black"
-
-                        app:layout_constraintStart_toEndOf="@+id/iv_place_detail_info"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/iv_place_detail_info" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_place_detail_extra_info_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="vertical"
-                        android:paddingHorizontal="16dp"
-                        android:visibility="visible"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:layout_constraintBottom_toTopOf="@+id/tv_place_detail_add_path_btn"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_info" />
-
-                    <TextView
-                        android:id="@+id/tv_place_detail_add_path_btn"
-                        style="@style/RandomThemeBlueBoldText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="24dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginEnd="24dp"
-                        android:background="@drawable/shape_main_blue_8_radius"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/place_detail_add_to_path"
-                        android:textColor="@color/white"
-
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/rv_place_detail_extra_info_list" />
-
-                    <TextView
-                        android:id="@+id/tv_place_detail_my_memory_title"
-                        style="@style/MiddleTitleBoldText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="24dp"
-                        android:text="@string/place_detail_my_memory"
-
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_add_path_btn" />
-
-                    <TextView
-                        android:id="@+id/tv_place_detail_no_photo"
-                        style="@style/TinyText"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="56dp"
-                        android:text="@string/place_detail_no_photo"
-                        android:visibility="gone"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_place_detail_my_memory_list"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:nestedScrollingEnabled="false"
-                        android:orientation="vertical"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
 
     </androidx.core.widget.NestedScrollView>
 
+    <TextView
+        android:id="@+id/tv_place_detail_add_path_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/shape_main_blue_8_radius"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/place_detail_add_to_path"
+        android:textColor="@color/white"
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.motion.widget.MotionLayout>
