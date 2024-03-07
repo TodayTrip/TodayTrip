@@ -11,7 +11,7 @@
         android:layout_height="16dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="3dp"
-        android:src="@drawable/ic_detail_small_right_arrow"
+        android:src="@drawable/ic_place_detail_small_right_arrow"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />

@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="240dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_shop_default"
+        android:src="@drawable/img_place_detail_pic_default"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
-        android:src="@drawable/img_place_list_blur"
+        android:src="@drawable/img_place_detail_blur"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
