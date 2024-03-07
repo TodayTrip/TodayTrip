@@ -19,6 +19,12 @@
             <KeyPosition motion:motionTarget="@id/iv_place_detail_back"
                 motion:keyPositionType="parentRelative"
                 />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_back_bg"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_top_blur"
+                motion:keyPositionType="parentRelative"
+                />
         </KeyFrameSet>
     </Transition>
 
@@ -36,6 +42,12 @@
                 motion:keyPositionType="parentRelative"
                 />
             <KeyPosition motion:motionTarget="@id/iv_place_detail_back"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_back_bg"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_top_blur"
                 motion:keyPositionType="parentRelative"
                 />
         </KeyFrameSet>
@@ -84,6 +96,7 @@
             android:id="@+id/iv_place_detail_back_bg"
             android:layout_width="32dp"
             android:layout_height="32dp"
+            android:alpha="1.0"
             android:background="@drawable/selector_place_detail_white_circle"
             motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
             motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
@@ -104,7 +117,7 @@
             android:layout_height="?attr/actionBarSize"
             android:adjustViewBounds="true"
             android:scaleType="center"
-            android:alpha="0.8"
+            android:alpha="0.0"
             motion:layout_constraintTop_toTopOf="parent"
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintEnd_toEndOf="parent"
@@ -150,7 +163,7 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
-            android:alpha="0.4"
+            android:alpha="1.0"
             />
     </ConstraintSet>
 </MotionScene>

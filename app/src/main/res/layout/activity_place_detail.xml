@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        android:alpha="0.0"
+        android:alpha="1.0"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -207,18 +207,52 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_place_detail_my_memory_list"
+                <ImageView
+                    android:id="@+id/iv_1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:src="@drawable/img_busan1"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title"
+                    />
+                <ImageView
+                    android:id="@+id/iv_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_busan1"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_1"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/img_busan1"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_2"
+                    />
+
+                <ImageView
+                    android:id="@+id/iv_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="60dp"
-                    android:nestedScrollingEnabled="false"
-                    android:orientation="vertical"
+                    android:src="@drawable/img_busan1"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_3"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
+                    />
+
+
+<!--                <androidx.recyclerview.widget.RecyclerView-->
+<!--                    android:id="@+id/rv_place_detail_my_memory_list"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:layout_marginBottom="60dp"-->
+<!--                    android:nestedScrollingEnabled="false"-->
+<!--                    android:orientation="vertical"-->
+<!--                    app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />-->
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
