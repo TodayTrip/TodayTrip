@@ -43,14 +43,15 @@ object RecordPrefUtil {
         recordList.forEach { record ->
             serializedRecordList.add(
                 SerializedRecord(
+                    record.recordId,
                     record.destination,
                     record.travelDate,
-                    record.savePhotoDataList.map {
+                    record.savePhotoDataList.map {savePhotoData ->
                         // SavePhotoData JSON 직렬화 -> Triple에 저장하기
                         Triple(
-                            it.tourItem.getContentTypeId(),
-                            it. imageUri,
-                            Gson().toJson(it.tourItem)
+                            savePhotoData.tourItem.getContentTypeId(),
+                            savePhotoData. imageUri,
+                            Gson().toJson(savePhotoData.tourItem)
                         )
                     }
                 )
@@ -107,9 +108,9 @@ object RecordPrefUtil {
 
             recordList.add(
                 Record(
-                    serializedRecord.destination,
-                    serializedRecord.travelDate,
-                    savePhotoDataList
+                    destination = serializedRecord.destination,
+                    travelDate = serializedRecord.travelDate,
+                    savePhotoDataList = savePhotoDataList
                 )
             )
         }
@@ -119,6 +120,8 @@ object RecordPrefUtil {
 
 @Serializable
 data class SerializedRecord(
+    @SerializedName("recordid")
+    val recordId:String,
     val destination: String,
     @SerializedName("traveldate")
     val travelDate: String,
