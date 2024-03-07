@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.place_list_adapter
+package com.twoday.todaytrip.ui.place_list.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import com.twoday.todaytrip.tourData.TourItem
