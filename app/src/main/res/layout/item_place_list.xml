@@ -138,7 +138,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        android:background="@drawable/shape_btn_main_blue"
+        android:background="@drawable/shape_main_blue_8_radius"
         android:paddingHorizontal="12dp"
         android:paddingVertical="4dp"
         app:layout_constraintBottom_toBottomOf="parent"

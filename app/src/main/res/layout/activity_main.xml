@@ -12,11 +12,11 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:defaultNavHost="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:defaultNavHost="true"
-        app:navGraph="@navigation/nav_graph_home"/>
+        app:navGraph="@navigation/nav_graph_home" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"
@@ -39,13 +39,16 @@
                 android:id="@+id/bottom_navigation_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="8dp"
+                android:paddingBottom="4dp"
                 android:layout_marginRight="16dp"
-                android:background="@drawable/bg_no_ripple"
-                app:itemRippleColor="@color/transparent"
-                app:itemIconTint="@color/selector_nav_bar_icon"
-                app:itemTextColor="@color/selector_nav_bar_icon"
+                android:background="@drawable/selector_bottom_bg_no_ripple"
                 android:outlineProvider="none"
                 android:outlineSpotShadowColor="@android:color/transparent"
+                app:itemBackground="@color/transparent"
+                app:itemIconTint="@color/selector_nav_bar_icon"
+                app:itemRippleColor="@color/transparent"
+                app:itemTextColor="@color/selector_nav_bar_icon"
                 app:menu="@menu/nav_menu" />
         </com.google.android.material.bottomappbar.BottomAppBar>
 
@@ -53,12 +56,13 @@
             android:id="@+id/fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_question"
-            app:maxImageSize="48dp"
-            app:fabCustomSize="64dp"
-            android:background="@android:color/white"
-            android:tint="@android:color/white"
+            android:background="@color/white"
             android:backgroundTint="@color/main_blue"
-            app:layout_anchor="@id/bottomAppBar"/>
+            android:tint="@color/white"
+            app:srcCompat="@drawable/ic_bottom_question"
+            app:tint="@color/white"
+            app:fabCustomSize="64dp"
+            app:layout_anchor="@id/bottomAppBar"
+            app:maxImageSize="40dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

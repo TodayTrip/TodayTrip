@@ -100,8 +100,8 @@ class PlaceListRecyclerViewAdapter :
 
         private fun setAddButtonUI(isAdded: Boolean) {
             addLayout.background = MyApplication.appContext!!.resources.getDrawable(
-                if (isAdded) R.drawable.shape_white_with_border_radius_10
-                else R.drawable.shape_mainblue_10_radius
+                if (isAdded) R.drawable.shape_main_blue_border_10_radius
+                else R.drawable.shape_main_blue_10_radius
             )
             addTextView.text = MyApplication.appContext!!.resources.getText(
                 if (isAdded) R.string.item_place_list_remove

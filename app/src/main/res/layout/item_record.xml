@@ -12,7 +12,7 @@
         android:background="@drawable/shape_circle"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/image_record_default" />
+        android:src="@drawable/img_record_default" />
 
     <ImageView
         android:layout_width="match_parent"
