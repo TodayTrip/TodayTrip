@@ -38,9 +38,6 @@
             android:name=".ui.RecordDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.RecordActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
