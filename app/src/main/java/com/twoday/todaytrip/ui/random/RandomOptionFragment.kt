@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
-import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 
@@ -28,7 +27,7 @@ class RandomOptionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.btnAllRandom.setBackgroundResource(R.drawable.shape_yellow_boarder)
+        binding.btnAllRandom.setBackgroundResource(R.drawable.shape_yellow_border_10_radius)
         setUpClickListener()
     }
 
@@ -55,11 +54,15 @@ class RandomOptionFragment : Fragment() {
         isSelectedThemeRandomBtn = !isAllRandom
 
         binding.btnAllRandom.apply {
-            setBackgroundResource(if (isAllRandom) R.drawable.shape_yellow_boarder else R.drawable.shape_without_boarder)
+            setBackgroundResource(
+                if (isAllRandom) R.drawable.shape_yellow_border_10_radius
+                else R.drawable.shape_white_10_radius)
         }
 
         binding.btnThemeRandom.apply {
-            setBackgroundResource(if (!isAllRandom) R.drawable.shape_yellow_boarder else R.drawable.shape_without_boarder)
+            setBackgroundResource(
+                if (!isAllRandom) R.drawable.shape_yellow_border_10_radius
+                else R.drawable.shape_white_10_radius)
         }
     }
 

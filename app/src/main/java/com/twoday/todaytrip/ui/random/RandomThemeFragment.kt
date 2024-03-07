@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
-import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 
@@ -38,10 +37,10 @@ class RandomThemeFragment : Fragment() {
     private fun setUpButtonClickState(status: Boolean) {
         binding.btnNext.isEnabled = status
         if(status){
-            binding.btnNext.setBackgroundResource(R.drawable.shape_subblue_8_radius)
+            binding.btnNext.setBackgroundResource(R.drawable.shape_sub_blue_8_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_blue))
         }else{
-            binding.btnNext.setBackgroundResource(R.drawable.shape_btn_gray)
+            binding.btnNext.setBackgroundResource(R.drawable.shape_light_gray_8_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.middle_gray))
         }
     }
@@ -83,9 +82,9 @@ class RandomThemeFragment : Fragment() {
         // 모든 버튼을 순회하면서, 선택된 번호의 버튼에만 특정 스타일 적용
         for ((index, button) in buttons.withIndex()) {
             if (index == selectedNumber) {
-                button.setBackgroundResource(R.drawable.shape_yellow_boarder)
+                button.setBackgroundResource(R.drawable.shape_yellow_border_10_radius)
             } else {
-                button.setBackgroundResource(R.drawable.shape_without_boarder)
+                button.setBackgroundResource(R.drawable.shape_white_10_radius)
             }
         }
         setUpButtonClickState(true)
