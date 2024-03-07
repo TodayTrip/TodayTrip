@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
@@ -21,13 +22,15 @@ import com.twoday.todaytrip.utils.MapUtils.createBoundsForAllMarkers
 import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
 import com.twoday.todaytrip.utils.MapUtils.updateCameraToBounds
+import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
-
+    private val TAG = "RecordDetailMapFragment"
     private var _binding: FragmentRecordDetailMapBinding? = null
     private val binding get() = _binding!!
 
+    private val recordDetailMapAdapter by lazy { RecordDetailMapAdapter() }
     private val viewModel by lazy {
         ViewModelProvider(this@RecordDetailMapFragment)[RecordDetailViewModel::class.java]
     }
@@ -35,17 +38,9 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
     // 마커 리스트 생성
     private val markers = mutableListOf<Marker>()
+    val recordList = RecordPrefUtil.loadRecordList()
 
-    // 임의의 위치 데이터 목록
-    private val locations = listOf(
-        LatLng(37.4979, 127.0276), // 서울 시청
-        LatLng(37.5124, 127.0589), // 광화문
-        LatLng(37.2942, 127.2024),  // 동대문
-        LatLng(37.5273, 127.0390),
-        LatLng(37.5195, 127.0378),
-        LatLng(37.5089, 127.0468)
-    )
-
+    private lateinit var locations: List<LatLng>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -61,7 +56,32 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         mapView = binding.mvRecordDetailFullMap
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
+
+        Log.d(TAG, "recordList: $recordList")
+        if(recordList.isNotEmpty()){
+            locations = recordList.flatMap { record ->
+                record.savePhotoDataList.map { photoData ->
+                    LatLng(photoData.tourItem.getLatitude().toDouble(), photoData.tourItem.getLongitude().toDouble())
+                }
+            }
+            Log.d(TAG, "locations: $locations")
+        }
+        else {
+            Log.d("기록된 경로가 없음", "nothing")
+        }
+
+
+        initImageRecyclerView()
+
     }
+
+    private fun initImageRecyclerView() {
+        binding.rvRecordDetailMap.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = recordDetailMapAdapter
+        }
+    }
+
     private fun observeFurthestPairAndConnectMarkers() {
         viewModel.findFurthestMarkers(markers) // LiveData를 업데이트하도록 요청
         viewModel.furthestPair.observe(viewLifecycleOwner, Observer { furthestPair ->
@@ -93,7 +113,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
 
         // 마커를 추가 한 후 아래 함수를 호출해야 함
         observeFurthestPairAndConnectMarkers()
-        updateCameraToBounds(naverMap, bounds, 200)
+        updateCameraToBounds(naverMap, bounds, 450)
     }
 
     // 마커끼리 폴리라인 연결하는 함수

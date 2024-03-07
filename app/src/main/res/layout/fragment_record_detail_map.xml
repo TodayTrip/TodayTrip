@@ -9,12 +9,12 @@
 
     <com.naver.maps.map.MapView
         android:id="@+id/mv_record_detail_full_map"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/view_top_box"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_record_detail_map"
@@ -26,4 +26,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="-203dp"
         tools:listitem="@layout/item_record_detail_map" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/view_top_box"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
