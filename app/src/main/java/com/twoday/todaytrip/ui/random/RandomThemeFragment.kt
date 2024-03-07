@@ -84,7 +84,7 @@ class RandomThemeFragment : Fragment() {
             if (index == selectedNumber) {
                 button.setBackgroundResource(R.drawable.shape_yellow_border_10_radius)
             } else {
-                button.setBackgroundResource(R.drawable.shape_without_boarder)
+                button.setBackgroundResource(R.drawable.shape_white_10_radius)
             }
         }
         setUpButtonClickState(true)
