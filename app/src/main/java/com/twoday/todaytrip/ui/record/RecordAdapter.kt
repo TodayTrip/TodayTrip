@@ -6,6 +6,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.databinding.ItemRecordBinding
 
 class RecordAdapter: ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallback) {
@@ -18,12 +20,28 @@ class RecordAdapter: ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallbac
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        //holder.bind(getItem(position))
+        holder.bind(getItem(position))
+    }
+
+    override fun submitList(list: MutableList<Record>?) {
+        super.submitList(list?.sortedBy { it.travelDate }?.reversed())
     }
 
     inner class Holder(binding: ItemRecordBinding): ViewHolder(binding.root){
-        val imageView: ImageView = binding.ivItemRecordImage
-        val titleTextView: TextView = binding.tvItemRecordTitle
-        val dateTextView: TextView = binding.tvItemRecordDate
+        private val imageView: ImageView = binding.ivItemRecordImage
+        private val titleTextView: TextView = binding.tvItemRecordTitle
+        private val dateTextView: TextView = binding.tvItemRecordDate
+
+        fun bind(record: Record){
+            record.savePhotoDataList[0].imageUri?.let{
+                Glide.with(MyApplication.appContext!!)
+                    .load(it)
+                    .into(imageView)
+                imageView.scaleType = ImageView.ScaleType.CENTER_CROP
+                imageView.clipToOutline = true
+            }
+            titleTextView.text = record.destination
+            dateTextView.text = record.travelDate
+        }
     }
 }
