@@ -12,10 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.db.williamchart.data.AxisType
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordBinding
+import com.twoday.todaytrip.ui.record_detail.RecordDetailActivity
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.viewModel.RecordViewModel
 
-class RecordFragment : Fragment() {
+class RecordFragment : Fragment(), OnRecordClickListener {
     private val TAG = "RecordFragment"
 
     private var _binding: FragmentRecordBinding? = null
@@ -92,11 +93,19 @@ class RecordFragment : Fragment() {
     }
 
     private fun initRecordRecyclerView(){
-        recordAdapter = RecordAdapter()
+        recordAdapter = RecordAdapter().apply{
+            onRecordClickListener = this@RecordFragment
+        }
         binding.rvRecord.run{
             adapter = recordAdapter
             addItemDecoration(GridSpaceItemDecoration(2, 8))
         }
+    }
+    override fun onRecordClick(record: Record) {
+        Log.d(TAG, "onRecordClick) ${record.destination}, ${record.travelDate}")
+        startActivity(
+            RecordDetailActivity.newIntent(this.requireContext(), record)
+        )
     }
     private fun setRecordRecyclerViewVisibility(isVisible:Boolean){
         binding.rvRecord.isVisible = isVisible

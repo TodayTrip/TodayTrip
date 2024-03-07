@@ -14,6 +14,8 @@ import com.twoday.todaytrip.databinding.ItemRecordBinding
 class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallback) {
     private val TAG = "RecordAdapter"
 
+    var onRecordClickListener:OnRecordClickListener? = null
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemRecordBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -22,7 +24,10 @@ class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallba
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bind(getItem(position))
+        with(getItem(position)){
+            holder.initListener(this)
+            holder.bind(this)
+        }
     }
 
     override fun submitList(list: MutableList<Record>?) {
@@ -34,6 +39,11 @@ class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallba
         private val titleTextView: TextView = binding.tvItemRecordTitle
         private val dateTextView: TextView = binding.tvItemRecordDate
 
+        fun initListener(record: Record){
+            itemView.setOnClickListener {
+                onRecordClickListener?.onRecordClick(record)
+            }
+        }
         fun bind(record: Record) {
             val savePhotoDataWithImage = record.savePhotoDataList.find {
                 !it.imageUri.isNullOrBlank()
