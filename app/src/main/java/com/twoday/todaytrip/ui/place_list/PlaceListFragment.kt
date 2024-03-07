@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.place_list_adapter.PagerFragmentStateAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
