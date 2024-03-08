@@ -21,6 +21,7 @@ class RouteAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
+        holder.position.text = (position+1).toString()
         holder.initListener(currentItem)
         holder.bind(currentItem)
 //        if (position == itemCount - 1) {
@@ -32,6 +33,7 @@ class RouteAdapter :
         val name = binding.tvSavePhotoRoadText
         val address = binding.tvSavePhotoAddress
         val option = binding.ivSavePhotoOption
+        val position = binding.tvSavePhotoPocketNumber
         fun initListener(item: RouteListData) {
             itemView.setOnClickListener{
                 Log.d(TAG, "RouteAdapter)setOnClickListener ${item.contentId}")

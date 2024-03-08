@@ -37,10 +37,10 @@ class RandomThemeFragment : Fragment() {
     private fun setUpButtonClickState(status: Boolean) {
         binding.btnNext.isEnabled = status
         if(status){
-            binding.btnNext.setBackgroundResource(R.drawable.shape_sub_blue_8_radius)
-            binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.main_blue))
+            binding.btnNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
+            binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         }else{
-            binding.btnNext.setBackgroundResource(R.drawable.shape_light_gray_8_radius)
+            binding.btnNext.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.middle_gray))
         }
     }
