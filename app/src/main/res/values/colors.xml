@@ -13,4 +13,5 @@
     <color name="middle_gray">#D9D9D9</color>
     <color name="start_background">#F7F7FA</color>
     <color name="transparent">#00000000</color>
+    <color name="dark_gray">#3A3A3A</color>
 </resources>

@@ -6,7 +6,7 @@
 <!--        <item name="android:windowFullscreen">true</item>-->
 <!--        <item name="windowNoTitle">true</item>-->
         <item name="android:windowLightStatusBar">true</item>
-        <item name="android:statusBarColor">@color/main_blue</item>
+        <item name="android:statusBarColor">@color/white</item>
     </style>
 
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">

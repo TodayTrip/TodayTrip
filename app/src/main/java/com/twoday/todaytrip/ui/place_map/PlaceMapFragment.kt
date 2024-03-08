@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.tabs.TabLayout
@@ -62,22 +61,22 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
 
-        setupImageRecyclerView()
-        setupTabLayout()
+        initImageRecyclerView()
+        initTabLayout()
     }
 
     private fun observeFurthestPairAndConnectMarkers() {
         viewModel.findFurthestMarkers(markers) // LiveData를 업데이트하도록 요청
     }
 
-    private fun setupImageRecyclerView() {
+    private fun initImageRecyclerView() {
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeMapAdapter
         }
     }
 
-    private fun setupTabLayout() {
+    private fun initTabLayout() {
         binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 when (tab.position) {
@@ -148,7 +147,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private fun onMarkerReady() {
         clearMarkers()
 
-        if(locations.isNotEmpty()){
+        if (locations.isNotEmpty()) {
             val markerIconBitmap =
                 resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
 

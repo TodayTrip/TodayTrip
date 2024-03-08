@@ -4,13 +4,14 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
 import com.google.gson.Gson
+import com.google.gson.annotations.SerializedName
 import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
-import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.Serializable
 
 object RecordPrefUtil {
     private val TAG = "RecordPrefUtil"
@@ -38,13 +39,24 @@ object RecordPrefUtil {
         Log.d(TAG, "saveTourItemList) recordList size = ${recordList.size}")
         val prefs = getRecordListPreferences()
 
-        // (1) SavePhotoData JSON 직렬화 -> Triple에 담기
-        val serializedRecordList = recordList.map { record ->
-            record.savePhotoDataList.map {
-                Triple(it.tourItem.getContentTypeId(), it.imageUri, Gson().toJson(it.tourItem))
-            }
+        val serializedRecordList: MutableList<SerializedRecord> = mutableListOf()
+        recordList.forEach { record ->
+            serializedRecordList.add(
+                SerializedRecord(
+                    record.recordId,
+                    record.destination,
+                    record.travelDate,
+                    record.savePhotoDataList.map {savePhotoData ->
+                        // SavePhotoData JSON 직렬화 -> Triple에 저장하기
+                        Triple(
+                            savePhotoData.tourItem.getContentTypeId(),
+                            savePhotoData. imageUri,
+                            Gson().toJson(savePhotoData.tourItem)
+                        )
+                    }
+                )
+            )
         }
-        // (2) List<List<Triple>> 직렬화
         val json = Gson().toJson(serializedRecordList)
         prefs.edit().putString(destinationKey, json).apply()
     }
@@ -53,57 +65,66 @@ object RecordPrefUtil {
         Log.d(TAG, "loadRecordList) destination key: ${destinationKey}")
 
         val prefs = getRecordListPreferences()
-
         val json = prefs.getString(destinationKey, null)
         if ((json == null) || (json.toString() == "[]"))
             return emptyList()
 
-        // (1) List<List<Triple>> 역직렬화
-        val type = object : TypeToken<List<List<Triple<String, String, Json>>>>() {}.type
-        val serializedRecordList: List<List<Triple<String, String, Json>>> =
+        val type = object : TypeToken<List<SerializedRecord>>() {}.type
+        val serializedRecordList: List<SerializedRecord> =
             Gson().fromJson(json, type)
 
-        // (2) Triple에서 꺼내기 -> SavePhotoData JSON 역직렬화
         val recordList = mutableListOf<Record>()
         serializedRecordList.forEach { serializedRecord ->
-            val record = mutableListOf<SavePhotoData>()
+            val savePhotoDataList = mutableListOf<SavePhotoData>()
 
-            serializedRecord.forEach {
+            serializedRecord.serializedSavePhotoDataList.forEach {
+                // SavePhotoData 역직렬화 -> Triple에서 꺼내기
                 val tourItemType = when (it.first) {
-                    TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
+                    TourContentTypeId.TOURIST_DESTINATION.contentTypeId ->
                         object : TypeToken<TourItem.TouristDestination>() {}.type
-                    }
 
-                    TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
+                    TourContentTypeId.CULTURAL_FACILITIES.contentTypeId ->
                         object : TypeToken<TourItem.CulturalFacilities>() {}.type
-                    }
 
-                    TourContentTypeId.RESTAURANT.contentTypeId -> {
+                    TourContentTypeId.RESTAURANT.contentTypeId ->
                         object : TypeToken<TourItem.Restaurant>() {}.type
-                    }
 
-                    TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
+                    TourContentTypeId.LEISURE_SPORTS.contentTypeId ->
                         object : TypeToken<TourItem.LeisureSports>() {}.type
-                    }
 
-                    TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
+                    TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId ->
                         object : TypeToken<TourItem.EventPerformanceFestival>() {}.type
-                    }
 
-                    else -> {
+                    else ->
                         object : TypeToken<TourItem.TouristDestination>() {}.type
-                    }
                 }
-
-                record.add(
+                savePhotoDataList.add(
                     SavePhotoData(
-                        Gson().fromJson(it.third as String, tourItemType),
+                        Gson().fromJson(it.third, tourItemType),
                         it.second
                     )
                 )
             }
-            recordList.add(Record(record))
+
+            recordList.add(
+                Record(
+                    destination = serializedRecord.destination,
+                    travelDate = serializedRecord.travelDate,
+                    savePhotoDataList = savePhotoDataList
+                )
+            )
         }
         return recordList
     }
 }
+
+@Serializable
+data class SerializedRecord(
+    @SerializedName("recordid")
+    val recordId:String,
+    val destination: String,
+    @SerializedName("traveldate")
+    val travelDate: String,
+    @SerializedName("serializedsavephotodatalist")
+    val serializedSavePhotoDataList: List<Triple<String, String?, String>>
+) : java.io.Serializable

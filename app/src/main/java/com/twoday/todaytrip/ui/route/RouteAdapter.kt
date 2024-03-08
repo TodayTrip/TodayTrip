@@ -24,6 +24,7 @@ class RouteAdapter :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val currentItem = getItem(position)
+        holder.position.text = (position+1).toString()
         holder.bind(currentItem)
 //        if (position == itemCount - 1) {
 //            holder.visi.visibility = View.INVISIBLE
@@ -34,6 +35,7 @@ class RouteAdapter :
         val name = binding.tvSavePhotoRoadText
         val address = binding.tvSavePhotoAddress
         val option = binding.ivSavePhotoOption
+        val position = binding.tvSavePhotoPocketNumber
         fun bind(item: RouteListData) {
             name.text = item.name
             address.text = item.address

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
@@ -23,43 +24,49 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     //private val viewModel: PlaceDetailViewModel by viewModels()
 
-    //대표사진 한장만
-//    private val placePhotoAdapter by lazy { PlaceDetailPhotoAdapter() }
-    private val placeInfoAdapter by lazy { PlaceDetailExtraInfoAdapter() }
-    private val placeMemoryAdapter by lazy { PlaceDetailMyMemoryAdapter() }
+    //    private val placePhotoAdapter by lazy { PlaceDetailPhotoAdapter() }
+    private lateinit var placeInfoAdapter: PlaceDetailExtraInfoAdapter
+//    private val placeMemoryAdapter by lazy { PlaceDetailMyMemoryAdapter() }
 
     //getExtra(장소 TourItem parcelable)
-    private val tourItem:TourItem? by lazy{
-        when(intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)){
-            TourContentTypeId.TOURIST_DESTINATION.contentTypeId ->{
+    private val tourItem: TourItem? by lazy {
+        when (intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)) {
+            TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId ->{
+
+            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.CulturalFacilities>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.RESTAURANT.contentTypeId ->{
+
+            TourContentTypeId.RESTAURANT.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.Restaurant>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.LEISURE_SPORTS.contentTypeId ->{
+
+            TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.LeisureSports>(EXTRA_TOUR_ITEM)
             }
-            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId ->{
+
+            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.EventPerformanceFestival>(EXTRA_TOUR_ITEM)
             }
+
             else -> {
                 null
             }
         }
     }
-    companion object{
+
+    companion object {
         const val EXTRA_CONTENT_TYPE_ID = "extra_content_type_id"
         const val EXTRA_TOUR_ITEM = "extra_tour_item"
-        fun newIntent(context: Context, contentTypeId:String, tourItem:TourItem): Intent =
+        fun newIntent(context: Context, contentTypeId: String, tourItem: TourItem): Intent =
             Intent(context, PlaceDetailActivity::class.java).apply {
                 putExtra(EXTRA_CONTENT_TYPE_ID, contentTypeId)
                 putExtra(EXTRA_TOUR_ITEM, tourItem)
             }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,19 +77,34 @@ class PlaceDetailActivity : AppCompatActivity() {
 
         initView()
         //initViewModel()
+        tourItem?.let { initOnClickListener(it) }
     }
 
     private fun initView() {
 //        val introPhotoRecyclerView = binding.rvPlaceDetailPic
         val extraInfoRecyclerView = binding.rvPlaceDetailExtraInfoList
-        val myMemoryRecyclerView = binding.rvPlaceDetailMyMemoryList
+//        val myMemoryRecyclerView = binding.rvPlaceDetailMyMemoryList
 //        introPhotoRecyclerView.adapter = placePhotoAdapter
+
+        placeInfoAdapter = PlaceDetailExtraInfoAdapter(tourItem!!.getDetailInfoWithLabel())
         extraInfoRecyclerView.adapter = placeInfoAdapter
-        myMemoryRecyclerView.adapter = placeMemoryAdapter
+        Log.d("PlaceDetailInfo", "itemCount = ${placeInfoAdapter.itemCount}")
+//        myMemoryRecyclerView.adapter = placeMemoryAdapter
+
+        tourItem?.getDetailInfoWithLabel()
+
+        with(binding) {
+            tvPlaceDetailTitle.text = tourItem?.getTitle()
+            tvPlaceDetailLoca.text = tourItem?.getAddress()
+//            tvPlaceDetailTime.text = tourItem?.getTimeInfoWithLabel()?.get(0)?.second ?: "00:00"
+            Glide.with(applicationContext.applicationContext)
+                .load(tourItem?.getImage())
+                .into(ivPlaceDetailPic)
+        }
+
     }
 
 
-//    @SuppressLint("SetTextI18n")
 //    private fun initViewModel() =viewModel.also { vm ->
 //        vm.placeItemData.observe(this, Observer {
 //            it.getContentId()
@@ -103,6 +125,9 @@ class PlaceDetailActivity : AppCompatActivity() {
 //    }
 
     fun initOnClickListener(item: TourItem) {
+        binding.ivPlaceDetailBack.setOnClickListener {
+            if (!isFinishing) finish()
+        }
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             OnTourItemAddClickListener.onTourItemAddClick(item)
             setAddButtonUI(item.isAdded)
