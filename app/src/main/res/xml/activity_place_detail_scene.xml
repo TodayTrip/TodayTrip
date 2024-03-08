@@ -68,10 +68,10 @@
 
         <Constraint
             android:id="@+id/iv_place_detail_back"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:background="@color/transparent"
             android:elevation="1dp"
             android:paddingStart="6dp"
@@ -94,8 +94,8 @@
             />
         <Constraint
             android:id="@+id/iv_place_detail_back_bg"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:alpha="1.0"
             android:background="@drawable/selector_place_detail_white_circle"
             motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
@@ -125,10 +125,10 @@
 
         <Constraint
             android:id="@+id/iv_place_detail_back"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="8dp"
             android:background="@color/transparent"
             android:elevation="1dp"
             android:paddingStart="6dp"
@@ -151,8 +151,8 @@
             />
         <Constraint
             android:id="@+id/iv_place_detail_back_bg"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:alpha="0.0"
             android:background="@drawable/selector_place_detail_white_circle"
             motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"

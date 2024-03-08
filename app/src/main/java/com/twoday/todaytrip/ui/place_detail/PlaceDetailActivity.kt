@@ -16,6 +16,7 @@ import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PlaceDetailActivity : AppCompatActivity() {
@@ -77,10 +78,11 @@ class PlaceDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Log.d(TAG, "tourItem title = ${tourItem?.getTitle()}")
+        tourItem!!.isAdded = ContentIdPrefUtil.isSavedContentId(tourItem!!.getContentId())
 
         initView()
         //initViewModel()
-        tourItem?.let { initOnClickListener(it) }
+        initOnClickListener(tourItem!!)
     }
 
     private fun initView() {
@@ -105,7 +107,8 @@ class PlaceDetailActivity : AppCompatActivity() {
                 .into(ivPlaceDetailPic)
             tvPlaceDetailNoPhoto.isVisible = !hasPhoto
         }
-
+        Log.d("btn", "${tourItem!!.isAdded}")
+        setAddButtonUI(tourItem!!.isAdded)
     }
 
 
@@ -128,7 +131,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 //        })
 //    }
 
-    fun initOnClickListener(item: TourItem) {
+    private fun initOnClickListener(item: TourItem) {
         binding.ivPlaceDetailBack.setOnClickListener {
             if (!isFinishing) finish()
         }

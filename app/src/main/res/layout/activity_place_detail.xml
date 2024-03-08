@@ -35,8 +35,8 @@
 
     <ImageView
         android:id="@+id/iv_place_detail_back_bg"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="@drawable/selector_place_detail_white_circle"
         app:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
         app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
@@ -44,10 +44,10 @@
 
     <ImageView
         android:id="@+id/iv_place_detail_back"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:background="@color/transparent"
         android:elevation="1dp"
         android:paddingStart="6dp"
@@ -263,7 +263,7 @@
     <TextView
         android:id="@+id/tv_place_detail_add_path_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="16dp"
@@ -273,6 +273,7 @@
         android:padding="8dp"
         android:text="@string/place_detail_add_to_path"
         android:textColor="@color/white"
+        android:textSize="16sp"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
