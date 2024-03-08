@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="여행지를 찾는 중... \n두구두구두구!!\n선택된 여행지는···\n두구두구두구!!"
+        android:text="선택된 여행지는···\n두구두구두구!!"
         android:letterSpacing="-0.04"
         android:gravity="center"
         android:textColor="@color/black"
