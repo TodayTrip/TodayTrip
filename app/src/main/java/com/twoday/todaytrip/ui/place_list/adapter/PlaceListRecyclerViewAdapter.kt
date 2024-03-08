@@ -45,19 +45,10 @@ class PlaceListRecyclerViewAdapter :
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
 
-        private val timeLabelTextViewList = listOf(
-            binding.tvItemPlaceListTimeLabel1,
-            binding.tvItemPlaceListTimeLabel2,
-            binding.tvItemPlaceListTimeLabel3
-        )
         private val timeTextViewList = listOf(
             binding.tvItemPlaceListTime1,
-            binding.tvItemPlaceListTime2,
-            binding.tvItemPlaceListTime3
+            binding.tvItemPlaceListTime2
         )
-
-        private val addLayout = binding.layoutItemPlaceListAdd
-        private val addTextView = binding.tvItemPlaceListAdd
 
         fun bind(item: TourItem) {
             item.getThumbnailImage()?.let { url ->
@@ -73,17 +64,8 @@ class PlaceListRecyclerViewAdapter :
 
             item.getTimeInfoWithLabel().forEachIndexed { index, pair ->
                 Log.d(TAG, "getTimeInfoWithLabel) index: $index, pair: $pair")
-                with(timeLabelTextViewList[index]) {
-                    isVisible = true
-//                    text = pair.first
-                }
-                with(timeTextViewList[index]) {
-                    isVisible = true
-                    text = Html.fromHtml(pair.second)
-                }
+                timeTextViewList[index].text = Html.fromHtml(pair.second)
             }
-
-            setAddButtonUI(item.isAdded)
         }
 
         fun initOnClickListener(item: TourItem) {
@@ -91,28 +73,6 @@ class PlaceListRecyclerViewAdapter :
                 Log.d(TAG, "itemView.setOnClickListener) called")
                 onTourItemClickListener?.onTourItemClick(item)
             }
-
-            this.addLayout.setOnClickListener {
-                OnTourItemAddClickListener.onTourItemAddClick(item)
-                setAddButtonUI(item.isAdded)
-            }
-        }
-
-        private fun setAddButtonUI(isAdded: Boolean) {
-            addLayout.background = MyApplication.appContext!!.resources.getDrawable(
-                if (isAdded) R.drawable.shape_main_blue_border_10_radius
-                else R.drawable.shape_main_blue_10_radius
-            )
-            addTextView.text = MyApplication.appContext!!.resources.getText(
-                if (isAdded) R.string.item_place_list_remove
-                else R.string.item_place_list_add
-            )
-            addTextView.setTextColor(
-                MyApplication.appContext!!.resources.getColor(
-                    if (isAdded) R.color.main_blue
-                    else R.color.white
-                )
-            )
         }
     }
 }
