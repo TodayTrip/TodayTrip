@@ -84,7 +84,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
             labelsSize = 30F
             labelsColor = resources.getColor(R.color.middle_gray)
             animation.duration = 1800
-            animate(chartDataList)
+            animate(chartDataList.reversed())
         }
     }
     private fun setChartVisibility(isVisible: Boolean) {
