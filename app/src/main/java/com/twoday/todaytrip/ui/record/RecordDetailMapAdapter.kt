@@ -11,8 +11,6 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
 import com.twoday.todaytrip.place_list_adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.utils.RecordPrefUtil.loadRecordList
-import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class RecordDetailMapAdapter() : ListAdapter<TourItem, RecordDetailMapAdapter.Holder>(
     TourItemDiffCallback()
@@ -44,7 +42,7 @@ class RecordDetailMapAdapter() : ListAdapter<TourItem, RecordDetailMapAdapter.Ho
     }
 
     inner class Holder(val binding: ItemPlaceMapListBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val firstImageView = binding.ivItemPlaceList
+        private val firstImageView = binding.ivItemPlaceListThumbnail
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
 
@@ -56,9 +54,9 @@ class RecordDetailMapAdapter() : ListAdapter<TourItem, RecordDetailMapAdapter.Ho
             binding.tvItemPlaceListAddress.text = item.getAddress()
             Glide.with(MyApplication.appContext!!)
                 .load(item.getThumbnailImage())
-                .placeholder(R.drawable.img_default_image)
-                .into(binding.ivItemPlaceList)
-            binding.ivItemPlaceList.clipToOutline = true
+                .placeholder(R.drawable.img_default)
+                .into(binding.ivItemPlaceListThumbnail)
+            binding.ivItemPlaceListThumbnail.clipToOutline = true
         }
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {
