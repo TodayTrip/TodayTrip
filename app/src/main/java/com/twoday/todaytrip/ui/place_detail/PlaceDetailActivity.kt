@@ -8,13 +8,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemAddClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PlaceDetailActivity : AppCompatActivity() {
@@ -57,6 +59,8 @@ class PlaceDetailActivity : AppCompatActivity() {
         }
     }
 
+    private val hasPhoto: Boolean = false
+
     companion object {
         const val EXTRA_CONTENT_TYPE_ID = "extra_content_type_id"
         const val EXTRA_TOUR_ITEM = "extra_tour_item"
@@ -74,10 +78,11 @@ class PlaceDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         Log.d(TAG, "tourItem title = ${tourItem?.getTitle()}")
+        tourItem!!.isAdded = ContentIdPrefUtil.isSavedContentId(tourItem!!.getContentId())
 
         initView()
         //initViewModel()
-        tourItem?.let { initOnClickListener(it) }
+        initOnClickListener(tourItem!!)
     }
 
     private fun initView() {
@@ -100,8 +105,10 @@ class PlaceDetailActivity : AppCompatActivity() {
             Glide.with(applicationContext.applicationContext)
                 .load(tourItem?.getImage())
                 .into(ivPlaceDetailPic)
+            tvPlaceDetailNoPhoto.isVisible = !hasPhoto
         }
-
+        Log.d("btn", "${tourItem!!.isAdded}")
+        setAddButtonUI(tourItem!!.isAdded)
     }
 
 
@@ -124,7 +131,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 //        })
 //    }
 
-    fun initOnClickListener(item: TourItem) {
+    private fun initOnClickListener(item: TourItem) {
         binding.ivPlaceDetailBack.setOnClickListener {
             if (!isFinishing) finish()
         }

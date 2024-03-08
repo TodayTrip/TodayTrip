@@ -14,7 +14,7 @@
       android:layout_height="wrap_content"
       android:layout_marginStart="51dp"
       android:letterSpacing="-0.04"
-      android:text="여행경로"
+      android:text="장소별 나의 추억을 기록해보세요"
       android:textSize="19sp"
       android:textStyle="bold"
       android:layout_marginTop="19dp"

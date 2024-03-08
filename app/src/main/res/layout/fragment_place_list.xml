@@ -120,7 +120,7 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tl_tab_layout"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="55dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

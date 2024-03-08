@@ -14,14 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
-import com.twoday.todaytrip.place_list_adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
-class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener{
+class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     private val TAG = "CafeRecyclerViewFragment"
 
     private var _binding: FragmentPlaceListCafeRecyclerViewBinding? = null

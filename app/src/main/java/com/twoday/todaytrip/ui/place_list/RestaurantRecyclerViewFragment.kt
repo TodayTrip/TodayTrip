@@ -14,8 +14,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListRestaurantRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
-import com.twoday.todaytrip.place_list_adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
