@@ -29,77 +29,81 @@
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_collapseMode="parallax" />
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iv_place_list_fragment_blur"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scaleType="fitXY"
-                    android:src="@drawable/img_place_list_blur"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_local"
+                    android:src="@drawable/img_place_detail_blur"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toBottomOf="@+id/iv_local"
-                    app:layout_constraintEnd_toEndOf="parent">
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/img_weather"
-                        android:layout_width="32dp"
-                        android:layout_height="32dp"
-                        android:layout_marginEnd="12dp"
+                        android:layout_width="33dp"
+                        android:layout_height="37dp"
+                        android:layout_marginStart="12dp"
                         android:src="@drawable/ic_place_list_weather_sun"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
                         android:id="@+id/tv_weather_info"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="12dp"
+                        android:layout_marginStart="12dp"
                         android:text="온도º"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toStartOf="@+id/tv_weather_info2"
-                        app:layout_constraintTop_toBottomOf="@+id/img_weather" />
+                        app:layout_constraintBottom_toBottomOf="@+id/img_weather"
+                        app:layout_constraintStart_toEndOf="@+id/img_weather"
+                        app:layout_constraintTop_toTopOf="@+id/img_weather" />
 
                     <TextView
                         android:id="@+id/tv_weather_info2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="비"
+                        android:layout_marginStart="12dp"
+                        android:text="날씨"
                         android:textColor="@color/white"
                         android:textSize="16sp"
-                        app:layout_constraintEnd_toEndOf="@+id/img_weather"
-                        app:layout_constraintTop_toBottomOf="@+id/img_weather" />
+                        app:layout_constraintBottom_toBottomOf="@+id/img_weather"
+                        app:layout_constraintStart_toEndOf="@+id/tv_weather_info"
+                        app:layout_constraintTop_toTopOf="@+id/img_weather" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/tv_travel_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:text="경상남도 거제시"
+                        android:textAppearance="@style/address" />
+                </androidx.appcompat.widget.Toolbar>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:id="@+id/tv_travel_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="경상남도 거제시"
-                    android:textAppearance="@style/address"
-                    android:textSize="30sp" />
-            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -150,19 +154,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/place_list_event" />
             </com.google.android.material.tabs.TabLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/vp_viewpager_main"
-                android:layout_width="match_parent"
-                android:layout_height="750dp"
-                android:background="@color/white"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tl_tab_layout" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_viewpager_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="20dp"
-        android:text="랜덤으로 여행 할 지역이 정해집니다.\n지역의 선택 방식을 선택해 주세요."
+        android:text="랜덤으로 여행 할 지역이 정해집니다.\n지역 선택 방식을 선택해 주세요."
         android:textColor="@color/dark_gray"
         android:textSize="20sp"
         android:layout_marginTop="85dp"
@@ -27,7 +27,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/shape_white_10_radius"
+        android:background="@drawable/shape_gray_stroke_10_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_theme_random"
         app:layout_constraintHorizontal_bias="0.5"
@@ -35,6 +35,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/iv_all_random_color"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -45,6 +46,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_all_random_gray"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
@@ -61,7 +63,7 @@
         android:layout_height="150dp"
         android:layout_marginEnd="10dp"
         android:padding="20dp"
-        android:background="@drawable/shape_white_10_radius"
+        android:background="@drawable/shape_gray_stroke_10_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_all_random"
@@ -77,6 +79,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
+            android:id="@+id/iv_theme_random_gray"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:src="@drawable/img_random_theme_gray"
@@ -115,7 +118,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_main_blue_8_radius"
+        android:background="@drawable/shape_middle_gray_12_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"

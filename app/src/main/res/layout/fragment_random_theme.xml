@@ -7,29 +7,6 @@
     android:background="@color/white"
     tools:context=".ui.random.RandomOptionFragment">
 
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/layout_step_bar"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="10dp"-->
-<!--        android:layout_marginStart="32dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:layout_marginEnd="32dp"-->
-<!--        android:background="@drawable/shape_light_gray_step_bar"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
-
-<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-<!--        android:id="@+id/layout_step_bar_point"-->
-<!--        android:layout_width="0dp"-->
-<!--        android:layout_height="10dp"-->
-<!--        android:layout_marginTop="32dp"-->
-<!--        android:background="@drawable/shape_main_blue_step_bar"-->
-<!--        app:layout_constraintStart_toStartOf="@+id/layout_step_bar"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintWidth_percent="0.6" />-->
-
-
     <TextView
         android:id="@+id/tv_theme_select_description"
         android:layout_width="wrap_content"
@@ -61,11 +38,12 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme1"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginStart="30dp"
+                android:layout_height="105dp"
+                android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="40dp"
-                android:background="@drawable/shape_white_10_radius"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/shape_white_12_radius"
+                android:elevation="2dp"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme2"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,20 +57,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/img_random_theme_first"
+                    android:layout_marginEnd="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme1" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme2"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/shape_white_10_radius"
+                android:layout_height="105dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/shape_white_12_radius"
+                android:elevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme1"
@@ -106,20 +85,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/img_random_theme_second"
+                    android:layout_marginEnd="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme2" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme3"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="2dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme4"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -134,9 +114,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="14dp"
                     android:foregroundGravity="bottom"
                     android:src="@drawable/img_random_theme_third"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -147,8 +127,9 @@
                 android:id="@+id/btn_theme4"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="20dp"
                 android:background="@drawable/shape_white_10_radius"
+                android:elevation="2dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/btn_theme3"
@@ -162,20 +143,21 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/img_random_theme_fourth"
+                    android:layout_marginEnd="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme4" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme5"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="40dp"
+                android:layout_height="105dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:elevation="2dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme6"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -190,13 +172,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_marginEnd="2dp"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
                     android:src="@drawable/img_random_theme_fifth"
+                    android:layout_marginEnd="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme5" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -204,7 +185,8 @@
                 android:id="@+id/btn_theme6"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginEnd="30dp"
+                android:layout_marginEnd="20dp"
+                android:elevation="2dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -219,20 +201,23 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
                     android:src="@drawable/img_random_theme_sixth"
+                    android:layout_marginEnd="14dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme6" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/btn_theme7"
                 android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:layout_height="105dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="3dp"
                 android:background="@drawable/shape_white_10_radius"
+                android:elevation="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/btn_theme5"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="@+id/btn_theme5"
@@ -246,12 +231,12 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="55dp"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginEnd="14dp"
                     android:src="@drawable/img_random_theme_seventh"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/tv_theme7" />
+                    app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
@@ -260,10 +245,10 @@
         android:id="@+id/btn_next"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_main_blue_8_radius"
+        android:background="@drawable/shape_main_blue_12_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
