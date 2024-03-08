@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="16dp"
+    android:layout_marginStart="16dp"
+    android:layout_marginEnd="16dp"
+    android:layout_marginTop="16dp"
     android:background="@drawable/shape_white_16_radius"
-    android:elevation="20dp">
+    android:elevation="4dp">
 
     <ImageView
         android:id="@+id/iv_item_place_list_thumbnail"
-        android:layout_width="125dp"
-        android:layout_height="125dp"
+        android:layout_width="115dp"
+        android:layout_height="115dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/shape_white_10_radius"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
