@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.place_list_adapter
+package com.twoday.todaytrip.ui.place_list.adapter
 
 import android.text.Html
 import android.util.Log
@@ -18,7 +18,7 @@ class PlaceListRecyclerViewAdapter :
     ListAdapter<TourItem, PlaceListRecyclerViewAdapter.Holder>(TourItemDiffCallback) {
     private val TAG = "PlaceListRecyclerViewAdapter"
 
-    var onTourItemClickListener:OnTourItemClickListener? = null
+    var onTourItemClickListener: OnTourItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =

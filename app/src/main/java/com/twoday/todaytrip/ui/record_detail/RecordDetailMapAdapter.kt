@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemAddClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourItem
 
 class RecordDetailMapAdapter() : ListAdapter<TourItem, RecordDetailMapAdapter.Holder>(

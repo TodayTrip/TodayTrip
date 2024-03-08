@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:motion="http://schemas.android.com/apk/res-auto">
+
+    <Transition
+        motion:constraintSetStart="@id/start"
+        motion:constraintSetEnd="@+id/end"
+        motion:duration="4000">
+        <OnSwipe motion:dragDirection="dragUp"
+            motion:touchAnchorId="@id/nsv_place_detail_scroll_area"
+            motion:touchAnchorSide="right"
+            motion:moveWhenScrollAtTop="true"
+            />
+        <KeyFrameSet>
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_pic"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_back"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_back_bg"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_top_blur"
+                motion:keyPositionType="parentRelative"
+                />
+        </KeyFrameSet>
+    </Transition>
+
+    <Transition
+        motion:constraintSetStart="@id/end"
+        motion:constraintSetEnd="@+id/start"
+        motion:duration="4000">
+        <OnSwipe motion:dragDirection="dragDown"
+            motion:touchAnchorId="@id/nsv_place_detail_scroll_area"
+            motion:touchAnchorSide="right"
+            motion:moveWhenScrollAtTop="true"
+            />
+        <KeyFrameSet>
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_pic"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_back"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_back_bg"
+                motion:keyPositionType="parentRelative"
+                />
+            <KeyPosition motion:motionTarget="@id/iv_place_detail_top_blur"
+                motion:keyPositionType="parentRelative"
+                />
+        </KeyFrameSet>
+    </Transition>
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/iv_place_detail_pic"
+            android:layout_width="match_parent"
+            android:layout_height="260dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            motion:layout_constraintBottom_toTopOf="@+id/nsv_place_detail_scroll_area"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Constraint
+            android:id="@+id/iv_place_detail_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/transparent"
+            android:elevation="1dp"
+            android:paddingStart="6dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:src="@drawable/ic_place_detail_back"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            />
+        <Constraint
+            android:id="@+id/nsv_place_detail_scroll_area"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic"
+            />
+        <Constraint
+            android:id="@+id/iv_place_detail_back_bg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:alpha="1.0"
+            android:background="@drawable/selector_place_detail_white_circle"
+            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
+            motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
+            />
+        <Constraint
+            android:id="@+id/iv_place_detail_top_blur"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:alpha="0.0"
+            />
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@+id/iv_place_detail_pic"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:adjustViewBounds="true"
+            android:scaleType="center"
+            android:alpha="0.0"
+            motion:layout_constraintTop_toTopOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <Constraint
+            android:id="@+id/iv_place_detail_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/transparent"
+            android:elevation="1dp"
+            android:paddingStart="6dp"
+            android:paddingTop="4dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="4dp"
+            android:src="@drawable/ic_place_detail_back"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toTopOf="parent"
+            />
+        <Constraint
+            android:id="@+id/nsv_place_detail_scroll_area"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            motion:layout_constraintBottom_toBottomOf="parent"
+            motion:layout_constraintEnd_toEndOf="parent"
+            motion:layout_constraintStart_toStartOf="parent"
+            motion:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic"
+            />
+        <Constraint
+            android:id="@+id/iv_place_detail_back_bg"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:alpha="0.0"
+            android:background="@drawable/selector_place_detail_white_circle"
+            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
+            motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
+            />
+        <Constraint
+            android:id="@+id/iv_place_detail_top_blur"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/white"
+            android:alpha="1.0"
+            />
+    </ConstraintSet>
+</MotionScene>
