@@ -14,14 +14,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
-import com.twoday.todaytrip.place_list_adapter.OnTourItemClickListener
-import com.twoday.todaytrip.place_list_adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
-class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListener{
+class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     private val TAG = "TouristAttractionRecyclerViewFragment"
 
     private var _binding: FragmentPlaceListTouristAttractionRecyclerViewBinding? = null
@@ -34,7 +34,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         }
     }
 
-    private lateinit var adapter:PlaceListRecyclerViewAdapter
+    private lateinit var adapter: PlaceListRecyclerViewAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,

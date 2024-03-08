@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/main_blue"
+    android:background="@color/white"
     tools:context=".ui.random.RandomOptionFragment">
 
     <TextView
@@ -12,9 +12,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:text="뽑힌 여행지는?! 두구두구두구!!"
-        android:textColor="@color/white"
-        android:textSize="22sp"
+        android:text="여행지를 찾는 중... \n두구두구두구!!"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

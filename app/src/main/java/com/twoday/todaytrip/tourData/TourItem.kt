@@ -38,7 +38,7 @@ sealed interface TourItem: Parcelable{
                 ("이용 시간" to
                         if (touristDestinationInfo.usetime.isNullOrBlank()) "정보 없음"
                         else touristDestinationInfo.usetime) as Pair<String, String>,
-                ("쉬는날" to
+                ("쉬는 날" to
                         if (touristDestinationInfo.restdate.isNullOrBlank()) "정보 없음"
                         else touristDestinationInfo.usetime) as Pair<String, String>
             )
@@ -54,8 +54,8 @@ sealed interface TourItem: Parcelable{
                     // 있으면 표시, 없으면 표시되지 않을 관광지 정보
                     if (!accomcount.isNullOrBlank()) add("수용 인원" to accomcount)
                     if (!chkbabycarriage.isNullOrBlank()) add("유모차 대여" to chkbabycarriage)
-                    if (!chkcreditcard.isNullOrBlank()) add("신용카드 가능" to chkcreditcard)
-                    if (!chkpet.isNullOrBlank()) add("반려동물 동반 가능" to chkpet)
+                    if (!chkcreditcard.isNullOrBlank()) add("신용카드 가능 여부" to chkcreditcard)
+                    if (!chkpet.isNullOrBlank()) add("반려동물 동반 가능 여부" to chkpet)
                     if (!expagerange.isNullOrBlank()) add("체험 가능 연령" to expagerange)
                     if (!expguide.isNullOrBlank()) add("체험 안내" to expguide)
                     if (!heritage1.isNullOrBlank()) add("세계 문화 유산" to heritage1)
@@ -81,7 +81,7 @@ sealed interface TourItem: Parcelable{
                 ("이용 시간" to
                         if (culturalFacilitiesInfo.usetimeculture.isNullOrBlank()) "정보 없음"
                         else culturalFacilitiesInfo.usetimeculture) as Pair<String, String>,
-                ("쉬는날" to
+                ("쉬는 날" to
                         if (culturalFacilitiesInfo.restdateculture.isNullOrBlank()) "정보 없음"
                         else culturalFacilitiesInfo.restdateculture) as Pair<String, String>
             )
@@ -94,14 +94,14 @@ sealed interface TourItem: Parcelable{
                     // 필수로 표시 될 문화시설 정보
                     add(("이용 요금" to (usefee ?: "정보 없음")) as Pair<String, String>)
                     add(("이용 시간" to (usetimeculture ?: "정보 없음")) as Pair<String, String>)
-                    add(("쉬는날" to (restdateculture ?: "정보 없음")) as Pair<String, String>)
+                    add(("쉬는 날" to (restdateculture ?: "정보 없음")) as Pair<String, String>)
                     add(("주차 시설" to (parkingculture ?: "정보 없음")) as Pair<String, String>)
                     // 있으면 표시, 없으면 표시되지 않을 문화시설 정보
                     if (!parkingfee.isNullOrBlank()) add("주차 요금" to parkingfee)
                     if (!accomcountculture.isNullOrBlank()) add("수용 인원" to accomcountculture)
                     if (!chkbabycarriageculture.isNullOrBlank()) add("유모차 대여" to chkbabycarriageculture)
-                    if (!chkcreditcardculture.isNullOrBlank()) add("신용카드 가능" to chkcreditcardculture)
-                    if (!chkpetculture.isNullOrBlank()) add("반려동물 동반 가능" to chkpetculture)
+                    if (!chkcreditcardculture.isNullOrBlank()) add("신용카드 가능 여부" to chkcreditcardculture)
+                    if (!chkpetculture.isNullOrBlank()) add("반려동물 동반 가능 여부" to chkpetculture)
                     if (!discountinfo.isNullOrBlank()) add("할인 정보" to discountinfo)
                     if (!scale.isNullOrBlank()) add("규모" to scale)
                     if (!spendtime.isNullOrBlank()) add("관람 소요 시간" to spendtime)
@@ -124,7 +124,7 @@ sealed interface TourItem: Parcelable{
                 ("이용 시간" to
                         if (restaurantInfo.opentimefood.isNullOrBlank()) "정보 없음"
                         else restaurantInfo.opentimefood) as Pair<String, String>,
-                ("쉬는날" to
+                ("쉬는 날" to
                         if (restaurantInfo.restdatefood.isNullOrBlank()) "정보 없음"
                         else restaurantInfo.restdatefood) as Pair<String, String>,
             )
@@ -135,13 +135,13 @@ sealed interface TourItem: Parcelable{
                 with(restaurantInfo) {
                     // 필수로 표시 될 문화시설 정보
                     add(("영업 시간" to (opentimefood ?: "정보 없음")) as Pair<String, String>)
-                    add(("쉬는날" to (restdatefood ?: "정보 없음")) as Pair<String, String>)
+                    add(("쉬는 날" to (restdatefood ?: "정보 없음")) as Pair<String, String>)
                     add(("주차 시설" to (parkingfood ?: "정보 없음")) as Pair<String, String>)
                     add(("대표 메뉴" to (firstmenu ?: "정보 없음")) as Pair<String, String>)
                     // 있으면 표시, 없으면 표시되지 않을 문화시설 정보
                     if (!treatmenu.isNullOrBlank()) add("취급 메뉴" to treatmenu)
                     if (!packing.isNullOrBlank()) add("포장 가능" to packing)
-                    if (!chkcreditcardfood.isNullOrBlank()) add("신용카드 가능" to chkcreditcardfood)
+                    if (!chkcreditcardfood.isNullOrBlank()) add("신용카드 가능 여부" to chkcreditcardfood)
                     if (!discountinfofood.isNullOrBlank()) add("할인 정보" to discountinfofood)
                     if (!scalefood.isNullOrBlank()) add("규모" to scalefood)
                     if (!seat.isNullOrBlank()) add("좌석 수" to seat)
@@ -191,8 +191,8 @@ sealed interface TourItem: Parcelable{
                     if (!scaleleports.isNullOrBlank()) add("규모" to scaleleports)
                     if (!accomcountleports.isNullOrBlank()) add("수용 인원" to accomcountleports)
                     if (!chkbabycarriageleports.isNullOrBlank()) add("유모차 대여" to chkbabycarriageleports)
-                    if (!chkcreditcardleports.isNullOrBlank()) add("신용카드 가능" to chkcreditcardleports)
-                    if (!chkpetleports.isNullOrBlank()) add("반려동물 동반 가능" to chkpetleports)
+                    if (!chkcreditcardleports.isNullOrBlank()) add("신용카드 가능 여부" to chkcreditcardleports)
+                    if (!chkpetleports.isNullOrBlank()) add("반려동물 동반 가능 여부" to chkpetleports)
                     if (!infocenterleports.isNullOrBlank()) add("문의 및 안내" to infocenterleports)
                 }
             }
