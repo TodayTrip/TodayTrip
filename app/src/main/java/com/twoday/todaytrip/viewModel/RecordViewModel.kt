@@ -32,8 +32,12 @@ class RecordViewModel: ViewModel() {
             )
             Log.d(TAG, "$destination ${chartDataList[index].second}")
         }
-        chartDataList = chartDataList.filter{ it.second > 0 }.sortedBy { it.second }.toMutableList()
+        chartDataList = chartDataList.filter{ it.second > 0.0 }.sortedBy { it.second }.reversed().toMutableList()
         // TODO 방문 횟수 같은 여행지 -> 00 외 3 으로 표시될 수 있도록 바꾸기
+
+        chartDataList.forEach {
+            Log.d(TAG, "chartDataList = ${it.first}, ${it.second}")
+        }
 
         val chartSize = chartDataList.size
         return when{
