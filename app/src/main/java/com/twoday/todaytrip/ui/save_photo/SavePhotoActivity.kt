@@ -53,9 +53,6 @@ class SavePhotoActivity : AppCompatActivity() {
                 it.getContentId() == contentID
             }!!
             savePhotoDataList.add(SavePhotoData(tourItem))
-            if (allTourItemList.isNotEmpty()){
-                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
-            }
         }
     }
 
