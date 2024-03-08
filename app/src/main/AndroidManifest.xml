@@ -35,13 +35,13 @@
             android:name=".ui.place_detail.PlaceDetailActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.RecordDetailActivity"
+            android:name=".ui.record.RecordDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.RandomActivity"
+            android:name=".ui.random.RandomActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
