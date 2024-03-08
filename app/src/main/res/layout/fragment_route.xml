@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="51dp"
         android:letterSpacing="-0.04"
-        android:text="여행경로"
+        android:text="내가 담은 여행지"
         android:textSize="18sp"
         android:textStyle="bold"
         android:layout_marginTop="19dp"
