@@ -64,10 +64,10 @@
             app:layout_constraintTop_toBottomOf="@id/tv_record_chart_title" />
 
         <com.db.williamchart.view.HorizontalBarChartView
-            android:layout_marginTop="8dp"
             android:id="@+id/chart_record"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             android:visibility="invisible"
             app:chart_barsColor="@color/white"
             app:chart_barsRadius="10dp"
@@ -131,10 +131,13 @@
         android:id="@+id/rv_record"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:visibility="invisible"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/spinner_record_order"
-        tools:listitem="@layout/item_record" />
+        app:spanCount="2"
+        tools:listitem="@layout/item_record"
+        tools:visibility="visible" />
 </androidx.constraintlayout.widget.ConstraintLayout>

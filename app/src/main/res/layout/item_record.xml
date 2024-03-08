@@ -2,8 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="160dp"
-    android:layout_height="160dp"
-    android:layout_margin="8dp">
+    android:layout_height="160dp">
 
     <ImageView
         android:id="@+id/iv_item_record_image"
@@ -11,47 +10,56 @@
         android:layout_height="match_parent"
         android:background="@drawable/shape_circle"
         android:clipToOutline="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/img_record_default" />
+        android:src="@drawable/ic_launcher_foreground"
+        android:scaleType="centerCrop"/>
 
     <ImageView
+        android:id="@+id/iv_item_record_image_mask"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.6"
+        android:alpha="0.5"
         android:background="@drawable/shape_circle"
         android:backgroundTint="@color/button_gray"
         android:clipToOutline="true" />
 
-    <TextView
-        android:id="@+id/tv_item_record_title"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="부산"
-        android:textColor="@color/white"
-        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/iv_item_record_more"
-        android:layout_width="8dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_item_record_more"
-        android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_item_record_title"
-        app:layout_constraintStart_toEndOf="@id/tv_item_record_title"
-        app:layout_constraintTop_toTopOf="@id/tv_item_record_title" />
+        <TextView
+            android:id="@+id/tv_item_record_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="부산"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv_item_record_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="2024/02/26"
-        android:textColor="@color/middle_gray"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_item_record_title" />
+        <ImageView
+            android:id="@+id/iv_item_record_more"
+            android:layout_width="8dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_item_record_more"
+            app:layout_constraintBottom_toBottomOf="@id/tv_item_record_title"
+            app:layout_constraintStart_toEndOf="@id/tv_item_record_title"
+            app:layout_constraintTop_toTopOf="@id/tv_item_record_title" />
+
+        <TextView
+            android:id="@+id/tv_item_record_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2024/02/26"
+            android:textColor="@color/light_gray"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_record_title" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

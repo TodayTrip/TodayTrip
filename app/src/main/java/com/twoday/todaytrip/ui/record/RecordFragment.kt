@@ -12,10 +12,11 @@ import androidx.lifecycle.ViewModelProvider
 import com.db.williamchart.data.AxisType
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordBinding
+import com.twoday.todaytrip.ui.record_detail.RecordDetailActivity
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.viewModel.RecordViewModel
 
-class RecordFragment : Fragment() {
+class RecordFragment : Fragment(), OnRecordClickListener {
     private val TAG = "RecordFragment"
 
     private var _binding: FragmentRecordBinding? = null
@@ -24,6 +25,8 @@ class RecordFragment : Fragment() {
     private val model by lazy {
         ViewModelProvider(this@RecordFragment)[RecordViewModel::class.java]
     }
+
+    private lateinit var recordAdapter: RecordAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +54,23 @@ class RecordFragment : Fragment() {
     private fun initModelObserver() {
         model.recordList.observe(viewLifecycleOwner, Observer {
             initTitleLayout(it)
-            initChart()
+
+            val chartDataList =  model.getChartDataList()
+            if (chartDataList.isEmpty()) {
+                setChartVisibility(false)
+            }
+            else{
+                setChartVisibility(true)
+                setChartData(chartDataList)
+            }
+
+            if(it.isEmpty()){
+                setRecordRecyclerViewVisibility(false)
+            }
+            else{
+                setRecordRecyclerViewVisibility(true)
+                recordAdapter.submitList(it.toMutableList())
+            }
         })
     }
 
@@ -59,15 +78,7 @@ class RecordFragment : Fragment() {
         binding.tvRecordSubTitle.text = getString(R.string.record_sub_title, recordList.size)
     }
 
-    private fun initChart() {
-        val chartDataList = model.getChartDataList()
-        Log.d(TAG, "initChart) chartDataList.size = ${chartDataList.size}")
-        if (chartDataList.isEmpty()) {
-            setChartVisibility(false)
-            return
-        }
-        setChartVisibility(true)
-
+    private fun setChartData(chartDataList:List<Pair<String, Float>>) {
         binding.chartRecord.run {
             axis = AxisType.Y
             labelsSize = 30F
@@ -82,6 +93,22 @@ class RecordFragment : Fragment() {
     }
 
     private fun initRecordRecyclerView(){
-        // TODO
+        recordAdapter = RecordAdapter().apply{
+            onRecordClickListener = this@RecordFragment
+        }
+        binding.rvRecord.run{
+            adapter = recordAdapter
+            addItemDecoration(GridSpaceItemDecoration(2, 8))
+        }
+    }
+    override fun onRecordClick(record: Record) {
+        Log.d(TAG, "onRecordClick) ${record.destination}, ${record.travelDate}")
+        startActivity(
+            RecordDetailActivity.newIntent(this.requireContext(), record)
+        )
+    }
+    private fun setRecordRecyclerViewVisibility(isVisible:Boolean){
+        binding.rvRecord.isVisible = isVisible
+        binding.layoutRecordEmpty.isVisible = !isVisible
     }
 }

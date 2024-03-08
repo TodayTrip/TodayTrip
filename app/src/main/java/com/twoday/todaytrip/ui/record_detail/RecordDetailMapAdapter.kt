@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.record
+package com.twoday.todaytrip.ui.record_detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -28,7 +28,7 @@ class RecordDetailMapAdapter() : ListAdapter<TourItem, RecordDetailMapAdapter.Ho
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecordDetailMapAdapter.Holder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
             ItemPlaceMapListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return Holder(binding)
