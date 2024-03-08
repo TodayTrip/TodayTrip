@@ -1,14 +1,18 @@
 package com.twoday.todaytrip.ui.route
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.naver.maps.geometry.LatLng
@@ -23,15 +27,19 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
+import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
+import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.tourData.TourItem
+import androidx.fragment.app.Fragment
 
-class RouteFragment : Fragment(), OnMapReadyCallback {
+class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener {
     private val TAG = "RouteFragment"
 
     private lateinit var binding: FragmentRouteBinding
@@ -48,9 +56,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     private val markers = mutableListOf<Marker>()
     private var locations: MutableList<LatLng> = mutableListOf()
 
-    private val viewModel by lazy {
-        ViewModelProvider(this@RouteFragment)[RouteViewModel::class.java]
-    }
+//    private val viewModel by lazy {
+//        ViewModelProvider(this@RouteFragment)[RouteViewModel::class.java]
+//    }
 
 
     override fun onCreateView(
@@ -89,17 +97,30 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
                     tourItem.getLongitude()?.toDouble() ?: 0.0
                 )
             )
-            loadedDataSet.add(RouteListData(tourItem.getTitle(), tourItem.getAddress()))
+            loadedDataSet.add(RouteListData(contentId, tourItem.getTitle(), tourItem.getAddress()))
         }
         dataSet = loadedDataSet.toList()
     }
 
     private fun initRouteRecyclerView() {
+        adapter.onRouteListDataClickListener = this@RouteFragment
         binding.rvRouteRecyclerview.adapter = adapter
         adapter.submitList(dataSet)
         if (dataSet.isNotEmpty()) {
             binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
         }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onRouteListDataClick(contentId: String) {
+        Log.d(TAG,"fragment)onRouteListDataClick) ${contentId}" )
+        val allTourItemList = TourItemPrefUtil.loadAllTourItemList()
+        val clickedTourItem:TourItem = allTourItemList.find{
+            it.getContentId() == contentId
+        }!!
+        startActivity(
+            PlaceDetailActivity.newIntent(MyApplication.appContext!!, clickedTourItem.getContentTypeId(), clickedTourItem)
+        )
     }
 
     private fun initItemTouchSimpleCallback() {
@@ -161,7 +182,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback {
     private fun onMarkerReady() {
         if (locations.isNotEmpty()) {
             val markerIconBitmap =
-                MapUtils.resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+                MapUtils.resizeMapIcons(MyApplication.appContext!!, R.drawable.ic_marker, 120, 120)
 
             locations.forEach { latLng ->
                 val marker = Marker().apply {
