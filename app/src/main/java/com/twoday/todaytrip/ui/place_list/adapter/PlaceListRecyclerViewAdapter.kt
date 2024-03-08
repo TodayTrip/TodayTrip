@@ -41,7 +41,7 @@ class PlaceListRecyclerViewAdapter :
     }
 
     inner class Holder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val firstImageView = binding.ivItemPlaceList
+        private val firstImageView = binding.ivItemPlaceListThumbnail
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
 
@@ -63,7 +63,7 @@ class PlaceListRecyclerViewAdapter :
             item.getThumbnailImage()?.let { url ->
                 Glide.with(MyApplication.appContext!!)
                     .load(url)
-                    .placeholder(R.drawable.img_default_image)
+                    .placeholder(R.drawable.img_default)
                     .into(firstImageView)
             }
             firstImageView.clipToOutline = true
@@ -75,7 +75,7 @@ class PlaceListRecyclerViewAdapter :
                 Log.d(TAG, "getTimeInfoWithLabel) index: $index, pair: $pair")
                 with(timeLabelTextViewList[index]) {
                     isVisible = true
-                    text = pair.first
+//                    text = pair.first
                 }
                 with(timeTextViewList[index]) {
                     isVisible = true

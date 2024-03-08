@@ -43,7 +43,7 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
     }
 
     inner class Holder(val binding: ItemPlaceMapListBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val firstImageView = binding.ivItemPlaceList
+        private val firstImageView = binding.ivItemPlaceListThumbnail
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
 
@@ -55,9 +55,9 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
             binding.tvItemPlaceListAddress.text = item.getAddress()
             Glide.with(MyApplication.appContext!!)
                 .load(item.getThumbnailImage())
-                .placeholder(R.drawable.img_default_image)
-                .into(binding.ivItemPlaceList)
-            binding.ivItemPlaceList.clipToOutline = true
+                .placeholder(R.drawable.img_default)
+                .into(binding.ivItemPlaceListThumbnail)
+            binding.ivItemPlaceListThumbnail.clipToOutline = true
         }
         fun initOnClickListener(item: TourItem) {
             this.addButton.setOnClickListener {

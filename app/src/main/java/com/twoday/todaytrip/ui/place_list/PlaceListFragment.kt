@@ -41,7 +41,6 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-
         weatherInfo()
 
     }
@@ -73,8 +72,8 @@ class PlaceListFragment : Fragment() {
         val cal = Calendar.getInstance()
         val timeToDate = cal.time
         val timeH = SimpleDateFormat("HH", Locale.getDefault()).format(timeToDate)
-        var base_time = getBaseTime(timeH)
-        var base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(timeToDate)
+        var baseTime = getBaseTime(timeH)
+        var baseDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(timeToDate)
         val coordinates = localLocation(searchArea().toString())!!
         val latitude = coordinates.latitude
         val longitude = coordinates.longitude
@@ -89,21 +88,21 @@ class PlaceListFragment : Fragment() {
         }
 
         // 오전 12시나 1시인 경우 전날 데이터 사용
-        if (base_time.toInt() == 0) {
+        if (baseTime.toInt() == 0) {
             cal.add(Calendar.DATE, -1)
-            base_date.format(timeToDate)
-            base_time = "2300"
+            baseDate.format(timeToDate)
+            baseTime = "2300"
         } else {
-            base_date = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(timeToDate)
-            base_time = getBaseTime(timeH)
+            baseDate = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(timeToDate)
+            baseTime = getBaseTime(timeH)
         }
 
         WeatherClient.weatherNetWork.getWeather(
             dataType = "JSON",
             numOfRows = 12,
             pageNo = 1,
-            baseDate = base_date,
-            baseTime = base_time,
+            baseDate = baseDate,
+            baseTime = baseTime,
             nx = latitude,
             ny = longitude
         ).enqueue(object : retrofit2.Callback<weather> {
@@ -146,7 +145,7 @@ class PlaceListFragment : Fragment() {
             "7" -> result = "눈날림"
             else -> result = "error"
         }
-        binding.tvWeatherInfo2.text = result
+
 
         // 하늘 상태 설정
         val skyImageResource = when (sky) {
@@ -155,10 +154,13 @@ class PlaceListFragment : Fragment() {
             "4" -> R.drawable.ic_place_list_weather_cloud
             else -> R.drawable.ic_place_list_weather_sun
         }
-        binding.imgWeather.setImageResource(skyImageResource)
 
-        // 온도 설정
-        binding.tvWeatherInfo.text = "$temp°"
+        with(binding) {
+            imgWeather.setImageResource(skyImageResource)
+            "$temp°".also { tvWeatherInfo.text = it }
+            tvWeatherInfo2.text = result
+        }
+
     }
 
     private fun getBaseTime(h: String): String {
@@ -179,8 +181,7 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun searchArea(): String? {
-        val area = DestinationPrefUtil.loadDestination()
-        return area
+        return DestinationPrefUtil.loadDestination()
     }
 
     private data class Coordinates(

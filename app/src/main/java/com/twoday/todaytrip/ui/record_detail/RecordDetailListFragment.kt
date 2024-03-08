@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.record
+package com.twoday.todaytrip.ui.record_detail
 
 import android.os.Bundle
 import android.view.LayoutInflater

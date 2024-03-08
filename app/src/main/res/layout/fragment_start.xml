@@ -12,32 +12,31 @@
         android:id="@+id/iv_start_walk_gif"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toTopOf="@+id/btn_start_trip"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView"
         style="@style/LargeTitleBoldText"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="20dp"
         android:text="오늘 여행을 시작해볼까요?"
         android:textColor="@color/main_blue"
-        app:layout_constraintBottom_toTopOf="@+id/btn_start_trip"
+
+        app:layout_constraintBottom_toTopOf="@+id/iv_start_walk_gif"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.52"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_start_trip"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="200dp"
-        android:background="@drawable/shape_sub_blue_8_radius"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/shape_main_blue_8_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -47,8 +46,8 @@
             style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="가입 하기"
-            android:textColor="@color/dark_blue"
+            android:text="시작하기"
+            android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

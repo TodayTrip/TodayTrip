@@ -72,7 +72,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginStart="9dp"
             android:text="주소"
-            android:textAppearance="@style/SmallText"
+            android:textAppearance="@style/PlaceAddrText"
             android:textColor="@color/button_gray"
             android:textSize="12sp"
             android:letterSpacing="-0.04"

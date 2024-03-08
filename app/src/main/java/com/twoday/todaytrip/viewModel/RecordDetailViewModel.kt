@@ -8,9 +8,10 @@ import com.naver.maps.map.overlay.Marker
 
 class RecordDetailViewModel : ViewModel() {
     private val _isOptionMap: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-    val isOptionMap: LiveData<Boolean> get() = _isOptionMap
+    val isOptionMap: LiveData<Boolean>
+        get() = _isOptionMap
 
-    // 가장 먼 거리의 마커쌍을 저장하는 라이브 데이터
+    // 가장 먼 거리의 마커 쌍을 저장하는 라이브 데이터
     private val _furthestPair = MutableLiveData<Pair<Marker, Marker>?>()
     val furthestPair: LiveData<Pair<Marker, Marker>?>
         get() {
