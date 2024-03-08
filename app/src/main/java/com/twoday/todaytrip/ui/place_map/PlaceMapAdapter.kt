@@ -45,11 +45,16 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
         fun bind(item: TourItem) {
             binding.tvItemPlaceMapTitle.text = item.getTitle()
             binding.tvItemPlaceMapAddress.text = item.getAddress()
+
             Glide.with(MyApplication.appContext!!)
                 .load(item.getThumbnailImage())
                 .placeholder(R.drawable.img_default)
                 .into(binding.ivItemPlaceMapThumbnail)
             binding.ivItemPlaceMapThumbnail.clipToOutline = true
+
+            val timeInfo = item.getTimeInfoWithLabel()
+            binding.tvItemPlaceListTime1.text = timeInfo[0].second
+            binding.tvItemPlaceListTime2.text = timeInfo[1].second
         }
     }
 }

@@ -47,16 +47,14 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
             app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_title" />
-
         <ImageView
-            android:id="@+id/tv_item_place_list_time_label1"
+            android:id="@+id/iv_item_place_list_time_label1"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_place_list_time_info"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time1"
             app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
-            tools:visibility="visible" />
+           />
 
         <TextView
             android:id="@+id/tv_item_place_list_time1"
@@ -65,19 +63,18 @@
             android:maxLines="1"
             android:text="이곳은 이 장소의 운영 시간을 나타나는 공간입니다."
             app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
-            app:layout_constraintStart_toEndOf="@+id/tv_item_place_list_time_label1"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_time_label1"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_address" />
 
         <ImageView
-            android:id="@+id/tv_item_place_list_time_label2"
+            android:id="@+id/iv_item_place_list_time_label2"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_place_list_date_info"
             android:textAppearance="@style/PlaceLabelText"
-            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time2"
             app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title"
-            tools:visibility="visible" />
+            />
 
         <TextView
             android:id="@+id/tv_item_place_list_time2"
@@ -85,57 +82,10 @@
             android:layout_marginTop="4dp"
             android:maxLines="1"
             android:text="이곳은 이 장소의 운영 날짜를 나타나는 공간입니다."
-            android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
-            app:layout_constraintStart_toEndOf="@id/tv_item_place_list_time_label2"
+            app:layout_constraintStart_toEndOf="@id/iv_item_place_list_time_label2"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_time1"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_item_place_list_time_label3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:text="레이블3"
-            android:textAppearance="@style/PlaceLabelText"
-            android:visibility="invisible"
-            app:layout_constraintStart_toEndOf="@id/iv_item_place_map_thumbnail"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_place_list_time2"
-            tools:visibility="visible" />
-
-        <TextView
-            android:id="@+id/tv_item_place_list_time3"
-            style="@style/PlaceLabelInfoText"
-            android:maxLines="1"
-            android:text="시간3 시간3 시간3 시간3 시간3 시간3 시간3 시간3 시간3 시간3 시간3"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
-            app:layout_constraintStart_toEndOf="@id/tv_item_place_list_time_label3"
-            app:layout_constraintTop_toTopOf="@id/tv_item_place_list_time_label3"
-            tools:visibility="visible" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_item_place_list_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:background="@drawable/shape_main_blue_8_radius"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="4dp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_place_list_time2">
-
-            <TextView
-                android:id="@+id/tv_item_place_list_add"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/item_place_list_add"
-                android:textAppearance="@style/PlaceAddrText"
-                android:textColor="@color/white" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
+             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
