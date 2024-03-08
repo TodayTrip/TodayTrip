@@ -41,7 +41,7 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-//        weatherInfo()
+        weatherInfo()
 
     }
 

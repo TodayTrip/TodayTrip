@@ -101,6 +101,6 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
     // Coil
     implementation("io.coil-kt:coil:2.0.0-rc03")
-    //balloon
+    //Balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
 }

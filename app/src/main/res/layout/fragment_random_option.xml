@@ -7,61 +7,50 @@
     android:background="@color/white"
     tools:context=".ui.random.RandomOptionFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_step_bar"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:background="@drawable/shape_light_gray_step_bar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_step_bar_point"
-        android:layout_width="0dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="32dp"
-        android:background="@drawable/shape_main_blue_step_bar"
-        app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent="0.3" />
 
     <TextView
         android:id="@+id/tv_random_select_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="16dp"
+        android:gravity="center"
         android:padding="20dp"
-        android:text="여행지 추천을 해드릴게요. \n어떤 랜덤을 원하시나요?"
-        android:textColor="@color/black"
-        android:textSize="24sp"
+        android:text="랜덤으로 여행 할 지역이 정해집니다.\n지역 선택 방식을 선택해 주세요."
+        android:textColor="@color/dark_gray"
+        android:textSize="20sp"
+        android:layout_marginTop="85dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_step_bar" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_all_random"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="10dp"
-        android:layout_marginEnd="48dp"
-        android:background="@drawable/shape_white_10_radius"
-        android:elevation="10dp"
+        android:background="@drawable/shape_gray_stroke_10_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_theme_random"
-        app:layout_constraintStart_toStartOf="@+id/layout_step_bar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/iv_all_random_color"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_margin="20dp"
             android:src="@drawable/img_random_qmark"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_all_random_gray"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            android:src="@drawable/img_random_qmark_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -73,9 +62,10 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/shape_white_10_radius"
-        android:elevation="10dp"
-        app:layout_constraintEnd_toEndOf="@+id/layout_step_bar"
+        android:padding="20dp"
+        android:background="@drawable/shape_gray_stroke_10_radius"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_all_random"
         app:layout_constraintTop_toTopOf="@+id/btn_all_random">
 
@@ -87,15 +77,25 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_theme_random_gray"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/img_random_theme_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="완전 랜덤"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_gray"
         android:layout_marginTop="10dp"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_all_random"
         app:layout_constraintStart_toStartOf="@+id/btn_all_random"
         app:layout_constraintTop_toBottomOf="@+id/btn_all_random" />
@@ -104,9 +104,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="테마별 랜덤"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_gray"
         android:layout_marginTop="10dp"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_theme_random"
         app:layout_constraintStart_toStartOf="@+id/btn_theme_random"
         app:layout_constraintTop_toBottomOf="@+id/btn_theme_random" />
@@ -115,27 +115,27 @@
         android:id="@+id/btn_option_select"
         android:layout_width="match_parent"
         android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/shape_middle_gray_12_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <TextView
-            style="@style/SmallBoldText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="다음"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/SmallBoldText"
+        android:text="다음"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

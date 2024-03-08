@@ -29,7 +29,7 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
 
         //여행종료 버튼
         view?.findViewById<ConstraintLayout>(R.id.layout_bottom_sheet_button)?.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
+            val intent = Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
             val savePhotoDataList = (activity as SavePhotoActivity).savePhotoDataList
             RecordPrefUtil.addRecord(Record(savePhotoDataList = savePhotoDataList))

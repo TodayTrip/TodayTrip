@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.ui.route.RouteListData
 
 class RouteViewModel: ViewModel() {
-    private val _routeItems: MutableLiveData<RouteListData> = MutableLiveData()
-    val routeItems: LiveData<RouteListData> = _routeItems
+    private val _routeItems: MutableLiveData<List<RouteListData>> = MutableLiveData()
+    val routeItems: LiveData<List<RouteListData>> = _routeItems
 
 
 //    fun add(route: RouteListData) {
@@ -19,6 +19,8 @@ class RouteViewModel: ViewModel() {
 
     fun add(photo: RouteListData) {
         val currentList = _routeItems.value
+        currentList?.plus(photo)
+        _routeItems.value = routeItems.value?.plus(photo)
 
 
     }
