@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui
+package com.twoday.todaytrip.ui.random
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

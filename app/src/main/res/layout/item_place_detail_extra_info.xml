@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/tv_item_place_detail_extra_info"
-        style="@style/SmallText"
+        style="@style/PlaceAddrText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
