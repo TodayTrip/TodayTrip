@@ -63,7 +63,7 @@
             android:background="@drawable/shape_main_blue_10_radius"
             android:clipToOutline="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_record_default"
+            android:src="@drawable/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
