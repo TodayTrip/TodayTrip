@@ -14,6 +14,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 import com.twoday.todaytrip.ui.record.Record
+import com.twoday.todaytrip.utils.RecordPrefUtil
 
 class RecordDetailActivity : AppCompatActivity() {
     private val TAG = "RecordDetailActivity"
@@ -92,7 +93,10 @@ class RecordDetailActivity : AppCompatActivity() {
 
     }
     private fun initDeleteButton(){
-        // TODO
+        binding.tvRecordDetailDelete.setOnClickListener {
+            RecordPrefUtil.deleteRecord(record!!)
+            finish()
+        }
     }
     private fun initOptionButton(){
         binding.ivRecordDetailOption.setOnClickListener {
