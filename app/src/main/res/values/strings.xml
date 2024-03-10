@@ -10,7 +10,7 @@
     <string name="record_title">나의 여행 기록</string>
     <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>
     <string name="record_chart_title">자주 방문한 여행지 <font color="#FFD15B"><b>TOP3</b></font></string>
-    <string name="record_chart_empty">저장된 여행 기록이 없습니다!</string>
+    <string name="record_chart_empty">여행지를 2곳 이상 방문해보세요!</string>
     <string name="record_list_order_most_recent">최신순</string>
     <string name="record_list_order_least_recent">오래된순</string>
     <string name="record_list_order_alphabetical">가나다순</string>
