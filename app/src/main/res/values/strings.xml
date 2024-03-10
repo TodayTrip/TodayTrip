@@ -54,4 +54,9 @@
     <!--  ItemPlaceList  -->
     <string name="item_place_list_add">담기</string>
     <string name="item_place_list_remove">빼기</string>
+
+    <!--  Bottom Sheet  -->
+    <string name="bottom_sheet_title_record">현재까지의 경로가 기록됩니다.</string>
+    <string name="bottom_sheet_warning_record">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
+
 </resources>
