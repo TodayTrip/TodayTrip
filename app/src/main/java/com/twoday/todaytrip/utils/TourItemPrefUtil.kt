@@ -47,7 +47,7 @@ object TourItemPrefUtil {
         )
 
     fun resetTourItemListPref(){
-        Log.d(TAG, "resetTourItemListPref) called")
+        Log.d(TAG, "resetTourItemListPref called")
         saveTouristAttractionList(emptyList())
         saveRestaurantList(emptyList())
         saveCafeList(emptyList())
