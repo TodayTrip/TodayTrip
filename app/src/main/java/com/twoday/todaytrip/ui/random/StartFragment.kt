@@ -1,35 +1,28 @@
 package com.twoday.todaytrip.ui.random
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentStartBinding
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.utils.showSnackBar
+import com.twoday.todaytrip.viewModel.LoginResult
+import com.twoday.todaytrip.viewModel.RandomViewModel
 
-//TODO 여행지 초기화 작업 필요할 듯
 class StartFragment : Fragment() {
+
     private var _binding: FragmentStartBinding? = null
     private val binding get() = _binding!!
-
-    // FirebaseAuth 인스턴스를 변수로 선언
-    private lateinit var auth: FirebaseAuth
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        // FirebaseAuth 객체의 공유 인스턴스를 초기화
-        auth = Firebase.auth
+    private val viewModel by lazy {
+        ViewModelProvider(this@StartFragment)[RandomViewModel::class.java]
     }
 
     override fun onCreateView(
@@ -37,10 +30,24 @@ class StartFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentStartBinding.inflate(inflater, container, false)
-        setUpClickListener()
-        initView()
         return binding.root
 //        setGoogleLogin()
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        initModelObserver()
+        setUpClickListener()
+    }
+
+    private fun initModelObserver() {
+        viewModel.loginStatus.observe(viewLifecycleOwner, Observer { result ->
+            when (result) {
+                LoginResult.SUCCESS -> findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
+                LoginResult.FAILURE -> showSnackBar(R.string.login_fail)
+            }
+        })
     }
 
     private fun initView() {
@@ -51,33 +58,13 @@ class StartFragment : Fragment() {
 
     private fun setUpClickListener() {
         binding.btnStartTrip.setOnClickListener {
-//            findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
+            viewModel.performAnonymousLogin()
             resetSharedPref()
-            performAnonymousLogin()
         }
     }
 
-    //익명 로그인 함수
-    private fun performAnonymousLogin() {
-        auth.signInAnonymously()
-            .addOnCompleteListener(activity as Activity) { task ->
-                if (task.isSuccessful) {
-                    findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
-                } else {
-                    showSnackBar(R.string.login_fail)
-                }
-            }
-    }
-
-    private fun showSnackBar(message: Int) {
-        Snackbar.make(
-            binding.root,
-            getString(message),
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    private fun resetSharedPref(){
+    //TODO 이 함수도 RandomViewModel로 빼놓으면 어떨까요?
+    private fun resetSharedPref() {
         TourItemPrefUtil.resetTourItemListPref()
         ContentIdPrefUtil.resetContentIdListPref()
     }
