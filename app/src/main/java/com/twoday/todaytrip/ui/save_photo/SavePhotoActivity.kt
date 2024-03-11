@@ -104,6 +104,12 @@ class SavePhotoActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == RESULT_OK && it.data != null) {
             val uri = it.data!!.data!!
+
+            grantUriPermission(
+                "com.twoday.todaytrip",
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
             adapter.addImageUri(uri, position)
         }
     }
