@@ -48,6 +48,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
     }
 
     override fun onResume() {
+        Log.d(TAG, "onResume) called")
         super.onResume()
         model.loadRecordList()
     }
@@ -56,7 +57,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
             initTitleLayout(it)
 
             val chartDataList =  model.getChartDataList()
-            if (chartDataList.isEmpty()) {
+            if (chartDataList.size < 2) {
                 setChartVisibility(false)
             }
             else{

@@ -10,7 +10,7 @@
     <string name="record_title">나의 여행 기록</string>
     <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>
     <string name="record_chart_title">자주 방문한 여행지 <font color="#FFD15B"><b>TOP3</b></font></string>
-    <string name="record_chart_empty">저장된 여행 기록이 없습니다!</string>
+    <string name="record_chart_empty">여행지를 2곳 이상 방문해보세요!</string>
     <string name="record_list_order_most_recent">최신순</string>
     <string name="record_list_order_least_recent">오래된순</string>
     <string name="record_list_order_alphabetical">가나다순</string>
@@ -54,4 +54,15 @@
     <!--  ItemPlaceList  -->
     <string name="item_place_list_add">담기</string>
     <string name="item_place_list_remove">빼기</string>
+
+    <!--  Bottom Sheet  -->
+    <string name="bottom_sheet_title_record">현재까지의 경로가 기록됩니다.</string>
+    <string name="bottom_sheet_warning_record">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
+
+    <!--  Alert Dialog  -->
+    <string name="alert_dialog_delete_title">여행 기록을 삭제하시겠습니까?</string>
+    <string name="alert_dialog_delete_description">삭제한 여행 기록은 복구할 수 없습니다.</string>
+    <string name="alert_dialog_positive">삭제</string>
+    <string name="alert_dialog_negative">취소</string>
+
 </resources>
