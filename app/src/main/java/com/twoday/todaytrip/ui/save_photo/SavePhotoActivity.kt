@@ -48,7 +48,7 @@ class SavePhotoActivity : AppCompatActivity() {
             }!!
             savePhotoDataList.add(SavePhotoData(tourItem))
             if (allTourItemList.isNotEmpty()) {
-                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
+//                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
             }
         }
     }
