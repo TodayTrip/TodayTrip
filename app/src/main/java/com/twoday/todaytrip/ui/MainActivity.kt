@@ -25,12 +25,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+        initOnClickListener()
     }
 
     private fun initView() {
         setNavigation()
     }
 
+    private fun initOnClickListener() {
+        binding.fabBottomRandom.setOnClickListener {
+
+        }
+    }
     private fun setNavigation() {
         val navHomeFragment =
             supportFragmentManager.findFragmentById(R.id.nav_main_fragment) as NavHostFragment
@@ -44,10 +50,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupFabVisibility(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.navigation_map -> binding.fab.visibility = View.GONE
-                R.id.navigation_route -> binding.fab.visibility = View.GONE
-                R.id.navigation_record -> binding.fab.visibility = View.GONE
-                else -> binding.fab.visibility = View.VISIBLE
+                R.id.navigation_map -> binding.fabBottomRandom.visibility = View.GONE
+                R.id.navigation_route -> binding.fabBottomRandom.visibility = View.GONE
+                R.id.navigation_record -> binding.fabBottomRandom.visibility = View.GONE
+                else -> binding.fabBottomRandom.visibility = View.VISIBLE
             }
         }
     }
