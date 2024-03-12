@@ -105,4 +105,6 @@ dependencies {
     implementation ("com.github.skydoves:balloon:1.4.6")
     // Skeleton
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    //FishBun
+    implementation ("io.github.sangcomz:fishbun:1.1.1")
 }
