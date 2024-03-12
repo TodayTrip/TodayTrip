@@ -94,14 +94,18 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
     }
 
     override fun onPositiveClick() {
+        Log.d(TAG, "onPositiveClick) called")
         RecordPrefUtil.deleteRecord(record!!)
         finish()
     }
     private fun initDeleteButton(){
-        val dialog = DeleteRecordDialog(this).apply{
-            onPositiveClickListener = this@RecordDetailActivity
+        binding.tvRecordDetailDelete.setOnClickListener {
+            Log.d(TAG, "delete button clicked")
+            val dialog = DeleteRecordDialog(this@RecordDetailActivity).apply{
+                onPositiveClickListener = this@RecordDetailActivity
+            }
+            dialog.show()
         }
-        dialog.show()
     }
     private fun initOptionButton(){
         binding.ivRecordDetailOption.setOnClickListener {
