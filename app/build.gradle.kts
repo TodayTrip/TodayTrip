@@ -19,7 +19,7 @@ android {
         applicationId = "com.twoday.todaytrip"
         minSdk = 24
         targetSdk = 34
-        versionCode = 2
+        versionCode = 3
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -103,4 +103,8 @@ dependencies {
     implementation("io.coil-kt:coil:2.0.0-rc03")
     // balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
+    // Skeleton
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
+    //FishBun
+    implementation ("io.github.sangcomz:fishbun:1.1.1")
 }

@@ -24,12 +24,12 @@ class RandomResultViewModel : ViewModel() {
         )
     }
 
-    private val _isTourDataListReady = MutableLiveData<Boolean>()
-    val isTourDataListReady: LiveData<Boolean>
-        get() = _isTourDataListReady
+    private val _isTouristAttractionListReady = MutableLiveData<Boolean>()
+    val isTouristAttractionListReady: LiveData<Boolean>
+        get() = _isTouristAttractionListReady
 
     init {
-        _isTourDataListReady.value = false
+        _isTouristAttractionListReady.value = false
         CoroutineScope(Dispatchers.IO).launch {
             fetchAndSaveTourItemList()
         }
@@ -39,23 +39,10 @@ class RandomResultViewModel : ViewModel() {
         val touristAttractionJob = CoroutineScope(Dispatchers.IO).launch {
             fetchAndSaveTouristAttractionList()
         }
-        val restaurantListJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveRestaurantList()
-        }
-        val cafeListJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveCafeList()
-        }
-        val eventListJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveEventList()
-        }
-
         touristAttractionJob.join()
-        restaurantListJob.join()
-        cafeListJob.join()
-        eventListJob.join()
 
         withContext(Dispatchers.Main) {
-            _isTourDataListReady.value = true
+            _isTouristAttractionListReady.value = true
         }
     }
 
@@ -70,18 +57,5 @@ class RandomResultViewModel : ViewModel() {
             else
                 TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList)
-    }
-
-    private fun fetchAndSaveRestaurantList() {
-        val restaurantList = TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
-        TourItemPrefUtil.saveRestaurantList(restaurantList)
-    }
-    private fun fetchAndSaveCafeList() {
-        val cafeList = TourNetworkInterfaceUtils.getCafeTabList(areaCode)
-        TourItemPrefUtil.saveCafeList(cafeList)
-    }
-    private fun fetchAndSaveEventList() {
-        val eventList = TourNetworkInterfaceUtils.getEventTabList(areaCode)
-        TourItemPrefUtil.saveEventList(eventList)
     }
 }

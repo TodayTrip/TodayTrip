@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_item_place_list_thumbnail"
+            android:id="@+id/iv_item_place_list_skeleton_thumbnail"
             android:layout_width="115dp"
             android:layout_height="115dp"
             android:layout_marginStart="20dp"
@@ -29,60 +29,62 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_item_place_list_title"
+            android:id="@+id/tv_item_place_list_skeleton_title"
             style="@style/PlaceTitleBoldText"
             android:layout_marginEnd="20dp"
+            android:background="@color/middle_gray"
             android:maxLines="1"
-            android:text="이곳은 이 장소의 이름을 나타나는 공간입니다."
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_thumbnail"
-            app:layout_constraintTop_toTopOf="@+id/iv_item_place_list_thumbnail" />
+            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_skeleton_thumbnail"
+            app:layout_constraintTop_toTopOf="@+id/iv_item_place_list_skeleton_thumbnail" />
 
         <TextView
-            android:id="@+id/tv_item_place_list_address"
+            android:id="@+id/tv_item_place_list_skeleton_address"
             style="@style/PlaceAddrText"
+            android:background="@color/middle_gray"
             android:maxLines="1"
-            android:text="이곳은 이 장소의 주소를 나타나는 공간입니다."
-            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
-            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_title" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_skeleton_title"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_skeleton_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_skeleton_title" />
 
         <ImageView
-            android:id="@+id/iv_item_place_list_time_label1"
+            android:id="@+id/iv_item_place_list_skeleton_time_label1"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_place_list_time_info"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time1"
-            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_skeleton_time1"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_skeleton_title" />
 
         <TextView
-            android:id="@+id/tv_item_place_list_time1"
+            android:id="@+id/tv_item_place_list_skeleton_time1"
             style="@style/PlaceLabelInfoText"
             android:layout_marginTop="8dp"
+            android:background="@color/middle_gray"
+
             android:maxLines="1"
-            android:text="이곳은 이 장소의 운영 시간을 나타나는 공간입니다."
-            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_time_label1"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_address" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_skeleton_title"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_skeleton_time_label1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_skeleton_address" />
 
         <ImageView
-            android:id="@+id/iv_item_place_list_time_label2"
+            android:id="@+id/iv_item_place_list_skeleton_time_label2"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_place_list_date_info"
             android:textAppearance="@style/PlaceLabelText"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time2"
-            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title" />
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_skeleton_time2"
+            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_skeleton_title" />
 
         <TextView
-            android:id="@+id/tv_item_place_list_time2"
+            android:id="@+id/tv_item_place_list_skeleton_time2"
             style="@style/PlaceLabelInfoText"
             android:layout_marginTop="4dp"
+            android:background="@color/middle_gray"
+
             android:maxLines="1"
-            android:text="이곳은 이 장소의 운영 날짜를 나타나는 공간입니다."
-            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
-            app:layout_constraintStart_toEndOf="@id/iv_item_place_list_time_label2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_time1" />
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_skeleton_title"
+            app:layout_constraintStart_toEndOf="@id/iv_item_place_list_skeleton_time_label2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_skeleton_time1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
