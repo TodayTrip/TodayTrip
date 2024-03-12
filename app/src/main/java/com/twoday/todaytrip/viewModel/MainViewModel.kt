@@ -1,23 +1,27 @@
 package com.twoday.todaytrip.viewModel
 
+//import com.google.firebase.database.FirebaseDatabase
+//import com.google.firebase.storage.FirebaseStorage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-//import com.google.firebase.database.FirebaseDatabase
-//import com.google.firebase.storage.FirebaseStorage
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
     private val TAG = "MainViewModel"
 
-    private val theme by lazy{
+    private val theme by lazy {
         DestinationPrefUtil.loadTheme()
     }
-    private val areaCode by lazy{
+    private val areaCode by lazy {
         getDestinationAreaCode(
             DestinationPrefUtil.loadDestination()
         )
@@ -39,68 +43,73 @@ class MainViewModel : ViewModel() {
     val eventList: LiveData<List<TourItem>>
         get() = _eventList
 
-//    private val storageRef = FirebaseStorage.getInstance().reference
-//    private val databaseRef = FirebaseDatabase.getInstance().reference
-
     init {
-        loadTourItemList()
+        getTourItemList()
     }
 
     private fun getDestinationAreaCode(destination: String): String =
         if (destination.isNullOrBlank()) ""
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
-    private fun loadTourItemList(){
-        _touristAttractionList.value = TourItemPrefUtil.loadTouristAttractionList()
-        _restaurantList.value = TourItemPrefUtil.loadRestaurantList()
-        _cafeList.value = TourItemPrefUtil.loadCafeList()
-        _eventList.value = TourItemPrefUtil.loadEventList()
+    private fun getTourItemList() {
+        TourItemPrefUtil.loadTouristAttractionList().run {
+            if (this.isNotEmpty()) _touristAttractionList.value = this
+            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveTouristAttractionList() }
+        }
+        TourItemPrefUtil.loadRestaurantList().run {
+            if (this.isNotEmpty()) _restaurantList.value = this
+            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveRestaurantList() }
+        }
+        TourItemPrefUtil.loadCafeList().run {
+            if (this.isNotEmpty()) _cafeList.value = this
+            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveCafeList() }
+        }
+        TourItemPrefUtil.loadEventList().run {
+            if (this.isNotEmpty()) _eventList.value = this
+            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveEventList() }
+        }
     }
 
-    fun fetchAndSaveTouristAttractionList() {
-        val touristAttractionList =
+    private suspend fun fetchAndSaveTouristAttractionList() {
+        val touristAttractionList = CoroutineScope(Dispatchers.IO).async {
             if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode)
             else
                 TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
-        TourItemPrefUtil.saveTouristAttractionList(touristAttractionList)
+        }
+        CoroutineScope(Dispatchers.Main).launch{
+            _touristAttractionList.value = touristAttractionList.await()
+        }
+        TourItemPrefUtil.saveTouristAttractionList(touristAttractionList.await())
     }
 
-    fun fetchAndSaveRestaurantList() {
-        val restaurantList = TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
-        TourItemPrefUtil.saveRestaurantList(restaurantList)
+    private suspend fun fetchAndSaveRestaurantList() {
+        val restaurantList = CoroutineScope(Dispatchers.IO).async {
+            TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            _restaurantList.value = restaurantList.await()
+        }
+        TourItemPrefUtil.saveRestaurantList(restaurantList.await())
     }
-    fun fetchAndSaveCafeList() {
-        val cafeList = TourNetworkInterfaceUtils.getCafeTabList(areaCode)
-        TourItemPrefUtil.saveCafeList(cafeList)
 
+    private suspend fun fetchAndSaveCafeList() {
+        val cafeList = CoroutineScope(Dispatchers.IO).async {
+            TourNetworkInterfaceUtils.getCafeTabList(areaCode)
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            _cafeList.value = cafeList.await()
+        }
+        TourItemPrefUtil.saveCafeList(cafeList.await())
     }
-    fun fetchAndSaveEventList() {
-        val eventList = TourNetworkInterfaceUtils.getEventTabList(areaCode)
-        TourItemPrefUtil.saveEventList(eventList)
+
+    private suspend fun fetchAndSaveEventList() {
+        val eventList = CoroutineScope(Dispatchers.IO).async {
+            TourNetworkInterfaceUtils.getEventTabList(areaCode)
+        }
+        CoroutineScope(Dispatchers.Main).launch {
+            _eventList.value = eventList.await()
+        }
+        TourItemPrefUtil.saveEventList(eventList.await())
     }
 }
-
-data class AreaBasedListItem(
-    val title: String,
-    val contentId: String,
-    val contentTypeId: String,
-    val createdTime: String,
-    val modifiedTime: String,
-    val tel: String = "",
-    val address: String = "",
-    val addressDetail: String = "",
-    val zipcode: String = "",
-    val mapX: String = "",
-    val mapY: String = "",
-    val mapLevel: String = "",
-    val areaCode: String = "",
-    val siGunGuCode: String = "",
-    val category1: String = "",
-    val category2: String = "",
-    val category3: String = "",
-    val firstImage: String? = null, // 이미지 URL을 nullable로 변경
-    val firstImageThumbnail: String? = null,
-    val bookTour: String = "",
-    val copyrightType: String = ""
-)
