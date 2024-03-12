@@ -37,7 +37,7 @@
         android:id="@+id/iv_place_detail_back_bg"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:background="@drawable/selector_place_detail_white_circle"
+        android:background="@color/transparent"
         app:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
         app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
         />
