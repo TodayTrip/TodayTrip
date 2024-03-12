@@ -47,7 +47,6 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
 
@@ -67,29 +66,15 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener(){
-        binding.layoutEventRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveEventList()
-        }
-    }
     private fun initModelObserver(){
         mainModel.eventList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
-            if(it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+            setLoadingUI(false)
         })
     }
-    private fun setNoResultUI(){
-        binding.layoutEventRecyclerViewNoResult.isVisible = true
-        binding.layoutEventRecyclerViewLoading.isVisible = false
-    }
+
     private fun setLoadingUI(isLoading:Boolean){
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutEventRecyclerViewNoResult.isVisible = false
-
         binding.layoutEventRecyclerViewLoading.isVisible = isLoading
         binding.rvEventRecyclerView.isVisible = !isLoading
     }

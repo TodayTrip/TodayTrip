@@ -47,7 +47,6 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
 
@@ -68,29 +67,13 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener(){
-        binding.layoutTouristAttractionRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveTouristAttractionList()
-        }
-    }
     private fun initModelObserver(){
         mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
-            if(it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+            setLoadingUI(false)
         })
     }
-    private fun setNoResultUI(){
-        binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = true
-        binding.layoutTouristAttractionRecyclerViewLoading.isVisible = false
-    }
     private fun setLoadingUI(isLoading:Boolean){
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = false
-
         binding.layoutTouristAttractionRecyclerViewLoading.isVisible = isLoading
         binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
     }

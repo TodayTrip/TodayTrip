@@ -48,7 +48,6 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
 
@@ -70,32 +69,15 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener() {
-        binding.layoutRestaurantRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveRestaurantList()
-        }
-    }
-
     private fun initModelObserver() {
         mainModel.restaurantList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
-            if (it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+            setLoadingUI(false)
         })
-    }
-
-    private fun setNoResultUI() {
-        binding.layoutRestaurantRecyclerViewNoResult.isVisible = true
-        binding.layoutRestaurantRecyclerViewLoading.isVisible = false
     }
 
     private fun setLoadingUI(isLoading: Boolean) {
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutRestaurantRecyclerViewNoResult.isVisible = false
-
         binding.layoutRestaurantRecyclerViewLoading.isVisible = isLoading
         binding.rvRestaurantRecyclerView.isVisible = !isLoading
     }

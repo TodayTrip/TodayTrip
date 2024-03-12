@@ -47,7 +47,6 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         super.onViewCreated(view, savedInstanceState)
 
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
 
@@ -67,29 +66,14 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener(){
-        binding.layoutCafeRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveCafeList()
-        }
-    }
     private fun initModelObserver(){
         mainModel.cafeList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
-            if(it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+            setLoadingUI(false)
         })
-    }
-    private fun setNoResultUI(){
-        binding.layoutCafeRecyclerViewNoResult.isVisible = true
-        binding.layoutCafeRecyclerViewLoading.isVisible = false
     }
     private fun setLoadingUI(isLoading:Boolean){
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutCafeRecyclerViewNoResult.isVisible = false
-
         binding.layoutCafeRecyclerViewLoading.isVisible = isLoading
         binding.rvCafeRecyclerView.isVisible = !isLoading
     }
