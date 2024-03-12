@@ -42,7 +42,7 @@ class RandomResultFragment : Fragment() {
         model.isTourDataListReady.observe(viewLifecycleOwner, Observer {isReady ->
             if(isReady) {
                 Log.d(TAG, "tour list ready! start main activity")
-                val intent = Intent(activity, MainActivity::class.java)
+                val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             }
         })
