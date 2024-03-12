@@ -36,6 +36,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     }
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
+
     // 마커 리스트 생성
     private val markers = mutableListOf<Marker>()
     val recordList = RecordPrefUtil.loadRecordList()
@@ -58,15 +59,17 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         mapView.getMapAsync(this)
 
         Log.d(TAG, "recordList: $recordList")
-        if(recordList.isNotEmpty()){
+        if (recordList.isNotEmpty()) {
             locations = recordList.flatMap { record ->
                 record.savePhotoDataList.map { photoData ->
-                    LatLng(photoData.tourItem.getLatitude().toDouble(), photoData.tourItem.getLongitude().toDouble())
+                    LatLng(
+                        photoData.tourItem.getLatitude().toDouble(),
+                        photoData.tourItem.getLongitude().toDouble()
+                    )
                 }
             }
             Log.d(TAG, "locations: $locations")
-        }
-        else {
+        } else {
             Log.d("기록된 경로가 없음", "nothing")
         }
 
@@ -90,6 +93,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
             }
         })
     }
+
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
@@ -117,13 +121,18 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     // 마커끼리 폴리라인 연결하는 함수
-    private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap, markers: MutableList<Marker>, furthestPair: Pair<Marker, Marker>) {
+    private fun connectMarkersSequentiallyFromFurthest(
+        naverMap: NaverMap,
+        markers: MutableList<Marker>,
+        furthestPair: Pair<Marker, Marker>
+    ) {
         var currentMarker = furthestPair.first // 시작점으로 설정할 마커
         val connectedMarkers = mutableListOf(currentMarker)
         markers.remove(currentMarker)
 
         while (markers.isNotEmpty()) {
-            val closestMarker = markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
+            val closestMarker =
+                markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
             closestMarker?.let { marker ->
                 drawPolyline(naverMap, listOf(currentMarker.position, marker.position))
                 currentMarker = marker
