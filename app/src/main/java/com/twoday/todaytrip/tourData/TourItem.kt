@@ -19,8 +19,8 @@ sealed interface TourItem : Parcelable {
     fun getThumbnailImage() = tourItemInfo.firstImageThumbnail ?: null
     fun getLongitude() = tourItemInfo.mapX
     fun getLatitude() = tourItemInfo.mapY
-    abstract fun getTimeInfoWithLabel(): List<Pair<String, String>>
-    abstract fun getDetailInfoWithLabel(): List<Pair<String, String>>
+    fun getTimeInfoWithLabel(): List<Pair<String, String>>
+    fun getDetailInfoWithLabel(): List<Pair<String, String>>
     fun getContentId() = tourItemInfo.contentId
     fun getContentTypeId() = tourItemInfo.contentTypeId
 
