@@ -82,7 +82,7 @@ class RandomThemeFragment : Fragment() {
         // 모든 버튼을 순회하면서, 선택된 번호의 버튼에만 특정 스타일 적용
         for ((index, button) in buttons.withIndex()) {
             if (index == selectedNumber) {
-                button.setBackgroundResource(R.drawable.shape_yellow_border_10_radius)
+                button.setBackgroundResource(R.drawable.shape_yellow_stroke_10_radius)
             } else {
                 button.setBackgroundResource(R.drawable.shape_white_10_radius)
             }
