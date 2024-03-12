@@ -41,7 +41,7 @@ class PlaceListRecyclerViewAdapter :
     }
 
     inner class Holder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val firstImageView = binding.ivItemPlaceMapThumbnail
+        private val firstImageView = binding.ivItemPlaceListThumbnail
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
 
