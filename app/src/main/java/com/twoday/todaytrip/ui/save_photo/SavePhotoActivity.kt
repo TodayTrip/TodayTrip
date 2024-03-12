@@ -53,9 +53,6 @@ class SavePhotoActivity : AppCompatActivity() {
                 it.getContentId() == contentID
             }!!
             savePhotoDataList.add(SavePhotoData(tourItem))
-            if (allTourItemList.isNotEmpty()){
-                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
-            }
         }
     }
 
@@ -107,6 +104,12 @@ class SavePhotoActivity : AppCompatActivity() {
     ) {
         if (it.resultCode == RESULT_OK && it.data != null) {
             val uri = it.data!!.data!!
+
+            grantUriPermission(
+                "com.twoday.todaytrip",
+                uri,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION
+            )
             adapter.addImageUri(uri, position)
         }
     }
