@@ -52,22 +52,71 @@ class MainViewModel : ViewModel() {
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
     private fun getTourItemList() {
-        TourItemPrefUtil.loadTouristAttractionList().run {
-            if (this.isNotEmpty()) _touristAttractionList.value = this
-            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveTouristAttractionList() }
+        loadOrFetchTouristAttractionList()
+        loadOrFetchRestaurantList()
+        loadOrFetchCafeList()
+        loadOrFetchEventList()
+    }
+
+    private fun loadOrFetchTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch {
+        var touristAttractionList: List<TourItem>? = null
+        while(true){
+            touristAttractionList = TourItemPrefUtil.loadTouristAttractionList()
+            if(!touristAttractionList.isNullOrEmpty())
+                break
+
+            fetchAndSaveTouristAttractionList()
         }
-        TourItemPrefUtil.loadRestaurantList().run {
-            if (this.isNotEmpty()) _restaurantList.value = this
-            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveRestaurantList() }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            _touristAttractionList.value = touristAttractionList!!.toList()
         }
-        TourItemPrefUtil.loadCafeList().run {
-            if (this.isNotEmpty()) _cafeList.value = this
-            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveCafeList() }
+        return@launch
+    }
+    private fun loadOrFetchRestaurantList() = CoroutineScope(Dispatchers.IO).launch {
+        var restaurantList: List<TourItem>? = null
+        while(true){
+            restaurantList = TourItemPrefUtil.loadRestaurantList()
+            if(!restaurantList.isNullOrEmpty())
+                break
+
+            fetchAndSaveRestaurantList()
         }
-        TourItemPrefUtil.loadEventList().run {
-            if (this.isNotEmpty()) _eventList.value = this
-            else CoroutineScope(Dispatchers.IO).launch { fetchAndSaveEventList() }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            _restaurantList.value = restaurantList!!.toList()
         }
+        return@launch
+    }
+    private fun loadOrFetchCafeList() = CoroutineScope(Dispatchers.IO).launch {
+        var cafeList: List<TourItem>? = null
+        while(true){
+            cafeList = TourItemPrefUtil.loadCafeList()
+            if(!cafeList.isNullOrEmpty())
+                break
+
+            fetchAndSaveCafeList()
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            _cafeList.value = cafeList!!.toList()
+        }
+        return@launch
+    }
+    private fun loadOrFetchEventList() = CoroutineScope(Dispatchers.IO).launch {
+        var eventList: List<TourItem>? = null
+        while(true){
+            eventList = TourItemPrefUtil.loadEventList()
+            if(!eventList.isNullOrEmpty())
+                break
+
+            fetchAndSaveEventList()
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            _eventList.value = eventList!!.toList()
+        }
+        return@launch
     }
 
     private suspend fun fetchAndSaveTouristAttractionList() {
@@ -77,38 +126,23 @@ class MainViewModel : ViewModel() {
             else
                 TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
         }
-        CoroutineScope(Dispatchers.Main).launch{
-            _touristAttractionList.value = touristAttractionList.await()
-        }
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList.await())
     }
-
     private suspend fun fetchAndSaveRestaurantList() {
         val restaurantList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
         }
-        CoroutineScope(Dispatchers.Main).launch {
-            _restaurantList.value = restaurantList.await()
-        }
         TourItemPrefUtil.saveRestaurantList(restaurantList.await())
     }
-
     private suspend fun fetchAndSaveCafeList() {
         val cafeList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.getCafeTabList(areaCode)
         }
-        CoroutineScope(Dispatchers.Main).launch {
-            _cafeList.value = cafeList.await()
-        }
         TourItemPrefUtil.saveCafeList(cafeList.await())
     }
-
     private suspend fun fetchAndSaveEventList() {
         val eventList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.getEventTabList(areaCode)
-        }
-        CoroutineScope(Dispatchers.Main).launch {
-            _eventList.value = eventList.await()
         }
         TourItemPrefUtil.saveEventList(eventList.await())
     }
