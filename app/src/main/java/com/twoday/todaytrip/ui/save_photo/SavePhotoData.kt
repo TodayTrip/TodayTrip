@@ -9,6 +9,7 @@ import kotlinx.serialization.Serializable
 @Parcelize
 data class SavePhotoData(
     val tourItem: TourItem,
-    var imageUri: String? = null,
+//    var imageUri: String? = null,
+    var imageUriList: MutableList<String> = mutableListOf(),
     val position: Int = 0
 ): java.io.Serializable, Parcelable

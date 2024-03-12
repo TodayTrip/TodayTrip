@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
@@ -34,7 +34,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter: PlaceListRecyclerViewAdapter
+    private lateinit var adapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -46,13 +46,18 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoadingUI(true)
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
+    private fun setLoadingUI(isLoading: Boolean) {
+        binding.shimmerCafeRecyclerView.isVisible = isLoading
+        binding.rvCafeRecyclerView.isVisible = !isLoading
 
+        if(isLoading) binding.shimmerCafeRecyclerView.startShimmer()
+    }
     private fun initRecyclerView(){
-        adapter = PlaceListRecyclerViewAdapter().apply{
+        adapter = PlaceListAdapter().apply{
             onTourItemClickListener = this@CafeRecyclerViewFragment
         }
         binding.rvCafeRecyclerView.adapter = adapter
@@ -67,31 +72,11 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener(){
-        binding.layoutCafeRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveCafeList()
-        }
-    }
     private fun initModelObserver(){
         mainModel.cafeList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
-            if(it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+            setLoadingUI(false)
         })
-    }
-    private fun setNoResultUI(){
-        binding.layoutCafeRecyclerViewNoResult.isVisible = true
-        binding.layoutCafeRecyclerViewLoading.isVisible = false
-    }
-    private fun setLoadingUI(isLoading:Boolean){
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutCafeRecyclerViewNoResult.isVisible = false
-
-        binding.layoutCafeRecyclerViewLoading.isVisible = isLoading
-        binding.rvCafeRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

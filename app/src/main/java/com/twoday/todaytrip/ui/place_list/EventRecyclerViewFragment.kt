@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListEventRecyclerViewBinding
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
@@ -34,7 +34,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter: PlaceListRecyclerViewAdapter
+    private lateinit var adapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -46,13 +46,18 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoadingUI(true)
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
+    private fun setLoadingUI(isLoading: Boolean) {
+        binding.shimmerEventRecyclerView.isVisible = isLoading
+        binding.rvEventRecyclerView.isVisible = !isLoading
 
+        if(isLoading) binding.shimmerEventRecyclerView.startShimmer()
+    }
     private fun initRecyclerView(){
-        adapter = PlaceListRecyclerViewAdapter().apply{
+        adapter = PlaceListAdapter().apply{
             onTourItemClickListener = this@EventRecyclerViewFragment
         }
         binding.rvEventRecyclerView.adapter = adapter
@@ -67,31 +72,11 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener(){
-        binding.layoutEventRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveEventList()
-        }
-    }
     private fun initModelObserver(){
         mainModel.eventList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
-            if(it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+            setLoadingUI(false)
         })
-    }
-    private fun setNoResultUI(){
-        binding.layoutEventRecyclerViewNoResult.isVisible = true
-        binding.layoutEventRecyclerViewLoading.isVisible = false
-    }
-    private fun setLoadingUI(isLoading:Boolean){
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutEventRecyclerViewNoResult.isVisible = false
-
-        binding.layoutEventRecyclerViewLoading.isVisible = isLoading
-        binding.rvEventRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

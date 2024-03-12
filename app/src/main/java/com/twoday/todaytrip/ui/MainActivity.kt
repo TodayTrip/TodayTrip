@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val viewModel by lazy {
+    private val model by lazy {
         ViewModelProvider(this@MainActivity)[MainViewModel::class.java]
     }
 
