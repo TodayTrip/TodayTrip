@@ -4,21 +4,21 @@ import android.app.Dialog
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.util.Log
 import android.view.LayoutInflater
 import com.twoday.todaytrip.MyApplication
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.DialogAlertBinding
 
-class DeleteRecordDialog(context: Context) {
+class DeleteRecordDialog(val context: Context) {
+    private val TAG = "DeleteRecordDialog"
 
     interface OnPositiveClickListener{
         fun onPositiveClick()
     }
 
     private lateinit var binding: DialogAlertBinding
-    private val dialog = Dialog(MyApplication.appContext!!)
-    private val context by lazy{
-        MyApplication.appContext!!
-    }
+    private val dialog = Dialog(context)
 
     var onPositiveClickListener:OnPositiveClickListener? = null
 
@@ -27,19 +27,30 @@ class DeleteRecordDialog(context: Context) {
 
         dialog.setContentView(binding.root)
         dialog.setCancelable(false)
+
+        initDialogUI()
+        initListener()
+
+        dialog.show()
+    }
+
+    private fun initDialogUI(){
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        val closeBtn = binding.layoutAlertNegative
-        val confirmBtn = binding.layoutAlertPositive
-
-        closeBtn.setOnClickListener {
+        binding.tvAlertDialogTitle.text =
+            context.resources.getText(R.string.alert_dialog_delete_title)
+        binding.tvAlertDialogDescription.text =
+            context.resources.getText(R.string.alert_dialog_delete_description)
+    }
+    private fun initListener(){
+        binding.layoutAlertNegative.setOnClickListener {
+            Log.d(TAG, "closeBtn clicked")
             dialog.dismiss()
         }
-        confirmBtn.setOnClickListener {
+        binding.layoutAlertPositive.setOnClickListener {
+            Log.d(TAG, "deleteBtn clicked")
             onPositiveClickListener?.onPositiveClick()
             dialog.dismiss()
         }
-
-        dialog.show()
     }
 }
