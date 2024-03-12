@@ -1,25 +1,19 @@
 package com.twoday.todaytrip.ui.save_photo
 
+import android.R.attr.path
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
+import android.os.Parcelable
+import android.util.Log
 import android.view.View
 import android.widget.Toast
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.createBalloon
-import com.twoday.todaytrip.R
+import com.sangcomz.fishbun.FishBun
+import com.sangcomz.fishbun.FishBun.Companion.INTENT_PATH
+import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
-import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.route.BottomSheetDialog
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 
@@ -44,31 +38,34 @@ class SavePhotoActivity : AppCompatActivity() {
         initRouteFinishButton()
     }
 
-    private fun initSavePhotoDataList(){
+    private fun initSavePhotoDataList() {
         val allTourItemList = TourItemPrefUtil.loadAllTourItemList()
         val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
 
-        addedContentIdList.forEach {contentID ->
-            val tourItem = allTourItemList.find{
+        addedContentIdList.forEach { contentID ->
+            val tourItem = allTourItemList.find {
                 it.getContentId() == contentID
             }!!
             savePhotoDataList.add(SavePhotoData(tourItem))
-            if (allTourItemList.isNotEmpty()){
+            if (allTourItemList.isNotEmpty()) {
                 binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
             }
         }
     }
 
-    private fun initSavePhotoRecylerView(){
+    private fun initSavePhotoRecylerView() {
         adapter = SavePhotoAdapter(savePhotoDataList)
         binding.rvSavephotoRecyclerview.adapter = adapter
 
         adapter.itemClick = object : SavePhotoAdapter.ItemClick {
             override fun onClick(item: SavePhotoData, position: Int) {
                 this@SavePhotoActivity.position = position
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
-                activityResult.launch(intent)
+                FishBun.with(this@SavePhotoActivity).setImageAdapter(GlideAdapter())
+                    .startAlbumWithOnActivityResult(FishBun.FISHBUN_REQUEST_CODE)
+//                val intent = Intent(Intent.ACTION_PICK)
+//                intent.type = "image/*"
+//                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true) //멀티선택기능
+//                activityResult.launch(intent)
                 Toast.makeText(this@SavePhotoActivity, "클릭", Toast.LENGTH_SHORT).show()
             }
         }
@@ -102,16 +99,35 @@ class SavePhotoActivity : AppCompatActivity() {
 //        }
 //    }
 
-    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) {
-        if (it.resultCode == RESULT_OK && it.data != null) {
-            val uri = it.data!!.data!!
-            adapter.addImageUri(uri, position)
+//    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()
+//    ) {
+////        if (it.resultCode == RESULT_OK && it.data != null) {
+//        if (it.resultCode == RESULT_OK) {
+//
+//        }
+//    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            FishBun.FISHBUN_REQUEST_CODE -> if (resultCode == RESULT_OK) {
+                val path = data?.getParcelableArrayListExtra<Parcelable>(INTENT_PATH)
+                if (!path.isNullOrEmpty()) {
+                    val count = path.size
+                    val imageList: MutableList<String> = mutableListOf()
+                    for (index in 0 until count!!) {
+                        val imageUri = path[index]
+                        Log.d("sdc","${imageUri.toString()}")
+                        imageList.add(imageUri.toString())
+                    }
+                    adapter.addImagesUriList(imageList,position)
+//                adapter.addImageUri(imageList[0], position)
+                }
+            }
         }
     }
 
-    private fun initRouteFinishButton(){
+    private fun initRouteFinishButton() {
         binding.btnRouteFinish.setOnClickListener {
             val frag = BottomSheetDialog()
             frag.show(supportFragmentManager, frag.tag)

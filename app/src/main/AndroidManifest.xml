@@ -7,6 +7,9 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+
 
     <uses-permission
         android:name="com.google.android.gms.permission.AD_ID"
@@ -15,6 +18,12 @@
     <meta-data
         android:name="google_analytics_adid_collection_enabled"
         android:value="false" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
 
     <application
         android:name=".MyApplication"
@@ -48,6 +57,7 @@
         <activity
             android:name=".ui.MainActivity"
             android:exported="true" >
+
 
         </activity>
         <activity

@@ -103,4 +103,6 @@ dependencies {
     implementation("io.coil-kt:coil:2.0.0-rc03")
     //Balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
+    //FishBun
+    implementation ("io.github.sangcomz:fishbun:1.1.1")
 }
