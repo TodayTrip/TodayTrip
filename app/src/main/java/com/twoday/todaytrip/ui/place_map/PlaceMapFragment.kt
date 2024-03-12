@@ -10,6 +10,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
@@ -39,6 +40,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private val viewModel by lazy {
         ViewModelProvider(this@PlaceMapFragment)[PlaceMapViewModel::class.java]
     }
+    private val pagerSnapHelper = PagerSnapHelper()
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
 
@@ -82,6 +84,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initImageRecyclerView() {
+        pagerSnapHelper.attachToRecyclerView(binding.rvPlaceMap)
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeMapAdapter
