@@ -51,6 +51,7 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
 
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         initModelObserver()
+        Log.d("TAG0","${record!!.savePhotoDataList[0].imageUriList.toString()}")
 
         initUI()
         initBackButton()

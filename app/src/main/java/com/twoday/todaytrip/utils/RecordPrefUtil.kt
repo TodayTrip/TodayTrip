@@ -53,7 +53,7 @@ object RecordPrefUtil {
                         // SavePhotoData JSON 직렬화 -> Triple에 저장하기
                         Triple(
                             savePhotoData.tourItem.getContentTypeId(),
-                            savePhotoData.imageUri,
+                            savePhotoData. imageUriList,
                             Gson().toJson(savePhotoData.tourItem)
                         )
                     }
@@ -130,5 +130,6 @@ data class SerializedRecord(
     @SerializedName("traveldate")
     val travelDate: String,
     @SerializedName("serializedsavephotodatalist")
-    val serializedSavePhotoDataList: List<Triple<String, String?, String>>
+//    val serializedSavePhotoDataList: List<Triple<String, String, String>>
+    val serializedSavePhotoDataList: List<Triple<String, MutableList<String>, String>>
 ) : java.io.Serializable
