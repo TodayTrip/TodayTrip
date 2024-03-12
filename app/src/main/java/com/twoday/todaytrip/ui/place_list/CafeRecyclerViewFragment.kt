@@ -46,10 +46,16 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoadingUI(true)
         initRecyclerView()
         initModelObserver()
     }
+    private fun setLoadingUI(isLoading: Boolean) {
+        binding.shimmerCafeRecyclerView.isVisible = isLoading
+        binding.rvCafeRecyclerView.isVisible = !isLoading
 
+        if(isLoading) binding.shimmerCafeRecyclerView.startShimmer()
+    }
     private fun initRecyclerView(){
         adapter = PlaceListAdapter().apply{
             onTourItemClickListener = this@CafeRecyclerViewFragment
@@ -71,11 +77,6 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })
-    }
-    private fun setLoadingUI(isLoading:Boolean){
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutCafeRecyclerViewLoading.isVisible = isLoading
-        binding.rvCafeRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

@@ -7,16 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListRestaurantRecyclerViewBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -46,8 +47,16 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoadingUI(true)
         initRecyclerView()
         initModelObserver()
+    }
+
+    private fun setLoadingUI(isLoading: Boolean) {
+        binding.shimmerRestaurantRecyclerView.isVisible = isLoading
+        binding.rvRestaurantRecyclerView.isVisible = !isLoading
+
+        if(isLoading) binding.shimmerRestaurantRecyclerView.startShimmer()
     }
 
     private fun initRecyclerView() {
@@ -73,12 +82,6 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })
-    }
-
-    private fun setLoadingUI(isLoading: Boolean) {
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutRestaurantRecyclerViewLoading.isVisible = isLoading
-        binding.rvRestaurantRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

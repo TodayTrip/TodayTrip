@@ -14,10 +14,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -39,18 +39,30 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentPlaceListTouristAttractionRecyclerViewBinding.inflate(layoutInflater, container, false)
+        _binding = FragmentPlaceListTouristAttractionRecyclerViewBinding.inflate(
+            layoutInflater,
+            container,
+            false
+        )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoadingUI(true)
         initRecyclerView()
         initModelObserver()
     }
 
-    private fun initRecyclerView(){
+    private fun setLoadingUI(isLoading: Boolean) {
+        binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
+        binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
+
+        if (isLoading) binding.shimmerTouristAttractionRecyclerView.startShimmer()
+    }
+
+    private fun initRecyclerView() {
         adapter = PlaceListAdapter().apply {
             onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
         }
@@ -63,19 +75,16 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         val placeDetailIntent = PlaceDetailActivity.newIntent(
             requireContext(),
             tourItem.getContentTypeId(),
-            tourItem)
+            tourItem
+        )
         startActivity(placeDetailIntent)
     }
 
-    private fun initModelObserver(){
+    private fun initModelObserver() {
         mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })
-    }
-    private fun setLoadingUI(isLoading:Boolean){
-        binding.layoutTouristAttractionRecyclerViewLoading.isVisible = isLoading
-        binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

@@ -46,10 +46,16 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setLoadingUI(true)
         initRecyclerView()
         initModelObserver()
     }
+    private fun setLoadingUI(isLoading: Boolean) {
+        binding.shimmerEventRecyclerView.isVisible = isLoading
+        binding.rvEventRecyclerView.isVisible = !isLoading
 
+        if(isLoading) binding.shimmerEventRecyclerView.startShimmer()
+    }
     private fun initRecyclerView(){
         adapter = PlaceListAdapter().apply{
             onTourItemClickListener = this@EventRecyclerViewFragment
@@ -71,12 +77,6 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })
-    }
-
-    private fun setLoadingUI(isLoading:Boolean){
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutEventRecyclerViewLoading.isVisible = isLoading
-        binding.rvEventRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {
