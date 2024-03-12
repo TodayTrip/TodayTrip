@@ -16,7 +16,7 @@ import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.utils.RecordPrefUtil
 
-class RecordDetailActivity : AppCompatActivity() {
+class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveClickListener {
     private val TAG = "RecordDetailActivity"
 
     private var _binding: ActivityRecordDetailBinding? = null
@@ -92,11 +92,16 @@ class RecordDetailActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onPositiveClick() {
+        RecordPrefUtil.deleteRecord(record!!)
+        finish()
+    }
     private fun initDeleteButton(){
-        binding.tvRecordDetailDelete.setOnClickListener {
-            RecordPrefUtil.deleteRecord(record!!)
-            finish()
+        val dialog = DeleteRecordDialog(this).apply{
+            onPositiveClickListener = this@RecordDetailActivity
         }
+        dialog.show()
     }
     private fun initOptionButton(){
         binding.ivRecordDetailOption.setOnClickListener {
