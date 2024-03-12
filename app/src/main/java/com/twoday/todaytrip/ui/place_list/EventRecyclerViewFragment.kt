@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.databinding.FragmentPlaceListEventRecyclerViewBinding
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
@@ -34,7 +34,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter: PlaceListRecyclerViewAdapter
+    private lateinit var adapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -51,7 +51,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecyclerView(){
-        adapter = PlaceListRecyclerViewAdapter().apply{
+        adapter = PlaceListAdapter().apply{
             onTourItemClickListener = this@EventRecyclerViewFragment
         }
         binding.rvEventRecyclerView.adapter = adapter
