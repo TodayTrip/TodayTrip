@@ -18,41 +18,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_place_list"
-        tools:visibility="visible" />
+        tools:listitem="@layout/item_place_list"/>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_cafe_recycler_view_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_cafe_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_cafe_recycler_view_loading"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/anim_place_list_loading" />
-
-        <TextView
-            android:id="@+id/tv_cafe_recycler_view_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/place_list_loading_cafe"
-            android:textAppearance="@style/PlaceAddrText"
-            android:textColor="@color/button_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lottie_cafe_recycler_view_loading" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <include layout="@layout/item_place_list_skeleton"/>
+            <include layout="@layout/item_place_list_skeleton"/>
+            <include layout="@layout/item_place_list_skeleton"/>
+            <include layout="@layout/item_place_list_skeleton"/>
+            <include layout="@layout/item_place_list_skeleton"/>
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
