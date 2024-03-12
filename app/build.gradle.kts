@@ -103,4 +103,6 @@ dependencies {
     implementation("io.coil-kt:coil:2.0.0-rc03")
     // balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
+    // Skeleton
+    implementation ("com.facebook.shimmer:shimmer:0.5.0")
 }
