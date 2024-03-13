@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.random.RandomActivity
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 
 class RandomBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,6 +26,8 @@ class RandomBottomSheetDialog : BottomSheetDialogFragment() {
         super.onActivityCreated(savedInstanceState)
 
         view?.findViewById<ConstraintLayout>(R.id.layout_bottom_sheet_button)?.setOnClickListener {
+            DestinationPrefUtil.saveDestination("")
+            DestinationPrefUtil.saveTheme("")
             val intent = Intent(context, RandomActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
