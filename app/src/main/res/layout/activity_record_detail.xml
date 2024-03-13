@@ -27,16 +27,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/record_detail_back"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_record_detail_back"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/record_detail_delete"
             android:textColor="@color/red"
             android:textSize="16sp"
@@ -53,6 +43,7 @@
         android:layout_marginTop="8dp"
         android:text="부산"
         android:textSize="30sp"
+        android:textColor="@color/place_title_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_record_detail_top" />
 
@@ -63,6 +54,7 @@
         android:layout_marginStart="16dp"
         android:text="2024/02/26"
         android:textSize="20sp"
+        android:textColor="@color/place_addr_gray"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_detail_title" />
 
