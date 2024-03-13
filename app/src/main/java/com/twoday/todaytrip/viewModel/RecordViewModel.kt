@@ -22,28 +22,22 @@ class RecordViewModel: ViewModel() {
         _recordList.value = RecordPrefUtil.loadRecordList()
         Log.d(TAG, "loadRecordList) record list size: ${recordList.value?.size}")
     }
-    fun getChartDataList():List<Pair<String, Float>>{
-        var chartDataList = mutableListOf<Pair<String, Float>>()
-        DestinationData.allRandomDestination.forEachIndexed { index, destination ->
-            chartDataList.add(
-                destination to _recordList.value!!.filter {
-                    it.destination == destination
-                }.size.toFloat()
-            )
-            Log.d(TAG, "$destination ${chartDataList[index].second}")
-        }
-        chartDataList = chartDataList.filter{ it.second > 0.0 }.sortedBy { it.second }.reversed().toMutableList()
-        // TODO 방문 횟수 같은 여행지 -> 00 외 3 으로 표시될 수 있도록 바꾸기
+    fun getChartDataList():List<String> = _recordList.value!!.map { it.destination }
+//        DestinationData.allRandomDestination.forEach { destination ->
+//            if (_recordList.value!!.any { it.destination == destination }) {
+//                chartDataList.add(destination)
+//            }
+//        }
+//
+//        chartDataList.forEach {
+//            Log.d(TAG, "chartDataList = $it")
+//        }
+//
+//        val chartSize = chartDataList.size
+//        return when{
+//            (chartSize == 0) -> emptyList()
+//            (chartSize <= 3) -> chartDataList.subList(0, chartSize)
+//            else -> chartDataList.subList(0, chartSize)
+//        }
 
-        chartDataList.forEach {
-            Log.d(TAG, "chartDataList = ${it.first}, ${it.second}")
-        }
-
-        val chartSize = chartDataList.size
-        return when{
-            (chartSize == 0) -> emptyList()
-            (chartSize <= 3) -> chartDataList.subList(0, chartSize)
-            else -> chartDataList.subList(0, 3)
-        }
-    }
 }

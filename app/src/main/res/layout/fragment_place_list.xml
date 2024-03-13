@@ -55,7 +55,6 @@
                         android:layout_width="33dp"
                         android:layout_height="37dp"
                         android:layout_marginStart="12dp"
-                        android:src="@drawable/ic_place_list_weather_sun"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -65,7 +64,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="온도º"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/img_weather"
@@ -77,7 +75,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="12dp"
-                        android:text="날씨"
                         android:textColor="@color/white"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="@+id/img_weather"
@@ -100,7 +97,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:text="경상남도 거제시"
                     android:textAppearance="@style/address" />
             </androidx.appcompat.widget.Toolbar>
 
