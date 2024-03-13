@@ -58,6 +58,8 @@
     <!--  Bottom Sheet  -->
     <string name="bottom_sheet_title_record">현재까지의 경로가 기록됩니다.</string>
     <string name="bottom_sheet_warning_record">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
+    <string name="bottom_sheet_random_decription">이제까지의 여행을 기록하고\n새로운 여행을 시작해 볼까요?</string>
+    <string name="bottom_sheet_random_button">랜덤 돌리기</string>
 
     <!--  Alert Dialog  -->
     <string name="alert_dialog_delete_title">여행 기록을 삭제하시겠습니까?</string>
