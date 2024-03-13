@@ -83,16 +83,18 @@
                 <TextView
                     android:id="@+id/tv_place_detail_title"
                     style="@style/MiddleTitleBoldText"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="20dp"
-                    android:maxWidth="320dp"
+                    android:layout_marginEnd="16dp"
+                    android:gravity="start"
                     android:text="가게명"
                     android:textColor="@color/black"
                     android:textSize="24dp"
 
                     app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
@@ -122,31 +124,31 @@
                     app:layout_constraintStart_toEndOf="@+id/iv_place_detail_loca"
                     app:layout_constraintTop_toTopOf="@+id/iv_place_detail_loca" />
 
-                <ImageView
-                    android:id="@+id/iv_place_detail_info"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_marginTop="16dp"
-                    android:src="@drawable/ic_place_detail_info"
+<!--                <ImageView-->
+<!--                    android:id="@+id/iv_place_detail_info"-->
+<!--                    android:layout_width="16dp"-->
+<!--                    android:layout_height="16dp"-->
+<!--                    android:layout_marginTop="16dp"-->
+<!--                    android:src="@drawable/ic_place_detail_info"-->
 
-                    app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />
+<!--                    app:layout_constraintStart_toStartOf="@id/iv_place_detail_loca"-->
+<!--                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_loca" />-->
 
-                <TextView
-                    android:id="@+id/tv_place_detail_info"
-                    style="@style/SmallBoldText"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="-3dp"
-                    android:layout_marginEnd="16dp"
-                    android:text="추가정보"
-                    android:textColor="@color/black"
-                    android:textStyle="normal"
+<!--                <TextView-->
+<!--                    android:id="@+id/tv_place_detail_info"-->
+<!--                    style="@style/SmallBoldText"-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_marginStart="8dp"-->
+<!--                    android:layout_marginTop="-3dp"-->
+<!--                    android:layout_marginEnd="16dp"-->
+<!--                    android:text="추가정보"-->
+<!--                    android:textColor="@color/black"-->
+<!--                    android:textStyle="normal"-->
 
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_info"
-                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_info" />
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_info"-->
+<!--                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_info" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_place_detail_extra_info_list"
@@ -160,7 +162,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_info" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_loca" />
 
                 <!--                    <TextView-->
                 <!--                        android:id="@+id/tv_place_detail_add_path_btn_original"-->
