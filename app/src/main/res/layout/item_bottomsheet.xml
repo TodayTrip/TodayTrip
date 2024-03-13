@@ -14,10 +14,11 @@
         android:id="@+id/tv_bottom_sheet_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="40dp"
         android:text="@string/bottom_sheet_title_record"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/place_addr_gray"
         android:letterSpacing="-0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,26 +28,14 @@
         android:id="@+id/tv_bottom_sheet_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/bottom_sheet_warning_record"
         android:textColor="@color/button_gray"
         android:textSize="16sp"
-        android:letterSpacing="-0.04"
-        android:lineSpacingExtra="-2dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_title" />
-
-    <ImageView
-        android:id="@+id/iv_bottom_sheet_cancel"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@drawable/ic_bottom_sheet_cancel"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_bottom_sheet_button"
