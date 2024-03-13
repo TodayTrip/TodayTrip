@@ -1,11 +1,9 @@
 package com.twoday.todaytrip.ui.save_photo
 
-import android.R.attr.path
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sangcomz.fishbun.FishBun

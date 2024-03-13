@@ -18,6 +18,7 @@ import com.twoday.todaytrip.weather.WeatherClient
 import com.twoday.todaytrip.weather.weather
 import retrofit2.Call
 import retrofit2.Response
+import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -47,6 +48,7 @@ class PlaceListFragment : Fragment() {
 
     private fun initAdapter() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
+        val coordinates = localLocation(searchArea().toString())
         with(viewPagerAdapter) {
             addFragment(TouristAttractionRecyclerViewFragment())
             addFragment(RestaurantRecyclerViewFragment())
@@ -54,6 +56,14 @@ class PlaceListFragment : Fragment() {
             addFragment(EventRecyclerViewFragment())
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
+        binding.tvTravelAddress.text = coordinates?.name
+        binding.ivLocal.setImageResource(coordinates?.image!!)
+
+        binding.ivLocal.setOnClickListener {
+            val intent = Intent(context, FullScreenImageActivity::class.java)
+            intent.putExtra("imageResource", coordinates.image)
+            startActivity(intent)
+        }
 
         TabLayoutMediator(binding.tlTabLayout, binding.vpViewpagerMain) { tab, position ->
             tab.text = resources.getText(
@@ -77,15 +87,6 @@ class PlaceListFragment : Fragment() {
         val coordinates = localLocation(searchArea().toString())!!
         val latitude = coordinates.latitude
         val longitude = coordinates.longitude
-
-        binding.tvTravelAddress.text = coordinates.name
-        binding.ivLocal.setImageResource(coordinates.image)
-
-        binding.ivLocal.setOnClickListener {
-            val intent = Intent(context, FullScreenImageActivity::class.java)
-            intent.putExtra("imageResource", coordinates.image)
-            startActivity(intent)
-        }
 
         // 오전 12시나 1시인 경우 전날 데이터 사용
         if (baseTime.toInt() == 0) {
@@ -154,13 +155,14 @@ class PlaceListFragment : Fragment() {
             "4" -> R.drawable.ic_place_list_weather_cloud
             else -> R.drawable.ic_place_list_weather_sun
         }
-
-        with(binding) {
-            imgWeather.setImageResource(skyImageResource)
-            "$temp°".also { tvWeatherInfo.text = it }
-            tvWeatherInfo2.text = result
+        try {
+            with(binding) {
+                imgWeather.setImageResource(skyImageResource)
+                "$temp°".also { tvWeatherInfo.text = it }
+                tvWeatherInfo2.text = result
+            }
         }
-
+        catch (e:Exception){e.stackTrace}
     }
 
     private fun getBaseTime(h: String): String {
