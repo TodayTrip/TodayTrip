@@ -9,6 +9,7 @@ import com.twoday.todaytrip.databinding.ActivityMainBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.ui.place_list.RandomBottomSheetDialog
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -34,9 +35,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun initOnClickListener() {
         binding.fabBottomRandom.setOnClickListener {
-
+            val randomBottomSheet = RandomBottomSheetDialog()
+            randomBottomSheet.show(supportFragmentManager, randomBottomSheet.tag)
         }
     }
+
     private fun setNavigation() {
         val navHomeFragment =
             supportFragmentManager.findFragmentById(R.id.nav_main_fragment) as NavHostFragment
