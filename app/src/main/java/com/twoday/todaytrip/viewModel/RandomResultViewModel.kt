@@ -9,6 +9,7 @@ import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -42,6 +43,8 @@ class RandomResultViewModel : ViewModel() {
         touristAttractionJob.join()
 
         withContext(Dispatchers.Main) {
+            if(TourItemPrefUtil.loadTouristAttractionList().isEmpty())
+                delay(3000)
             _isTouristAttractionListReady.value = true
         }
     }
