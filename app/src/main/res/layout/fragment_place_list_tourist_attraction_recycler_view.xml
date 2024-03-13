@@ -6,18 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ui.place_list.TouristAttractionRecyclerViewFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_tourist_attraction_recycler_view"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_tourist_attraction_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="70dp"
-        android:visibility="invisible"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_place_list" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_tourist_attraction_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp"
+            android:visibility="invisible"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_place_list" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     <com.facebook.shimmer.ShimmerFrameLayout
@@ -34,15 +42,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
-
             <include layout="@layout/item_place_list_skeleton" />
-
             <include layout="@layout/item_place_list_skeleton" />
-
             <include layout="@layout/item_place_list_skeleton" />
-
             <include layout="@layout/item_place_list_skeleton" />
-
+            <include layout="@layout/item_place_list_skeleton" />
             <include layout="@layout/item_place_list_skeleton" />
         </LinearLayout>
     </com.facebook.shimmer.ShimmerFrameLayout>
@@ -52,11 +56,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="120dp"
-        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/iv_tourist_attraction_recycler_view_no_result"
