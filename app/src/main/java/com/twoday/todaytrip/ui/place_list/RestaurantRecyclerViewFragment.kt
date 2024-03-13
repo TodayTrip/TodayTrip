@@ -79,6 +79,7 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
 
     private fun initModelObserver() {
         mainModel.restaurantList.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "restaurant list size: ${it.size}")
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })

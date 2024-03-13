@@ -49,7 +49,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        userVisibleHint = false
         setLoadingUI(true)
         initRecyclerView()
         initModelObserver()
@@ -82,10 +82,12 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
 
     private fun initModelObserver() {
         mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "tourist attraction list size: ${it.size}")
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -2,6 +2,7 @@ package com.twoday.todaytrip.viewModel
 
 //import com.google.firebase.database.FirebaseDatabase
 //import com.google.firebase.storage.FirebaseStorage
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
@@ -26,6 +28,8 @@ class MainViewModel : ViewModel() {
             DestinationPrefUtil.loadDestination()
         )
     }
+
+    private val MAX_API_CALL_COUNT = 3
 
     private val _touristAttractionList = MutableLiveData<List<TourItem>>()
     val touristAttractionList: LiveData<List<TourItem>>
@@ -60,12 +64,17 @@ class MainViewModel : ViewModel() {
 
     private fun loadOrFetchTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch {
         var touristAttractionList: List<TourItem>? = null
-        while(true){
-            touristAttractionList = TourItemPrefUtil.loadTouristAttractionList()
-            if(!touristAttractionList.isNullOrEmpty())
-                break
 
-            fetchAndSaveTouristAttractionList()
+        var apiCallCount = 0
+        while(true) {
+            touristAttractionList = TourItemPrefUtil.loadTouristAttractionList()
+            if (touristAttractionList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
+                apiCallCount++
+                delay(1000)
+                Log.d(TAG, "fetch tourist attraction, apiCallCount: $apiCallCount")
+                fetchAndSaveTouristAttractionList()
+            }
+            else break
         }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -73,14 +82,20 @@ class MainViewModel : ViewModel() {
         }
         return@launch
     }
+
     private fun loadOrFetchRestaurantList() = CoroutineScope(Dispatchers.IO).launch {
         var restaurantList: List<TourItem>? = null
-        while(true){
-            restaurantList = TourItemPrefUtil.loadRestaurantList()
-            if(!restaurantList.isNullOrEmpty())
-                break
 
-            fetchAndSaveRestaurantList()
+        var apiCallCount = 0
+        while(true) {
+            restaurantList = TourItemPrefUtil.loadRestaurantList()
+            if (restaurantList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
+                apiCallCount++
+                delay(1000)
+                Log.d(TAG, "fetch restaurant attraction, apiCall: $apiCallCount")
+                fetchAndSaveRestaurantList()
+            }
+            else break
         }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -88,14 +103,20 @@ class MainViewModel : ViewModel() {
         }
         return@launch
     }
+
     private fun loadOrFetchCafeList() = CoroutineScope(Dispatchers.IO).launch {
         var cafeList: List<TourItem>? = null
-        while(true){
-            cafeList = TourItemPrefUtil.loadCafeList()
-            if(!cafeList.isNullOrEmpty())
-                break
 
-            fetchAndSaveCafeList()
+        var apiCallCount = 0
+        while(true) {
+            cafeList = TourItemPrefUtil.loadCafeList()
+            if (cafeList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
+                apiCallCount++
+                delay(1000)
+                Log.d(TAG, "fetch cafe attraction, apiCall: $apiCallCount")
+                fetchAndSaveCafeList()
+            }
+            else break
         }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -103,14 +124,20 @@ class MainViewModel : ViewModel() {
         }
         return@launch
     }
+
     private fun loadOrFetchEventList() = CoroutineScope(Dispatchers.IO).launch {
         var eventList: List<TourItem>? = null
-        while(true){
-            eventList = TourItemPrefUtil.loadEventList()
-            if(!eventList.isNullOrEmpty())
-                break
 
-            fetchAndSaveEventList()
+        var apiCallCount = 0
+        while(true) {
+            eventList = TourItemPrefUtil.loadEventList()
+            if (eventList.isNullOrEmpty() && (apiCallCount<MAX_API_CALL_COUNT)) {
+                apiCallCount++
+                delay(1000)
+                Log.d(TAG, "fetch event attraction, apiCall: $apiCallCount")
+                fetchAndSaveEventList()
+            }
+            else break
         }
 
         CoroutineScope(Dispatchers.Main).launch {
@@ -128,18 +155,21 @@ class MainViewModel : ViewModel() {
         }
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList.await())
     }
+
     private suspend fun fetchAndSaveRestaurantList() {
         val restaurantList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
         }
         TourItemPrefUtil.saveRestaurantList(restaurantList.await())
     }
+
     private suspend fun fetchAndSaveCafeList() {
         val cafeList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.getCafeTabList(areaCode)
         }
         TourItemPrefUtil.saveCafeList(cafeList.await())
     }
+
     private suspend fun fetchAndSaveEventList() {
         val eventList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.getEventTabList(areaCode)

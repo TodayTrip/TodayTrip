@@ -74,6 +74,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
 
     private fun initModelObserver(){
         mainModel.cafeList.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "cafe list size: ${it.size}")
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })

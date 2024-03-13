@@ -74,6 +74,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
 
     private fun initModelObserver(){
         mainModel.eventList.observe(viewLifecycleOwner, Observer {
+            Log.d(TAG, "event list size: ${it.size}")
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
         })
