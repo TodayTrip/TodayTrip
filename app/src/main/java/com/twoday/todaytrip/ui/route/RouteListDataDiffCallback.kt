@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 
 object RouteListDataDiffCallback: DiffUtil.ItemCallback<RouteListData>() {
     override fun areItemsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {
-        return oldItem.name == newItem.name
+        return oldItem.contentId == newItem.contentId
     }
 
     override fun areContentsTheSame(oldItem: RouteListData, newItem: RouteListData): Boolean {

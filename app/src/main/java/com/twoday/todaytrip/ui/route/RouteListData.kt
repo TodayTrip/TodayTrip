@@ -4,4 +4,6 @@ data class RouteListData(
     val contentId: String,
     val name: String,
     val address: String,
+    var position: Int = 0,
+    val remove: Boolean = false
     )

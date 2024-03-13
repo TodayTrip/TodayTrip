@@ -1,19 +1,25 @@
 package com.twoday.todaytrip.ui.save_photo
 
-import android.R.attr.path
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.FishBun.Companion.INTENT_PATH
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
+import com.skydoves.balloon.ArrowPositionRules
+import com.skydoves.balloon.BalloonAnimation
+import com.skydoves.balloon.BalloonSizeSpec
+import com.skydoves.balloon.createBalloon
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
+import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.route.BottomSheetDialog
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 
@@ -71,40 +77,39 @@ class SavePhotoActivity : AppCompatActivity() {
         }
     }
 
-//    private fun initToolTip() {
-//        //tooltip 버튼
-//        binding.ivTooltip.setOnClickListener {
-//            val balloon = createBalloon(context = this) {
-//                setWidthRatio(1.0f)
-//                setHeight(BalloonSizeSpec.WRAP)
-//                setText("기록이 저정되며 해당탭이 초기화 됩니다\n저장한 기록은 기록 탭에서 보실 수 있습니다")
-//                setTextColorResource(R.color.black)
-//                setTextSize(15f)
-//                setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)
-//                setArrowSize(10)
-//                setArrowPosition(0.5f)
-//                setPadding(12)
-//                setMarginLeft(20)
-//                setMarginRight(20)
-//                setCornerRadius(8f)
-//                elevation
-//                setBackgroundColorResource(R.color.white)
-//                setBalloonAnimation(BalloonAnimation.ELASTIC)
-//                build()
-//            }
-//            balloon.showAlignBottom(binding.ivTooltip)
-//            Handler(Looper.getMainLooper()).postDelayed({
-//                balloon.dismiss()
-//            }, 3000)
+//    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+//        ActivityResultContracts.StartActivityForResult()) {
+//        if (it.resultCode == RESULT_OK && it.data != null) {
+////            uri = it.data!!.data!!
+////            grantUriPermission(
+////                "com.twoday.todaytrip",
+////                uri,
+////                Intent.FLAG_GRANT_READ_URI_PERMISSION
+////            )
+////            Glide.with(this).
+////                    load(uri).into(binding.imgLoad)
+//            binding.imgLoad.load(uri)
+////            uri?.let { it1 -> currentList.add(0, it1) }
 //        }
 //    }
-
-//    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
-//        ActivityResultContracts.StartActivityForResult()
-//    ) {
-////        if (it.resultCode == RESULT_OK && it.data != null) {
-//        if (it.resultCode == RESULT_OK) {
 //
+////    private val activityResult: ActivityResultLauncher<Intent> = registerForActivityResult(
+////        ActivityResultContracts.StartActivityForResult()
+////    ) {
+//        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+//            super.onActivityResult(requestCode, resultCode, data)
+//        if (resultCode == RESULT_OK && data != null) {
+//            if (data?.clipData !=null) {
+//                val count = data?.clipData?.itemCount
+//                val imageList: MutableList<String> = mutableListOf()
+//                for (index in 0 until count!!) {
+//                    val imageUri = data.clipData!!.getItemAt(index).uri
+//                    Log.d("TAG", "${imageUri.toString()}")
+//                    imageList.add(imageUri.toString())
+//                }
+//                adapter.addImagesUriList(imageList, position)
+////                adapter.addImageUri(imageList[0], position)
+//            }
 //        }
 //    }
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -117,7 +122,7 @@ class SavePhotoActivity : AppCompatActivity() {
                     val imageList: MutableList<String> = mutableListOf()
                     for (index in 0 until count!!) {
                         val imageUri = path[index]
-                        Log.d("sdc","${imageUri.toString()}")
+                        Log.d("TAG","${imageUri.toString()}")
                         imageList.add(imageUri.toString())
                     }
                     adapter.addImagesUriList(imageList,position)
