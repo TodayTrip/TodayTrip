@@ -1,6 +1,5 @@
 package com.twoday.todaytrip.ui.save_photo
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,8 +40,14 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
         return item.size
     }
 
-    fun addImageUri(uri: Uri, position: Int) {
-        item[position].imageUri = uri.toString()
+//    fun addImageUri(uri: String, position: Int) {
+////        item[position].imageUri = uri.toString()
+//        item[position].imageUri[0] = uri
+//        notifyItemChanged(position)
+//    }
+
+    fun addImagesUriList(uriList: MutableList<String>, position: Int) {
+        item[position].imageUriList = uriList
         notifyItemChanged(position)
     }
 
@@ -60,13 +65,15 @@ class SavePhotoAdapter(private val item: MutableList<SavePhotoData>) :
             title.text = item.tourItem.getTitle()
             address.text = item.tourItem.getAddress()
 
-            if(!item.imageUri.isNullOrBlank()) {
+//            if(!item.imageUri.isNullOrBlank()) {
+//            if(!item.imageUri[0].isEmpty()) {
+//
+            if (!item.imageUriList.isNullOrEmpty()){
+                Glide.with(image)
+                    .load(item.imageUriList[0])
+                    .into(image)
                 icon.isVisible = false
                 iconText.isVisible = false
-
-                Glide.with(image)
-                    .load(item.imageUri)
-                    .into(image)
             }
         }
     }

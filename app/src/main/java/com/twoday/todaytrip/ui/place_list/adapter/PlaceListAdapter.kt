@@ -4,7 +4,6 @@ import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -14,8 +13,8 @@ import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
-class PlaceListRecyclerViewAdapter :
-    ListAdapter<TourItem, PlaceListRecyclerViewAdapter.Holder>(TourItemDiffCallback) {
+class PlaceListAdapter :
+    ListAdapter<TourItem, PlaceListAdapter.Holder>(TourItemDiffCallback) {
     private val TAG = "PlaceListRecyclerViewAdapter"
 
     var onTourItemClickListener: OnTourItemClickListener? = null
@@ -41,7 +40,7 @@ class PlaceListRecyclerViewAdapter :
     }
 
     inner class Holder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val firstImageView = binding.ivItemPlaceMapThumbnail
+        private val firstImageView = binding.ivItemPlaceListThumbnail
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
 

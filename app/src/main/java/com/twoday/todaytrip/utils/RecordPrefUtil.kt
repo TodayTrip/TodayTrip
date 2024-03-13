@@ -16,18 +16,21 @@ import kotlinx.serialization.Serializable
 object RecordPrefUtil {
     private val TAG = "RecordPrefUtil"
 
-    fun loadRecordList() = RecordPrefUtil.loadRecordList(PrefConstants.RECORD_LIST_KEY)
-    fun saveRecordList(recordList: List<Record>) = RecordPrefUtil.saveRecordList(
-        recordList,
-        PrefConstants.RECORD_LIST_KEY
-    )
-
-    fun addRecord(record: Record) = RecordPrefUtil.saveRecordList(
+    fun loadRecordList() = loadRecordList(PrefConstants.RECORD_LIST_KEY)
+    fun addRecord(record: Record) = saveRecordList(
         loadRecordList().toMutableList().apply {
             add(record)
         },
         PrefConstants.RECORD_LIST_KEY
     )
+
+    fun deleteRecord(record: Record) {
+        Log.d(TAG, "deleteRecord) recordId: ${record.recordId}")
+        saveRecordList(
+            loadRecordList().filter { it.recordId != record.recordId },
+            PrefConstants.RECORD_LIST_KEY
+        )
+    }
 
     private fun getRecordListPreferences(): SharedPreferences =
         MyApplication.appContext!!.getSharedPreferences(
@@ -46,11 +49,11 @@ object RecordPrefUtil {
                     record.recordId,
                     record.destination,
                     record.travelDate,
-                    record.savePhotoDataList.map {savePhotoData ->
+                    record.savePhotoDataList.map { savePhotoData ->
                         // SavePhotoData JSON 직렬화 -> Triple에 저장하기
                         Triple(
                             savePhotoData.tourItem.getContentTypeId(),
-                            savePhotoData. imageUri,
+                            savePhotoData. imageUriList,
                             Gson().toJson(savePhotoData.tourItem)
                         )
                     }
@@ -108,6 +111,7 @@ object RecordPrefUtil {
 
             recordList.add(
                 Record(
+                    recordId = serializedRecord.recordId,
                     destination = serializedRecord.destination,
                     travelDate = serializedRecord.travelDate,
                     savePhotoDataList = savePhotoDataList
@@ -121,10 +125,11 @@ object RecordPrefUtil {
 @Serializable
 data class SerializedRecord(
     @SerializedName("recordid")
-    val recordId:String,
+    val recordId: String,
     val destination: String,
     @SerializedName("traveldate")
     val travelDate: String,
     @SerializedName("serializedsavephotodatalist")
-    val serializedSavePhotoDataList: List<Triple<String, String?, String>>
+//    val serializedSavePhotoDataList: List<Triple<String, String, String>>
+    val serializedSavePhotoDataList: List<Triple<String, MutableList<String>, String>>
 ) : java.io.Serializable

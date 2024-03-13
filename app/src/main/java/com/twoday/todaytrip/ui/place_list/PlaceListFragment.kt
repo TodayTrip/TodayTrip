@@ -42,13 +42,13 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-        weatherInfo()
+//        weatherInfo()
 
     }
 
     private fun initAdapter() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
-        val coordinates = localLocation(searchArea().toString())!!
+        val coordinates = localLocation(searchArea().toString())
         with(viewPagerAdapter) {
             addFragment(TouristAttractionRecyclerViewFragment())
             addFragment(RestaurantRecyclerViewFragment())
@@ -56,8 +56,8 @@ class PlaceListFragment : Fragment() {
             addFragment(EventRecyclerViewFragment())
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
-        binding.tvTravelAddress.text = coordinates.name
-        binding.ivLocal.setImageResource(coordinates.image)
+        binding.tvTravelAddress.text = coordinates?.name
+        binding.ivLocal.setImageResource(coordinates?.image!!)
 
         binding.ivLocal.setOnClickListener {
             val intent = Intent(context, FullScreenImageActivity::class.java)

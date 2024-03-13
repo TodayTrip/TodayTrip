@@ -10,7 +10,7 @@
     <com.naver.maps.map.MapView
         android:id="@+id/mv_record_detail_full_map"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -26,6 +26,4 @@
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="-203dp"
         tools:listitem="@layout/item_record_detail_map" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

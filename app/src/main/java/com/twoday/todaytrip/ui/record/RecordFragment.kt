@@ -53,6 +53,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
     }
 
     override fun onResume() {
+        Log.d(TAG, "onResume) called")
         super.onResume()
         model.loadRecordList()
     }
@@ -61,7 +62,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
             initTitleLayout(it)
 
             val chartDataList =  model.getChartDataList()
-            Log.d("asd", chartDataList.toString())
+
             if (chartDataList.isEmpty()) {
                 setChartVisibility(false)
             }
@@ -92,7 +93,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
     }
 
     private fun setChartVisibility(isVisible: Boolean) {
-//        binding.graphContainer.isVisible = isVisible
+        binding.graphContainer.isVisible = isVisible
         binding.tvChartEmpty.isVisible = !isVisible
     }
 
