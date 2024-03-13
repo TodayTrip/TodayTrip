@@ -11,6 +11,7 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
 class PlaceListAdapter :
@@ -59,7 +60,7 @@ class PlaceListAdapter :
             firstImageView.clipToOutline = true
 
             titleTextView.text = item.getTitle()
-            addressTextView.text = item.getAddress()
+            addressTextView.text = item.getAddress().removeDestination()
 
             item.getTimeInfoWithLabel().forEachIndexed { index, pair ->
                 Log.d(TAG, "getTimeInfoWithLabel) index: $index, pair: $pair")
