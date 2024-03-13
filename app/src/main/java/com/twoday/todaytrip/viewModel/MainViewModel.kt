@@ -9,6 +9,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.PageNoPrefUtil
+import com.twoday.todaytrip.utils.PrefConstants
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -79,8 +80,6 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             _touristAttractionList.value = touristAttractionList!!.toList()
         }
-        if (!touristAttractionList.isNullOrEmpty())
-            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo + 1)
         return@launch
     }
 
@@ -102,8 +101,6 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             _restaurantList.value = restaurantList!!.toList()
         }
-        if (!restaurantList.isNullOrEmpty())
-            PageNoPrefUtil.saveRestaurantPageNo(pageNo + 1)
         return@launch
     }
 
@@ -125,8 +122,6 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             _cafeList.value = cafeList!!.toList()
         }
-        if (!cafeList.isNullOrEmpty())
-            PageNoPrefUtil.saveCafePageNo(pageNo + 1)
         return@launch
     }
 
@@ -148,12 +143,11 @@ class MainViewModel : ViewModel() {
         CoroutineScope(Dispatchers.Main).launch {
             _eventList.value = eventList!!.toList()
         }
-        if (!eventList.isNullOrEmpty())
-            PageNoPrefUtil.saveEventPageNo(pageNo + 1)
         return@launch
     }
 
     private suspend fun fetchAndSaveTouristAttractionList(pageNo: Int) {
+        Log.d(TAG, "fetchAndSaveTouristAttractionList) pageNo: $pageNo")
         val touristAttractionList = CoroutineScope(Dispatchers.IO).async {
             if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
@@ -165,26 +159,37 @@ class MainViewModel : ViewModel() {
                 )
         }
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList.await())
+        if(touristAttractionList.await().isNotEmpty())
+            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
     }
 
     private suspend fun fetchAndSaveRestaurantList(pageNo: Int) {
+        Log.d(TAG, "fetchAndSaveRestaurantList) pageNo: $pageNo")
         val restaurantList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveRestaurantList(restaurantList.await())
+        if(restaurantList.await().isNotEmpty())
+            PageNoPrefUtil.saveRestaurantPageNo(pageNo + 1)
     }
 
     private suspend fun fetchAndSaveCafeList(pageNo: Int) {
+        Log.d(TAG,"fetchAndSaveCafeList) pageNo: $pageNo")
         val cafeList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.getCafeTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveCafeList(cafeList.await())
+        if(cafeList.await().isNotEmpty())
+                PageNoPrefUtil.saveCafePageNo(pageNo + 1)
     }
 
     private suspend fun fetchAndSaveEventList(pageNo: Int) {
+        Log.d(TAG, "fetchAndSaveEventList) pageNo: $pageNo")
         val eventList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.getEventTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveEventList(eventList.await())
+        if(eventList.await().isNotEmpty())
+            PageNoPrefUtil.saveEventPageNo(pageNo + 1)
     }
 }
