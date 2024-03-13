@@ -13,6 +13,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
@@ -49,12 +51,23 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        userVisibleHint = false
-        setLoadingUI(true)
+
+        initUI()
         initRecyclerView()
         initModelObserver()
     }
 
+    private fun initUI(){
+        setLoadingUI(true)
+        setNoResultUI(false)
+
+        Glide.with(requireContext())
+            .load(resources.getDrawable(R.drawable.gif_place_list_no_result))
+            .into(binding.ivTouristAttractionRecyclerViewNoResult)
+    }
+    private fun setNoResultUI(isNoResult: Boolean){
+        binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = isNoResult
+    }
     private fun setLoadingUI(isLoading: Boolean) {
         binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
         binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
@@ -85,6 +98,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
             Log.d(TAG, "tourist attraction list size: ${it.size}")
             adapter.submitList(it.toMutableList())
             setLoadingUI(false)
+            if(it.isEmpty()) setNoResultUI(true)
         })
     }
 
