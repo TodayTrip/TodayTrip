@@ -53,6 +53,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         super.onViewCreated(view, savedInstanceState)
 
         initUI()
+        initSwipeRefreshLayout()
         initRecyclerView()
         initModelObserver()
     }
@@ -75,6 +76,15 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         if (isLoading) binding.shimmerTouristAttractionRecyclerView.startShimmer()
     }
 
+    private fun initSwipeRefreshLayout(){
+        binding.swipeTouristAttractionRecyclerView.setOnRefreshListener {
+            setNoResultUI(false)
+            setLoadingUI(true)
+            mainModel.loadOrFetchTouristAttractionList()
+
+            binding.swipeTouristAttractionRecyclerView.isRefreshing = false
+        }
+    }
     private fun initRecyclerView() {
         adapter = PlaceListAdapter().apply {
             onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
@@ -101,7 +111,6 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
             if(it.isEmpty()) setNoResultUI(true)
         })
     }
-
 
     override fun onDestroyView() {
         super.onDestroyView()

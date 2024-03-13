@@ -62,7 +62,7 @@ class MainViewModel : ViewModel() {
         loadOrFetchEventList()
     }
 
-    private fun loadOrFetchTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch {
+    fun loadOrFetchTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch {
         var touristAttractionList: List<TourItem>? = null
 
         var apiCallCount = 0
