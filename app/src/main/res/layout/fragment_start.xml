@@ -4,27 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/start_background"
+    android:background="@color/white"
     tools:context=".ui.random.StartFragment">
-
+<!--    android:background="@color/start_background"-->
 
     <ImageView
         android:id="@+id/iv_start_walk_gif"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_start_trip"
+        android:layout_height="320dp"
+        android:layout_margin="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_intro"
         style="@style/LargeTitleBoldText"
         android:layout_marginBottom="20dp"
         android:text="오늘 여행을 시작해볼까요?"
-        android:textColor="@color/main_blue"
-
+        android:textColor="@color/dark_gray"
         app:layout_constraintBottom_toTopOf="@+id/iv_start_walk_gif"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -32,11 +32,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_start_trip"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="52dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/shape_main_blue_8_radius"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_main_blue_12_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
