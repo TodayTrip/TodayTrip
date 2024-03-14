@@ -28,7 +28,11 @@ class RandomBottomSheetDialog : BottomSheetDialogFragment() {
         view?.findViewById<ConstraintLayout>(R.id.layout_bottom_sheet_button)?.setOnClickListener {
             DestinationPrefUtil.saveDestination("")
             DestinationPrefUtil.saveTheme("")
-            val intent = Intent(context, RandomActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            val intent = Intent(context, RandomActivity::class.java).addFlags(
+                Intent.FLAG_ACTIVITY_NEW_TASK
+                        or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            )
             startActivity(intent)
         }
     }
