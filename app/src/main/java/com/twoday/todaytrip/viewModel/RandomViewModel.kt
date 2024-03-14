@@ -19,4 +19,8 @@ class RandomViewModel : ViewModel() {
         TourItemPrefUtil.resetTourItemListPref()
         ContentIdPrefUtil.resetContentIdListPref()
     }
+
+    fun loadDestinationSharedPref(): String {
+        return DestinationPrefUtil.loadDestination()
+    }
 }
