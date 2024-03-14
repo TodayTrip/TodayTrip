@@ -16,7 +16,12 @@ object DateTimeUtil {
     }
     fun getCurrentTime():String{
         val currentTime = Calendar.getInstance().time
-        val formatter = SimpleDateFormat("yyyyMMdd")
+        val formatter = SimpleDateFormat("HHmm")
         return formatter.format(currentTime)
+    }
+    fun getCurrentDay():String{
+        val currentDay = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("EEE")
+        return formatter.format(currentDay)
     }
 }

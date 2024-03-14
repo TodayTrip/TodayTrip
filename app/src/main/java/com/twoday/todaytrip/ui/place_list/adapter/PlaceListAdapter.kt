@@ -55,22 +55,35 @@ class PlaceListAdapter :
         )
 
         fun bind(item: TourItem) {
+            val currentDate = DateTimeUtil.getCurrentDateWithNoLine()
+            val currentTime = DateTimeUtil.getCurrentTime()
+            val currentDay = DateTimeUtil.getCurrentDay()
+
             item.getThumbnailImage()?.let { url ->
                 Glide.with(MyApplication.appContext!!)
                     .load(url)
                     .placeholder(R.drawable.img_default)
                     .into(firstImageView)
             }
-            val currentDate = DateTimeUtil.getCurrentDateWithNoLine()
-            val startDate = item.getDetailInfoWithLabel()[3].second
-            val endDate = item.getDetailInfoWithLabel()[4].second
-            if (currentDate > endDate) {
-                val matrix = ColorMatrix()
-                matrix.setSaturation(0F)
-                val filter = ColorMatrixColorFilter(matrix)
-                firstImageView.setColorFilter(filter)
+
+            when (item.getContentTypeId()) {
+                "15" -> {//행사축제
+                    val startDate = item.getDetailInfoWithLabel()[3].second
+                    val endDate = item.getDetailInfoWithLabel()[4].second
+                    if (currentDate > endDate) {
+                        val matrix = ColorMatrix()
+                        matrix.setSaturation(0F)
+                        val filter = ColorMatrixColorFilter(matrix)
+                        firstImageView.setColorFilter(filter)
+                    }
+                }
+                "39" -> {//식당카페
+                }
+                else -> {//관관지
+                }
             }
-            Log.d("date", "current date=${DateTimeUtil.getCurrentDateWithNoLine()} place date=${item.getTimeInfoWithLabel()[1].second} detail info=${item.getDetailInfoWithLabel()[3].second}")
+
+            Log.d("date", "current date=${DateTimeUtil.getCurrentDateWithNoLine()} place date=${item.getTimeInfoWithLabel()[1].second} detail info=${item.getDetailInfoWithLabel()}")
             firstImageView.clipToOutline = true
 
             titleTextView.text = item.getTitle()
