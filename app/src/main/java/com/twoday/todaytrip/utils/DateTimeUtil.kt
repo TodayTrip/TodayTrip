@@ -14,4 +14,9 @@ object DateTimeUtil {
         val formatter = SimpleDateFormat("yyyyMMdd")
         return formatter.format(currentDateTime)
     }
+    fun getCurrentTime():String{
+        val currentTime = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyyMMdd")
+        return formatter.format(currentTime)
+    }
 }
