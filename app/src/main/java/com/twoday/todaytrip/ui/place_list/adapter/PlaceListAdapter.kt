@@ -1,5 +1,7 @@
 package com.twoday.todaytrip.ui.place_list.adapter
 
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,9 +12,11 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
+import com.twoday.todaytrip.tourApi.IntroDetailItem
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.DateTimeUtil
 
 class PlaceListAdapter :
     ListAdapter<TourItem, PlaceListAdapter.Holder>(TourItemDiffCallback) {
@@ -57,6 +61,16 @@ class PlaceListAdapter :
                     .placeholder(R.drawable.img_default)
                     .into(firstImageView)
             }
+            val currentDate = DateTimeUtil.getCurrentDateWithNoLine()
+            val startDate = item.getDetailInfoWithLabel()[3].second
+            val endDate = item.getDetailInfoWithLabel()[4].second
+            if (currentDate > endDate) {
+                val matrix = ColorMatrix()
+                matrix.setSaturation(0F)
+                val filter = ColorMatrixColorFilter(matrix)
+                firstImageView.setColorFilter(filter)
+            }
+            Log.d("date", "current date=${DateTimeUtil.getCurrentDateWithNoLine()} place date=${item.getTimeInfoWithLabel()[1].second} detail info=${item.getDetailInfoWithLabel()[3].second}")
             firstImageView.clipToOutline = true
 
             titleTextView.text = item.getTitle()

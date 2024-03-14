@@ -9,4 +9,9 @@ object DateTimeUtil {
         val formatter = SimpleDateFormat("yyyy-MM-dd")
         return formatter.format(currentDateTime)
     }
+    fun getCurrentDateWithNoLine():String{
+        val currentDateTime = Calendar.getInstance().time
+        val formatter = SimpleDateFormat("yyyyMMdd")
+        return formatter.format(currentDateTime)
+    }
 }
