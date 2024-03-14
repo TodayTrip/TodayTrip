@@ -55,14 +55,16 @@ class RandomResultViewModel : ViewModel() {
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
     private fun fetchAndSaveTouristAttractionList() {
+        val pageNo = PageNoPrefUtil.FIRST_PAGE
+
         val touristAttractionList =
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, 0)
+                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, 0)
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, pageNo)
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList)
 
         if(!touristAttractionList.isNullOrEmpty())
-            PageNoPrefUtil.saveTouristAttractionPageNo(1)
+            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
     }
 }

@@ -8,6 +8,8 @@ import com.twoday.todaytrip.MyApplication
 object PageNoPrefUtil {
     private val TAG = "PageNoPrefUtil"
 
+    val FIRST_PAGE = 1
+
     fun saveTouristAttractionPageNo(pageNo:Int) =
         savePageNo(pageNo, PrefConstants.TOURIST_ATTRACTION_PAGE_NO_KEY)
     fun loadTouristAttractionPageNo() =
@@ -30,10 +32,10 @@ object PageNoPrefUtil {
 
     fun resetPageNoPref(){
         Log.d(TAG, "resetPageNoPref called")
-        saveTouristAttractionPageNo(0)
-        saveRestaurantPageNo(0)
-        saveCafePageNo(0)
-        saveEventPageNo(0)
+        saveTouristAttractionPageNo(FIRST_PAGE)
+        saveRestaurantPageNo(FIRST_PAGE)
+        saveCafePageNo(FIRST_PAGE)
+        saveEventPageNo(FIRST_PAGE)
     }
 
 

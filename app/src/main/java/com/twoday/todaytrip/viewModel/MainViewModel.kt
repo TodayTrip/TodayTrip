@@ -82,14 +82,13 @@ class MainViewModel : ViewModel() {
         var touristAttractionList: List<TourItem>? = null
 
         var apiCallCount = 0
-        val pageNo = PageNoPrefUtil.loadTouristAttractionPageNo()
         while (true) {
             touristAttractionList = TourItemPrefUtil.loadTouristAttractionList()
             if (touristAttractionList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
                 apiCallCount++
                 delay(1000)
                 Log.d(TAG, "fetch tourist attraction, apiCallCount: $apiCallCount")
-                fetchAndSaveTouristAttractionList(pageNo)
+                fetchAndSaveTouristAttractionList()
             } else break
         }
 
@@ -105,14 +104,13 @@ class MainViewModel : ViewModel() {
         var restaurantList: List<TourItem>? = null
 
         var apiCallCount = 0
-        val pageNo = PageNoPrefUtil.loadRestaurantPageNo()
         while (true) {
             restaurantList = TourItemPrefUtil.loadRestaurantList()
             if (restaurantList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
                 apiCallCount++
                 delay(1000)
                 Log.d(TAG, "fetch restaurant attraction, apiCall: $apiCallCount")
-                fetchAndSaveRestaurantList(pageNo)
+                fetchAndSaveRestaurantList()
             } else break
         }
 
@@ -127,14 +125,13 @@ class MainViewModel : ViewModel() {
         var cafeList: List<TourItem>? = null
 
         var apiCallCount = 0
-        val pageNo = PageNoPrefUtil.loadCafePageNo()
         while (true) {
             cafeList = TourItemPrefUtil.loadCafeList()
             if (cafeList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
                 apiCallCount++
                 delay(1000)
                 Log.d(TAG, "fetch cafe attraction, apiCall: $apiCallCount")
-                fetchAndSaveCafeList(pageNo)
+                fetchAndSaveCafeList()
             } else break
         }
 
@@ -149,14 +146,13 @@ class MainViewModel : ViewModel() {
         var eventList: List<TourItem>? = null
 
         var apiCallCount = 0
-        val pageNo = PageNoPrefUtil.loadEventPageNo()
         while (true) {
             eventList = TourItemPrefUtil.loadEventList()
             if (eventList.isNullOrEmpty() && (apiCallCount < MAX_API_CALL_COUNT)) {
                 apiCallCount++
                 delay(1000)
                 Log.d(TAG, "fetch event attraction, apiCall: $apiCallCount")
-                fetchAndSaveEventList(pageNo)
+                fetchAndSaveEventList()
             } else break
         }
 
@@ -168,26 +164,27 @@ class MainViewModel : ViewModel() {
 
     // 관광지 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchTouristAttractionList() 함수에서 호출됨
-    private suspend fun fetchAndSaveTouristAttractionList(pageNo: Int) {
+    private suspend fun fetchAndSaveTouristAttractionList() {
+        val pageNo = PageNoPrefUtil.loadTouristAttractionPageNo()
         Log.d(TAG, "fetchAndSaveTouristAttractionList) pageNo: $pageNo")
+
         val touristAttractionList = CoroutineScope(Dispatchers.IO).async {
             if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
-                    theme,
-                    areaCode,
-                    pageNo
-                )
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, pageNo)
         }
+
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList.await())
         if(touristAttractionList.await().isNotEmpty())
             PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
     }
     // 음식점 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchRestaurantList() 함수에서 호출됨
-    private suspend fun fetchAndSaveRestaurantList(pageNo: Int) {
+    private suspend fun fetchAndSaveRestaurantList() {
+        val pageNo = PageNoPrefUtil.loadRestaurantPageNo()
         Log.d(TAG, "fetchAndSaveRestaurantList) pageNo: $pageNo")
+
         val restaurantList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
         }
@@ -197,8 +194,10 @@ class MainViewModel : ViewModel() {
     }
     // 카페 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchCafeList() 함수에서 호출됨
-    private suspend fun fetchAndSaveCafeList(pageNo: Int) {
+    private suspend fun fetchAndSaveCafeList() {
+        val pageNo = PageNoPrefUtil.loadCafePageNo()
         Log.d(TAG,"fetchAndSaveCafeList) pageNo: $pageNo")
+
         val cafeList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchCafeTabList(areaCode, pageNo)
         }
@@ -208,8 +207,10 @@ class MainViewModel : ViewModel() {
     }
     // 행사/축제 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchEventList() 함수에서 호출됨
-    private suspend fun fetchAndSaveEventList(pageNo: Int) {
+    private suspend fun fetchAndSaveEventList() {
+        val pageNo = PageNoPrefUtil.loadEventPageNo()
         Log.d(TAG, "fetchAndSaveEventList) pageNo: $pageNo")
+
         val eventList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchEventTabList(areaCode, pageNo)
         }
@@ -228,6 +229,7 @@ class MainViewModel : ViewModel() {
 
         val pageNo = PageNoPrefUtil.loadTouristAttractionPageNo()
         Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) pageNo: $pageNo")
+
         val moreTouristAttractionList = async {
             if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
@@ -238,8 +240,10 @@ class MainViewModel : ViewModel() {
                     pageNo
                 )
         }.await()
+
         Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) moreTouristAttractionList size: ${moreTouristAttractionList.size}")
         if(moreTouristAttractionList.isEmpty()) return@launch
+
         TourItemPrefUtil.saveMoreTouristAttractionList(moreTouristAttractionList)
         PageNoPrefUtil.saveTouristAttractionPageNo(pageNo + 1)
 
@@ -258,11 +262,14 @@ class MainViewModel : ViewModel() {
 
         val pageNo = PageNoPrefUtil.loadRestaurantPageNo()
         Log.d(TAG, "fetchAndSaveMoreRestaurantList) pageNo: $pageNo")
+
         val moreRestaurantList = async {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
         }.await()
+
         Log.d(TAG, "fetchAndSaveMoreRestaurantList) moreRestaurantList size: ${moreRestaurantList.size}")
         if(moreRestaurantList.isEmpty()) return@launch
+
         TourItemPrefUtil.saveMoreRestaurantList(moreRestaurantList)
         PageNoPrefUtil.saveRestaurantPageNo(pageNo + 1)
 
@@ -281,11 +288,14 @@ class MainViewModel : ViewModel() {
 
         val pageNo = PageNoPrefUtil.loadCafePageNo()
         Log.d(TAG, "fetchAndSaveMoreCafeList) pageNo: $pageNo")
+
         val moreCafeList = async {
             TourNetworkInterfaceUtils.fetchCafeTabList(areaCode, pageNo)
         }.await()
+
         Log.d(TAG, "fetchAndSaveMoreCafeList) moreCafeList size: ${moreCafeList.size}")
         if(moreCafeList.isEmpty()) return@launch
+
         TourItemPrefUtil.saveMoreCafeList(moreCafeList)
         PageNoPrefUtil.saveCafePageNo(pageNo + 1)
 
@@ -307,8 +317,10 @@ class MainViewModel : ViewModel() {
         val moreEventList = async {
             TourNetworkInterfaceUtils.fetchEventTabList(areaCode, pageNo)
         }.await()
+
         Log.d(TAG, "fetchAndSaveMoreEventList) moreEventList size: ${moreEventList.size}")
         if(moreEventList.isEmpty()) return@launch
+
         TourItemPrefUtil.saveMoreEventList(moreEventList)
         PageNoPrefUtil.saveEventPageNo(pageNo + 1)
 
