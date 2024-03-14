@@ -2,14 +2,12 @@ package com.twoday.todaytrip.tourApi
 
 import android.util.Log
 import com.google.common.net.HttpHeaders.CACHE_CONTROL
-import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.utils.NetworkUtil
 import okhttp3.Cache
 import okhttp3.CacheControl
 import okhttp3.Interceptor
-import okhttp3.Interceptor.*
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor

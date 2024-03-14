@@ -9,17 +9,16 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
-class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
-    TourItemDiffCallback()
-) {
+class PlaceMapAdapter(
+    private val onItemClick: (TourItem) -> Unit
+) : ListAdapter<TourItem, PlaceMapAdapter.Holder>(TourItemDiffCallback()) {
     init {
         submitList(TourItemPrefUtil.loadTouristAttractionList())
     }
-    var onTourItemClickListener: OnTourItemAddClickListener? = null
+
     class TourItemDiffCallback : DiffUtil.ItemCallback<TourItem>() {
         override fun areItemsTheSame(oldItem: TourItem, newItem: TourItem): Boolean {
             return oldItem.getContentId() == newItem.getContentId()
@@ -55,6 +54,9 @@ class PlaceMapAdapter() : ListAdapter<TourItem, PlaceMapAdapter.Holder>(
             val timeInfo = item.getTimeInfoWithLabel()
             binding.tvItemPlaceListTime1.text = timeInfo[0].second
             binding.tvItemPlaceListTime2.text = timeInfo[1].second
+            binding.root.setOnClickListener {
+                onItemClick(item)
+            }
         }
     }
 }

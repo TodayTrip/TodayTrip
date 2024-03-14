@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_white"
     tools:context=".ui.random.RandomOptionFragment">
 
 
@@ -12,7 +12,7 @@
         android:id="@+id/tv_random_select_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="start"
         android:text="랜덤으로 여행 할 지역이 정해집니다.\n지역 선택 방식을 선택해 주세요."
         android:textColor="@color/dark_gray"
         android:textSize="22sp"
@@ -27,7 +27,6 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_marginStart="10dp"
-        android:background="@drawable/shape_gray_stroke_10_radius"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_theme_random"
         app:layout_constraintHorizontal_bias="0.5"
@@ -63,7 +62,6 @@
         android:layout_height="150dp"
         android:layout_marginEnd="10dp"
         android:padding="20dp"
-        android:background="@drawable/shape_gray_stroke_10_radius"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_all_random"
@@ -114,7 +112,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_option_select"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="52dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"

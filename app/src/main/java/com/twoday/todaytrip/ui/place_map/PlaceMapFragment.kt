@@ -1,13 +1,16 @@
 package com.twoday.todaytrip.ui.place_map
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.MapView
@@ -17,6 +20,8 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceMapBinding
+import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.utils.MapUtils.createBoundsForAllMarkers
 import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
 import com.twoday.todaytrip.utils.MapUtils.updateCameraToBounds
@@ -26,14 +31,16 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadTouristAttractionList
 import com.twoday.todaytrip.viewModel.PlaceMapViewModel
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
     private var _binding: FragmentPlaceMapBinding? = null
     private val binding get() = _binding!!
-    private val placeMapAdapter by lazy { PlaceMapAdapter() }
+    private val placeMapAdapter by lazy { PlaceMapAdapter(onItemClick) }
     private val viewModel by lazy {
         ViewModelProvider(this@PlaceMapFragment)[PlaceMapViewModel::class.java]
     }
+    private val pagerSnapHelper = PagerSnapHelper()
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
 
@@ -44,6 +51,14 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         loadTouristAttractionList().map {
             LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
         }
+
+    private val onItemClick: (TourItem) -> Unit = { tourItem ->
+        val placeDetailIntent = PlaceDetailActivity.newIntent(
+            requireContext(),
+            tourItem.getContentTypeId(),
+            tourItem)
+        startActivity(placeDetailIntent)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,7 +71,6 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // mapView 변수 초기화
         mapView = binding.mvPlaceMap
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -70,6 +84,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initImageRecyclerView() {
+        pagerSnapHelper.attachToRecyclerView(binding.rvPlaceMap)
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeMapAdapter
@@ -177,7 +192,6 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         }
         markers.clear() // 마커 리스트 비우기
     }
-
 
     override fun onStart() {
         super.onStart()
