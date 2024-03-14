@@ -33,7 +33,6 @@ class PlaceListAdapter :
             PlaceListViewType.TOUR_ITEM.viewType
         }
         else{
-            Log.d(TAG, "position: ${position} is DUMMY_TOUR_ITEM")
             PlaceListViewType.DUMMY_ITEM.viewType
         }
 
@@ -76,7 +75,6 @@ class PlaceListAdapter :
     }
 
     fun addDummyTourItem(){
-        Log.d(TAG, "addDummyTourItem) called")
         val currentListWithDummy = mutableListOf<TourItem>()
         currentListWithDummy.run{
             addAll(currentList)
@@ -85,12 +83,6 @@ class PlaceListAdapter :
             add(PlaceListConstants.DUMMY_TOUR_ITEM)
         }
         submitList(currentListWithDummy)
-    }
-    fun removeDummyTourItem(){
-        Log.d(TAG, "removeDummyTourItem) called")
-        submitList(currentList.filter {
-            it != PlaceListConstants.DUMMY_TOUR_ITEM
-        }.toMutableList())
     }
 
     inner class TourItemHolder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
