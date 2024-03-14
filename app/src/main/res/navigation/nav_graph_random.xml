@@ -13,6 +13,20 @@
         <action
             android:id="@+id/action_navigation_start_to_navigation_random_option"
             app:destination="@id/navigation_random_option" />
+        <action
+            android:id="@+id/action_navigation_start_to_navigation_select_region"
+            app:destination="@id/navigation_select_region" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_select_region"
+        android:name="com.twoday.todaytrip.ui.random.SelectRegionFragment"
+        android:label="fragment_select_region"
+        tools:layout="@layout/fragment_select_region">
+
+        <action
+            android:id="@+id/action_navigation_select_region_to_navigation_random_result"
+            app:destination="@id/navigation_random_result" />
     </fragment>
 
     <fragment

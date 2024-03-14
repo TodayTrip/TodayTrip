@@ -8,6 +8,7 @@
     <color name="main_blue">#0085FF</color>
     <color name="dark_blue">#004B98</color>
     <color name="sub_blue">#E8F5FF</color>
+    <color name="sub_btn_blue">#9DD0FF</color>
     <color name="point_yellow">#FFD15B</color>
 
     <color name="button_gray">#4E4E4E</color>

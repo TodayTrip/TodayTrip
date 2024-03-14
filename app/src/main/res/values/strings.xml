@@ -3,8 +3,13 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!-- RandomActivity   -->
+    <!--  RandomActivity   -->
     <string name="login_fail">로그인에 실패하였습니다.\n다시 시도해주세요</string>
+
+    <!--  StartFragment  -->
+    <string name="start_select_region">지역 옵션 지정하기</string>
+    <string name="start_start_btn">시작하기</string>
+    <string name="start_title">오늘 여행을 시작해볼까요?</string>
 
     <!--  RecordActivity  -->
     <string name="record_title">나의 여행 기록</string>
@@ -68,5 +73,24 @@
     <string name="alert_dialog_delete_description">삭제한 여행 기록은 복구할 수 없습니다.</string>
     <string name="alert_dialog_positive">삭제</string>
     <string name="alert_dialog_negative">취소</string>
+
+    <!--  Select Region Fragment  -->
+    <string name="select_region_description">여행하고 싶은 지역을 \n직접 선택해보세요!</string>
+    <string name="seoul">서울</string>
+    <string name="incheon">인천</string>
+    <string name="jeonbuk">전북</string>
+    <string name="jeonnam">전남</string>
+    <string name="gyeongbuk">경북</string>
+    <string name="gyeongnam">경남</string>
+    <string name="chungbuk">충북</string>
+    <string name="chungnam">충남</string>
+    <string name="gangwon">강원</string>
+    <string name="daegu">대구</string>
+    <string name="busan">부산</string>
+    <string name="daejeon">대전</string>
+    <string name="jeju">제주</string>
+    <string name="gyeonggi">경기</string>
+    <string name="gwangju">광주</string>
+    <string name="ulsan">울산</string>
 
 </resources>
