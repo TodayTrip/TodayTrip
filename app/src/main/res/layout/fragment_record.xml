@@ -32,24 +32,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_record_chart"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="250dp"
         android:layout_marginTop="16dp"
-        android:background="@drawable/shape_main_blue_10_radius"
-        android:backgroundTint="@color/main_blue"
+        android:background="@drawable/shape_gray_stroke_10_radius"
         android:elevation="10dp"
-        android:padding="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_sub_title">
-
-        <TextView
-            android:id="@+id/tv_record_chart_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/record_chart_title"
-            android:textColor="@color/middle_gray"
-            android:textSize="16sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tv_chart_empty"
@@ -61,39 +50,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_record_chart_title" />
+            app:layout_constraintTop_toTopOf="@id/layout_record_chart" />
 
-        <com.db.williamchart.view.HorizontalBarChartView
-            android:id="@+id/chart_record"
+        <FrameLayout
+            android:id="@+id/graphContainer"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="8dp"
-            android:visibility="invisible"
-            app:chart_barsColor="@color/white"
-            app:chart_barsRadius="10dp"
-            app:chart_spacing="4dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="320dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_record_chart_title" />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Spinner
-        android:id="@+id/spinner_record_order"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/shape_sub_blue_8_radius"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layout_record_chart" />
-
-    <ImageView
-        android:id="@+id/iv_record_spinner_down"
-        android:layout_width="16dp"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_record_spinner_down"
-        app:layout_constraintBottom_toBottomOf="@id/spinner_record_order"
-        app:layout_constraintStart_toEndOf="@id/spinner_record_order"
-        app:layout_constraintTop_toTopOf="@id/spinner_record_order" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_record_empty"
@@ -103,7 +69,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_record_order">
+        app:layout_constraintTop_toBottomOf="@+id/layout_record_chart">
 
         <ImageView
             android:layout_width="60dp"
@@ -131,13 +97,15 @@
         android:id="@+id/rv_record"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:visibility="invisible"
+        android:layout_marginTop="24dp"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinner_record_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_record_chart"
         app:spanCount="2"
         tools:listitem="@layout/item_record"
         tools:visibility="visible" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
