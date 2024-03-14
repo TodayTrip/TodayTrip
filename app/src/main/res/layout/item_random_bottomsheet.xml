@@ -8,21 +8,40 @@
     android:background="@drawable/shape_bottom_sheet_frame"
     app:behavior_peekHeight="56dp">
 
-    <TextView
-        android:id="@+id/tv_bottom_sheet_title"
+    <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="10dp"
-        android:text="@string/bottom_sheet_random_decription"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:textColor="@color/place_addr_gray"
-        app:layout_constraintBottom_toTopOf="@+id/layout_bottom_sheet_button"
+        android:src="@drawable/img_bottom_sheet_gray_bar"
+        android:layout_marginTop="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/tv_bottom_sheet_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/bottom_sheet_random_title"
+        android:textColor="@color/place_addr_gray"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_bottom_sheet_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="@string/bottom_sheet_random_description"
+        android:textColor="@color/button_gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_title" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_bottom_sheet_button"
@@ -34,13 +53,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_title">
+        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_description">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="-0.04"
-            android:text="확인"
+            android:text="@string/bottom_sheet_random_button"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"

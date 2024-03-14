@@ -10,12 +10,21 @@
     app:behavior_peekHeight="56dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/img_bottom_sheet_gray_bar"
+        android:layout_marginTop="14dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <TextView
         android:id="@+id/tv_bottom_sheet_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/bottom_sheet_title_record"
+        android:text="@string/bottom_sheet_record_title"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@color/place_addr_gray"
@@ -30,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="@string/bottom_sheet_warning_record"
+        android:text="@string/bottom_sheet_record_description"
         android:textColor="@color/button_gray"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -53,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="-0.04"
-            android:text="확인"
+            android:text="@string/bottom_sheet_record_button"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
