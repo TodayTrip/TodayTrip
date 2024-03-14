@@ -1,5 +1,8 @@
 package com.twoday.todaytrip.ui.record
 
+import android.graphics.Bitmap
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +13,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.db.williamchart.data.AxisType
+import com.jolenechong.wordcloud.WordCloud
+import com.skydoves.balloon.textForm
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordBinding
 import com.twoday.todaytrip.ui.record_detail.RecordDetailActivity
@@ -21,7 +26,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
 
     private var _binding: FragmentRecordBinding? = null
     private val binding get() = _binding!!
-
+    private lateinit var wordCloudView: WordCloud
     private val model by lazy {
         ViewModelProvider(this@RecordFragment)[RecordViewModel::class.java]
     }
@@ -57,7 +62,8 @@ class RecordFragment : Fragment(), OnRecordClickListener {
             initTitleLayout(it)
 
             val chartDataList =  model.getChartDataList()
-            if (chartDataList.size < 2) {
+
+            if (chartDataList.isEmpty()) {
                 setChartVisibility(false)
             }
             else{
@@ -79,17 +85,15 @@ class RecordFragment : Fragment(), OnRecordClickListener {
         binding.tvRecordSubTitle.text = getString(R.string.record_sub_title, recordList.size)
     }
 
-    private fun setChartData(chartDataList:List<Pair<String, Float>>) {
-        binding.chartRecord.run {
-            axis = AxisType.Y
-            labelsSize = 30F
-            labelsColor = resources.getColor(R.color.middle_gray)
-            animation.duration = 1800
-            animate(chartDataList.reversed())
-        }
+    private fun setChartData(chartDataList:List<String>) {
+        wordCloudView = WordCloud(requireContext(),null)
+        binding.graphContainer.addView(wordCloudView)
+
+        wordCloudView.setWords(chartDataList)
     }
+
     private fun setChartVisibility(isVisible: Boolean) {
-        binding.chartRecord.isVisible = isVisible
+        binding.graphContainer.isVisible = isVisible
         binding.tvChartEmpty.isVisible = !isVisible
     }
 
@@ -99,7 +103,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
         }
         binding.rvRecord.run{
             adapter = recordAdapter
-            addItemDecoration(GridSpaceItemDecoration(2, 8))
+            addItemDecoration(GridSpaceItemDecoration(2, 30))
         }
     }
     override fun onRecordClick(record: Record) {

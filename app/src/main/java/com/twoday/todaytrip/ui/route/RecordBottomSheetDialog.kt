@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
@@ -15,8 +14,11 @@ import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.RecordPrefUtil
 
-class BottomSheetDialog : BottomSheetDialogFragment() {
-
+class RecordBottomSheetDialog : BottomSheetDialogFragment() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NORMAL, R.style.TransparentBottomSheetDialogFragment)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,11 +36,6 @@ class BottomSheetDialog : BottomSheetDialogFragment() {
             val savePhotoDataList = (activity as SavePhotoActivity).savePhotoDataList
             RecordPrefUtil.addRecord(Record(savePhotoDataList = savePhotoDataList))
             ContentIdPrefUtil.resetContentIdListPref()
-            dismiss()
-        }
-
-        //닫기버튼
-        view?.findViewById<ImageView>(R.id.iv_bottom_sheet_cancel)?.setOnClickListener {
             dismiss()
         }
     }

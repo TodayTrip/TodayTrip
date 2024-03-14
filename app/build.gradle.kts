@@ -86,13 +86,9 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
-    // Firebase
+    // HttpHeaders
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:21.0.0")
-    implementation("com.google.firebase:firebase-storage-ktx")
-    implementation("com.google.firebase:firebase-database-ktx:20.3.1")
     // Lottie animation
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
@@ -103,8 +99,16 @@ dependencies {
     implementation("io.coil-kt:coil:2.0.0-rc03")
     // balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
+    // Word cloud
+    implementation("com.github.jolenechong:androidWordCloud:1.0.0") {
+        // exclude due to duplicate classes with the
+        // edu.stanford.nlp:stanford-corenlp dependency for data processing
+        exclude(group="com.sun.xml.bind", module="jaxb-core")
+        exclude(group="com.sun.xml.bind", module="jaxb-impl")
+    }
     // Skeleton
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
     //FishBun
     implementation ("io.github.sangcomz:fishbun:1.1.1")
+    implementation("com.google.android.material:material:1.11.0")
 }

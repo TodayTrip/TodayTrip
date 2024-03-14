@@ -9,6 +9,7 @@ import com.twoday.todaytrip.databinding.ActivityMainBinding
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.ui.place_list.RandomBottomSheetDialog
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
@@ -25,10 +26,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initView()
+        initOnClickListener()
     }
 
     private fun initView() {
         setNavigation()
+    }
+
+    private fun initOnClickListener() {
+        binding.fabBottomRandom.setOnClickListener {
+            val randomBottomSheet = RandomBottomSheetDialog()
+            randomBottomSheet.show(supportFragmentManager, randomBottomSheet.tag)
+        }
     }
 
     private fun setNavigation() {
@@ -44,10 +53,10 @@ class MainActivity : AppCompatActivity() {
     private fun setupFabVisibility(navController: NavController) {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.navigation_map -> binding.fab.visibility = View.GONE
-                R.id.navigation_route -> binding.fab.visibility = View.GONE
-                R.id.navigation_record -> binding.fab.visibility = View.GONE
-                else -> binding.fab.visibility = View.VISIBLE
+                R.id.navigation_map -> binding.fabBottomRandom.visibility = View.GONE
+                R.id.navigation_route -> binding.fabBottomRandom.visibility = View.GONE
+                R.id.navigation_record -> binding.fabBottomRandom.visibility = View.GONE
+                else -> binding.fabBottomRandom.visibility = View.VISIBLE
             }
         }
     }
