@@ -61,7 +61,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         setNoResultUI(false)
 
         Glide.with(requireContext())
-            .load(resources.getDrawable(R.drawable.gif_place_list_no_result))
+            .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
             .into(binding.ivEventRecyclerViewNoResult)
     }
 
