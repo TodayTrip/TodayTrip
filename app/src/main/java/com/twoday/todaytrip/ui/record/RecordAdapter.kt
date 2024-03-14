@@ -51,7 +51,7 @@ class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallba
             }
             if (savePhotoDataWithImage != null) {
                 Glide.with(MyApplication.appContext!!)
-                    .load(savePhotoDataWithImage.imageUriList!!)
+                    .load(savePhotoDataWithImage.imageUriList[0])
                     .placeholder(R.drawable.ic_launcher)
                     .into(imageView)
             }

@@ -1,26 +1,33 @@
 package com.twoday.todaytrip.ui.record_gallery
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ItemRecordGalleryPhotoBinding
 import com.twoday.todaytrip.databinding.ItemRecordGalleryTagBinding
+import javax.microedition.khronos.opengles.GL
 
-class RecordGalleryAdapter : RecyclerView.Adapter<ViewHolder>() {
+class RecordGalleryAdapter(private val imageUriList: List<String>) : RecyclerView.Adapter<RecordGalleryAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        TODO("Not yet implemented")
-    }
-
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = ItemRecordGalleryPhotoBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        val imageUri = imageUriList[position]
+        holder.bind(imageUri)
     }
 
+    override fun getItemCount(): Int = imageUriList.size
 
-    inner class PhotoViewHolder(binding: ItemRecordGalleryPhotoBinding): RecyclerView.ViewHolder(binding.root) {
-
+    class ViewHolder(private val binding: ItemRecordGalleryPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(imageUri: String) {
+            Glide.with(binding.galleryPhoto.context)
+                .load(imageUri)
+                .into(binding.galleryPhoto)
+        }
     }
 }

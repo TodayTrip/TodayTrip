@@ -14,7 +14,9 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 import com.twoday.todaytrip.ui.record.Record
+import com.twoday.todaytrip.ui.record_gallery.RecordGalleryFragment
 import com.twoday.todaytrip.utils.RecordPrefUtil
+import java.util.ArrayList
 
 class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveClickListener {
     private val TAG = "RecordDetailActivity"
@@ -67,11 +69,19 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
     private fun setOptionIconAsMap(isOptionMap:Boolean){
         if(isOptionMap){
             binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_list)
-            setFragment(RecordDetailMapFragment())
+            setFragment(RecordDetailListFragment())
         }
         else{
             binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_map)
             setFragment(RecordDetailListFragment())
+            val galleryFragment = RecordGalleryFragment().apply {
+                arguments = Bundle().apply {
+                    putStringArrayList("IMAGE_URI_LIST",
+                        record?.savePhotoDataList?.get(0)?.imageUriList as ArrayList<String>?
+                    )
+                }
+            }
+            setFragment(galleryFragment)
         }
     }
     private fun setFragment(fragment: Fragment){
