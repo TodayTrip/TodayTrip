@@ -93,15 +93,15 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic"
             />
-        <Constraint
-            android:id="@+id/iv_place_detail_back_bg"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:alpha="1.0"
-            android:background="@drawable/selector_place_detail_white_circle"
-            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
-            motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
-            />
+<!--        <Constraint-->
+<!--            android:id="@+id/iv_place_detail_back_bg"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:alpha="1.0"-->
+<!--            android:background="@drawable/selector_place_detail_white_circle"-->
+<!--            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"-->
+<!--            motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"-->
+<!--            />-->
         <Constraint
             android:id="@+id/iv_place_detail_top_blur"
             android:layout_width="match_parent"
@@ -151,15 +151,15 @@
             motion:layout_constraintStart_toStartOf="parent"
             motion:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic"
             />
-        <Constraint
-            android:id="@+id/iv_place_detail_back_bg"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:alpha="0.0"
-            android:background="@drawable/selector_place_detail_white_circle"
-            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
-            motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
-            />
+<!--        <Constraint-->
+<!--            android:id="@+id/iv_place_detail_back_bg"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:alpha="0.0"-->
+<!--            android:background="@drawable/selector_place_detail_white_circle"-->
+<!--            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"-->
+<!--            motion:layout_constraintStart_toStartOf="@id/iv_place_detail_back"-->
+<!--            />-->
         <Constraint
             android:id="@+id/iv_place_detail_top_blur"
             android:layout_width="match_parent"
