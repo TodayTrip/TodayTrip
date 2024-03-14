@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.ui.place_list.adapter
 
+import android.annotation.SuppressLint
 import android.graphics.ColorMatrix
 import android.graphics.ColorMatrixColorFilter
 import android.text.Html
@@ -75,6 +76,7 @@ class PlaceListAdapter :
                         matrix.setSaturation(0F)
                         val filter = ColorMatrixColorFilter(matrix)
                         firstImageView.setColorFilter(filter)
+                        binding.layoutEntire.setBackgroundResource(R.color.light_gray)
                     }
                 }
                 "39" -> {//식당카페

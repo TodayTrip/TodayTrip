@@ -39,7 +39,7 @@
         android:layout_marginEnd="16dp"
         android:text="와이파이"
         android:textStyle="normal"
-        android:textColor="@color/black"
+        android:textColor="@color/dark_gray"
         app:layout_constraintTop_toBottomOf="@id/tv_item_place_detail_extra_info_title"
         app:layout_constraintStart_toStartOf="@+id/tv_item_place_detail_extra_info_title"
         app:layout_constraintEnd_toEndOf="parent"
