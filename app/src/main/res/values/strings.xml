@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TodayTrip</string>
+    <string name="app_name">오늘여행</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
@@ -52,8 +52,12 @@
     <string name="item_place_list_remove">빼기</string>
 
     <!--  Bottom Sheet  -->
-    <string name="bottom_sheet_title_record">현재까지의 경로가 기록됩니다.</string>
-    <string name="bottom_sheet_warning_record">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
+    <string name="bottom_sheet_record_title">현재까지의 경로가 기록됩니다.</string>
+    <string name="bottom_sheet_record_description">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
+    <string name="bottom_sheet_record_button">확인</string>
+    <string name="bottom_sheet_random_title">새로운 여행을 떠나보세요!</string>
+    <string name="bottom_sheet_random_description">지금까지의 경로는 초기화됩니다.</string>
+    <string name="bottom_sheet_random_button">랜덤 돌리기</string>
 
     <!--  Alert Dialog  -->
     <string name="alert_dialog_delete_title">여행 기록을 삭제하시겠습니까?</string>

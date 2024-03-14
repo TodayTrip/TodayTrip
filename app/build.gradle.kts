@@ -86,13 +86,9 @@ dependencies {
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
-    // Firebase
+    // HttpHeaders
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth-ktx")
-    implementation("com.google.android.gms:play-services-auth:21.0.0")
-    implementation("com.google.firebase:firebase-storage-ktx")
-    implementation("com.google.firebase:firebase-database-ktx:20.3.1")
     // Lottie animation
     implementation("com.airbnb.android:lottie:6.3.0")
     // ViewPager2
@@ -116,4 +112,5 @@ dependencies {
     implementation ("io.github.sangcomz:fishbun:1.1.1")
     // SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("com.google.android.material:material:1.11.0")
 }

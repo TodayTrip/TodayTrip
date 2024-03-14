@@ -117,7 +117,7 @@ object TourNetworkInterfaceUtils {
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
-                                    TourItem.TouristDestination(item, it)
+                                    TourItem.LeisureSports(item, it)
                                 )
                             }
                         }

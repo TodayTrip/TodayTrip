@@ -21,4 +21,8 @@ class RandomViewModel : ViewModel() {
         ContentIdPrefUtil.resetContentIdListPref() // 경로에 담은 관광지 정보 초기화
         PageNoPrefUtil.resetPageNoPref() // 관광지 목록 별 pageNo 초기화
     }
+
+    fun loadDestinationSharedPref(): String {
+        return DestinationPrefUtil.loadDestination()
+    }
 }
