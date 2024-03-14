@@ -112,5 +112,6 @@ dependencies {
     implementation ("io.github.sangcomz:fishbun:1.1.1")
     // SwipeRefreshLayout
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    // Material
     implementation("com.google.android.material:material:1.11.0")
 }
