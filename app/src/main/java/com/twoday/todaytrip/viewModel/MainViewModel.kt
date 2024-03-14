@@ -1,7 +1,5 @@
 package com.twoday.todaytrip.viewModel
 
-//import com.google.firebase.database.FirebaseDatabase
-//import com.google.firebase.storage.FirebaseStorage
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.twoday.todaytrip.R
@@ -86,29 +85,21 @@ class RandomOptionFragment : Fragment() {
 
     private fun setAllRandomButtonStyle(isSelected: Boolean) {
         binding.btnAllRandom.apply {
-            setBackgroundResource(
-                if (isSelected) {
-                    binding.ivAllRandomGray.visibility = View.INVISIBLE
-                    R.drawable.shape_yellow_stroke_10_radius
-                } else {
-                    binding.ivAllRandomGray.visibility = View.VISIBLE
-                    R.drawable.shape_gray_stroke_10_radius
-                }
-            )
+            if (isSelected) {
+                binding.ivAllRandomGray.visibility = View.INVISIBLE
+            } else {
+                binding.ivAllRandomGray.visibility = View.VISIBLE
+            }
         }
     }
 
     private fun setThemeRandomButtonStyle(isSelected: Boolean) {
         binding.btnThemeRandom.apply {
-            setBackgroundResource(
-                if (!isSelected) {
-                    binding.ivThemeRandomGray.visibility = View.VISIBLE
-                    R.drawable.shape_gray_stroke_10_radius
-                } else {
-                    binding.ivThemeRandomGray.visibility = View.INVISIBLE
-                    R.drawable.shape_yellow_stroke_10_radius
-                }
-            )
+            if (!isSelected) {
+                binding.ivThemeRandomGray.visibility = View.VISIBLE
+            } else {
+                binding.ivThemeRandomGray.visibility = View.INVISIBLE
+            }
         }
     }
 

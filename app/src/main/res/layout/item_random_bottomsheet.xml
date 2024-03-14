@@ -4,11 +4,9 @@
     android:id="@+id/item_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_bottom_sheet_frame"
-    android:orientation="vertical"
     app:behavior_hideable="true"
-    app:behavior_peekHeight="56dp"
-    app:layout_behavior="@string/bottom_sheet_behavior">
+    android:background="@drawable/shape_bottom_sheet_frame"
+    app:behavior_peekHeight="56dp">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -24,22 +22,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:text="@string/bottom_sheet_record_title"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:text="@string/bottom_sheet_random_title"
         android:textColor="@color/place_addr_gray"
-        android:letterSpacing="-0.04"
+        android:textSize="22sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_bottom_sheet_warning"
+        android:id="@+id/tv_bottom_sheet_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
-        android:text="@string/bottom_sheet_record_description"
+        android:text="@string/bottom_sheet_random_description"
         android:textColor="@color/button_gray"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -56,13 +53,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_warning">
+        app:layout_constraintTop_toBottomOf="@+id/tv_bottom_sheet_description">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:letterSpacing="-0.04"
-            android:text="@string/bottom_sheet_record_button"
+            android:text="@string/bottom_sheet_random_button"
             android:textColor="@color/white"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
