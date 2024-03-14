@@ -27,6 +27,16 @@ object TourItemPrefUtil {
             touristAttractionList,
             PrefConstants.TOURIST_ATTRACTION_LIST_KEY
         )
+    fun saveMoreTouristAttractionList(moreTouristAttractionList:List<TourItem>){
+        val newTouristAttractionList = mutableListOf<TourItem>()
+        newTouristAttractionList.addAll(loadTouristAttractionList())
+        newTouristAttractionList.addAll(moreTouristAttractionList)
+
+        saveTourItemList(
+            newTouristAttractionList,
+            PrefConstants.TOURIST_ATTRACTION_LIST_KEY
+        )
+    }
 
     fun loadRestaurantList() = loadTourItemList(PrefConstants.RESTAURANT_LIST_KEY)
     fun saveRestaurantList(restaurantList:List<TourItem>) = saveTourItemList(

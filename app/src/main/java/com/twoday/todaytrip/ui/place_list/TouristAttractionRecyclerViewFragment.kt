@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
@@ -36,7 +37,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         }
     }
 
-    private lateinit var adapter: PlaceListAdapter
+    private lateinit var touristAttractionAdapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -67,11 +68,13 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
             .into(binding.ivTouristAttractionRecyclerViewNoResult)
     }
     private fun setNoResultUI(isNoResult: Boolean){
+        Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
         binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = isNoResult
     }
     private fun setLoadingUI(isLoading: Boolean) {
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
         binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
-        binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
+        //binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
 
         if (isLoading) binding.shimmerTouristAttractionRecyclerView.startShimmer()
     }
@@ -86,10 +89,32 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         }
     }
     private fun initRecyclerView() {
-        adapter = PlaceListAdapter().apply {
+        touristAttractionAdapter = PlaceListAdapter().apply {
             onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
         }
-        binding.rvTouristAttractionRecyclerView.adapter = adapter
+        binding.rvTouristAttractionRecyclerView.run{
+            this.adapter = touristAttractionAdapter
+            initScrollListener(this)
+        }
+    }
+    private fun initScrollListener(recyclerView: RecyclerView){
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Log.d(TAG, "recyclerview end of scroll!")
+                    Log.d(TAG, "adapter current list size: ${touristAttractionAdapter.currentList.size}")
+                    Log.d(TAG, "isTouristAttractionLoadReady: ${mainModel.isTouristAttractionLoadReady}")
+
+                    if((!touristAttractionAdapter.currentList.isEmpty()) &&
+                        (mainModel.isTouristAttractionLoadReady)){
+                        Log.d(TAG, "fetch and save more tourist attraction list")
+                        mainModel.fetchAndSaveMoreTouristAttractionList()
+                    }
+                }
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -104,11 +129,13 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     }
 
     private fun initModelObserver() {
-        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
-            Log.d(TAG, "tourist attraction list size: ${it.size}")
-            adapter.submitList(it.toMutableList())
+        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {touristAttractionList ->
+            Log.d(TAG, "observe) tourist attraction list size: ${touristAttractionList.size}")
+            touristAttractionAdapter.submitList(touristAttractionList.toMutableList())
+            Log.d(TAG, "observe) current list size: ${touristAttractionAdapter.currentList.size}")
+
             setLoadingUI(false)
-            if(it.isEmpty()) setNoResultUI(true)
+            if(touristAttractionList.isEmpty()) setNoResultUI(true)
         })
     }
 

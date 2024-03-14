@@ -30,6 +30,8 @@ class MainViewModel : ViewModel() {
     }
 
     private val MAX_API_CALL_COUNT = 3
+    private var _isTouristAttractionLoadReady = true
+    val isTouristAttractionLoadReady get() = _isTouristAttractionLoadReady
 
     private val _touristAttractionList = MutableLiveData<List<TourItem>>()
     val touristAttractionList: LiveData<List<TourItem>>
@@ -63,6 +65,10 @@ class MainViewModel : ViewModel() {
     }
 
     fun loadOrFetchTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.Main).launch {
+            _isTouristAttractionLoadReady = false
+        }
+
         var touristAttractionList: List<TourItem>? = null
 
         var apiCallCount = 0
@@ -79,6 +85,7 @@ class MainViewModel : ViewModel() {
 
         CoroutineScope(Dispatchers.Main).launch {
             _touristAttractionList.value = touristAttractionList!!.toList()
+            _isTouristAttractionLoadReady = true
         }
         return@launch
     }
@@ -163,6 +170,33 @@ class MainViewModel : ViewModel() {
             PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
     }
 
+    fun fetchAndSaveMoreTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Dispatchers.Main).launch {
+            _isTouristAttractionLoadReady = false
+        }
+
+        val pageNo = PageNoPrefUtil.loadTouristAttractionPageNo()
+        Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) pageNo: $pageNo")
+        val moreTouristAttractionList = async {
+            if (theme.isNullOrBlank())
+                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
+            else
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
+                    theme,
+                    areaCode,
+                    pageNo
+                )
+        }.await()
+        Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) moreTouristAttractionList size: ${moreTouristAttractionList.size}")
+        if(moreTouristAttractionList.isEmpty()) return@launch
+        TourItemPrefUtil.saveMoreTouristAttractionList(moreTouristAttractionList)
+        PageNoPrefUtil.saveTouristAttractionPageNo(pageNo + 1)
+
+        CoroutineScope(Dispatchers.Main).launch {
+            _touristAttractionList.value = TourItemPrefUtil.loadTouristAttractionList()
+            _isTouristAttractionLoadReady = true
+        }
+    }
     private suspend fun fetchAndSaveRestaurantList(pageNo: Int) {
         Log.d(TAG, "fetchAndSaveRestaurantList) pageNo: $pageNo")
         val restaurantList = CoroutineScope(Dispatchers.IO).async {

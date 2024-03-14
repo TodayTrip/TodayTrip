@@ -26,6 +26,7 @@ class PlaceListAdapter :
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+        Log.d(TAG, "onBindViewHolder) item title : ${getItem(position).getTitle()}")
         holder.run {
             initOnClickListener(getItem(position))
             bind(getItem(position))
@@ -33,6 +34,7 @@ class PlaceListAdapter :
     }
 
     override fun submitList(list: MutableList<TourItem>?) {
+        Log.d(TAG, "submitList) submitted list size: ${currentList.size}")
         list?.forEach {
             it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
         }
