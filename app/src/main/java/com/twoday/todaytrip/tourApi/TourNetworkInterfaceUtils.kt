@@ -386,7 +386,7 @@ object TourNetworkInterfaceUtils {
             return@runBlocking restaurantTabList.toList()
         }
 
-    fun getCafeTabList(areaCode: String, pageNo: Int)
+    fun fetchCafeTabList(areaCode: String, pageNo: Int)
             : List<TourItem> = runBlocking(Dispatchers.IO) {
         val cafeList = fetchAreaBasedList(
             areaCode = areaCode,
@@ -406,7 +406,7 @@ object TourNetworkInterfaceUtils {
         return@runBlocking cafeTabList.toList()
     }
 
-    fun getEventTabList(areaCode: String, pageNo:Int): List<TourItem> =
+    fun fetchEventTabList(areaCode: String, pageNo:Int): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val eventList = fetchAreaBasedList(
                 areaCode = areaCode,
