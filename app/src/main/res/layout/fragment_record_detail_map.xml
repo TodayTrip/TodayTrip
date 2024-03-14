@@ -24,6 +24,5 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="-203dp"
-        tools:listitem="@layout/item_record_detail_map" />
+        tools:layout_editor_absoluteX="-203dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

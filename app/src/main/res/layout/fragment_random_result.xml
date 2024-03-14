@@ -34,5 +34,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/start_gift_anim"/>
+        app:lottie_rawRes="@raw/anim_start_gift"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

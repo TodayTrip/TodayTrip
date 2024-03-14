@@ -13,9 +13,9 @@ import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
-import com.twoday.todaytrip.weather.Item
-import com.twoday.todaytrip.weather.WeatherClient
-import com.twoday.todaytrip.weather.weather
+import com.twoday.todaytrip.weatherApi.Item
+import com.twoday.todaytrip.weatherApi.WeatherClient
+import com.twoday.todaytrip.weatherApi.weather
 import retrofit2.Call
 import retrofit2.Response
 import java.lang.Exception

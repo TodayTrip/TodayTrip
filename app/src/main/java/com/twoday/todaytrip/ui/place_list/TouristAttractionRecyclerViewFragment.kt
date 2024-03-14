@@ -13,6 +13,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
@@ -34,7 +37,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         }
     }
 
-    private lateinit var adapter: PlaceListAdapter
+    private lateinit var touristAttractionAdapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -50,23 +53,67 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setLoadingUI(true)
+        initUI()
+        initSwipeRefreshLayout()
         initRecyclerView()
         initModelObserver()
     }
 
-    private fun setLoadingUI(isLoading: Boolean) {
-        binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
-        binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
+    private fun initUI(){
+        setLoadingUI(true)
+        setNoResultUI(false)
 
+        Glide.with(requireContext())
+            .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
+            .into(binding.ivTouristAttractionRecyclerViewNoResult)
+    }
+    private fun setNoResultUI(isNoResult: Boolean){
+        Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
+        binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = isNoResult
+    }
+    private fun setLoadingUI(isLoading: Boolean) {
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
+        binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
         if (isLoading) binding.shimmerTouristAttractionRecyclerView.startShimmer()
     }
 
+    private fun initSwipeRefreshLayout(){
+        binding.swipeTouristAttractionRecyclerView.setOnRefreshListener {
+            setNoResultUI(false)
+            setLoadingUI(true)
+            mainModel.loadOrFetchTouristAttractionList()
+
+            binding.swipeTouristAttractionRecyclerView.isRefreshing = false
+        }
+    }
     private fun initRecyclerView() {
-        adapter = PlaceListAdapter().apply {
+        touristAttractionAdapter = PlaceListAdapter().apply {
             onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
         }
-        binding.rvTouristAttractionRecyclerView.adapter = adapter
+        binding.rvTouristAttractionRecyclerView.run{
+            this.adapter = touristAttractionAdapter
+            initScrollListener(this)
+        }
+    }
+    private fun initScrollListener(recyclerView: RecyclerView){
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Log.d(TAG, "recyclerview end of scroll!")
+                    Log.d(TAG, "adapter current list size: ${touristAttractionAdapter.currentList.size}")
+                    Log.d(TAG, "isTouristAttractionLoadReady: ${mainModel.isTouristAttractionLoadReady}")
+
+                    if((touristAttractionAdapter.currentList.isNotEmpty()) &&
+                        (mainModel.isTouristAttractionLoadReady)){
+                        Log.d(TAG, "fetch and save more tourist attraction list")
+                        touristAttractionAdapter.addDummyTourItem()
+                        mainModel.fetchAndSaveMoreTouristAttractionList()
+                    }
+                }
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -81,9 +128,13 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     }
 
     private fun initModelObserver() {
-        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it.toMutableList())
+        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {touristAttractionList ->
+            Log.d(TAG, "observe) tourist attraction list size: ${touristAttractionList.size}")
+            touristAttractionAdapter.submitList(touristAttractionList.toMutableList())
+            Log.d(TAG, "observe) current list size: ${touristAttractionAdapter.currentList.size}")
+
             setLoadingUI(false)
+            if(touristAttractionList.isEmpty()) setNoResultUI(true)
         })
     }
 
