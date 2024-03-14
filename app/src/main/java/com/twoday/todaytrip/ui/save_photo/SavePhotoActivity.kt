@@ -1,18 +1,16 @@
 package com.twoday.todaytrip.ui.save_photo
 
-import android.R.attr.path
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.FishBun.Companion.INTENT_PATH
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
-import com.twoday.todaytrip.ui.route.BottomSheetDialog
+import com.twoday.todaytrip.ui.route.RecordBottomSheetDialog
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
@@ -129,7 +127,7 @@ class SavePhotoActivity : AppCompatActivity() {
 
     private fun initRouteFinishButton() {
         binding.btnRouteFinish.setOnClickListener {
-            val frag = BottomSheetDialog()
+            val frag = RecordBottomSheetDialog()
             frag.show(supportFragmentManager, frag.tag)
 //            RecordPrefUtil.addRecord(Record(savePhotoDataList))
 //            ContentIdPrefUtil.resetContentIdListPref()
