@@ -74,8 +74,6 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     private fun setLoadingUI(isLoading: Boolean) {
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
         binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
-        //binding.rvTouristAttractionRecyclerView.isVisible = !isLoading
-
         if (isLoading) binding.shimmerTouristAttractionRecyclerView.startShimmer()
     }
 
@@ -107,7 +105,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
                     Log.d(TAG, "adapter current list size: ${touristAttractionAdapter.currentList.size}")
                     Log.d(TAG, "isTouristAttractionLoadReady: ${mainModel.isTouristAttractionLoadReady}")
 
-                    if((!touristAttractionAdapter.currentList.isEmpty()) &&
+                    if((touristAttractionAdapter.currentList.isNotEmpty()) &&
                         (mainModel.isTouristAttractionLoadReady)){
                         Log.d(TAG, "fetch and save more tourist attraction list")
                         touristAttractionAdapter.addDummyTourItem()

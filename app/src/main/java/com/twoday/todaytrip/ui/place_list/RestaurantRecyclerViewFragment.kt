@@ -13,6 +13,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListRestaurantRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
@@ -34,36 +37,89 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter: PlaceListAdapter
+    private lateinit var restaurantAdapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         _binding =
-            FragmentPlaceListRestaurantRecyclerViewBinding.inflate(layoutInflater, container, false)
+            FragmentPlaceListRestaurantRecyclerViewBinding.inflate(
+                layoutInflater,
+                container,
+                false
+            )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setLoadingUI(true)
+        initUI()
+        initSwipeRefreshLayout()
         initRecyclerView()
         initModelObserver()
     }
 
-    private fun setLoadingUI(isLoading: Boolean) {
-        binding.shimmerRestaurantRecyclerView.isVisible = isLoading
-        binding.rvRestaurantRecyclerView.isVisible = !isLoading
+    private fun initUI() {
+        setLoadingUI(true)
+        setNoResultUI(false)
 
-        if(isLoading) binding.shimmerRestaurantRecyclerView.startShimmer()
+        Glide.with(requireContext())
+            .load(resources.getDrawable(R.drawable.gif_place_list_no_result))
+            .into(binding.ivRestaurantRecyclerViewNoResult)
+    }
+
+    private fun setNoResultUI(isNoResult: Boolean) {
+        Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
+        binding.layoutRestaurantRecyclerViewNoResult.isVisible = isNoResult
+    }
+
+    private fun setLoadingUI(isLoading: Boolean) {
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
+        binding.shimmerRestaurantRecyclerView.isVisible = isLoading
+        if (isLoading) binding.shimmerRestaurantRecyclerView.startShimmer()
+    }
+
+    private fun initSwipeRefreshLayout() {
+        binding.swipeRestaurantRecyclerView.setOnRefreshListener {
+            setNoResultUI(false)
+            setLoadingUI(true)
+            mainModel.loadOrFetchRestaurantList()
+
+            binding.swipeRestaurantRecyclerView.isRefreshing = false
+        }
     }
 
     private fun initRecyclerView() {
-        adapter = PlaceListAdapter().apply {
+        restaurantAdapter = PlaceListAdapter().apply {
             onTourItemClickListener = this@RestaurantRecyclerViewFragment
         }
-        binding.rvRestaurantRecyclerView.adapter = adapter
+        binding.rvRestaurantRecyclerView.run {
+            this.adapter = restaurantAdapter
+            initScrollListener(this)
+        }
+    }
+
+    private fun initScrollListener(recyclerView: RecyclerView) {
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Log.d(TAG, "recyclerview end of scroll!")
+                    Log.d(TAG, "adapter current list size: ${restaurantAdapter.currentList.size}")
+                    Log.d(TAG, "isRestaurantLoadReady: ${mainModel.isRestaurantLoadReady}")
+
+                    if ((restaurantAdapter.currentList.isNotEmpty()) &&
+                        (mainModel.isRestaurantLoadReady)
+                    ) {
+                        Log.d(TAG, "fetch and save more restaurant list")
+                        restaurantAdapter.addDummyTourItem()
+                        mainModel.fetchAndSaveMoreRestaurantList()
+                    }
+                }
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -78,10 +134,13 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initModelObserver() {
-        mainModel.restaurantList.observe(viewLifecycleOwner, Observer {
-            Log.d(TAG, "restaurant list size: ${it.size}")
-            adapter.submitList(it.toMutableList())
+        mainModel.restaurantList.observe(viewLifecycleOwner, Observer { restaurantList ->
+            Log.d(TAG, "observe) restaurant list size: ${restaurantList.size}")
+            restaurantAdapter.submitList(restaurantList.toMutableList())
+            Log.d(TAG, "observe) current list size: ${restaurantAdapter.currentList.size}")
+
             setLoadingUI(false)
+            if (restaurantList.isEmpty()) setNoResultUI(true)
         })
     }
 

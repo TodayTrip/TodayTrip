@@ -101,7 +101,7 @@ class MainViewModel : ViewModel() {
     }
     // 음식점 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
     // 음식점 탭에서 RecyclerView를 초기화할 때/ 불러오기 재시도할 때 호출됨
-    private fun loadOrFetchRestaurantList() = CoroutineScope(Dispatchers.IO).launch {
+    fun loadOrFetchRestaurantList() = CoroutineScope(Dispatchers.IO).launch {
         var restaurantList: List<TourItem>? = null
 
         var apiCallCount = 0
@@ -123,7 +123,7 @@ class MainViewModel : ViewModel() {
     }
     // 카페 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
     // 카페 탭에서 RecyclerView를 초기화할 때/ 불러오기 재시도할 때 호출됨
-    private fun loadOrFetchCafeList() = CoroutineScope(Dispatchers.IO).launch {
+    fun loadOrFetchCafeList() = CoroutineScope(Dispatchers.IO).launch {
         var cafeList: List<TourItem>? = null
 
         var apiCallCount = 0
@@ -145,7 +145,7 @@ class MainViewModel : ViewModel() {
     }
     // 행사/축제 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
     // 행사/축제 탭에서 RecyclerView를 초기화할 때/ 불러오기 재시도할 때 호출됨
-    private fun loadOrFetchEventList() = CoroutineScope(Dispatchers.IO).launch {
+    fun loadOrFetchEventList() = CoroutineScope(Dispatchers.IO).launch {
         var eventList: List<TourItem>? = null
 
         var apiCallCount = 0
