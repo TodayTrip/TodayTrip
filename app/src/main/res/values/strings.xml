@@ -16,24 +16,15 @@
     <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>
     <string name="record_chart_title">자주 방문한 여행지 <font color="#FFD15B"><b>TOP3</b></font></string>
     <string name="record_chart_empty">여행지를 2곳 이상 방문해보세요!</string>
-    <string name="record_list_order_most_recent">최신순</string>
-    <string name="record_list_order_least_recent">오래된순</string>
-    <string name="record_list_order_alphabetical">가나다순</string>
     <string name="record_list_empty">저장된 여행 기록이 없습니다!</string>
     <string name="record_new_travel">새로운 여행지를 정하러 가볼까요?</string>
 
     <!--  RecordDetailActivity  -->
-    <string name="record_detail_back">목록으로 돌아가기</string>
     <string name="record_detail_delete">삭제하기</string>
 
     <!--  ItemRecordDetailMap  -->
     <string name="item_record_detail_map_opening_hours">영업 시간</string>
     <string name="item_record_detail_map_closed_date">쉬는 날</string>
-
-    <!--  PlaceMapActivity  -->
-    <string name="place_map_back_to_list">목록으로</string>
-    <!--    위에 목록으로 돌아가기랑 합쳐도 될 것 같다-->
-
 
     <!--  PlaceDetailActivity  -->
     <string name="place_detail_add_to_path">경로에 추가하기</string>
@@ -46,24 +37,22 @@
     <string name="place_list_restaurant">음식점</string>
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
-    <string name="place_list_tourist_attraction_no_result">관광지 정보를 불러오지 못했습니다.</string>
-    <string name="place_list_restaurant_no_result">음식점 정보를 불러오지 못했습니다.</string>
-    <string name="place_list_cafe_no_result">카페 정보를 불러오지 못했습니다.</string>
-    <string name="place_list_event_no_result">행사/축제 정보를 불러오지 못했습니다.</string>
-    <string name="place_list_retry">다시 시도하기</string>
-    <string name="place_list_loading_tourist_attraction">관광지 정보 불러오는 중</string>
-    <string name="place_list_loading_restaurant">음식점 정보 불러오는 중</string>
-    <string name="place_list_loading_cafe">카페 정보 불러오는 중</string>
-    <string name="place_list_loading_event">행사/축제 정보 불러오는 중</string>
 
-    <!--  ItemPlaceList  -->
-    <string name="item_place_list_add">담기</string>
-    <string name="item_place_list_remove">빼기</string>
+    <string name="place_list_tourist_attraction_no_result">네트워크/서버 오류로 인해\n관광지 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_restaurant_no_result">네트워크/서버 오류로 인해\n음식점 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_cafe_no_result">네트워크/서버 오류로 인해\n카페 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_event_no_result">네트워크/서버 오류로 인해\n행사/축제 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
+
+    <string name="place_list_more_tourist_attraction_no_result">관광지 더 불러오기 실패</string>
+    <string name="place_list_more_restaurant_no_result">음식점 더 불러오기 실패</string>
+    <string name="place_list_more_cafe_no_result">카페 더 불러오기 실패</string>
+    <string name="place_list_more_event_no_result">행사/축제 더 불러오기 실패</string>
 
     <!--  Bottom Sheet  -->
     <string name="bottom_sheet_record_title">현재까지의 경로가 기록됩니다.</string>
     <string name="bottom_sheet_record_description">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
-    <string name="bottom_sheet_record_button">확인</string>
+    <string name="bottom_sheet_record_button">기록하기</string>
+
     <string name="bottom_sheet_random_title">새로운 여행을 떠나보세요!</string>
     <string name="bottom_sheet_random_description">지금까지의 경로는 초기화됩니다.</string>
     <string name="bottom_sheet_random_button">랜덤 돌리기</string>

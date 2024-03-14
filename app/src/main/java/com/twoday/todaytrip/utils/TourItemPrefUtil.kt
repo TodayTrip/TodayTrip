@@ -14,7 +14,6 @@ import kotlinx.serialization.json.encodeToJsonElement
 
 object TourItemPrefUtil {
     private val TAG = "TourItemPrefUtil"
-
     fun loadAllTourItemList():List<TourItem> = mutableListOf<TourItem>().apply{
             addAll(loadTouristAttractionList())
             addAll(loadRestaurantList())
@@ -27,24 +26,64 @@ object TourItemPrefUtil {
             touristAttractionList,
             PrefConstants.TOURIST_ATTRACTION_LIST_KEY
         )
+    fun saveMoreTouristAttractionList(moreTouristAttractionList:List<TourItem>){
+        val newTouristAttractionList = mutableListOf<TourItem>()
+        newTouristAttractionList.addAll(loadTouristAttractionList())
+        newTouristAttractionList.addAll(moreTouristAttractionList)
+
+        saveTourItemList(
+            newTouristAttractionList,
+            PrefConstants.TOURIST_ATTRACTION_LIST_KEY
+        )
+    }
 
     fun loadRestaurantList() = loadTourItemList(PrefConstants.RESTAURANT_LIST_KEY)
     fun saveRestaurantList(restaurantList:List<TourItem>) = saveTourItemList(
             restaurantList,
             PrefConstants.RESTAURANT_LIST_KEY
         )
+    fun saveMoreRestaurantList(moreRestaurantList:List<TourItem>){
+        val newRestaurantList = mutableListOf<TourItem>()
+        newRestaurantList.addAll(loadRestaurantList())
+        newRestaurantList.addAll(moreRestaurantList)
+
+        saveTourItemList(
+            newRestaurantList,
+            PrefConstants.RESTAURANT_LIST_KEY
+        )
+    }
 
     fun loadCafeList() = loadTourItemList(PrefConstants.CAFE_LIST_KEY)
     fun saveCafeList(cafeList: List<TourItem>) = saveTourItemList(
             cafeList,
             PrefConstants.CAFE_LIST_KEY
         )
+    fun saveMoreCafeList(moreCafeList:List<TourItem>){
+        val newCafeList = mutableListOf<TourItem>()
+        newCafeList.addAll(loadCafeList())
+        newCafeList.addAll(moreCafeList)
+
+        saveTourItemList(
+            newCafeList,
+            PrefConstants.CAFE_LIST_KEY
+        )
+    }
 
     fun loadEventList() = loadTourItemList(PrefConstants.EVENT_LIST_KEY)
     fun saveEventList(eventList:List<TourItem>) = saveTourItemList(
             eventList,
             PrefConstants.EVENT_LIST_KEY
         )
+    fun saveMoreEventList(moreEventList:List<TourItem>){
+        val newEventList = mutableListOf<TourItem>()
+        newEventList.addAll(loadEventList())
+        newEventList.addAll(moreEventList)
+
+        saveTourItemList(
+            newEventList,
+            PrefConstants.EVENT_LIST_KEY
+        )
+    }
 
     fun resetTourItemListPref(){
         Log.d(TAG, "resetTourItemListPref called")

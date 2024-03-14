@@ -24,9 +24,6 @@ class RouteAdapter :
         holder.position.text = (position+1).toString()
         holder.initListener(currentItem)
         holder.bind(currentItem)
-//        if (position == itemCount - 1) {
-//            holder.visi.visibility = View.INVISIBLE
-//        }
     }
 
     inner class ViewHolder(binding: ItemRouteListBinding) : RecyclerView.ViewHolder(binding.root) {
