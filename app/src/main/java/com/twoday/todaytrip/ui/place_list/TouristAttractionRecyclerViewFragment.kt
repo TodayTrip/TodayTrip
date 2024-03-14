@@ -110,6 +110,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
                     if((!touristAttractionAdapter.currentList.isEmpty()) &&
                         (mainModel.isTouristAttractionLoadReady)){
                         Log.d(TAG, "fetch and save more tourist attraction list")
+                        touristAttractionAdapter.addDummyTourItem()
                         mainModel.fetchAndSaveMoreTouristAttractionList()
                     }
                 }
