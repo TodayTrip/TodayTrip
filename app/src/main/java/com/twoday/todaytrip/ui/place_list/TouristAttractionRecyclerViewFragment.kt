@@ -16,11 +16,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.databinding.ActivityMainBinding
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
+import com.twoday.todaytrip.utils.showSnackBar
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -128,14 +131,26 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     }
 
     private fun initModelObserver() {
-        mainModel.touristAttractionList.observe(viewLifecycleOwner, Observer {touristAttractionList ->
+        mainModel.touristAttractionList.observe(viewLifecycleOwner){touristAttractionList ->
             Log.d(TAG, "observe) tourist attraction list size: ${touristAttractionList.size}")
             touristAttractionAdapter.submitList(touristAttractionList.toMutableList())
             Log.d(TAG, "observe) current list size: ${touristAttractionAdapter.currentList.size}")
 
             setLoadingUI(false)
             if(touristAttractionList.isEmpty()) setNoResultUI(true)
-        })
+        }
+
+        mainModel.touristAttractionMoreLoaded.observe(viewLifecycleOwner){
+            if(it == 0) return@observe
+
+            Log.d(TAG, "observe) touristAttractionMoreLoaded: $it")
+            touristAttractionAdapter.removeDummyTourItem()
+            showSnackBar(
+                message = R.string.place_list_more_tourist_attraction_no_result,
+                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+            )
+            mainModel.setTouristAttractionMoreLoadedDefault()
+        }
     }
 
     override fun onDestroyView() {

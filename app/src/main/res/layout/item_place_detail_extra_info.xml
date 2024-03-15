@@ -7,10 +7,11 @@
 
     <ImageView
         android:id="@+id/iv_item_place_detail_extra_info"
-        android:layout_width="16dp"
-        android:layout_height="16dp"
-        android:layout_marginTop="3dp"
-        android:src="@drawable/ic_place_detail_small_right_arrow"
+        android:layout_width="3dp"
+        android:layout_height="3dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_place_detail_circle"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         />
@@ -20,7 +21,7 @@
         style="@style/SmallBoldText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:gravity="top"
         android:text="기타 정보"
         android:textColor="@color/black"
