@@ -11,13 +11,23 @@
         android:id="@+id/tv_route_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
+        android:layout_marginStart="16dp"
         android:letterSpacing="-0.04"
         android:text="내가 담은 여행지"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        android:layout_marginTop="19dp"
+        app:layout_constraintBottom_toTopOf="@+id/cv_route_map_frame"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_route_remove_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_route_remove_button"
+        app:layout_constraintBottom_toTopOf="@+id/rv_route_recyclerview"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_route_map_frame" />
 
     <androidx.cardview.widget.CardView

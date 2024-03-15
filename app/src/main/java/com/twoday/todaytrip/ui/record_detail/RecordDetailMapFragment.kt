@@ -39,7 +39,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
 
     // 마커 리스트 생성
     private val markers = mutableListOf<Marker>()
-    val recordList = RecordPrefUtil.loadRecordList()
+    private val recordList = RecordPrefUtil.loadRecordList()
 
     private lateinit var locations: List<LatLng>
     override fun onCreateView(
@@ -53,7 +53,6 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // mapView 변수 초기화
         mapView = binding.mvRecordDetailFullMap
         mapView.onCreate(savedInstanceState)
         mapView.getMapAsync(this)
@@ -110,7 +109,7 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
                 icon = OverlayImage.fromBitmap(combinedBitmap)
                 map = naverMap
             }
-            markers.add(marker) // 마커 리스트에 추가
+            markers.add(marker)
         }
 
         val bounds = createBoundsForAllMarkers(markers)

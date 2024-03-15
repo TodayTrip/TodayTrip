@@ -4,7 +4,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.overlay.Marker
+import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 
 class RecordDetailViewModel : ViewModel() {
     private val _isOptionMap: MutableLiveData<Boolean> = MutableLiveData<Boolean>()
@@ -18,6 +20,9 @@ class RecordDetailViewModel : ViewModel() {
             Log.d("furthestPair", "RecordDetailViewModel에서 furthestPair 라이브데이터")
             return _furthestPair
         }
+
+    private val _marker = MutableLiveData<List<LatLng>>()
+    val marker: LiveData<List<LatLng>> = _marker
 
     init {
         _isOptionMap.value = true
@@ -48,4 +53,20 @@ class RecordDetailViewModel : ViewModel() {
         }
         _furthestPair.value = furthestPair
     }
+
+    fun setMarkersFromSavePhotoDataList(savePhotoDataList: List<SavePhotoData>?) {
+        Log.d("TAG1 RecordDetailViewModel", "${savePhotoDataList?.size}")
+        val latLngList = mutableListOf<LatLng>()
+        savePhotoDataList?.forEach { savePhotoData ->
+            latLngList.add(
+                LatLng(
+                    savePhotoData.tourItem.getLatitude().toDouble(),
+                    savePhotoData.tourItem.getLongitude().toDouble()
+                )
+            )
+            Log.d("TAG1 RecordDetailViewModel", "$latLngList")
+        }
+        _marker.value = latLngList
+    }
+
 }
