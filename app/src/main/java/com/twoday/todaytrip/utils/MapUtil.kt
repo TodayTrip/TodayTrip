@@ -4,7 +4,10 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.graphics.Color
 import android.graphics.Matrix
+import android.graphics.Paint
+import android.graphics.Rect
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraUpdate
@@ -13,10 +16,40 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.PolylineOverlay
 
 object MapUtils {
-    // 마커 아이콘 크기 조절하는 함수
+    // 마커 아이콘 크기 조절하는 함수 - Int
     fun resizeMapIcons(context: Context, iconId: Int, width: Int, height: Int): Bitmap {
         val imageBitmap = BitmapFactory.decodeResource(context.resources, iconId)
         return Bitmap.createScaledBitmap(imageBitmap, width, height, false)
+    }
+
+    // 마커 아이콘 크기 조절하는 함수 - Bitmap
+    fun resizeBitmap(bitmap: Bitmap, width: Int, height: Int): Bitmap {
+        return Bitmap.createScaledBitmap(bitmap, width, height, false)
+    }
+
+    // 텍스트를 포함하는 아이콘 생성하는 함수(마커 위에 숫자 띄울 때)
+    fun createIconWithText(context: Context, iconRes: Int, text: String): Bitmap {
+        val resources = context.resources
+        val scale = resources.displayMetrics.density
+        val bitmap = BitmapFactory.decodeResource(resources, iconRes)
+        var resultBitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true)
+        val canvas = Canvas(resultBitmap)
+
+        // 텍스트를 그리기 위한 페인트 설정
+        val paint = Paint(Paint.ANTI_ALIAS_FLAG)
+        paint.color = Color.WHITE // 텍스트 색상
+        paint.textSize = (15 * scale) // 텍스트 크기
+
+        // 텍스트의 위치를 계산
+        val bounds = Rect()
+        paint.getTextBounds(text, 0, text.length, bounds)
+        val x = (bitmap.width - bounds.width()) / 3f
+        val y = (bitmap.height + bounds.height()) / 2f
+
+        // 비트맵 위에 텍스트 그리기
+        canvas.drawText(text, x, y, paint)
+
+        return resultBitmap
     }
     // 모든 마커들을 포함하는 경계 생성 함수
     fun createBoundsForAllMarkers(markers: List<Marker>): LatLngBounds {
