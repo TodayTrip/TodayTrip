@@ -54,7 +54,8 @@
             android:layout_height="16dp"
             android:src="@drawable/ic_place_list_time_info"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time1"
-            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title" />
+            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_place_list_time1" />
 
         <TextView
             android:id="@+id/tv_item_place_list_time1"
@@ -73,7 +74,8 @@
             android:src="@drawable/ic_place_list_date_info"
             android:textAppearance="@style/PlaceLabelText"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time2"
-            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title" />
+            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_place_list_time2" />
 
         <TextView
             android:id="@+id/tv_item_place_list_time2"
