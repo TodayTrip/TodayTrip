@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.core.graphics.toColor
 import androidx.navigation.fragment.findNavController
 import com.devs.vectorchildfinder.VectorChildFinder
 import com.devs.vectorchildfinder.VectorDrawableCompat
@@ -55,7 +56,7 @@ class SelectRegionFragment : Fragment() {
     private var selectedRegionList = mutableListOf<String>()
 
     private val map by lazy { binding.ivSelectRegionMap }
-    private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_select_region, map) }
+    private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_korea_map, map) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +85,7 @@ class SelectRegionFragment : Fragment() {
                 it.isChecked = true
                 it.isSelected = true
                 val selected = mapVector.findPathByName(it.text.toString())
-                selected.fillColor = Color.BLUE
+                selected.fillColor = Color.rgb(0,133,255)
             }
         }
     }
@@ -96,10 +97,10 @@ class SelectRegionFragment : Fragment() {
                 Log.d(TAG, "selected chip=${it.text.toString()}, selected map=${selected.toString()}")
                 Log.d(TAG, "selected regions=${selectedRegionList}")
                 if (isChecked) {
-                    selected.fillColor = Color.BLUE
+                    selected.fillColor = Color.rgb(0,133,255)
                     selectedRegionList.add(it.text.toString())
                 } else {
-                    selected.fillColor = Color.GRAY
+                    selected.fillColor = Color.rgb(217,217,217)
                     selectedRegionList.remove(it.text.toString())
                 }
                 updateNextBtn()
