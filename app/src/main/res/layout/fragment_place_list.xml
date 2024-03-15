@@ -11,7 +11,7 @@
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:contentScrim="@color/main_blue"
+            app:contentScrim="@color/white"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <!-- parallax: 스크롤 시 접힘 -->
