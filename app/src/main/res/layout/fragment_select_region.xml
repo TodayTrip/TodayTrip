@@ -29,7 +29,6 @@
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_select_region_description">
@@ -42,7 +41,6 @@
             app:flow_verticalStyle="packed"
             app:flow_horizontalAlign="center"
             app:flow_verticalAlign="top"
-            app:flow_verticalGap="8dp"
             app:flow_wrapMode="chain"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -198,6 +196,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:adjustViewBounds="true"
+        android:layout_marginVertical="8dp"
         android:src="@drawable/img_select_region"
         app:layout_constraintTop_toBottomOf="@+id/layout_select_region_chips"
         app:layout_constraintBottom_toTopOf="@+id/btn_region_select_next"
