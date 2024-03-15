@@ -24,6 +24,9 @@ class RecordDetailViewModel : ViewModel() {
     private val _marker = MutableLiveData<List<LatLng>>()
     val marker: LiveData<List<LatLng>> = _marker
 
+    private val _imageUriList = MutableLiveData<List<String>>()
+    val imageUriList: LiveData<List<String>> = _imageUriList
+
     init {
         _isOptionMap.value = true
     }
@@ -69,4 +72,13 @@ class RecordDetailViewModel : ViewModel() {
         _marker.value = latLngList
     }
 
+    fun savePhotoDataUriList(savePhotoDataList: List<SavePhotoData>?) {
+        val uriList = mutableListOf<String>()
+        savePhotoDataList?.forEach {savePhotoData ->
+            savePhotoData.imageUriList.forEach {
+                uriList.add(it)
+            }
+        }
+        _imageUriList.value = uriList
+    }
 }

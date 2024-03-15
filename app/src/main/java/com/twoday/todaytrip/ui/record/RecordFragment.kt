@@ -84,6 +84,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
 
     private fun setChartData(chartDataList:List<String>) {
         wordCloudView = WordCloud(requireContext(),null)
+        binding.graphContainer.removeAllViews()
         binding.graphContainer.addView(wordCloudView)
 
         wordCloudView.setWords(chartDataList)
