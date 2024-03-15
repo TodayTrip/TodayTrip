@@ -431,7 +431,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 createBalloon(it1) {
                     setWidthRatio(1.0f)
                     setHeight(BalloonSizeSpec.WRAP)
-                    setText("기록이 저정되며 해당탭이 초기화 됩니다\n저장한 기록은 기록 탭에서 보실 수 있습니다")
+                    setText("기록이 저장되며 해당탭은 초기화 됩니다\n저장한 기록은 기록 탭에서 보실 수 있습니다")
                     setTextColorResource(R.color.black)
                     setTextSize(15f)
                     setArrowPositionRules(ArrowPositionRules.ALIGN_ANCHOR)

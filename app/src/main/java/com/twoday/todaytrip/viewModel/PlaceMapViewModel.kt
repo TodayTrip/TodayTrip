@@ -13,7 +13,6 @@ class PlaceMapViewModel : ViewModel() {
     private val _furthestPair = MutableLiveData<Pair<Marker, Marker>?>()
     val furthestPair: LiveData<Pair<Marker, Marker>?>
         get() {
-            Log.d("furthestPair", "RecordDetailViewModel에서 furthestPair 라이브데이터")
             return _furthestPair
         }
 

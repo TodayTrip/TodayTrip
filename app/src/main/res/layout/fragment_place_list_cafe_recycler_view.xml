@@ -4,100 +4,85 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginHorizontal="16dp"
+    android:background="@color/start_background"
     tools:context=".ui.place_list.CafeRecyclerViewFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_cafe_recycler_view"
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_cafe_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="invisible"
         android:layout_marginBottom="70dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/item_place_list"
-        tools:visibility="visible" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <include layout="@layout/item_place_list_skeleton" />
+
+            <include layout="@layout/item_place_list_skeleton" />
+
+            <include layout="@layout/item_place_list_skeleton" />
+
+            <include layout="@layout/item_place_list_skeleton" />
+
+            <include layout="@layout/item_place_list_skeleton" />
+
+            <include layout="@layout/item_place_list_skeleton" />
+        </LinearLayout>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_cafe_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="70dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_cafe_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_place_list" />
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_cafe_recycler_view_no_result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/tv_cafe_recycler_view_no_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/place_list_cafe_no_result"
-            android:textAppearance="@style/PlaceAddrText"
-            android:textColor="@color/button_gray"
+        <ImageView
+            android:id="@+id/iv_cafe_recycler_view_no_result"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/iv_cafe_recycler_view_no_result"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="12dp"
-            android:src="@drawable/ic_place_list_no_result"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_cafe_recycler_view_no_result"
-            app:tint="@color/main_blue" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/place_list_retry"
-            android:textAppearance="@style/SmallBoldText"
-            android:textColor="@color/main_blue"
+            android:gravity="center"
+            android:text="@string/place_list_cafe_no_result"
+            android:textAppearance="@style/SmallText"
+            android:textColor="@color/button_gray"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_cafe_recycler_view_no_result" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_cafe_recycler_view_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:visibility="visible">
-
-        <TextView
-            android:id="@+id/tv_cafe_recycler_view_loading"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/place_list_loading_cafe"
-            android:textAppearance="@style/PlaceAddrText"
-            android:textColor="@color/button_gray"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_cafe_recycler_view_loading"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/anim_place_list_loading" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

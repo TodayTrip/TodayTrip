@@ -13,11 +13,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListRestaurantRecyclerViewBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -34,29 +37,89 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter: PlaceListRecyclerViewAdapter
+    private lateinit var restaurantAdapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
         _binding =
-            FragmentPlaceListRestaurantRecyclerViewBinding.inflate(layoutInflater, container, false)
+            FragmentPlaceListRestaurantRecyclerViewBinding.inflate(
+                layoutInflater,
+                container,
+                false
+            )
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUI()
+        initSwipeRefreshLayout()
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
 
+    private fun initUI() {
+        setLoadingUI(true)
+        setNoResultUI(false)
+
+        Glide.with(requireContext())
+            .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
+            .into(binding.ivRestaurantRecyclerViewNoResult)
+    }
+
+    private fun setNoResultUI(isNoResult: Boolean) {
+        Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
+        binding.layoutRestaurantRecyclerViewNoResult.isVisible = isNoResult
+    }
+
+    private fun setLoadingUI(isLoading: Boolean) {
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
+        binding.shimmerRestaurantRecyclerView.isVisible = isLoading
+        if (isLoading) binding.shimmerRestaurantRecyclerView.startShimmer()
+    }
+
+    private fun initSwipeRefreshLayout() {
+        binding.swipeRestaurantRecyclerView.setOnRefreshListener {
+            setNoResultUI(false)
+            setLoadingUI(true)
+            mainModel.loadOrFetchRestaurantList()
+
+            binding.swipeRestaurantRecyclerView.isRefreshing = false
+        }
+    }
+
     private fun initRecyclerView() {
-        adapter = PlaceListRecyclerViewAdapter().apply {
+        restaurantAdapter = PlaceListAdapter().apply {
             onTourItemClickListener = this@RestaurantRecyclerViewFragment
         }
-        binding.rvRestaurantRecyclerView.adapter = adapter
+        binding.rvRestaurantRecyclerView.run {
+            this.adapter = restaurantAdapter
+            initScrollListener(this)
+        }
+    }
+
+    private fun initScrollListener(recyclerView: RecyclerView) {
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Log.d(TAG, "recyclerview end of scroll!")
+                    Log.d(TAG, "adapter current list size: ${restaurantAdapter.currentList.size}")
+                    Log.d(TAG, "isRestaurantLoadReady: ${mainModel.isRestaurantLoadReady}")
+
+                    if ((restaurantAdapter.currentList.isNotEmpty()) &&
+                        (mainModel.isRestaurantLoadReady)
+                    ) {
+                        Log.d(TAG, "fetch and save more restaurant list")
+                        restaurantAdapter.addDummyTourItem()
+                        mainModel.fetchAndSaveMoreRestaurantList()
+                    }
+                }
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
@@ -70,34 +133,15 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener() {
-        binding.layoutRestaurantRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveRestaurantList()
-        }
-    }
-
     private fun initModelObserver() {
-        mainModel.restaurantList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it.toMutableList())
-            if (it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
+        mainModel.restaurantList.observe(viewLifecycleOwner, Observer { restaurantList ->
+            Log.d(TAG, "observe) restaurant list size: ${restaurantList.size}")
+            restaurantAdapter.submitList(restaurantList.toMutableList())
+            Log.d(TAG, "observe) current list size: ${restaurantAdapter.currentList.size}")
+
+            setLoadingUI(false)
+            if (restaurantList.isEmpty()) setNoResultUI(true)
         })
-    }
-
-    private fun setNoResultUI() {
-        binding.layoutRestaurantRecyclerViewNoResult.isVisible = true
-        binding.layoutRestaurantRecyclerViewLoading.isVisible = false
-    }
-
-    private fun setLoadingUI(isLoading: Boolean) {
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutRestaurantRecyclerViewNoResult.isVisible = false
-
-        binding.layoutRestaurantRecyclerViewLoading.isVisible = isLoading
-        binding.rvRestaurantRecyclerView.isVisible = !isLoading
     }
 
     override fun onDestroyView() {

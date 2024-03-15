@@ -13,9 +13,12 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListRecyclerViewAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.viewModel.MainViewModel
@@ -34,7 +37,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var adapter: PlaceListRecyclerViewAdapter
+    private lateinit var cafeAdapter: PlaceListAdapter
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -46,17 +49,68 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUI()
+        initSwipeRefreshLayout()
         initRecyclerView()
-        initNoResultOnClickListener()
         initModelObserver()
     }
+    private fun initUI(){
+        setLoadingUI(true)
+        setNoResultUI(false)
 
+        Glide.with(requireContext())
+            .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
+            .into(binding.ivCafeRecyclerViewNoResult)
+    }
+    private fun setNoResultUI(isNoResult: Boolean){
+        Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
+        binding.layoutCafeRecyclerViewNoResult.isVisible = isNoResult
+    }
+    private fun setLoadingUI(isLoading: Boolean) {
+        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
+        binding.shimmerCafeRecyclerView.isVisible = isLoading
+        if (isLoading) binding.shimmerCafeRecyclerView.startShimmer()
+    }
+
+    private fun initSwipeRefreshLayout(){
+        binding.swipeCafeRecyclerView.setOnRefreshListener {
+            setNoResultUI(false)
+            setLoadingUI(true)
+            mainModel.loadOrFetchCafeList()
+
+            binding.swipeCafeRecyclerView.isRefreshing = false
+        }
+    }
     private fun initRecyclerView(){
-        adapter = PlaceListRecyclerViewAdapter().apply{
+        cafeAdapter = PlaceListAdapter().apply{
             onTourItemClickListener = this@CafeRecyclerViewFragment
         }
-        binding.rvCafeRecyclerView.adapter = adapter
+        binding.rvCafeRecyclerView.run{
+            this.adapter = cafeAdapter
+            initScrollListener(this)
+        }
     }
+    private fun initScrollListener(recyclerView: RecyclerView){
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if (!recyclerView.canScrollVertically(1)) {
+                    Log.d(TAG, "recyclerview end of scroll!")
+                    Log.d(TAG, "adapter current list size: ${cafeAdapter.currentList.size}")
+                    Log.d(TAG, "isCafeLoadReady: ${mainModel.isCafeLoadReady}")
+
+                    if((cafeAdapter.currentList.isNotEmpty()) &&
+                        (mainModel.isCafeLoadReady)){
+                        Log.d(TAG, "fetch and save more cafe list")
+                        cafeAdapter.addDummyTourItem()
+                        mainModel.fetchAndSaveMoreCafeList()
+                    }
+                }
+            }
+        })
+    }
+
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onTourItemClick(tourItem: TourItem) {
         Log.d(TAG, "onTourItemClick) called, ${tourItem.getTitle()}")
@@ -67,31 +121,15 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         startActivity(placeDetailIntent)
     }
 
-    private fun initNoResultOnClickListener(){
-        binding.layoutCafeRecyclerViewNoResult.setOnClickListener {
-            setLoadingUI(true)
-            mainModel.fetchAndSaveCafeList()
-        }
-    }
     private fun initModelObserver(){
-        mainModel.cafeList.observe(viewLifecycleOwner, Observer {
-            adapter.submitList(it.toMutableList())
-            if(it.isEmpty())
-                setNoResultUI()
-            else
-                setLoadingUI(false)
-        })
-    }
-    private fun setNoResultUI(){
-        binding.layoutCafeRecyclerViewNoResult.isVisible = true
-        binding.layoutCafeRecyclerViewLoading.isVisible = false
-    }
-    private fun setLoadingUI(isLoading:Boolean){
-        Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
-        binding.layoutCafeRecyclerViewNoResult.isVisible = false
+        mainModel.cafeList.observe(viewLifecycleOwner, Observer { cafeList ->
+            Log.d(TAG, "observe) cafe list size: ${cafeList.size}")
+            cafeAdapter.submitList(cafeList.toMutableList())
+            Log.d(TAG, "observe) current list size: ${cafeAdapter.currentList.size}")
 
-        binding.layoutCafeRecyclerViewLoading.isVisible = isLoading
-        binding.rvCafeRecyclerView.isVisible = !isLoading
+            setLoadingUI(false)
+            if(cafeList.isEmpty()) setNoResultUI(true)
+        })
     }
 
     override fun onDestroyView() {

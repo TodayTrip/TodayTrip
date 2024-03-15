@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -15,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/iv_item_place_map_thumbnail"
+            android:id="@+id/iv_item_place_list_thumbnail"
             android:layout_width="115dp"
             android:layout_height="115dp"
             android:layout_marginStart="20dp"
@@ -32,12 +31,12 @@
         <TextView
             android:id="@+id/tv_item_place_list_title"
             style="@style/PlaceTitleBoldText"
-            android:maxLines="1"
             android:layout_marginEnd="20dp"
+            android:maxLines="1"
             android:text="이곳은 이 장소의 이름을 나타나는 공간입니다."
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/iv_item_place_map_thumbnail"
-            app:layout_constraintTop_toTopOf="@+id/iv_item_place_map_thumbnail" />
+            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_thumbnail"
+            app:layout_constraintTop_toTopOf="@+id/iv_item_place_list_thumbnail" />
 
         <TextView
             android:id="@+id/tv_item_place_list_address"
@@ -47,14 +46,14 @@
             app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
             app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
             app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_title" />
+
         <ImageView
             android:id="@+id/iv_item_place_list_time_label1"
             android:layout_width="16dp"
             android:layout_height="16dp"
             android:src="@drawable/ic_place_list_time_info"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time1"
-            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
-           />
+            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title" />
 
         <TextView
             android:id="@+id/tv_item_place_list_time1"
@@ -73,8 +72,7 @@
             android:src="@drawable/ic_place_list_date_info"
             android:textAppearance="@style/PlaceLabelText"
             app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time2"
-            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title"
-            />
+            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title" />
 
         <TextView
             android:id="@+id/tv_item_place_list_time2"
@@ -84,8 +82,7 @@
             android:text="이곳은 이 장소의 운영 날짜를 나타나는 공간입니다."
             app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_title"
             app:layout_constraintStart_toEndOf="@id/iv_item_place_list_time_label2"
-            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_time1"
-             />
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_time1" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View

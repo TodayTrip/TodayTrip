@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.utils.PageNoPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -24,12 +26,12 @@ class RandomResultViewModel : ViewModel() {
         )
     }
 
-    private val _isTourDataListReady = MutableLiveData<Boolean>()
-    val isTourDataListReady: LiveData<Boolean>
-        get() = _isTourDataListReady
+    private val _isTouristAttractionListReady = MutableLiveData<Boolean>()
+    val isTouristAttractionListReady: LiveData<Boolean>
+        get() = _isTouristAttractionListReady
 
     init {
-        _isTourDataListReady.value = false
+        _isTouristAttractionListReady.value = false
         CoroutineScope(Dispatchers.IO).launch {
             fetchAndSaveTourItemList()
         }
@@ -39,23 +41,12 @@ class RandomResultViewModel : ViewModel() {
         val touristAttractionJob = CoroutineScope(Dispatchers.IO).launch {
             fetchAndSaveTouristAttractionList()
         }
-        val restaurantListJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveRestaurantList()
-        }
-        val cafeListJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveCafeList()
-        }
-        val eventListJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveEventList()
-        }
-
         touristAttractionJob.join()
-        restaurantListJob.join()
-        cafeListJob.join()
-        eventListJob.join()
 
         withContext(Dispatchers.Main) {
-            _isTourDataListReady.value = true
+            if(TourItemPrefUtil.loadTouristAttractionList().isEmpty())
+                delay(3000)
+            _isTouristAttractionListReady.value = true
         }
     }
 
@@ -64,24 +55,16 @@ class RandomResultViewModel : ViewModel() {
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
     private fun fetchAndSaveTouristAttractionList() {
+        val pageNo = PageNoPrefUtil.FIRST_PAGE
+
         val touristAttractionList =
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode)
+                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, pageNo)
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList)
-    }
 
-    private fun fetchAndSaveRestaurantList() {
-        val restaurantList = TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode)
-        TourItemPrefUtil.saveRestaurantList(restaurantList)
-    }
-    private fun fetchAndSaveCafeList() {
-        val cafeList = TourNetworkInterfaceUtils.getCafeTabList(areaCode)
-        TourItemPrefUtil.saveCafeList(cafeList)
-    }
-    private fun fetchAndSaveEventList() {
-        val eventList = TourNetworkInterfaceUtils.getEventTabList(areaCode)
-        TourItemPrefUtil.saveEventList(eventList)
+        if(!touristAttractionList.isNullOrEmpty())
+            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
     }
 }
