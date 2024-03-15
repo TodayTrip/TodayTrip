@@ -114,4 +114,6 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     // Material
     implementation("com.google.android.material:material:1.11.0")
+    // vector img color
+    implementation("com.github.devsideal:VectorChildFinder:1.0.0")
 }
