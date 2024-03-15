@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
@@ -255,7 +256,8 @@ import com.twoday.todaytrip.viewModel.RouteViewModel
 //}
 
 
-class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener, OnMoveEndListener {
+class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
+    OnMoveEndListener {
     private val TAG = "RouteFragment"
 
     private lateinit var binding: FragmentRouteBinding
@@ -297,12 +299,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     private fun initModelObserver() {
         routeViewModel.routeListDataSet.observe(viewLifecycleOwner) { routeDataList ->
-
+            routeViewModel.getLocation()
             routeAdapter.submitList(routeDataList.toMutableList())
+            binding.layoutRouteEmptyFrame.isVisible = routeDataList.isEmpty()
 
-
-            if (routeDataList.isNotEmpty()!!) {
-                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
+            if (routeViewModel.isMapReady.value!!){
+                routeViewModel.getLocation()
             }
         }
 
@@ -310,13 +312,14 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             routeAdapter.iconTogle(editMode)
         }
 
-        routeViewModel.isMapReady.observe(viewLifecycleOwner){isMapReady ->
-            if(isMapReady) routeViewModel.getLocation()
+        routeViewModel.isMapReady.observe(viewLifecycleOwner) { isMapReady ->
+            if (isMapReady) routeViewModel.getLocation()
         }
 
         routeViewModel.locations.observe(viewLifecycleOwner) { locations ->
-            if(!routeViewModel.isMapReady.value!!) return@observe
-
+            if (!routeViewModel.isMapReady.value!!) return@observe
+            clearMarkers()
+            polylineOverlay.map = null
             if (locations.isNotEmpty()) {
                 val markerIconBitmap =
                     MapUtils.resizeMapIcons(
@@ -396,9 +399,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             binding.rvRouteRecyclerview
         )
     }
+
     override fun onMoveEnd() {
         Log.d(TAG, "onMoveEnd) called")
-        routeViewModel.getRouteDataSet()
         routeViewModel.getLocation()
     }
 
@@ -420,8 +423,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         }
     }
 
-    override fun onRouteListDataRemove(item: RouteListData,position: Int){
-        routeViewModel.dataRemove(item,position)
+    override fun onRouteListDataRemove(item: RouteListData, position: Int) {
+        routeViewModel.dataRemove(item, position)
+        routeViewModel.getLocation()
     }
 
     private fun initToolTip() {
@@ -460,6 +464,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         routeViewModel.setIsMapReady(true)
     }
 
+    private fun clearMarkers() {
+        markers.forEach { marker ->
+            marker.map = null // 마커를 지도에서 제거
+        }
+        markers.clear() // 마커 리스트 비우기
+    }
 
     override fun onStart() {
         super.onStart()
@@ -468,6 +478,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     override fun onResume() {
         mapView.onResume()
+        mapView.getMapAsync(this)
         routeViewModel.getRouteDataSet()
         super.onResume()
     }
