@@ -9,11 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.navigation.fragment.findNavController
 import com.devs.vectorchildfinder.VectorChildFinder
 import com.devs.vectorchildfinder.VectorDrawableCompat
 import com.google.android.material.chip.Chip
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentSelectRegionBinding
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.SelectRegionPrefUtil
 
 class SelectRegionFragment : Fragment() {
@@ -77,8 +79,11 @@ class SelectRegionFragment : Fragment() {
         chips.forEach {
             if (selectedRegionList.contains(it.text)){
                 it.isChecked = true
+                it.isSelected = true
                 val selected = mapVector.findPathByName(it.text.toString())
                 selected.fillColor = Color.BLUE
+            } else {
+                it.isChecked = false
             }
         }
     }
@@ -86,8 +91,6 @@ class SelectRegionFragment : Fragment() {
     private fun fillMap() {
         val map = binding.ivSelectRegionMap
         val mapVector = VectorChildFinder(context, R.drawable.img_select_region, map)
-
-
         chips.forEach {
             val selected = mapVector.findPathByName(it.text.toString())
             it.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -102,6 +105,7 @@ class SelectRegionFragment : Fragment() {
                 }
                 updateNextBtn()
                 map.invalidate()
+                SelectRegionPrefUtil.resetSelectRegionListPref()
             }
         }
     }
@@ -109,6 +113,9 @@ class SelectRegionFragment : Fragment() {
     private fun setUpClickListener() {
         binding.btnRegionSelectNext.setOnClickListener {
             SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList)
+            val selectedDestination = SelectRegionPrefUtil.loadSelectRegionList().random()
+            DestinationPrefUtil.saveDestination(selectedDestination)
+            findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
         }
         //
     }
@@ -122,10 +129,6 @@ class SelectRegionFragment : Fragment() {
             binding.btnRegionSelectNext.setBackgroundResource(R.drawable.shape_middle_gray_12_radius)
         }
     }
-
-    //선택한 지역 shared preference에 저장
-    //선택한 지역 내에서만 랜덤
-    //다시 돌아왔을 때 전에 선택한 거 그대로 보이게
 
 
     override fun onDestroyView() {

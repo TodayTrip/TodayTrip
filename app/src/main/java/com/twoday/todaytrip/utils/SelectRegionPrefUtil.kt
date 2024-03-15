@@ -17,6 +17,11 @@ object SelectRegionPrefUtil {
         PrefConstants.SELECT_REGION_LIST_KEY
     )
 
+    fun resetSelectRegionListPref() {
+        Log.d(TAG, "resetSelectRegionListPref) called")
+        SelectRegionPrefUtil.saveSelectRegionList(emptyList())
+    }
+
     private fun getSelectRegionListPreferences(): SharedPreferences =
         MyApplication.appContext!!.getSharedPreferences(
             PrefConstants.PREFERENCE_SELECT_REGION_LIST_KEY,
@@ -29,14 +34,14 @@ object SelectRegionPrefUtil {
         prefs.edit().putString(destinationKey, json).apply()
     }
 
-    private fun loadSelectRegionList(destinationKey: String): List<String> {
+    private fun loadSelectRegionList(destinationKey: String): MutableList<String> {
         val prefs = getSelectRegionListPreferences()
         val json = prefs.getString(destinationKey, null)
         return if ((json != null) && (json.toString() != "[]")) {
             val type = object : TypeToken<List<String>>() {}.type
             Gson().fromJson(json, type)
         } else {
-            emptyList()
+            mutableListOf()
         }
     }
 }
