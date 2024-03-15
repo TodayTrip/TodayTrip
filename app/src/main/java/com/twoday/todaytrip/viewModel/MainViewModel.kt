@@ -55,6 +55,19 @@ class MainViewModel : ViewModel() {
     val eventList: LiveData<List<TourItem>>
         get() = _eventList
 
+    // 무한 스크롤을 위한 API 호출 성공 여부 저장
+    // 초기값 = 0 (무한 스크롤 호출 전)
+    // 페이지 번호가 1로 바뀌었다면 무한 스크롤 성공적, -1로 바뀌었다면 무한 스크롤 실패
+    private val _touristAttractionMoreLoaded = MutableLiveData<Int>(0)
+    val touristAttractionMoreLoaded
+        get() = _touristAttractionMoreLoaded
+    private val _restaurantMoreLoaded = MutableLiveData<Int>(0)
+    val restaurantMoreLoaded get() = _restaurantMoreLoaded
+    private val _cafeMoreLoaded = MutableLiveData<Int>(0)
+    val cafeMoreLoaded get() = _cafeMoreLoaded
+    private val _eventMoreLoaded = MutableLiveData<Int>(0)
+    val eventMoreLoaded get() = _eventMoreLoaded
+
     init {
         getTourItemList()
     }
@@ -242,13 +255,21 @@ class MainViewModel : ViewModel() {
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) moreTouristAttractionList size: ${moreTouristAttractionList.size}")
-        if(moreTouristAttractionList.isEmpty()) return@launch
+        if(moreTouristAttractionList.isEmpty()){
+            delay(700)
+            CoroutineScope(Dispatchers.Main).launch {
+                _touristAttractionMoreLoaded.value = -1
+                _isTouristAttractionLoadReady = true
+            }
+            return@launch
+        }
 
         TourItemPrefUtil.saveMoreTouristAttractionList(moreTouristAttractionList)
         PageNoPrefUtil.saveTouristAttractionPageNo(pageNo + 1)
 
         CoroutineScope(Dispatchers.Main).launch {
             _touristAttractionList.value = TourItemPrefUtil.loadTouristAttractionList()
+            _touristAttractionMoreLoaded.value = 1
             _isTouristAttractionLoadReady = true
         }
     }
@@ -268,13 +289,20 @@ class MainViewModel : ViewModel() {
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreRestaurantList) moreRestaurantList size: ${moreRestaurantList.size}")
-        if(moreRestaurantList.isEmpty()) return@launch
-
+        if(moreRestaurantList.isEmpty()){
+            delay(700)
+            CoroutineScope(Dispatchers.Main).launch {
+                _restaurantMoreLoaded.value = -1
+                _isRestaurantLoadReady = true
+            }
+            return@launch
+        }
         TourItemPrefUtil.saveMoreRestaurantList(moreRestaurantList)
         PageNoPrefUtil.saveRestaurantPageNo(pageNo + 1)
 
         CoroutineScope(Dispatchers.Main).launch {
             _restaurantList.value = TourItemPrefUtil.loadRestaurantList()
+            _restaurantMoreLoaded.value = 1
             _isRestaurantLoadReady = true
         }
     }
@@ -294,13 +322,21 @@ class MainViewModel : ViewModel() {
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreCafeList) moreCafeList size: ${moreCafeList.size}")
-        if(moreCafeList.isEmpty()) return@launch
+        if(moreCafeList.isEmpty()){
+            delay(700)
+            CoroutineScope(Dispatchers.Main).launch {
+                _cafeMoreLoaded.value = -1
+                _isCafeLoadReady = true
+            }
+            return@launch
+        }
 
         TourItemPrefUtil.saveMoreCafeList(moreCafeList)
         PageNoPrefUtil.saveCafePageNo(pageNo + 1)
 
         CoroutineScope(Dispatchers.Main).launch {
             _cafeList.value = TourItemPrefUtil.loadCafeList()
+            _cafeMoreLoaded.value = 1
             _isCafeLoadReady = true
         }
     }
@@ -319,14 +355,36 @@ class MainViewModel : ViewModel() {
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreEventList) moreEventList size: ${moreEventList.size}")
-        if(moreEventList.isEmpty()) return@launch
+        if(moreEventList.isEmpty()){
+            delay(700)
+            CoroutineScope(Dispatchers.Main).launch {
+                _eventMoreLoaded.value = -1
+                _isEventLoadReady = true
+            }
+            return@launch
+        }
 
         TourItemPrefUtil.saveMoreEventList(moreEventList)
         PageNoPrefUtil.saveEventPageNo(pageNo + 1)
 
         CoroutineScope(Dispatchers.Main).launch {
             _eventList.value = TourItemPrefUtil.loadEventList()
+            _eventMoreLoaded.value = 1
             _isEventLoadReady = true
         }
+    }
+
+    // API 추가 로딩 후, 추가 로딩 실패/성공 저장 변수 디폴트 값으로 돌려놓는 함수
+    fun setTouristAttractionMoreLoadedDefault(){
+        _touristAttractionMoreLoaded.value = 0
+    }
+    fun setRestaurantMoreLoadedDefault(){
+        _restaurantMoreLoaded.value = 0
+    }
+    fun setCafeMoreLoadedDefault(){
+        _cafeMoreLoaded.value = 0
+    }
+    fun setEventMoreLoadedDefault(){
+        _eventMoreLoaded.value = 0
     }
 }

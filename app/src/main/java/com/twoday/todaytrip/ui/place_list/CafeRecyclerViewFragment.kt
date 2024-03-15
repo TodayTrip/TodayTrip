@@ -21,6 +21,7 @@ import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.utils.showSnackBar
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -130,6 +131,18 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             setLoadingUI(false)
             if(cafeList.isEmpty()) setNoResultUI(true)
         })
+
+        mainModel.cafeMoreLoaded.observe(viewLifecycleOwner){
+            if(it == 0) return@observe
+
+            Log.d(TAG, "observe) cafeMoreLoaded: $it")
+            cafeAdapter.removeDummyTourItem()
+            showSnackBar(
+                message = R.string.place_list_more_cafe_no_result,
+                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+            )
+            mainModel.setCafeMoreLoadedDefault()
+        }
     }
 
     override fun onDestroyView() {
