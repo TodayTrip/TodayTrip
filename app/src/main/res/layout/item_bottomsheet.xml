@@ -11,6 +11,7 @@
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <ImageView
+        android:id="@+id/iv_gray_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/img_bottom_sheet_gray_bar"
@@ -23,7 +24,7 @@
         android:id="@+id/tv_bottom_sheet_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         android:text="@string/bottom_sheet_record_title"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -31,13 +32,13 @@
         android:letterSpacing="-0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/iv_gray_bar" />
 
     <TextView
         android:id="@+id/tv_bottom_sheet_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center"
         android:text="@string/bottom_sheet_record_description"
         android:textColor="@color/button_gray"
