@@ -14,8 +14,14 @@ class RouteViewModel: ViewModel() {
     private val _routeListDataSet: MutableLiveData<List<RouteListData>> = MutableLiveData()
     val routeListDataSet: LiveData<List<RouteListData>> = _routeListDataSet
 
+    private val _editMode: MutableLiveData<Boolean> = MutableLiveData()
+    val editMode: LiveData<Boolean> = _editMode
+
     private val _locations =  MutableLiveData<MutableList<LatLng>>()
     val locations get() = _locations
+
+    private val _isMapReady = MutableLiveData<Boolean>(false)
+    val isMapReady: LiveData<Boolean> = _isMapReady
 
 
 //    fun add(routeDataSet: RouteListData) {
@@ -28,10 +34,24 @@ class RouteViewModel: ViewModel() {
         getRouteDataSet()
     }
 
+    fun toggleEditMode(){
+            _editMode.value = _editMode.value != true
+        Log.d("sdc","viewmodel ${_editMode.value.toString()}")
+    }
 
-    private fun getRouteDataSet(){
-        val contentIdList = ContentIdPrefUtil.loadContentIdList() //경로에
+    fun dataRemove(item: RouteListData,position: Int){
+        val list = _routeListDataSet.value!!.toMutableList()
+        list.remove(item)
+        ContentIdPrefUtil.removeContentId(item.contentId)
+        _routeListDataSet.value = list
+    }
+
+
+
+    fun getRouteDataSet(){
+        val contentIdList = ContentIdPrefUtil.loadContentIdList() //담은 목록
         val tourList = TourItemPrefUtil.loadAllTourItemList() //관광지 전부
+
 
         val loadedRouteListDataSet = mutableListOf<RouteListData>()
         contentIdList.forEach { contentId ->
@@ -63,4 +83,7 @@ class RouteViewModel: ViewModel() {
         _locations.value = loadedLocations
     }
 
+    fun setIsMapReady(isReady: Boolean){
+        _isMapReady.value = isReady
+    }
 }

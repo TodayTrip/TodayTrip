@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ItemTouchHelper
 import com.naver.maps.geometry.LatLng
@@ -34,6 +35,9 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.naver.maps.map.overlay.PolylineOverlay
+import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.viewModel.RouteViewModel
 
 //class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener {
@@ -251,7 +255,7 @@ import com.twoday.todaytrip.viewModel.RouteViewModel
 //}
 
 
-class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener {
+class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener, OnMoveEndListener {
     private val TAG = "RouteFragment"
 
     private lateinit var binding: FragmentRouteBinding
@@ -263,6 +267,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
     private lateinit var locationSource: FusedLocationSource
+    private val polylineOverlay = PolylineOverlay()
 
     private val markers = mutableListOf<Marker>()
     private val routeViewModel by viewModels<RouteViewModel>()
@@ -286,20 +291,32 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         initModelObserver()
         initRouteRecyclerView()
         initItemTouchSimpleCallback()
-        initRouteFinishButton()
+        initRouteButton()
         initToolTip()
     }
 
     private fun initModelObserver() {
         routeViewModel.routeListDataSet.observe(viewLifecycleOwner) { routeDataList ->
+
             routeAdapter.submitList(routeDataList.toMutableList())
+
 
             if (routeDataList.isNotEmpty()!!) {
                 binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
             }
         }
 
+        routeViewModel.editMode.observe(viewLifecycleOwner) { editMode ->
+            routeAdapter.iconTogle(editMode)
+        }
+
+        routeViewModel.isMapReady.observe(viewLifecycleOwner){isMapReady ->
+            if(isMapReady) routeViewModel.getLocation()
+        }
+
         routeViewModel.locations.observe(viewLifecycleOwner) { locations ->
+            if(!routeViewModel.isMapReady.value!!) return@observe
+
             if (locations.isNotEmpty()) {
                 val markerIconBitmap =
                     MapUtils.resizeMapIcons(
@@ -336,7 +353,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                     Log.d("마커 폴리라인 위도 경도", "${it.longitude}+${it.latitude}")
                 }
                 Log.d("마커 폴리라인 연결", markerPositions.size.toString())
-                drawPolyline(naverMap, markerPositions)
+                polylineOverlay.map = null
+                polylineOverlay.apply {
+                    coords = markerPositions
+                    color = 0xFF0085FF.toInt()
+                    map = naverMap
+                }
             }
         }
     }
@@ -346,6 +368,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         binding.rvRouteRecyclerview.adapter = routeAdapter
     }
 
+    //디테일 화면 넘기기
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onRouteListDataClick(contentId: String) {
         Log.d(TAG, "fragment)onRouteListDataClick) ${contentId}")
@@ -362,14 +385,25 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         )
     } //범위만 바꿔주는 노티파이가 있는데 찾아볼것
 
+    //drag & drop
     private fun initItemTouchSimpleCallback() {
-        val itemTouchHelper = ItemTouchHelper(ItemTouchSimpleCallback())
+        val itemTouchHelper = ItemTouchHelper(
+            ItemTouchSimpleCallback().apply {
+                onMoveEndListener = this@RouteFragment
+            }
+        )
         itemTouchHelper.attachToRecyclerView(
             binding.rvRouteRecyclerview
         )
     }
+    override fun onMoveEnd() {
+        Log.d(TAG, "onMoveEnd) called")
+        routeViewModel.getRouteDataSet()
+        routeViewModel.getLocation()
+    }
 
-    private fun initRouteFinishButton() {
+    //클릭 이벤트
+    private fun initRouteButton() {
         binding.layoutRouteFinishButton.setOnClickListener {
 //            val frag = BottomSheetDialog()
 //            if (dataSet.isNotEmpty()) {
@@ -380,6 +414,14 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             }
 //            } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }
+
+        binding.ivRouteRemoveButton.setOnClickListener {
+            routeViewModel.toggleEditMode()
+        }
+    }
+
+    override fun onRouteListDataRemove(item: RouteListData,position: Int){
+        routeViewModel.dataRemove(item,position)
     }
 
     private fun initToolTip() {
@@ -415,7 +457,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
-        routeViewModel.getLocation()
+        routeViewModel.setIsMapReady(true)
     }
 
 
@@ -426,10 +468,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     override fun onResume() {
         mapView.onResume()
+        routeViewModel.getRouteDataSet()
         super.onResume()
     }
 
     override fun onPause() {
+        routeViewModel.setIsMapReady(false)
         mapView.onPause()
         super.onPause()
     }

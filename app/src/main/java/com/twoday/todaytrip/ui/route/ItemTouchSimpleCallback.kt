@@ -4,8 +4,12 @@ import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import okhttp3.internal.notifyAll
+import java.lang.Integer.max
 import java.util.Collections
+
+interface OnMoveEndListener{
+    fun onMoveEnd()
+}
 
 class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
     ItemTouchHelper.UP
@@ -16,6 +20,8 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
 ) {
     private val TAG = "ItemTouchSimpleCallback"
 
+    var onMoveEndListener: OnMoveEndListener? = null
+
     override fun onMove(
         recyclerView: RecyclerView,
         selectedViewHolder: RecyclerView.ViewHolder,
@@ -25,19 +31,20 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
 
         val fromPosition = selectedViewHolder.absoluteAdapterPosition
         val toPosition = targetViewHolder.absoluteAdapterPosition
-        val dataSet = routeAdapter.currentList.toMutableList()
+        //val dataSet = routeAdapter.currentList.toMutableList()
 
         Log.d(TAG, "currentList")
-        routeAdapter.currentList.forEach { Log.d(TAG, "${it.toString()}") }
-        Log.d(TAG, "dataSet")
-        dataSet.forEach { Log.d(TAG, "${it.toString()}") }
+        routeAdapter.currentList.forEach { Log.d(TAG, "${it.toString()}")}
 
-        Collections.swap(dataSet, fromPosition, toPosition)
-        //ContentIdPrefUtil.swapContentId(fromPosition, toPosition)
+        //Log.d(TAG, "dataSet")
+        //dataSet.forEach { Log.d(TAG, "${it.toString()}") }
+        //Collections.swap(dataSet, fromPosition, toPosition)
+
+        ContentIdPrefUtil.swapContentId(fromPosition, toPosition)
         routeAdapter.apply{
             Log.d(TAG, "from: ${fromPosition}, to: ${toPosition}")
-            //notifyItemMoved(fromPosition,toPosition)
-            submitList(dataSet)
+            notifyItemMoved(fromPosition,toPosition)
+            notifyItemRangeChanged(0, max(fromPosition, toPosition)+1, Any())
         }
         return true
     }
@@ -45,11 +52,10 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
     override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
         Log.d(TAG,"clearview")
         super.clearView(recyclerView, viewHolder)
-        ContentIdPrefUtil.saveContentIdList(
-            (recyclerView.adapter as RouteAdapter).currentList.map{it.contentId}
-        )
 
+        onMoveEndListener?.onMoveEnd()
     }
+
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         // Do Nothing
     }
