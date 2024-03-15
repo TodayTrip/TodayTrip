@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.utils.PageNoPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -42,6 +44,8 @@ class RandomResultViewModel : ViewModel() {
         touristAttractionJob.join()
 
         withContext(Dispatchers.Main) {
+            if(TourItemPrefUtil.loadTouristAttractionList().isEmpty())
+                delay(3000)
             _isTouristAttractionListReady.value = true
         }
     }
@@ -51,11 +55,16 @@ class RandomResultViewModel : ViewModel() {
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
     private fun fetchAndSaveTouristAttractionList() {
+        val pageNo = PageNoPrefUtil.FIRST_PAGE
+
         val touristAttractionList =
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode)
+                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode)
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, pageNo)
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList)
+
+        if(!touristAttractionList.isNullOrEmpty())
+            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
     }
 }

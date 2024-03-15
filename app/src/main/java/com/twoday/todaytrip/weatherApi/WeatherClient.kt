@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.weather
+package com.twoday.todaytrip.weatherApi
 
 import com.google.gson.GsonBuilder
 import com.twoday.todaytrip.BuildConfig

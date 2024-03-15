@@ -1,6 +1,5 @@
-package com.twoday.todaytrip.weather
+package com.twoday.todaytrip.weatherApi
 
-import com.twoday.todaytrip.BuildConfig
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

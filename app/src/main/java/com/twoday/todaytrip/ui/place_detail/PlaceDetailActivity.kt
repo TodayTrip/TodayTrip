@@ -59,7 +59,7 @@ class PlaceDetailActivity : AppCompatActivity() {
         }
     }
 
-    private val hasPhoto: Boolean = false
+    private val hasPhoto: Boolean = true
 
     companion object {
         const val EXTRA_CONTENT_TYPE_ID = "extra_content_type_id"

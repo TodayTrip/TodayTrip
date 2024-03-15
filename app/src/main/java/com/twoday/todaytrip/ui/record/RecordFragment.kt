@@ -12,13 +12,10 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.db.williamchart.data.AxisType
 import com.jolenechong.wordcloud.WordCloud
-import com.skydoves.balloon.textForm
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordBinding
 import com.twoday.todaytrip.ui.record_detail.RecordDetailActivity
-import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.viewModel.RecordViewModel
 
 class RecordFragment : Fragment(), OnRecordClickListener {
