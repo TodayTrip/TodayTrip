@@ -21,6 +21,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
+import com.twoday.todaytrip.utils.showSnackBar
 import com.twoday.todaytrip.viewModel.MainViewModel
 
 
@@ -139,6 +140,18 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             if (eventList.isEmpty()) setNoResultUI(true)
 
         })
+
+        mainModel.eventMoreLoaded.observe(viewLifecycleOwner){
+            if(it == 0) return@observe
+
+            Log.d(TAG, "observe) eventMoreLoaded: $it")
+            eventAdapter.removeDummyTourItem()
+            showSnackBar(
+                message = R.string.place_list_more_event_no_result,
+                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+            )
+            mainModel.setEventMoreLoadedDefault()
+        }
     }
 
     override fun onDestroyView() {

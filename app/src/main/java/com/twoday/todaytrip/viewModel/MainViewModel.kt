@@ -256,7 +256,7 @@ class MainViewModel : ViewModel() {
 
         Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) moreTouristAttractionList size: ${moreTouristAttractionList.size}")
         if(moreTouristAttractionList.isEmpty()){
-            delay(1000)
+            delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _touristAttractionMoreLoaded.value = -1
                 _isTouristAttractionLoadReady = true
@@ -290,6 +290,7 @@ class MainViewModel : ViewModel() {
 
         Log.d(TAG, "fetchAndSaveMoreRestaurantList) moreRestaurantList size: ${moreRestaurantList.size}")
         if(moreRestaurantList.isEmpty()){
+            delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _restaurantMoreLoaded.value = -1
                 _isRestaurantLoadReady = true
@@ -322,6 +323,7 @@ class MainViewModel : ViewModel() {
 
         Log.d(TAG, "fetchAndSaveMoreCafeList) moreCafeList size: ${moreCafeList.size}")
         if(moreCafeList.isEmpty()){
+            delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _cafeMoreLoaded.value = -1
                 _isCafeLoadReady = true
@@ -354,6 +356,7 @@ class MainViewModel : ViewModel() {
 
         Log.d(TAG, "fetchAndSaveMoreEventList) moreEventList size: ${moreEventList.size}")
         if(moreEventList.isEmpty()){
+            delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _eventMoreLoaded.value = -1
                 _isEventLoadReady = true
