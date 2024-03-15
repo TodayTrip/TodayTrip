@@ -13,10 +13,12 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.databinding.ItemPlaceListSkeletonShimmerBinding
+import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DateTimeUtil
+import kotlinx.coroutines.currentCoroutineContext
 
 enum class PlaceListViewType(val viewType: Int){
     TOUR_ITEM(0),
@@ -26,6 +28,7 @@ class PlaceListAdapter :
     ListAdapter<TourItem, RecyclerView.ViewHolder>(TourItemDiffCallback) {
     private val TAG = "PlaceListRecyclerViewAdapter"
 
+    private val DUMMY_COUNT = 3
     var onTourItemClickListener: OnTourItemClickListener? = null
 
     override fun getItemViewType(position: Int): Int  =
@@ -75,14 +78,22 @@ class PlaceListAdapter :
     }
 
     fun addDummyTourItem(){
-        val currentListWithDummy = mutableListOf<TourItem>()
-        currentListWithDummy.run{
+        val newListWithDummy = mutableListOf<TourItem>()
+        newListWithDummy.run{
             addAll(currentList)
-            add(PlaceListConstants.DUMMY_TOUR_ITEM)
-            add(PlaceListConstants.DUMMY_TOUR_ITEM)
-            add(PlaceListConstants.DUMMY_TOUR_ITEM)
+            for(i in 0 until DUMMY_COUNT)
+                add(PlaceListConstants.DUMMY_TOUR_ITEM)
         }
-        submitList(currentListWithDummy)
+        submitList(newListWithDummy)
+    }
+    fun removeDummyTourItem(){
+        val newListWithoutDummy =  mutableListOf<TourItem>()
+        newListWithoutDummy.addAll(currentList)
+
+        if(newListWithoutDummy.isNullOrEmpty()) return
+        submitList(
+            newListWithoutDummy.subList(0, currentList.size-DUMMY_COUNT)
+        )
     }
 
     inner class TourItemHolder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -108,7 +119,7 @@ class PlaceListAdapter :
             }
 
             when (item.getContentTypeId()) {
-                "15" -> {//행사축제
+                TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                     val startDate = item.getDetailInfoWithLabel()[3].second
                     val endDate = item.getDetailInfoWithLabel()[4].second
                     if (currentDate > endDate) {
@@ -119,9 +130,11 @@ class PlaceListAdapter :
                         binding.layoutEntire.setBackgroundResource(R.color.light_gray)
                     }
                 }
-                "39" -> {//식당카페
+                TourContentTypeId.RESTAURANT.contentTypeId ->{
+                    // do nothing
                 }
-                else -> {//관관지
+                else ->{
+                    // do nothing
                 }
             }
 
