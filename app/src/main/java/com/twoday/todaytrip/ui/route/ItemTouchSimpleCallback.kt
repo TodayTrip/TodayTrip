@@ -1,9 +1,15 @@
 package com.twoday.todaytrip.ui.route
 
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import java.lang.Integer.max
 import java.util.Collections
+
+interface OnMoveEndListener{
+    fun onMoveEnd()
+}
 
 class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
     ItemTouchHelper.UP
@@ -12,6 +18,9 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
             or ItemTouchHelper.END,
     0
 ) {
+    private val TAG = "ItemTouchSimpleCallback"
+
+    var onMoveEndListener: OnMoveEndListener? = null
 
     override fun onMove(
         recyclerView: RecyclerView,
@@ -22,14 +31,29 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
 
         val fromPosition = selectedViewHolder.absoluteAdapterPosition
         val toPosition = targetViewHolder.absoluteAdapterPosition
+        //val dataSet = routeAdapter.currentList.toMutableList()
 
-        val dataSet = routeAdapter.currentList.toMutableList()
-        Collections.swap(dataSet, fromPosition, toPosition)
+        Log.d(TAG, "currentList")
+        routeAdapter.currentList.forEach { Log.d(TAG, "${it.toString()}")}
+
+        //Log.d(TAG, "dataSet")
+        //dataSet.forEach { Log.d(TAG, "${it.toString()}") }
+        //Collections.swap(dataSet, fromPosition, toPosition)
+
         ContentIdPrefUtil.swapContentId(fromPosition, toPosition)
         routeAdapter.apply{
-            notifyItemMoved(fromPosition, toPosition)
+            Log.d(TAG, "from: ${fromPosition}, to: ${toPosition}")
+            notifyItemMoved(fromPosition,toPosition)
+            notifyItemRangeChanged(0, max(fromPosition, toPosition)+1, Any())
         }
         return true
+    }
+
+    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+        Log.d(TAG,"clearview")
+        super.clearView(recyclerView, viewHolder)
+
+        onMoveEndListener?.onMoveEnd()
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
