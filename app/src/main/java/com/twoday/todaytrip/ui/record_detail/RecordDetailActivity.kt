@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
@@ -22,25 +22,25 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
     private var _binding: ActivityRecordDetailBinding? = null
     private val binding get() = _binding!!
 
-    private val model by lazy{
-        ViewModelProvider(this@RecordDetailActivity)[RecordDetailViewModel::class.java]
-    }
-    private val record:Record? by lazy{
+    private val viewModel: RecordDetailViewModel by viewModels()
+
+    private val record: Record? by lazy {
         intent.getParcelableExtra(EXTRA_RECORD)
     }
 
-    private val onBackPressedCallback = object:OnBackPressedCallback(true){
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
         override fun handleOnBackPressed() {
             Log.d(TAG, "handleOnBackPressed) called")
             finish()
         }
     }
 
-    companion object{
+    companion object {
         private const val EXTRA_RECORD = "extra_record"
         fun newIntent(context: Context, record: Record): Intent =
-            Intent(context, RecordDetailActivity::class.java).apply{
+            Intent(context, RecordDetailActivity::class.java).apply {
                 putExtra(EXTRA_RECORD, record)
+                Log.d("TAG0 record의 savePhotoDataList", "${record?.savePhotoDataList?.size}")
             }
     }
 
@@ -51,7 +51,7 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
 
         this.onBackPressedDispatcher.addCallback(this, onBackPressedCallback)
         initModelObserver()
-        Log.d("TAG0","${record!!.savePhotoDataList[0].imageUriList.toString()}")
+        Log.d("TAG1 savePhotoDataList1", "${record?.savePhotoDataList?.size}")
 
         initUI()
         initBackButton()
@@ -59,35 +59,39 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
         initOptionButton()
     }
 
-    private fun initModelObserver(){
-        model.isOptionMap.observe(this, Observer {
+    private fun initModelObserver() {
+        viewModel.isOptionMap.observe(this, Observer {
             setOptionIconAsMap(it)
         })
     }
-    private fun setOptionIconAsMap(isOptionMap:Boolean){
-        if(isOptionMap){
+
+    private fun setOptionIconAsMap(isOptionMap: Boolean) {
+        if (isOptionMap) {
             binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_list)
-            setFragment(RecordDetailMapFragment())
-        }
-        else{
+            setFragment(RecordDetailListFragment())
+        } else {
             binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_map)
             setFragment(RecordDetailListFragment())
         }
     }
-    private fun setFragment(fragment: Fragment){
+
+    private fun setFragment(fragment: Fragment) {
+        viewModel.setMarkersFromSavePhotoDataList(record?.savePhotoDataList)
         supportFragmentManager.commit {
             replace(R.id.container_record_detail, fragment)
             setReorderingAllowed(true)
             addToBackStack("")
         }
     }
-    private fun initUI(){
+
+    private fun initUI() {
         with(binding) {
             tvRecordDetailTitle.text = record?.destination
             tvRecordDetailDate.text = record?.travelDate
         }
     }
-    private fun initBackButton(){
+
+    private fun initBackButton() {
         binding.ivRecordDetailBack.setOnClickListener {
             finish()
         }
@@ -99,18 +103,20 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
         RecordPrefUtil.deleteRecord(record!!)
         finish()
     }
-    private fun initDeleteButton(){
+
+    private fun initDeleteButton() {
         binding.tvRecordDetailDelete.setOnClickListener {
             Log.d(TAG, "delete button clicked")
-            val dialog = DeleteRecordDialog(this@RecordDetailActivity).apply{
+            val dialog = DeleteRecordDialog(this@RecordDetailActivity).apply {
                 onPositiveClickListener = this@RecordDetailActivity
             }
             dialog.show()
         }
     }
-    private fun initOptionButton(){
+
+    private fun initOptionButton() {
         binding.ivRecordDetailOption.setOnClickListener {
-            model.toggleIsOptionMap()
+            viewModel.toggleIsOptionMap()
         }
     }
 }
