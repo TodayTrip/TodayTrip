@@ -14,7 +14,9 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 import com.twoday.todaytrip.ui.record.Record
+import com.twoday.todaytrip.ui.record_gallery.RecordGalleryFragment
 import com.twoday.todaytrip.utils.RecordPrefUtil
+import java.util.ArrayList
 
 class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveClickListener {
     private val TAG = "RecordDetailActivity"
@@ -69,18 +71,32 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
         if (isOptionMap) {
             binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_list)
             setFragment(RecordDetailListFragment())
+
         } else {
-            binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_map)
-            setFragment(RecordDetailListFragment())
+            binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_gallery)
+            setFragment(RecordGalleryFragment())
         }
     }
 
     private fun setFragment(fragment: Fragment) {
-        viewModel.setMarkersFromSavePhotoDataList(record?.savePhotoDataList)
-        supportFragmentManager.commit {
-            replace(R.id.container_record_detail, fragment)
-            setReorderingAllowed(true)
-            addToBackStack("")
+        when (fragment) {
+            is RecordDetailListFragment -> {
+                viewModel.setMarkersFromSavePhotoDataList(record?.savePhotoDataList)
+                supportFragmentManager.commit {
+                    replace(R.id.container_record_detail, fragment)
+                    setReorderingAllowed(true)
+                    addToBackStack("")
+                }
+            }
+
+            else -> {
+                viewModel.savePhotoDataUriList(record?.savePhotoDataList)
+                supportFragmentManager.commit {
+                    replace(R.id.container_record_detail, fragment)
+                    setReorderingAllowed(true)
+                    addToBackStack("")
+                }
+            }
         }
     }
 

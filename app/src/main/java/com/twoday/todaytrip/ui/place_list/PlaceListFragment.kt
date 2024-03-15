@@ -201,7 +201,7 @@ class PlaceListFragment : Fragment() {
             "전남" -> Coordinates("51", "67", "전라남도", listOf(R.drawable.img_jeonnam1, R.drawable.img_jeonnam2, R.drawable.img_jeonnam3,R.drawable.img_jeonnam4,R.drawable.img_jeonnam5).random())
             "경북" -> Coordinates("89", "91", "경상북도", listOf(R.drawable.img_gyeongbuk1, R.drawable.img_gyeongbuk2, R.drawable.img_gyeongbuk3).random())
             "경남" -> Coordinates("91", "77", "경상남도", listOf(R.drawable.img_gyeongnam1, R.drawable.img_gyeongnam2, R.drawable.img_gyeongnam3).random())
-            "충북" -> Coordinates("69", "107", "충청북도", listOf(R.drawable.img_chungbuk1, R.drawable.img_chungbuk2, R.drawable.img_chungbuk3,R.drawable.img_chungbuk4,R.drawable.img_chungbuk5).random())
+            "충북" -> Coordinates("69", "107", "충청북도", listOf(R.drawable.img_chungbuk2, R.drawable.img_chungbuk3,R.drawable.img_chungbuk4,R.drawable.img_chungbuk5).random())
             "충남" -> Coordinates("68", "100", "충청남도",listOf(R.drawable.img_chungnam1, R.drawable.img_chungnam2, R.drawable.img_chungnam3).random())
             "강원" -> Coordinates("73", "134", "강원도", listOf(R.drawable.img_gangwon1, R.drawable.img_gangwon2, R.drawable.img_gangwon3).random())
             "대구" -> Coordinates("89", "90", "대구", listOf(R.drawable.img_daegu1, R.drawable.img_daegu2, R.drawable.img_daegu3).random())
