@@ -8,7 +8,7 @@ import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.RecordPrefUtil
 
-class RecordViewModel: ViewModel() {
+class RecordViewModel: ViewModel(){
     private val TAG = "RecordViewModel"
 
     private val _recordList = MutableLiveData<List<Record>>()
@@ -18,6 +18,7 @@ class RecordViewModel: ViewModel() {
     init{
         loadRecordList()
     }
+
     fun loadRecordList(){
         _recordList.value = RecordPrefUtil.loadRecordList()
         Log.d(TAG, "loadRecordList) record list size: ${recordList.value?.size}")
