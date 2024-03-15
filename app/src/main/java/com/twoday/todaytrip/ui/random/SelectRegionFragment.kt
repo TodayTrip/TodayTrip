@@ -31,24 +31,26 @@ class SelectRegionFragment : Fragment() {
 
 //    private lateinit var viewModel: SelectRegionViewModel
 
-    private var chips = listOf(
-        binding.chipSelectRegionSeoul,
-        binding.chipSelectRegionIncheon,
-        binding.chipSelectRegionJeonbuk,
-        binding.chipSelectRegionJeonnam,
-        binding.chipSelectRegionGyeongbuk,
-        binding.chipSelectRegionGyeongnam,
-        binding.chipSelectRegionChungbuk,
-        binding.chipSelectRegionChungnam,
-        binding.chipSelectRegionGangwon,
-        binding.chipSelectRegionDaegu,
-        binding.chipSelectRegionBusan,
-        binding.chipSelectRegionDaejeon,
-        binding.chipSelectRegionJeju,
-        binding.chipSelectRegionGyeonggi,
-        binding.chipSelectRegionGwangju,
-        binding.chipSelectRegionUlsan
-    )
+    private val chips by lazy {
+        listOf(
+            binding.chipSelectRegionSeoul,
+            binding.chipSelectRegionIncheon,
+            binding.chipSelectRegionJeonbuk,
+            binding.chipSelectRegionJeonnam,
+            binding.chipSelectRegionGyeongbuk,
+            binding.chipSelectRegionGyeongnam,
+            binding.chipSelectRegionChungbuk,
+            binding.chipSelectRegionChungnam,
+            binding.chipSelectRegionGangwon,
+            binding.chipSelectRegionDaegu,
+            binding.chipSelectRegionBusan,
+            binding.chipSelectRegionDaejeon,
+            binding.chipSelectRegionJeju,
+            binding.chipSelectRegionGyeonggi,
+            binding.chipSelectRegionGwangju,
+            binding.chipSelectRegionUlsan
+        )
+    }
 
     private var selectedRegionList = mutableListOf<String>()
 
@@ -60,9 +62,9 @@ class SelectRegionFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(SelectRegionViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         initView()
     }
 
