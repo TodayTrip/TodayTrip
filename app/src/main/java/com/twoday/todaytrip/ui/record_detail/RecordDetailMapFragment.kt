@@ -97,10 +97,8 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         this.naverMap = naverMap
 
         val markerIconBitmap =
-            resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
-        val photoBitmap =
-            resizeMapIcons(requireContext(), R.drawable.img_pic_marker, 80, 80)
-        val combinedBitmap = combineImages(markerIconBitmap, photoBitmap)
+            resizeMapIcons(requireContext(), R.drawable.img_pic_marker, 100, 100)
+        val combinedBitmap = combineImages(markerIconBitmap, markerIconBitmap)
 
         locations.forEach { latLng ->
             Log.d("latLng", latLng.toString())
