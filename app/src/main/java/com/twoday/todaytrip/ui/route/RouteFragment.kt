@@ -310,6 +310,8 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
         routeViewModel.editMode.observe(viewLifecycleOwner) { editMode ->
             routeAdapter.iconTogle(editMode)
+            binding.tvRouteRemoveButton.isVisible = !editMode
+            binding.tvRouteComplitButton.isVisible = editMode
         }
 
         routeViewModel.isMapReady.observe(viewLifecycleOwner) { isMapReady ->
@@ -418,7 +420,10 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 //            } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }
 
-        binding.ivRouteRemoveButton.setOnClickListener {
+        binding.tvRouteRemoveButton.setOnClickListener {
+            routeViewModel.toggleEditMode()
+        }
+        binding.tvRouteComplitButton.setOnClickListener {
             routeViewModel.toggleEditMode()
         }
     }
