@@ -23,4 +23,6 @@
     <color name="transparent">#00000000</color>
     <color name="dark_gray">#3A3A3A</color>
     <color name="light_gray2">#F6F6F6</color>
+
+    <color name="system_gray">#FF888888</color>
 </resources>
