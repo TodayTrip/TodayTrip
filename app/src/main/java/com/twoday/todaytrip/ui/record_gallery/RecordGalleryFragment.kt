@@ -17,9 +17,6 @@ import com.twoday.todaytrip.databinding.FragmentRecordGalleryBinding
 class RecordGalleryFragment : Fragment() {
     private lateinit var binding: FragmentRecordGalleryBinding
     private val viewModel: RecordGalleryViewModel by activityViewModels()
-    companion object {
-        fun newInstance() = RecordGalleryFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,7 +33,7 @@ class RecordGalleryFragment : Fragment() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 2)
+        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
     private fun observeViewModel() {

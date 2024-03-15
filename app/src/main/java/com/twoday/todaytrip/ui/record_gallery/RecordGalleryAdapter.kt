@@ -1,5 +1,7 @@
 package com.twoday.todaytrip.ui.record_gallery
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ItemRecordGalleryPhotoBinding
 import com.twoday.todaytrip.databinding.ItemRecordGalleryTagBinding
+import com.twoday.todaytrip.ui.place_list.FullScreenImageActivity
 import javax.microedition.khronos.opengles.GL
 
 class RecordGalleryAdapter(private val imageUriList: List<String>) : RecyclerView.Adapter<RecordGalleryAdapter.ViewHolder>() {
@@ -28,6 +31,15 @@ class RecordGalleryAdapter(private val imageUriList: List<String>) : RecyclerVie
             Glide.with(binding.galleryPhoto.context)
                 .load(imageUri)
                 .into(binding.galleryPhoto)
+
+            binding.galleryPhoto.setOnClickListener {
+                val context = binding.root.context
+                val intent = Intent(context, FullScreenImageActivity::class.java).apply {
+                    putExtra("imageUri", imageUri)
+                    Log.d("zxc",imageUri)
+                }
+                context.startActivity(intent)
+            }
         }
     }
 }
