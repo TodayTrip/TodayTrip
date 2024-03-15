@@ -38,7 +38,7 @@ object MapUtils {
         // 텍스트를 그리기 위한 페인트 설정
         val paint = Paint(Paint.ANTI_ALIAS_FLAG)
         paint.color = Color.WHITE // 텍스트 색상
-        paint.textSize = (15 * scale) // 텍스트 크기
+        paint.textSize = (75 * scale) // 텍스트 크기
 
         // 텍스트의 위치를 계산
         val bounds = Rect()
