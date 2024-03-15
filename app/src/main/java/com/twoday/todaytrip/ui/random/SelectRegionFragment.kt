@@ -54,6 +54,9 @@ class SelectRegionFragment : Fragment() {
 
     private var selectedRegionList = mutableListOf<String>()
 
+    private val map by lazy { binding.ivSelectRegionMap }
+    private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_select_region, map) }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,35 +67,29 @@ class SelectRegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
     }
 
     private fun initView() {
         fillMap()
         initChipSet()
+//        SelectRegionPrefUtil.resetSelectRegionListPref()
         setUpClickListener()
     }
 
     private fun initChipSet() {
-        selectedRegionList = SelectRegionPrefUtil.loadSelectRegionList().toMutableList()
-        val map = binding.ivSelectRegionMap
-        val mapVector = VectorChildFinder(context, R.drawable.img_select_region, map)
+        val selectedRegionPrefList = SelectRegionPrefUtil.loadSelectRegionList().toMutableList()
         chips.forEach {
-            if (selectedRegionList.contains(it.text)){
+            if (selectedRegionPrefList.contains(it.text)){
                 it.isChecked = true
                 it.isSelected = true
                 val selected = mapVector.findPathByName(it.text.toString())
                 selected.fillColor = Color.BLUE
-            } else {
-                it.isChecked = false
             }
         }
     }
 
     private fun fillMap() {
-        val map = binding.ivSelectRegionMap
-        val mapVector = VectorChildFinder(context, R.drawable.img_select_region, map)
         chips.forEach {
             val selected = mapVector.findPathByName(it.text.toString())
             it.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -107,13 +104,13 @@ class SelectRegionFragment : Fragment() {
                 }
                 updateNextBtn()
                 map.invalidate()
-                SelectRegionPrefUtil.resetSelectRegionListPref()
             }
         }
     }
 
     private fun setUpClickListener() {
         binding.btnRegionSelectNext.setOnClickListener {
+            SelectRegionPrefUtil.resetSelectRegionListPref()
             SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList)
             val selectedDestination = SelectRegionPrefUtil.loadSelectRegionList().random()
             DestinationPrefUtil.saveDestination(selectedDestination)
