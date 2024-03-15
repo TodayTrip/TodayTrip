@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -44,7 +45,6 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
 
-    // 마커 리스트 생성
     private val markers = mutableListOf<Marker>()
 
     private var locations =
@@ -77,10 +77,13 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
         initImageRecyclerView()
         initTabLayout()
+        initModelObserver()
     }
 
-    private fun observeFurthestPairAndConnectMarkers() {
-        viewModel.findFurthestMarkers(markers) // LiveData를 업데이트하도록 요청
+    private fun initModelObserver() {
+        viewModel.locations.observe(viewLifecycleOwner, Observer {
+            locations = it
+        })
     }
 
     private fun initImageRecyclerView() {
@@ -94,52 +97,24 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private fun initTabLayout() {
         binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
+                viewModel.onTabSeleted(tab.position)
                 when (tab.position) {
                     0 -> {
-                        Log.d("locations0", locations.toString())
-                        locations = emptyList()
-                        locations =
-                            loadTouristAttractionList().map {
-                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
-                            }
                         onMarkerReady()
                         placeMapAdapter.submitList(loadTouristAttractionList())
                     }
-
                     1 -> {
-                        Log.d("locations1", locations.toString())
-                        locations = emptyList()
-                        locations =
-                            loadRestaurantList().map {
-                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
-                            }
                         onMarkerReady()
                         placeMapAdapter.submitList(loadRestaurantList())
                     }
-
                     2 -> {
-                        Log.d("locations2", locations.toString())
-                        locations = emptyList()
-                        locations =
-                            loadCafeList().map {
-                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
-                            }
                         onMarkerReady()
                         placeMapAdapter.submitList(loadCafeList())
                     }
-
                     3 -> {
-                        Log.d("locations3", locations.toString())
-                        locations = emptyList()
-                        locations =
-                            loadEventList().map {
-                                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
-                            }
                         onMarkerReady()
                         placeMapAdapter.submitList(loadEventList())
                     }
-
-                    else -> placeMapAdapter.submitList(loadTouristAttractionList())
                 }
             }
 
@@ -180,12 +155,11 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
             val bounds = createBoundsForAllMarkers(markers)
 
-            // 마커를 추가 한 후 아래 함수를 호출해야 함
-            observeFurthestPairAndConnectMarkers()
             updateCameraToBounds(naverMap, bounds, 250)
         }
     }
 
+    //TODO ViewModel로 옮기려고 하는데 마커를 지도에서 제거하는 건 View에서 없애는 거니까 옮기면 안될까요?
     private fun clearMarkers() {
         markers.forEach { marker ->
             marker.map = null // 마커를 지도에서 제거

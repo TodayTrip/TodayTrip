@@ -19,7 +19,7 @@ android {
         applicationId = "com.twoday.todaytrip"
         minSdk = 26
         targetSdk = 34
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -108,7 +108,10 @@ dependencies {
     }
     // Skeleton
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
-    //FishBun
+    // FishBun
     implementation ("io.github.sangcomz:fishbun:1.1.1")
+    // SwipeRefreshLayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    // Material
     implementation("com.google.android.material:material:1.11.0")
 }

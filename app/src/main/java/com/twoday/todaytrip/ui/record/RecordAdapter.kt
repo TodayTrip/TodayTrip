@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemRecordBinding
+import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 
 class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallback) {
     private val TAG = "RecordAdapter"
@@ -46,8 +47,8 @@ class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallba
         }
         fun bind(record: Record) {
             val savePhotoDataWithImage = record.savePhotoDataList.find {
-//                !it.imageUri.isNullOrBlank()
                 !it.imageUriList.isNullOrEmpty()
+
             }
             if (savePhotoDataWithImage != null) {
                 Glide.with(MyApplication.appContext!!)

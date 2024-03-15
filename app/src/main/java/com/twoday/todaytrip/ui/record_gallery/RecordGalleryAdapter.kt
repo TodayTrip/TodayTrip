@@ -12,7 +12,7 @@ import com.twoday.todaytrip.databinding.ItemRecordGalleryTagBinding
 import com.twoday.todaytrip.ui.place_list.FullScreenImageActivity
 import javax.microedition.khronos.opengles.GL
 
-class RecordGalleryAdapter(private val imageUriList: List<String>) : RecyclerView.Adapter<RecordGalleryAdapter.ViewHolder>() {
+class RecordGalleryAdapter(private val uriList: List<String>) : RecyclerView.Adapter<RecordGalleryAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = ItemRecordGalleryPhotoBinding.inflate(inflater, parent, false)
@@ -20,23 +20,24 @@ class RecordGalleryAdapter(private val imageUriList: List<String>) : RecyclerVie
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val imageUri = imageUriList[position]
+        val imageUri = uriList[position]
         holder.bind(imageUri)
     }
 
-    override fun getItemCount(): Int = imageUriList.size
+    override fun getItemCount(): Int = uriList.size
 
     class ViewHolder(private val binding: ItemRecordGalleryPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(imageUri: String) {
             Glide.with(binding.galleryPhoto.context)
                 .load(imageUri)
                 .into(binding.galleryPhoto)
+            Log.d("zxc",imageUri)
 
             binding.galleryPhoto.setOnClickListener {
                 val context = binding.root.context
                 val intent = Intent(context, FullScreenImageActivity::class.java).apply {
                     putExtra("imageUri", imageUri)
-                    Log.d("zxc",imageUri)
+
                 }
                 context.startActivity(intent)
             }

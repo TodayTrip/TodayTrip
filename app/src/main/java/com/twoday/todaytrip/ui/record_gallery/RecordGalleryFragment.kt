@@ -8,15 +8,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.twoday.todaytrip.R
-import com.twoday.todaytrip.databinding.FragmentRecordBinding
 import com.twoday.todaytrip.databinding.FragmentRecordGalleryBinding
+import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordGalleryFragment : Fragment() {
     private lateinit var binding: FragmentRecordGalleryBinding
-    private val viewModel: RecordGalleryViewModel by activityViewModels()
+    private val viewModel: RecordDetailViewModel by activityViewModels()
+    private lateinit var uriList: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,21 +30,32 @@ class RecordGalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView(binding.rvRecordGallery)
-        observeViewModel()
+        initModelObserver()
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
     }
 
-    private fun observeViewModel() {
-        val imageUriList = arguments?.getStringArrayList("IMAGE_URI_LIST")
-        viewModel.setImageUriList(imageUriList ?: emptyList())
+    private fun initModelObserver() {
+        viewModel.imageUriList.observe(viewLifecycleOwner, Observer { uriList ->
+            uriList?.let {
+                this.uriList = it
+                val adapter = RecordGalleryAdapter(it)
+                binding.rvRecordGallery.adapter = adapter
 
-        viewModel.imageUriListLiveData.observe(viewLifecycleOwner, fun(imageUriList: List<String>) {
-            val adapter = RecordGalleryAdapter(imageUriList)
-            binding.rvRecordGallery.adapter = adapter
+            }
         })
     }
-
 }
+
+//    private fun observeViewModel() {
+//        val imageUriList = arguments?.getStringArrayList("IMAGE_URI_LIST")
+//        viewModel.setImageUriList(imageUriList ?: emptyList())
+//
+//        viewModel.imageUriListLiveData.observe(viewLifecycleOwner, fun(imageUriList: List<String>) {
+//            val adapter = RecordGalleryAdapter(imageUriList)
+//            binding.rvRecordGallery.adapter = adapter
+//        })
+//    }
+

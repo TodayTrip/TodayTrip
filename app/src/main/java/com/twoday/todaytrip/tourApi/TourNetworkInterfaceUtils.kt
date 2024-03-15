@@ -13,14 +13,15 @@ import kotlinx.coroutines.withContext
 
 object TourNetworkInterfaceUtils {
     private val TAG = "TourNetworkInterfaceUtils"
-    fun fetchTouristAttractionList(areaCode: String): List<TourItem> = runBlocking(Dispatchers.IO) {
+    fun fetchTouristAttractionList(areaCode: String, pageNo:Int): List<TourItem> = runBlocking(Dispatchers.IO) {
         val touristAttractionList = mutableListOf<TourItem>()
 
         withContext(Dispatchers.Default) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                numOfRows = 5
+                numOfRows = 5,
+                pageNo = pageNo
             )
         }?.let { areaBasedList ->
             areaBasedList.response.body.items.item.forEach { item ->
@@ -33,7 +34,8 @@ object TourNetworkInterfaceUtils {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                numOfRows = 5
+                numOfRows = 5,
+                pageNo = pageNo
             )
         }?.let { areaBasedList ->
             areaBasedList.response.body.items.item.forEach { item ->
@@ -46,12 +48,12 @@ object TourNetworkInterfaceUtils {
         return@runBlocking touristAttractionList.toList()
     }
 
-    fun fetchTouristAttractionListWithTheme(theme: String, areaCode: String): List<TourItem> =
+    fun fetchTouristAttractionListWithTheme(theme: String, areaCode: String, pageNo: Int): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val touristAttractionList = mutableListOf<TourItem>()
             when (theme) {
                 "산" -> {
-                    fetchMountainThemeList(areaCode).forEach { areaBasedList ->
+                    fetchMountainThemeList(areaCode, pageNo).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -63,7 +65,7 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "바다" -> {
-                    fetchSeaThemeList(areaCode).forEach { areaBasedList ->
+                    fetchSeaThemeList(areaCode, pageNo).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -75,7 +77,7 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "역사" -> {
-                    fetchHistoricalTheme(areaCode)?.let { areaBasedList ->
+                    fetchHistoricalTheme(areaCode, pageNo)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -87,7 +89,7 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "휴양" -> {
-                    fetchRecreationalTheme(areaCode)?.let { areaBasedList ->
+                    fetchRecreationalTheme(areaCode, pageNo)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -99,7 +101,7 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "체험" -> {
-                    fetchExperientialTheme(areaCode)?.let { areaBasedList ->
+                    fetchExperientialTheme(areaCode, pageNo)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -111,7 +113,7 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "레포츠" -> {
-                    fetchLeisureSportsTheme(areaCode)?.let { areaBasedList ->
+                    fetchLeisureSportsTheme(areaCode, pageNo)?.let { areaBasedList ->
                         areaBasedList.response.body.items.item.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -123,7 +125,7 @@ object TourNetworkInterfaceUtils {
                 }
 
                 "문화시설" -> {
-                    fetchCulturalThemeList(areaCode).forEach { areaBasedList ->
+                    fetchCulturalThemeList(areaCode, pageNo).forEach { areaBasedList ->
                         areaBasedList?.response?.body?.items?.item?.forEach { item ->
                             fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
                                 touristAttractionList.add(
@@ -141,7 +143,7 @@ object TourNetworkInterfaceUtils {
             return@runBlocking touristAttractionList.toList()
         }
 
-    private fun fetchMountainThemeList(areaCode: String)
+    private fun fetchMountainThemeList(areaCode: String, pageNo: Int)
             : List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
             val mountainList = async {
@@ -151,7 +153,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.MOUNTAIN.id,
-                    numOfRows = 3
+                    numOfRows = 3,
+                    pageNo = pageNo
                 )
             }
             val naturalRecreationForestList = async {
@@ -161,7 +164,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
-                    numOfRows = 3
+                    numOfRows = 3,
+                    pageNo = pageNo
                 )
             }
             val arboretumList = async {
@@ -171,7 +175,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.ARBORETUM.id,
-                    numOfRows = 3
+                    numOfRows = 3,
+                    pageNo = pageNo
                 )
             }
             return@runBlocking listOf(
@@ -181,7 +186,7 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    private fun fetchSeaThemeList(areaCode: String)
+    private fun fetchSeaThemeList(areaCode: String, pageNo: Int)
             : List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
             val coastalSceneryList = async {
@@ -191,7 +196,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.COASTAL_SCENERY.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val postList = async {
@@ -201,7 +207,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.PORT.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val lightHouseList = async {
@@ -211,7 +218,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.LIGHTHOUSE.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val islandList = async {
@@ -221,7 +229,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.ISLAND.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val beachList = async {
@@ -231,7 +240,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.NATURE.id,
                     category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
                     category3 = TourCategoryId3.BEACH.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             return@runBlocking listOf(
@@ -243,49 +253,53 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    private fun fetchHistoricalTheme(areaCode: String): AreaBasedList? =
+    private fun fetchHistoricalTheme(areaCode: String, pageNo:Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
                 category2 = TourCategoryId2.HISTORICAL_TOURIST_ATTRACTION.id,
-                numOfRows = 10
+                numOfRows = 10,
+                pageNo = pageNo
             )
         }
 
-    private fun fetchRecreationalTheme(areaCode: String): AreaBasedList? =
+    private fun fetchRecreationalTheme(areaCode: String, pageNo:Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
                 category2 = TourCategoryId2.RECREATIONAL_TOURIST_ATTRACTION.id,
-                numOfRows = 10
+                numOfRows = 10,
+                pageNo = pageNo
             )
         }
 
-    private fun fetchExperientialTheme(areaCode: String): AreaBasedList? =
+    private fun fetchExperientialTheme(areaCode: String, pageNo:Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
                 category2 = TourCategoryId2.EXPERIENTIAL_TOURIST_ATTRACTION.id,
-                numOfRows = 10
+                numOfRows = 10,
+                pageNo = pageNo
             )
         }
 
-    private fun fetchLeisureSportsTheme(areaCode: String): AreaBasedList? =
+    private fun fetchLeisureSportsTheme(areaCode: String, pageNo:Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.LEISURE_SPORTS.contentTypeId,
-                numOfRows = 10
+                numOfRows = 10,
+                pageNo = pageNo
             )
         }
 
-    private fun fetchCulturalThemeList(areaCode: String): List<AreaBasedList?> =
+    private fun fetchCulturalThemeList(areaCode: String, pageNo: Int): List<AreaBasedList?> =
         runBlocking(Dispatchers.IO) {
             val museumList = async {
                 fetchAreaBasedList(
@@ -294,7 +308,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.HUMANITIES.id,
                     category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
                     category3 = TourCategoryId3.MUSEUM.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val memorialHallList = async {
@@ -304,7 +319,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.HUMANITIES.id,
                     category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
                     category3 = TourCategoryId3.MEMORIAL_HALL.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val exhibitionList = async {
@@ -314,7 +330,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.HUMANITIES.id,
                     category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
                     category3 = TourCategoryId3.EXHIBITION.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val areGalleryList = async {
@@ -324,7 +341,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.HUMANITIES.id,
                     category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
                     category3 = TourCategoryId3.ART_GALLERY.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             val conventionCenterList = async {
@@ -334,7 +352,8 @@ object TourNetworkInterfaceUtils {
                     category1 = TourCategoryId1.HUMANITIES.id,
                     category2 = TourCategoryId2.CULTURAL_FACILITIES.id,
                     category3 = TourCategoryId3.CONVENTION_CENTER.id,
-                    numOfRows = 2
+                    numOfRows = 2,
+                    pageNo = pageNo
                 )
             }
             return@runBlocking listOf(
@@ -346,12 +365,13 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    fun fetchRestaurantTabList(areaCode: String): List<TourItem> =
+    fun fetchRestaurantTabList(areaCode: String, pageNo: Int): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val restaurantList = fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
-                numOfRows = 15
+                numOfRows = 15,
+                pageNo = pageNo
             )
             val restaurantTabList = mutableListOf<TourItem>()
             restaurantList?.response?.body?.items?.item
@@ -366,8 +386,7 @@ object TourNetworkInterfaceUtils {
             return@runBlocking restaurantTabList.toList()
         }
 
-    fun getCafeTabList(areaCode: String)
-
+    fun fetchCafeTabList(areaCode: String, pageNo: Int)
             : List<TourItem> = runBlocking(Dispatchers.IO) {
         val cafeList = fetchAreaBasedList(
             areaCode = areaCode,
@@ -375,7 +394,8 @@ object TourNetworkInterfaceUtils {
             category1 = TourCategoryId1.FOOD.id,
             category2 = TourCategoryId2.FOOD.id,
             category3 = TourCategoryId3.CAFE_AND_TEA.id,
-            numOfRows = 10
+            numOfRows = 10,
+            pageNo = pageNo
         )
         val cafeTabList = mutableListOf<TourItem>()
         cafeList?.response?.body?.items?.item?.forEach { item ->
@@ -386,21 +406,23 @@ object TourNetworkInterfaceUtils {
         return@runBlocking cafeTabList.toList()
     }
 
-    fun getEventTabList(areaCode: String): List<TourItem> =
+    fun fetchEventTabList(areaCode: String, pageNo:Int): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val eventList = fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
                 category2 = TourCategoryId2.PERFORMANCE_EVENT.id,
-                numOfRows = 5
+                numOfRows = 5,
+                pageNo = pageNo
             )
             val festivalList = fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
                 category2 = TourCategoryId2.FESTIVAL.id,
-                numOfRows = 5
+                numOfRows = 5,
+                pageNo = pageNo
             )
             val eventTabList = mutableListOf<TourItem>()
             eventList?.response?.body?.items?.item?.forEach { item ->
@@ -422,7 +444,8 @@ object TourNetworkInterfaceUtils {
         category1: String? = null,
         category2: String? = null,
         category3: String? = null,
-        numOfRows: Int
+        numOfRows: Int,
+        pageNo:Int
     ): AreaBasedList? {
         try {
             val areaBasedResponse = TourNetworkClient.tourNetWork.fetchAreaBasedList(
@@ -431,7 +454,8 @@ object TourNetworkInterfaceUtils {
                 category1 = category1,
                 category2 = category2,
                 category3 = category3,
-                numOfRows = numOfRows
+                numOfRows = numOfRows,
+                pageNo = pageNo
             )
             if (areaBasedResponse.response.body.totalCount == 0) {
                 Log.d(TAG, "getAreaBasedList) totalCount = 0")
