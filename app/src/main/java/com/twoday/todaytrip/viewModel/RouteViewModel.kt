@@ -46,6 +46,10 @@ class RouteViewModel: ViewModel() {
         _routeListDataSet.value = list
     }
 
+    fun locationRemove(){
+
+    }
+
 
 
     fun getRouteDataSet(){
