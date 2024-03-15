@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/background_white"
     tools:context=".ui.record_detail.RecordDetailActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/iv_record_detail_back"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_record_detail_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
