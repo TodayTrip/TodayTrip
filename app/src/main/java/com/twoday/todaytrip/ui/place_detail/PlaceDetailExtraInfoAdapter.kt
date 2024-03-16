@@ -11,9 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.databinding.ItemPlaceDetailExtraInfoBinding
 import com.twoday.todaytrip.tourData.TourItem
 
-class PlaceDetailExtraInfoAdapter(
-    private val placeInfoList: List<Pair<String, String>>
-) : RecyclerView.Adapter<PlaceDetailExtraInfoAdapter.ViewHolder>() {
+class PlaceDetailExtraInfoAdapter() : RecyclerView.Adapter<PlaceDetailExtraInfoAdapter.ViewHolder>() {
+
+    var placeInfoList = listOf<Pair<String,String>>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemPlaceDetailExtraInfoBinding.inflate(
@@ -30,17 +30,13 @@ class PlaceDetailExtraInfoAdapter(
         holder.onBind(placeInfoList[position])
     }
 
-
-    inner class ViewHolder(private val binding: ItemPlaceDetailExtraInfoBinding) :
+    inner class ViewHolder(binding: ItemPlaceDetailExtraInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val labelText = binding.tvItemPlaceDetailExtraInfoTitle
         private val infoText = binding.tvItemPlaceDetailExtraInfo
         fun onBind(placeInfo: Pair<String, String>) {
             labelText.text = placeInfo.first
-            Log.d("placeDetailInfo", "placeInfoFirst = ${placeInfo.first}")
-            Log.d("placeDetailInfo", "placeInfoSecond = ${placeInfo.second}")
             infoText.text = Html.fromHtml(placeInfo.second)
-//            infoText.text = placeInfo.second
         }
     }
 }

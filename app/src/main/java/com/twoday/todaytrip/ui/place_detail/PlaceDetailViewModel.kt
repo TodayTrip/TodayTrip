@@ -7,39 +7,28 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.viewModel.MainViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 
-class PlaceDetailViewModel(
-    private val tourItem: TourItem
-): ViewModel() {
+class PlaceDetailViewModel(): ViewModel() {
+    private var tourItem: TourItem? = null
 
-    private val currentDestination: String? = null
-    private val isAddedToRoute: Boolean = false
+    private val _isTourItemAdded = MutableLiveData<Boolean>()
+    val isTourItemAdded: LiveData<Boolean> get() = _isTourItemAdded
 
-//    private val placeId: String? = null
-
-    private var _placeItemData = MutableLiveData<TourItem>()
-    val placeItemData: LiveData<TourItem> get() = _placeItemData
-
-    private var _placeMemory = MutableLiveData<List<String>>()
-    val placeMemory: LiveData<List<String>> get() = _placeMemory
-
-    init {
-        getPlaceInfo()
+    fun initTourItem(tourItemIntent: TourItem){
+        tourItem = tourItemIntent.apply{
+            isAdded = ContentIdPrefUtil.isSavedContentId(this.getContentId())
+        }
+        _isTourItemAdded.value = tourItem?.isAdded
     }
 
-    fun getPlaceInfo() {
-//        _placeItemData.postValue(
-//            tourItem.getDetailInfoWithLabel()
-//        )
-        tourItem.getThumbnailImage()
-        //glide-> 이미지뷰
-        tourItem.getTitle()
-        tourItem.getAddress()
-        tourItem.getDetailInfoWithLabel()
-        //리사이클러뷰 dataset
+    fun addButtonClicked(){
+        OnTourItemAddClickListener.onTourItemAddClick(tourItem!!)
+        _isTourItemAdded.value = tourItem?.isAdded
     }
 }
