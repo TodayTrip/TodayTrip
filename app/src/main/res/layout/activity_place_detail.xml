@@ -98,7 +98,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
-                    android:id="@+id/iv_place_detail_loca"
+                    android:id="@+id/iv_place_detail_address"
                     android:layout_width="16dp"
                     android:layout_height="16dp"
                     android:layout_marginStart="16dp"
@@ -109,7 +109,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_title" />
 
                 <TextView
-                    android:id="@+id/tv_place_detail_loca"
+                    android:id="@+id/tv_place_detail_address"
                     style="@style/SmallBoldText"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -121,8 +121,8 @@
                     android:textStyle="normal"
 
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_loca"
-                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_loca" />
+                    app:layout_constraintStart_toEndOf="@+id/iv_place_detail_address"
+                    app:layout_constraintTop_toTopOf="@+id/iv_place_detail_address" />
 
 <!--                <ImageView-->
 <!--                    android:id="@+id/iv_place_detail_info"-->
@@ -162,7 +162,7 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_loca" />
+                    app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_address" />
 
                 <!--                    <TextView-->
                 <!--                        android:id="@+id/tv_place_detail_add_path_btn_original"-->
@@ -196,7 +196,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/rv_place_detail_extra_info_list" />
 
                 <TextView
-                    android:id="@+id/tv_place_detail_no_photo"
+                    android:id="@+id/tv_place_detail_no_memory"
                     style="@style/TinyText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
