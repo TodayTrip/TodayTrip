@@ -101,7 +101,6 @@ class RecordDetailMapFragment : Fragment(), OnMapReadyCallback {
         val combinedBitmap = combineImages(markerIconBitmap, markerIconBitmap)
 
         locations.forEach { latLng ->
-            Log.d("latLng", latLng.toString())
             val marker = Marker().apply {
                 position = latLng
                 icon = OverlayImage.fromBitmap(combinedBitmap)
