@@ -98,7 +98,7 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
             val text = (index + 1).toString() // 마커에 표시할 텍스트
             val iconWithTextBitmap =
                 createIconWithText(requireContext(), R.drawable.img_pic_marker, text)
-            val resizedIconBitmap = resizeBitmap(iconWithTextBitmap, 120, 120)
+            val resizedIconBitmap = resizeBitmap(iconWithTextBitmap, 100, 100)
 
             val marker = Marker().apply {
                 position = latLng
