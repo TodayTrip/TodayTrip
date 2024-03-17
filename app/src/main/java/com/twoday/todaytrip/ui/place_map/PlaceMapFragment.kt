@@ -1,8 +1,8 @@
 package com.twoday.todaytrip.ui.place_map
 
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,11 +12,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraAnimation
+import com.naver.maps.map.CameraPosition
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
@@ -80,6 +85,26 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         initModelObserver()
     }
 
+    private fun initOnChangeListener() {
+        naverMap.addOnCameraChangeListener { _, _ ->
+            val zoom = naverMap.cameraPosition.zoom
+            if (zoom > 14.0) { // 확대 레벨이 임계값 이상일 때 마커 캡션 보이기
+                markers.forEach { marker ->
+                    marker.captionText = marker.tag as String // 실제 장소 이름으로 대체해야 합니다.
+                    marker.setCaptionAligns(Align.Bottom)
+                    marker.captionColor = Color.BLACK
+                    marker.captionHaloColor = Color.WHITE
+                    marker.captionTextSize = 16f
+                }
+            } else {
+                // 확대 레벨이 임계값 미만일 때 마커 캡션 숨기기
+                markers.forEach { marker ->
+                    marker.captionText = ""
+                }
+            }
+        }
+    }
+
     private fun initModelObserver() {
         viewModel.locations.observe(viewLifecycleOwner, Observer {
             locations = it
@@ -91,7 +116,27 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeMapAdapter
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        val view = pagerSnapHelper.findSnapView(layoutManager)
+                        val pos = layoutManager?.getPosition(view!!)
+                        pos?.let { moveToMarker(it)}
+                    }
+                }
+            })
         }
+    }
+
+    private fun moveToMarker(position: Int) {
+        val targetLocation = locations[position]
+        val zoomLevel = 15.0 // 숫자가 커질 수록 확대됨
+        val cameraPosition = CameraPosition(targetLocation, zoomLevel)
+        val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition).animate(CameraAnimation.Easing)
+        naverMap.moveCamera(cameraUpdate)
+
+        initOnChangeListener()
     }
 
     private fun initTabLayout() {
@@ -139,22 +184,19 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
         if (locations.isNotEmpty()) {
             val markerIconBitmap =
-                resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
+                resizeMapIcons(requireContext(), R.drawable.ic_white_circle_marker, 100, 100)
 
-            locations.forEach { latLng ->
-                Log.d("latLng", latLng.toString())
+            locations.forEachIndexed { index, latLng ->
                 val marker = Marker().apply {
                     position = latLng
                     icon = OverlayImage.fromBitmap(markerIconBitmap)
                     map = naverMap
+                    tag = placeMapAdapter.currentList[index].getTitle() // 장소 이름 태그로 가져오기
                 }
                 markers.add(marker) // 마커 리스트에 추가
             }
 
-            Log.d("markers", markers.size.toString())
-
             val bounds = createBoundsForAllMarkers(markers)
-
             updateCameraToBounds(naverMap, bounds, 250)
         }
     }
