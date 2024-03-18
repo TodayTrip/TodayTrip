@@ -45,10 +45,10 @@ class StartFragment : Fragment() {
             viewModel.resetSharedPref()
             findNavController().navigate(R.id.action_navigation_start_to_navigation_random_option)
         }
-        binding.btnSelectRegion.setOnClickListener {
-            viewModel.resetSharedPref()
-            findNavController().navigate(R.id.action_navigation_start_to_navigation_select_region)
-        }
+//        binding.btnSelectRegion.setOnClickListener {
+//            viewModel.resetSharedPref()
+//            findNavController().navigate(R.id.action_navigation_start_to_navigation_select_region)
+//        }
     }
 
     override fun onDestroyView() {

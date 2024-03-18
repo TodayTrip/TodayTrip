@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_navigation_start_to_navigation_random_option"
             app:destination="@id/navigation_random_option" />
-        <action
-            android:id="@+id/action_navigation_start_to_navigation_select_region"
-            app:destination="@id/navigation_select_region" />
     </fragment>
 
     <fragment
@@ -38,8 +35,11 @@
             android:id="@+id/action_navigation_random_option_to_navigation_random_theme"
             app:destination="@id/navigation_random_theme" />
         <action
-            android:id="@+id/action_navigation_random_option_to_navigation_random_result"
-            app:destination="@id/navigation_random_result" />
+            android:id="@+id/action_navigation_random_option_to_navigation_select_region"
+            app:destination="@id/navigation_select_region" />
+        <!--        <action-->
+<!--            android:id="@+id/action_navigation_random_option_to_navigation_random_result"-->
+<!--            app:destination="@id/navigation_random_result" />-->
     </fragment>
 
     <fragment
@@ -47,13 +47,16 @@
         android:name="com.twoday.todaytrip.ui.random.RandomThemeFragment"
         android:label="fragment_random_theme"
         tools:layout="@layout/fragment_random_theme">
-        <action
-            android:id="@+id/action_navigation_random_theme_to_navigation_random_result"
-            app:destination="@id/navigation_random_result">
-        </action>
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_random_theme_to_navigation_random_result"-->
+<!--            app:destination="@id/navigation_random_result">-->
+<!--        </action>-->
         <action
             android:id="@+id/action_navigation_random_theme_to_navigation_random_option"
             app:destination="@id/navigation_random_option" />
+        <action
+            android:id="@+id/action_navigation_random_theme_to_navigation_select_region"
+            app:destination="@id/navigation_select_region" />
     </fragment>
 
     <fragment
