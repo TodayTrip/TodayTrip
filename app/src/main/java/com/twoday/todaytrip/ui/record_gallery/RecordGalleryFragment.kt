@@ -2,6 +2,7 @@ package com.twoday.todaytrip.ui.record_gallery
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -34,7 +35,10 @@ class RecordGalleryFragment : Fragment() {
     }
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
-        recyclerView.layoutManager = GridLayoutManager(requireContext(), 3)
+        val columnWidthDp = 400
+        val layoutManager = GridLayoutManager(requireContext(), calColumns(columnWidthDp))
+        recyclerView.layoutManager = layoutManager
+        Log.d("asd", calColumns(columnWidthDp).toString())
     }
 
     private fun initModelObserver() {
@@ -43,9 +47,21 @@ class RecordGalleryFragment : Fragment() {
                 this.uriList = it
                 val adapter = RecordGalleryAdapter(it)
                 binding.rvRecordGallery.adapter = adapter
-
             }
         })
+    }
+
+    private fun getDisplayWidth(): Int {
+        val displayMetrics = DisplayMetrics()
+        requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+        Log.d("qqq",displayMetrics.widthPixels.toString())
+        return displayMetrics.widthPixels
+    }
+
+    private fun calColumns(columnWidthDp: Int): Int {
+        val displayWidth = getDisplayWidth()
+        val numColumns = displayWidth / columnWidthDp
+        return if (numColumns <= 1) 2 else numColumns
     }
 }
 
