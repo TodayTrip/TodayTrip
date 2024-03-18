@@ -51,7 +51,7 @@ class RandomThemeFragment : Fragment() {
         }
         binding.btnNext.setOnClickListener {
             selectedTheme?.let {
-                findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_random_result)
+                findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_select_region)
             }
         }
         binding.btnTheme1.setOnClickListener { selectTheme("산", 0) }
@@ -91,13 +91,14 @@ class RandomThemeFragment : Fragment() {
     }
 
     private fun selectRandomDestination(theme: String) {
-        val themeDestination = DestinationData.themeDestinations[theme]?.random()
-        Log.d("themeDestination", themeDestination.toString())
-        themeDestination?.let {
-            Log.d("themeDestination", it)
-            DestinationPrefUtil.saveDestination(it)
+//        val themeDestination = DestinationData.themeDestinations[theme]?.random()
+//        Log.d("themeDestination", themeDestination.toString())
+        // 지역 선택으로 넘어가서 여행지 선택하니까 테마만 선택된 거 저장하면 될 것 같습니다
+//        themeDestination?.let {
+//            Log.d("themeDestination", it)
+//            DestinationPrefUtil.saveDestination(it)
             DestinationPrefUtil.saveTheme(theme)
-        }
+//        }
     }
 
     override fun onDestroyView() {
