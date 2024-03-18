@@ -191,7 +191,9 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                     position = latLng
                     icon = OverlayImage.fromBitmap(markerIconBitmap)
                     map = naverMap
-                    tag = placeMapAdapter.currentList[index].getTitle() // 장소 이름 태그로 가져오기
+                    if (index < placeMapAdapter.currentList.size) {
+                        tag = placeMapAdapter.currentList[index].getTitle()
+                    }
                 }
                 markers.add(marker) // 마커 리스트에 추가
             }
