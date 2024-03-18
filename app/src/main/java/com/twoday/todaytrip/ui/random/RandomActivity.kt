@@ -20,7 +20,7 @@ class RandomActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         val savedDestination = viewModel.loadDestinationSharedPref()
-        if (savedDestination != "") {
+        if (savedDestination.isNotBlank()) {
             navigateToMainActivity()
         }
         setContentView(binding.root)

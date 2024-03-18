@@ -18,9 +18,9 @@ class RandomOptionFragment : Fragment() {
     private var isSelectedAllRandomBtn = false
     private var isSelectedThemeRandomBtn = false
     private var isButtonClickable = false
-    private val viewModel by lazy {
-        ViewModelProvider(this@RandomOptionFragment)[RandomViewModel::class.java]
-    }
+//    private val viewModel by lazy {
+//        ViewModelProvider(this@RandomOptionFragment)[RandomViewModel::class.java]
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,8 +44,8 @@ class RandomOptionFragment : Fragment() {
         binding.btnOptionSelect.setOnClickListener {
             if (isSelectedAllRandomBtn) {
                 // 전체 랜덤 선택 시 Sharf에 여행지 랜덤 저장
-                viewModel.selectRandomDestination()
-                findNavController().navigate(R.id.action_navigation_random_option_to_navigation_random_result)
+//                viewModel.selectRandomDestination()
+                findNavController().navigate(R.id.action_navigation_random_option_to_navigation_select_region)
             } else {
                 findNavController().navigate(R.id.action_navigation_random_option_to_navigation_random_theme)
             }
