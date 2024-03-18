@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapView
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
@@ -18,6 +19,8 @@ import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordDetailListBinding
 import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.MapUtils.createIconWithText
+import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
 import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
@@ -84,34 +87,45 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
     private fun initModelObserver() {
         viewModel.marker.observe(viewLifecycleOwner, Observer {
             markerList = it
-            Log.d("RecordDetailListFragment","뷰모델에서 받아온 위도 경도: $markerList")
+            Log.d("RecordDetailListFragment", "뷰모델에서 받아온 위도 경도: $markerList")
         })
     }
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
-        val markerIconBitmap =
-            MapUtils.resizeMapIcons(requireContext(), R.drawable.ic_marker, 120, 120)
-        val photoBitmap =
-            MapUtils.resizeMapIcons(requireContext(), R.drawable.img_pic_marker, 80, 80)
-        val combinedBitmap = MapUtils.combineImages(markerIconBitmap, photoBitmap)
+        markerList.forEachIndexed { index, latLng ->
+            val text = (index + 1).toString() // 마커에 표시할 텍스트
+            val iconWithTextBitmap =
+                createIconWithText(requireContext(), R.drawable.img_pic_marker, text)
+            val resizedIconBitmap = resizeBitmap(iconWithTextBitmap, 120, 120)
 
-        markerList.forEach { latLng ->
-            Log.d("latLng", latLng.toString())
             val marker = Marker().apply {
                 position = latLng
-                icon = OverlayImage.fromBitmap(combinedBitmap)
+                icon = OverlayImage.fromBitmap(resizedIconBitmap)
                 map = naverMap
             }
             markers.add(marker) // 마커 리스트에 추가
         }
 
         val bounds = MapUtils.createBoundsForAllMarkers(markers)
+        MapUtils.updateCameraToBounds(naverMap, bounds, 130)
 
-        // 마커를 추가 한 후 아래 함수를 호출해야 함
-//        observeFurthestPairAndConnectMarkers()
-        MapUtils.updateCameraToBounds(naverMap, bounds, 450)
+        if (markerList.size == 1) {
+            naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
+        }
+
+        connectMarkersSequentiallyFromFurthest(naverMap)
+    }
+
+    // 저장된 순서대로 마커끼리 폴리라인 연결하는 함수
+    private fun connectMarkersSequentiallyFromFurthest(naverMap: NaverMap) {
+        if (markerList.size > 1) {
+            val markerPositions = markerList.map { location ->
+                LatLng(location.latitude, location.longitude)
+            }
+            MapUtils.drawPolyline(naverMap, markerPositions)
+        }
     }
 
     override fun onStart() {

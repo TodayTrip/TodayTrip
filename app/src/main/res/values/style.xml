@@ -4,7 +4,7 @@
     <style name="LargeTitleBoldText">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">28sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -44,7 +44,7 @@
         <item name="android:layout_marginStart">12dp</item>
         <item name="android:ellipsize">end</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/place_title_gray</item>
     </style>
@@ -58,7 +58,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textColor">@color/place_addr_gray</item>
         <item name="android:ellipsize">end</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
     <style name="PlaceLabelInfoText">
         <item name="android:layout_width">0dp</item>

@@ -56,7 +56,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.MainActivity"
-            android:exported="false" />
+            android:exported="true"/>
 
         <activity
             android:name=".ui.random.RandomActivity"
@@ -67,5 +67,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>
