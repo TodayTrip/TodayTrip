@@ -1,19 +1,12 @@
 package com.twoday.todaytrip.ui.place_detail
 
-import android.annotation.SuppressLint
 import android.text.Html
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.databinding.ItemPlaceDetailExtraInfoBinding
-import com.twoday.todaytrip.tourData.TourItem
 
-class PlaceDetailExtraInfoAdapter() : RecyclerView.Adapter<PlaceDetailExtraInfoAdapter.ViewHolder>() {
-
-    var placeInfoList = listOf<Pair<String,String>>()
+class PlaceInfoAdapter(private var placeInfoList: List<Pair<String,String>>) : RecyclerView.Adapter<PlaceInfoAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             ItemPlaceDetailExtraInfoBinding.inflate(
@@ -29,6 +22,11 @@ class PlaceDetailExtraInfoAdapter() : RecyclerView.Adapter<PlaceDetailExtraInfoA
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.onBind(placeInfoList[position])
     }
+    fun setDataSet(newPlaceInfoList: List<Pair<String,String>>){
+        placeInfoList = newPlaceInfoList
+        notifyDataSetChanged()
+    }
+
 
     inner class ViewHolder(binding: ItemPlaceDetailExtraInfoBinding) :
         RecyclerView.ViewHolder(binding.root) {

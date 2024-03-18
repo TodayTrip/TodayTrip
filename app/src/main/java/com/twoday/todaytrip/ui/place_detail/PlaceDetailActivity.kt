@@ -1,18 +1,17 @@
 package com.twoday.todaytrip.ui.place_detail
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 
 class PlaceDetailActivity : AppCompatActivity() {
     private val TAG = "PlaceDetailActivity"
@@ -23,10 +22,14 @@ class PlaceDetailActivity : AppCompatActivity() {
         ViewModelProvider(this@PlaceDetailActivity)[PlaceDetailViewModel::class.java]
     }
 
-    private lateinit var placeInfoAdapter: PlaceDetailExtraInfoAdapter
+    private lateinit var placeInfoAdapter: PlaceInfoAdapter
+    private lateinit var memoryDataAdapter: MemoryDataAdapter
 
     private val tourItemExtra by lazy {
         when (intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)) {
+            TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
+                intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
+            }
             TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.CulturalFacilities>(EXTRA_TOUR_ITEM)
             }
@@ -42,9 +45,9 @@ class PlaceDetailActivity : AppCompatActivity() {
             TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.EventPerformanceFestival>(EXTRA_TOUR_ITEM)
             }
-
             else -> {
-                intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
+                Log.d(TAG, "tour item from intent extra is null!")
+                null
             }
         }
     }
@@ -64,16 +67,21 @@ class PlaceDetailActivity : AppCompatActivity() {
         binding = ActivityPlaceDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initViewModel()
         initTitleUI()
-        initMoreInfoRecyclerView()
+        initPlaceInfoRecyclerView()
+        initMyMemoryRecyclerView()
+
         initModelObserver()
+        initViewModel()
+
         initBackButton()
         initAddButton()
     }
 
     private fun initViewModel() {
-        model.initTourItem(tourItemExtra!!)
+        tourItemExtra?.let{
+            model.initTourItem(it)
+        }
     }
 
     private fun initTitleUI() {
@@ -88,11 +96,13 @@ class PlaceDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun initMoreInfoRecyclerView() {
-        placeInfoAdapter = PlaceDetailExtraInfoAdapter().apply {
-            placeInfoList = tourItemExtra!!.getDetailInfoWithLabel()
-        }
+    private fun initPlaceInfoRecyclerView() {
+        placeInfoAdapter = PlaceInfoAdapter(listOf())
         binding.rvPlaceDetailExtraInfoList.adapter = placeInfoAdapter
+    }
+    private fun initMyMemoryRecyclerView(){
+        memoryDataAdapter = MemoryDataAdapter()
+        binding.rvPlaceDetailMyMemoryList.adapter = memoryDataAdapter
     }
 
     private fun initModelObserver() {
@@ -112,6 +122,17 @@ class PlaceDetailActivity : AppCompatActivity() {
                     else R.color.white
                 )
             )
+        }
+
+        model.placeInfoList.observe(this@PlaceDetailActivity){
+            placeInfoAdapter.setDataSet(it)
+        }
+        model.memoryDataList.observe(this@PlaceDetailActivity){
+            Log.d(TAG, "observe) memoryDataList.size: ${it.size}")
+            memoryDataAdapter.submitList(it.toMutableList())
+
+            binding.rvPlaceDetailMyMemoryList.isVisible = it.isNotEmpty()
+            binding.tvPlaceDetailNoMemory.isVisible = it.isEmpty()
         }
     }
 
