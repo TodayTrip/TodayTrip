@@ -18,7 +18,7 @@ object SelectRegionPrefUtil {
 
     fun resetSelectRegionListPref() {
         Log.d(TAG, "resetSelectRegionListPref) called")
-        saveSelectRegionList(emptyList())
+        saveSelectRegionList(mutableListOf<String>())
     }
 
     private fun getSelectRegionListPreferences(): SharedPreferences =

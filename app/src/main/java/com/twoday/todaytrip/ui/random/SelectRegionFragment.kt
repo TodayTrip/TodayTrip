@@ -145,7 +145,8 @@ class SelectRegionFragment : Fragment() {
         }
         binding.btnRegionSelectNext.setOnClickListener {
             SelectRegionPrefUtil.resetSelectRegionListPref()
-            SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList)
+            SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList.toMutableList())
+
             val selectedDestination = SelectRegionPrefUtil.loadSelectRegionList().random()
             DestinationPrefUtil.saveDestination(selectedDestination)
             findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
