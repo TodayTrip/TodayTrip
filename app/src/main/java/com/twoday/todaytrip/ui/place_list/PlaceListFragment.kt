@@ -1,6 +1,6 @@
 package com.twoday.todaytrip.ui.place_list
 
-import android.content.Intent
+//import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,16 +9,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.ViewPagerAdapter
 import com.twoday.todaytrip.utils.DestinationPrefUtil
-//import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weatherApi.Item
 import com.twoday.todaytrip.weatherApi.WeatherClient
 import com.twoday.todaytrip.weatherApi.weather
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -56,15 +55,18 @@ class PlaceListFragment : Fragment() {
             addFragment(EventRecyclerViewFragment())
         }
 
+        val adapter = ViewPagerAdapter()
+        binding.viewpagerRecommend.adapter = adapter
+
         binding.vpViewpagerMain.adapter = viewPagerAdapter
         binding.vpViewpagerMain.isUserInputEnabled = false
         binding.tvTravelAddress.text = coordinates?.name
-        binding.ivLocal.setImageResource(coordinates?.image!!)
-        binding.ivLocal.setOnClickListener {
-            val intent = Intent(context, FullScreenImageActivity::class.java)
-            intent.putExtra("imageResource", coordinates.image)
-            startActivity(intent)
-        }
+//        binding.ivLocal.setImageResource(coordinates?.image!!)
+//        binding.ivLocal.setOnClickListener {
+//            val intent = Intent(context, FullScreenImageActivity::class.java)
+//            intent.putExtra("imageResource", coordinates.image)
+//            startActivity(intent)
+//        }
 
         TabLayoutMediator(binding.tlTabLayout, binding.vpViewpagerMain) { tab, position ->
             tab.text = resources.getText(
