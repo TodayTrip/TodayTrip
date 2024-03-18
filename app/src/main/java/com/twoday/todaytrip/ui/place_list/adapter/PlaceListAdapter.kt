@@ -5,6 +5,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -18,7 +19,6 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DateTimeUtil
-import kotlinx.coroutines.currentCoroutineContext
 
 enum class PlaceListViewType(val viewType: Int){
     TOUR_ITEM(0),
@@ -74,6 +74,7 @@ class PlaceListAdapter :
         list?.forEach {
             it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
         }
+
         super.submitList(list)
     }
 
@@ -116,6 +117,12 @@ class PlaceListAdapter :
                     .load(url)
                     .placeholder(R.drawable.img_default)
                     .into(firstImageView)
+            }
+
+            if (item.isAdded){
+                binding.ivBookmark.visibility = View.VISIBLE
+            } else {
+                binding.ivBookmark.visibility = View.INVISIBLE
             }
 
             when (item.getContentTypeId()) {
