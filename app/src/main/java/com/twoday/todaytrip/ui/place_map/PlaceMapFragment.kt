@@ -90,7 +90,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             val zoom = naverMap.cameraPosition.zoom
             if (zoom > 14.0) { // 확대 레벨이 임계값 이상일 때 마커 캡션 보이기
                 markers.forEach { marker ->
-                    marker.captionText = marker.tag as String // 실제 장소 이름으로 대체해야 합니다.
+                    marker.captionText = marker.tag as? String ?: ""
                     marker.setCaptionAligns(Align.Bottom)
                     marker.captionColor = Color.BLACK
                     marker.captionHaloColor = Color.WHITE
