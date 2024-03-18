@@ -10,16 +10,13 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.databinding.ActivityMainBinding
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
@@ -60,6 +57,11 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         initSwipeRefreshLayout()
         initRecyclerView()
         initModelObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchTouristAttractionList()
     }
 
     private fun initUI(){
