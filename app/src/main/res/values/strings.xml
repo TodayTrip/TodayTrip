@@ -65,6 +65,7 @@
 
     <!--  Select Region Fragment  -->
     <string name="select_region_description">여행하고 싶은 지역을 \n직접 선택해보세요!</string>
+기    <string name="select_region_all">전체 선택</string>
     <string name="seoul">서울</string>
     <string name="incheon">인천</string>
     <string name="jeonbuk">전북</string>

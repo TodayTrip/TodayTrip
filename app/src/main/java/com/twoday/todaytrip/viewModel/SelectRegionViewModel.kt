@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.random
+package com.twoday.todaytrip.viewModel
 
 import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.utils.SelectRegionPrefUtil

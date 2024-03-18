@@ -6,13 +6,12 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
-import java.util.Collections
 
 object SelectRegionPrefUtil {
     private val TAG = "SelectRegionPrefUtil"
 
     fun loadSelectRegionList() = loadSelectRegionList(PrefConstants.SELECT_REGION_LIST_KEY)
-    fun saveSelectRegionList(selectRegionList: List<String>) = saveSelectRegionList(
+    fun saveSelectRegionList(selectRegionList: MutableList<String>) = saveSelectRegionList(
         selectRegionList,
         PrefConstants.SELECT_REGION_LIST_KEY
     )
