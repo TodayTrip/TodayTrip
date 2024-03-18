@@ -66,7 +66,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding.inflate(layoutInflater)
+        binding = ActivityPlaceDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initTitleUI()
