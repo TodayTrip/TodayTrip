@@ -12,7 +12,6 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
-//import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import com.twoday.todaytrip.weatherApi.Item
 import com.twoday.todaytrip.weatherApi.WeatherClient
 import com.twoday.todaytrip.weatherApi.weather
@@ -42,9 +41,9 @@ class PlaceListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initAdapter()
-//        weatherInfo()
-
+        weatherInfo()
     }
+
 
     private fun initAdapter() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
@@ -57,11 +56,11 @@ class PlaceListFragment : Fragment() {
         }
         binding.vpViewpagerMain.adapter = viewPagerAdapter
         binding.tvTravelAddress.text = coordinates?.name
-        binding.ivLocal.setImageResource(coordinates?.image!!)
+        coordinates?.image?.let { binding.ivLocal.setImageResource(it) }
 
         binding.ivLocal.setOnClickListener {
             val intent = Intent(context, FullScreenImageActivity::class.java)
-            intent.putExtra("imageResource", coordinates.image)
+            intent.putExtra("imageResource", coordinates?.image)
             startActivity(intent)
         }
 
