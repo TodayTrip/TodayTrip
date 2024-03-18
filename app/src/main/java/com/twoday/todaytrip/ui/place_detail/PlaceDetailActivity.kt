@@ -30,6 +30,7 @@ class PlaceDetailActivity : AppCompatActivity() {
             TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
             }
+
             TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.CulturalFacilities>(EXTRA_TOUR_ITEM)
             }
@@ -45,6 +46,7 @@ class PlaceDetailActivity : AppCompatActivity() {
             TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.EventPerformanceFestival>(EXTRA_TOUR_ITEM)
             }
+
             else -> {
                 Log.d(TAG, "tour item from intent extra is null!")
                 null
@@ -64,7 +66,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlaceDetailBinding.inflate(layoutInflater)
+        binding = com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initTitleUI()
@@ -79,16 +81,23 @@ class PlaceDetailActivity : AppCompatActivity() {
     }
 
     private fun initViewModel() {
-        tourItemExtra?.let{
+        tourItemExtra?.let {
             model.initTourItem(it)
         }
     }
 
     private fun initTitleUI() {
         tourItemExtra?.let {
-            if (it.getImage().isNullOrEmpty()) {
-                Glide.with(applicationContext.applicationContext)
-                    .load(it.getImage())
+            Log.d(TAG, "tourItem is not null")
+
+            Log.d(TAG, "image: ${it.getImage()}, thumbnail: ${it.getThumbnailImage()}")
+            if (!it.getImage().isNullOrEmpty()) {
+                Glide.with(this@PlaceDetailActivity)
+                    .load(it.getImage().toString())
+                    .into(binding.ivPlaceDetailPic)
+            } else if (!it.getThumbnailImage().isNullOrEmpty()) {
+                Glide.with(this@PlaceDetailActivity)
+                    .load(it.getThumbnailImage().toString())
                     .into(binding.ivPlaceDetailPic)
             }
             binding.tvPlaceDetailTitle.text = it.getTitle()
@@ -100,7 +109,8 @@ class PlaceDetailActivity : AppCompatActivity() {
         placeInfoAdapter = PlaceInfoAdapter(listOf())
         binding.rvPlaceDetailExtraInfoList.adapter = placeInfoAdapter
     }
-    private fun initMyMemoryRecyclerView(){
+
+    private fun initMyMemoryRecyclerView() {
         memoryDataAdapter = MemoryDataAdapter()
         binding.rvPlaceDetailMyMemoryList.adapter = memoryDataAdapter
     }
@@ -124,10 +134,10 @@ class PlaceDetailActivity : AppCompatActivity() {
             )
         }
 
-        model.placeInfoList.observe(this@PlaceDetailActivity){
+        model.placeInfoList.observe(this@PlaceDetailActivity) {
             placeInfoAdapter.setDataSet(it)
         }
-        model.memoryDataList.observe(this@PlaceDetailActivity){
+        model.memoryDataList.observe(this@PlaceDetailActivity) {
             Log.d(TAG, "observe) memoryDataList.size: ${it.size}")
             memoryDataAdapter.submitList(it.toMutableList())
 
@@ -136,11 +146,12 @@ class PlaceDetailActivity : AppCompatActivity() {
         }
     }
 
-    private fun initBackButton(){
+    private fun initBackButton() {
         binding.ivPlaceDetailBack.setOnClickListener {
             if (!isFinishing) finish()
         }
     }
+
     private fun initAddButton() {
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             model.addButtonClicked()
