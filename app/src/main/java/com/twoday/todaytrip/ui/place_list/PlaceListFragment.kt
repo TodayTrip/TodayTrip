@@ -29,6 +29,8 @@ class PlaceListFragment : Fragment() {
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -42,7 +44,6 @@ class PlaceListFragment : Fragment() {
 
         initAdapter()
         weatherInfo()
-
     }
 
     private fun initAdapter() {
