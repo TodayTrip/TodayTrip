@@ -7,7 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.MainActivity
@@ -16,11 +19,17 @@ import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.RecordPrefUtil
+import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.SavePhotoViewModel
 
 class RecordBottomSheetDialog : BottomSheetDialogFragment() {
 
-    private val savePhotoViewModel by viewModels<SavePhotoViewModel>()
+    private val savePhotoViewModel: SavePhotoViewModel by activityViewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                SavePhotoViewModel() as T
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.TransparentBottomSheetDialogFragment)

@@ -32,4 +32,8 @@ class SavePhotoViewModel: ViewModel() {
         }
         _savePhotoDataList.value = savePhotoData
     }
+
+    fun addImage(position: Int, imageList: MutableList<String>){
+        _savePhotoDataList.value?.get(position)?.imageUriList = imageList
+    }
 }

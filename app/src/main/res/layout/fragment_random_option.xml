@@ -93,7 +93,7 @@
         android:text="완전 랜덤"
         android:textColor="@color/dark_gray"
         android:layout_marginTop="10dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_all_random"
         app:layout_constraintStart_toStartOf="@+id/btn_all_random"
         app:layout_constraintTop_toBottomOf="@+id/btn_all_random" />
@@ -104,7 +104,7 @@
         android:text="테마별 랜덤"
         android:textColor="@color/dark_gray"
         android:layout_marginTop="10dp"
-        android:textSize="24sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="@+id/btn_theme_random"
         app:layout_constraintStart_toStartOf="@+id/btn_theme_random"
         app:layout_constraintTop_toBottomOf="@+id/btn_theme_random" />

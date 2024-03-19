@@ -23,16 +23,14 @@ class RecordFragment : Fragment(), OnRecordClickListener {
 
     private var _binding: FragmentRecordBinding? = null
     private val binding get() = _binding!!
-    private lateinit var wordCloudView: WordCloud
+
     private val model by lazy {
         ViewModelProvider(this@RecordFragment)[RecordViewModel::class.java]
     }
 
     private lateinit var recordAdapter: RecordAdapter
+    private lateinit var wordCloudView: WordCloud
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -91,7 +89,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
     }
 
     private fun setChartVisibility(isVisible: Boolean) {
-        binding.graphContainer.isVisible = isVisible
+        binding.layoutRecordChart.isVisible = isVisible
         binding.tvChartEmpty.isVisible = !isVisible
     }
 

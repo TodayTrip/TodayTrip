@@ -1,37 +1,31 @@
 package com.twoday.todaytrip.ui.place_detail
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PlaceDetailActivity : AppCompatActivity() {
     private val TAG = "PlaceDetailActivity"
 
     private lateinit var binding: ActivityPlaceDetailBinding
 
-    //private val viewModel: PlaceDetailViewModel by viewModels()
+    private val model by lazy {
+        ViewModelProvider(this@PlaceDetailActivity)[PlaceDetailViewModel::class.java]
+    }
 
-    //    private val placePhotoAdapter by lazy { PlaceDetailPhotoAdapter() }
-    private lateinit var placeInfoAdapter: PlaceDetailExtraInfoAdapter
-//    private val placeMemoryAdapter by lazy { PlaceDetailMyMemoryAdapter() }
+    private lateinit var placeInfoAdapter: PlaceInfoAdapter
+    private lateinit var memoryDataAdapter: MemoryDataAdapter
 
-    //getExtra(장소 TourItem parcelable)
-    private val tourItem: TourItem? by lazy {
+    private val tourItemExtra by lazy {
         when (intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)) {
             TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
                 intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
@@ -54,12 +48,11 @@ class PlaceDetailActivity : AppCompatActivity() {
             }
 
             else -> {
+                Log.d(TAG, "tour item from intent extra is null!")
                 null
             }
         }
     }
-
-    private val hasPhoto: Boolean = true
 
     companion object {
         const val EXTRA_CONTENT_TYPE_ID = "extra_content_type_id"
@@ -71,94 +64,97 @@ class PlaceDetailActivity : AppCompatActivity() {
             }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityPlaceDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        Log.d(TAG, "tourItem title = ${tourItem?.getTitle()}")
-        tourItem!!.isAdded = ContentIdPrefUtil.isSavedContentId(tourItem!!.getContentId())
+        initTitleUI()
+        initPlaceInfoRecyclerView()
+        initMyMemoryRecyclerView()
 
-        initView()
-        //initViewModel()
-        initOnClickListener(tourItem!!)
+        initModelObserver()
+        initViewModel()
+
+        initBackButton()
+        initAddButton()
     }
 
-    private fun initView() {
-//        val introPhotoRecyclerView = binding.rvPlaceDetailPic
-        val extraInfoRecyclerView = binding.rvPlaceDetailExtraInfoList
-//        val myMemoryRecyclerView = binding.rvPlaceDetailMyMemoryList
-//        introPhotoRecyclerView.adapter = placePhotoAdapter
-
-        placeInfoAdapter = PlaceDetailExtraInfoAdapter(tourItem!!.getDetailInfoWithLabel())
-        extraInfoRecyclerView.adapter = placeInfoAdapter
-        Log.d("PlaceDetailInfo", "itemCount = ${placeInfoAdapter.itemCount}")
-//        myMemoryRecyclerView.adapter = placeMemoryAdapter
-
-        tourItem?.getDetailInfoWithLabel()
-
-        with(binding) {
-            tvPlaceDetailTitle.text = tourItem?.getTitle()
-            tvPlaceDetailLoca.text = tourItem?.getAddress()
-//            tvPlaceDetailTime.text = tourItem?.getTimeInfoWithLabel()?.get(0)?.second ?: "00:00"
-            Glide.with(applicationContext.applicationContext)
-                .load(tourItem?.getImage())
-                .into(ivPlaceDetailPic)
-            tvPlaceDetailNoPhoto.isVisible = !hasPhoto
+    private fun initViewModel() {
+        tourItemExtra?.let {
+            model.initTourItem(it)
         }
-        Log.d("btn", "${tourItem!!.isAdded}")
-        setAddButtonUI(tourItem!!.isAdded)
     }
 
+    private fun initTitleUI() {
+        tourItemExtra?.let {
+            Log.d(TAG, "tourItem is not null")
 
-//    private fun initViewModel() =viewModel.also { vm ->
-//        vm.placeItemData.observe(this, Observer {
-//            it.getContentId()
-//            it.getDetailInfoWithLabel()
-//            with(binding) {
-//                Glide.with(MyApplication.appContext!!)
-//                    .load(it.getThumbnailImage())
-//                    .placeholder(R.drawable.img_shop_default)
-//                    .into(binding.ivPlaceDetailPic)
-//                tvPlaceDetailTitle.text = it.getTitle()
-//                tvPlaceDetailLoca.text = "주소  ${it.getAddress()}"
-//                tvPlaceDetailTime.text = "영업시간  ${it.getDetailInfoWithLabel()}"
-//                tvPlaceDetailInfo.text
-//            }
-//        })
-//        vm.placeMemory.observe(this, Observer {
-//        })
-//    }
+            Log.d(TAG, "image: ${it.getImage()}, thumbnail: ${it.getThumbnailImage()}")
+            if (!it.getImage().isNullOrEmpty()) {
+                Glide.with(this@PlaceDetailActivity)
+                    .load(it.getImage().toString())
+                    .into(binding.ivPlaceDetailPic)
+            } else if (!it.getThumbnailImage().isNullOrEmpty()) {
+                Glide.with(this@PlaceDetailActivity)
+                    .load(it.getThumbnailImage().toString())
+                    .into(binding.ivPlaceDetailPic)
+            }
+            binding.tvPlaceDetailTitle.text = it.getTitle()
+            binding.tvPlaceDetailAddress.text = it.getAddress()
+        }
+    }
 
-    private fun initOnClickListener(item: TourItem) {
+    private fun initPlaceInfoRecyclerView() {
+        placeInfoAdapter = PlaceInfoAdapter(listOf())
+        binding.rvPlaceDetailExtraInfoList.adapter = placeInfoAdapter
+    }
+
+    private fun initMyMemoryRecyclerView() {
+        memoryDataAdapter = MemoryDataAdapter()
+        binding.rvPlaceDetailMyMemoryList.adapter = memoryDataAdapter
+    }
+
+    private fun initModelObserver() {
+        model.isTourItemAdded.observe(this@PlaceDetailActivity) { isAdded ->
+            binding.tvPlaceDetailAddPathBtn.background =
+                this.resources.getDrawable(
+                    if (isAdded) R.drawable.shape_main_blue_border_10_radius
+                    else R.drawable.shape_main_blue_10_radius
+                )
+            binding.tvPlaceDetailAddPathBtn.text = this.resources.getText(
+                if (isAdded) R.string.place_detail_remove_from_path
+                else R.string.place_detail_add_to_path
+            )
+            binding.tvPlaceDetailAddPathBtn.setTextColor(
+                this.resources.getColor(
+                    if (isAdded) R.color.main_blue
+                    else R.color.white
+                )
+            )
+        }
+
+        model.placeInfoList.observe(this@PlaceDetailActivity) {
+            placeInfoAdapter.setDataSet(it)
+        }
+        model.memoryDataList.observe(this@PlaceDetailActivity) {
+            Log.d(TAG, "observe) memoryDataList.size: ${it.size}")
+            memoryDataAdapter.submitList(it.toMutableList())
+
+            binding.rvPlaceDetailMyMemoryList.isVisible = it.isNotEmpty()
+            binding.tvPlaceDetailNoMemory.isVisible = it.isEmpty()
+        }
+    }
+
+    private fun initBackButton() {
         binding.ivPlaceDetailBack.setOnClickListener {
             if (!isFinishing) finish()
         }
+    }
+
+    private fun initAddButton() {
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
-            OnTourItemAddClickListener.onTourItemAddClick(item)
-            setAddButtonUI(item.isAdded)
+            model.addButtonClicked()
         }
     }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun setAddButtonUI(isAdded: Boolean) {
-        binding.tvPlaceDetailAddPathBtn.background =
-            MyApplication.appContext!!.resources.getDrawable(
-                if (isAdded) R.drawable.shape_main_blue_border_10_radius
-                else R.drawable.shape_main_blue_10_radius
-            )
-        binding.tvPlaceDetailAddPathBtn.text = MyApplication.appContext!!.resources.getText(
-            if (isAdded) R.string.place_detail_remove_from_path
-            else R.string.place_detail_add_to_path
-        )
-        binding.tvPlaceDetailAddPathBtn.setTextColor(
-            MyApplication.appContext!!.resources.getColor(
-                if (isAdded) R.color.main_blue
-                else R.color.white
-            )
-        )
-    }
-
-
 }

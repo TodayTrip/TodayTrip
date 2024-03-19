@@ -11,18 +11,8 @@ import androidx.lifecycle.Observer
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.FishBun.Companion.INTENT_PATH
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
-import com.skydoves.balloon.ArrowPositionRules
-import com.skydoves.balloon.BalloonAnimation
-import com.skydoves.balloon.BalloonSizeSpec
-import com.skydoves.balloon.createBalloon
-import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
-import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.route.RecordBottomSheetDialog
-import com.twoday.todaytrip.ui.route.RouteAdapter
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.RecordPrefUtil
-import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.viewModel.SavePhotoViewModel
 
 
@@ -141,7 +131,7 @@ class SavePhotoActivity : AppCompatActivity() {
                         imageList.add(imageUri.toString())
                     }
                     adapter.addImagesUriList(imageList,position)
-                    savePhotoViewModel.savePhotoDataList.value?.get(position)?.imageUriList = imageList
+                    savePhotoViewModel.addImage(position,imageList)
 //                adapter.addImageUri(imageList[0], position)
                 }
             }

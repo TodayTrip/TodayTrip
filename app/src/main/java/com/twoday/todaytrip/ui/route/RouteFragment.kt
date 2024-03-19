@@ -111,9 +111,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 val markerIconBitmap =
                     MapUtils.resizeMapIcons(
                         MyApplication.appContext!!,
-                        R.drawable.ic_marker,
-                        120,
-                        120
+                        R.drawable.img_pic_marker,
+                        100,
+                        100
                     )
                 locations.forEach { latLng ->
                     val marker = Marker().apply {
@@ -124,7 +124,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                     markers.add(marker) // 마커 리스트에 추가
                 }
                 val bounds = MapUtils.createBoundsForAllMarkers(markers)
-//            observeFurthestPairAndConnectMarkers()
+
                 MapUtils.updateCameraToBounds(naverMap, bounds, 130)
 
                 if (locations.size == 1) {
@@ -134,15 +134,10 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 // TODO : locations에 저장된 값이 없을 때 현재 선택한 지역이 카메라에 보이게 수정
             }
 
-            Log.d("마커 폴리라인 연결", "폴리라인 연결 함수 초반")
             if (locations.size > 1) {
                 val markerPositions = locations.map { location ->
                     LatLng(location.latitude, location.longitude)
                 }
-                markerPositions.forEach {
-                    Log.d("마커 폴리라인 위도 경도", "${it.longitude}+${it.latitude}")
-                }
-                Log.d("마커 폴리라인 연결", markerPositions.size.toString())
                 polylineOverlay.map = null
                 polylineOverlay.apply {
                     coords = markerPositions
@@ -173,7 +168,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 clickedTourItem
             )
         )
-    } //범위만 바꿔주는 노티파이가 있는데 찾아볼것
+    }
 
     //drag & drop
     private fun initItemTouchSimpleCallback() {
