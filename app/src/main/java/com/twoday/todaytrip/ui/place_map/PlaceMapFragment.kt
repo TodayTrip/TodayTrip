@@ -55,7 +55,10 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
     private var locations =
         loadTouristAttractionList().map {
-            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+            LocationInfo(
+                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble()),
+                it.getTitle()
+            )
         }
 
     private val onItemClick: (TourItem) -> Unit = { tourItem ->
@@ -70,13 +73,14 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentPlaceMapBinding.inflate(inflater, container, false)
         Log.d(TAG,"onCreateView")
+        _binding = FragmentPlaceMapBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d(TAG,"onViewCreated")
 
         mapView = binding.mvPlaceMap
         mapView.onCreate(savedInstanceState)
@@ -85,17 +89,17 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         initImageRecyclerView()
         initTabLayout()
         initModelObserver()
-        Log.d(TAG,"onViewCreated")
     }
 
-    private fun initOnChangeListener() {
+    private fun initOnChangeListener(position: Int) {
+        Log.d(TAG,"initOnChangeListener")
+        val locationInfo = locations[position]
+        val targetTitle = locationInfo.title
         naverMap.addOnCameraChangeListener { _, _ ->
             val zoom = naverMap.cameraPosition.zoom
             if (zoom > 14.0) { // 확대 레벨이 임계값 이상일 때 마커 캡션 보이기
-//                Log.d("마커사이즈",markers.size.toString())
                 markers.forEach { marker ->
-//                    Log.d("마커 tag",marker.tag.toString())
-                    marker.captionText = marker.tag as? String ?: ""
+                    marker.captionText = targetTitle
                     marker.setCaptionAligns(Align.Bottom)
                     marker.captionColor = Color.BLACK
                     marker.captionHaloColor = Color.WHITE
@@ -108,17 +112,17 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-        Log.d(TAG,"initOnChangeListener")
     }
 
     private fun initModelObserver() {
+        Log.d(TAG,"initModelObserver")
         viewModel.locations.observe(viewLifecycleOwner, Observer {
             locations = it
         })
-        Log.d(TAG,"initModelObserver")
     }
 
     private fun initImageRecyclerView() {
+        Log.d(TAG,"initImageRecyclerView")
         pagerSnapHelper.attachToRecyclerView(binding.rvPlaceMap)
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -134,50 +138,45 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                 }
             })
         }
-        Log.d(TAG,"initImageRecyclerView")
     }
 
     private fun moveToMarker(position: Int) {
-        val targetLocation = locations[position]
+        Log.d(TAG,"moveToMarker")
+        val locationInfo = locations[position]
+        val targetLocation = locationInfo.latLng
         val zoomLevel = 15.0 // 숫자가 커질 수록 확대됨
         val cameraPosition = CameraPosition(targetLocation, zoomLevel)
         val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition).animate(CameraAnimation.Easing)
+
         naverMap.moveCamera(cameraUpdate)
-        Log.d(TAG,"moveToMarker")
+        initOnChangeListener(position)
     }
 
     private fun initTabLayout() {
+        Log.d(TAG,"initTabLayout")
         binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 viewModel.onTabSeleted(tab.position)
+                clearMarkers()
                 when (tab.position) {
                     0 -> {
                         Log.d(TAG,"initTabLayout 1")
-                        clearMarkers()
-                        onMarkerReady()
                         placeMapAdapter.submitList(loadTouristAttractionList())
                     }
                     1 -> {
                         Log.d(TAG,"initTabLayout 2")
-                        clearMarkers()
-                        onMarkerReady()
                         placeMapAdapter.submitList(loadRestaurantList())
                     }
                     2 -> {
                         Log.d(TAG,"initTabLayout 3")
-                        clearMarkers()
-                        onMarkerReady()
                         placeMapAdapter.submitList(loadCafeList())
                     }
                     3 -> {
                         Log.d(TAG,"initTabLayout 4")
-                        clearMarkers()
-                        onMarkerReady()
                         placeMapAdapter.submitList(loadEventList())
                     }
                 }
                 onMarkerReady()
-//                clearMarkers()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -190,23 +189,23 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
+
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
 
         onMarkerReady()
-        Log.d(TAG,"onMapReady\n----------------------------------------------------------")
     }
 
     private fun onMarkerReady() {
-//        clearMarkers()
+        Log.d(TAG,"onMarkerReady")
 
         if (locations.isNotEmpty()) {
             val markerIconBitmap =
                 resizeMapIcons(requireContext(), R.drawable.ic_white_circle_marker, 100, 100)
 
-            locations.forEachIndexed { index, latLng ->
+            locations.forEachIndexed { index, location ->
                 val marker = Marker().apply {
-                    position = latLng
+                    position = location.latLng
                     icon = OverlayImage.fromBitmap(markerIconBitmap)
                     map = naverMap
                     if (index < placeMapAdapter.currentList.size) {
@@ -219,18 +218,15 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             val bounds = createBoundsForAllMarkers(markers)
             updateCameraToBounds(naverMap, bounds, 250)
         }
-
-        initOnChangeListener()
-        Log.d(TAG,"onMarkerReady")
     }
 
     //TODO ViewModel로 옮기려고 하는데 마커를 지도에서 제거하는 건 View에서 없애는 거니까 옮기면 안될까요?
     private fun clearMarkers() {
+        Log.d(TAG,"clearMarkers")
         markers.forEach { marker ->
             marker.map = null // 마커를 지도에서 제거
         }
         markers.clear() // 마커 리스트 비우기
-        Log.d(TAG,"clearMarkers")
     }
 
     override fun onStart() {
@@ -259,15 +255,20 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
+        Log.d(TAG,"onSaveInstanceState")
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
-        Log.d(TAG,"onSaveInstanceState")
     }
 
     override fun onDestroyView() {
+        Log.d(TAG,"onDestroyView")
         super.onDestroyView()
         mapView.onDestroy()
-        Log.d(TAG,"onDestroyView")
         _binding = null
     }
 }
+
+data class LocationInfo(
+    val latLng: LatLng,
+    val title: String
+)
