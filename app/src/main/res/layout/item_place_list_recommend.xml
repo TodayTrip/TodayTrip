@@ -39,7 +39,7 @@
         app:layout_constraintTop_toTopOf="@+id/iv_place_list_fragment_blur" />
 
     <TextView
-        android:id="@+id/tv_selected_location"
+        android:id="@+id/tv_selected_destination"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -51,7 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
-        android:id="@+id/spinner_selected_location"
+        android:id="@+id/spinner_selected_destination_sigungu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -59,9 +59,9 @@
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_selected_location"
-        app:layout_constraintStart_toEndOf="@+id/tv_selected_location"
-        app:layout_constraintTop_toTopOf="@+id/tv_selected_location" />
+        app:layout_constraintBottom_toBottomOf="@+id/tv_selected_destination"
+        app:layout_constraintStart_toEndOf="@+id/tv_selected_destination"
+        app:layout_constraintTop_toTopOf="@+id/tv_selected_destination" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
