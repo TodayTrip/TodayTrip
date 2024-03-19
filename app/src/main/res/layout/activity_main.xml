@@ -49,6 +49,7 @@
                 app:itemIconTint="@color/selector_nav_bar_icon"
                 app:itemRippleColor="@color/transparent"
                 app:itemTextColor="@color/selector_nav_bar_icon"
+                app:labelVisibilityMode="labeled"
                 app:menu="@menu/nav_menu" />
         </com.google.android.material.bottomappbar.BottomAppBar>
 

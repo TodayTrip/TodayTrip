@@ -27,4 +27,8 @@ object PrefConstants {
     // (4) Record 목록 저장 Shared Preference
     const val PREFERENCE_RECORD_LIST_KEY = "PREFERENCE_RECORD_LIST_KEY"
     const val RECORD_LIST_KEY = "RECORD_LIST_KEY" // Record 목록
+
+    // (5) Select Region 지역 선택 목록 저장 Shared Preference
+    const val PREFERENCE_SELECT_REGION_LIST_KEY = "PREFERENCE_SELECT_REGION_LIST_KEY"
+    const val SELECT_REGION_LIST_KEY = "SELECT_REGION_LIST_KEY"
 }

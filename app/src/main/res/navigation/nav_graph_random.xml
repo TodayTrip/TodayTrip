@@ -16,6 +16,17 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_select_region"
+        android:name="com.twoday.todaytrip.ui.random.SelectRegionFragment"
+        android:label="fragment_select_region"
+        tools:layout="@layout/fragment_select_region">
+
+        <action
+            android:id="@+id/action_navigation_select_region_to_navigation_random_result"
+            app:destination="@id/navigation_random_result" />
+    </fragment>
+
+    <fragment
         android:id="@+id/navigation_random_option"
         android:name="com.twoday.todaytrip.ui.random.RandomOptionFragment"
         android:label="fragment_random_option"
@@ -24,8 +35,11 @@
             android:id="@+id/action_navigation_random_option_to_navigation_random_theme"
             app:destination="@id/navigation_random_theme" />
         <action
-            android:id="@+id/action_navigation_random_option_to_navigation_random_result"
-            app:destination="@id/navigation_random_result" />
+            android:id="@+id/action_navigation_random_option_to_navigation_select_region"
+            app:destination="@id/navigation_select_region" />
+        <!--        <action-->
+<!--            android:id="@+id/action_navigation_random_option_to_navigation_random_result"-->
+<!--            app:destination="@id/navigation_random_result" />-->
     </fragment>
 
     <fragment
@@ -33,13 +47,16 @@
         android:name="com.twoday.todaytrip.ui.random.RandomThemeFragment"
         android:label="fragment_random_theme"
         tools:layout="@layout/fragment_random_theme">
-        <action
-            android:id="@+id/action_navigation_random_theme_to_navigation_random_result"
-            app:destination="@id/navigation_random_result">
-        </action>
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_random_theme_to_navigation_random_result"-->
+<!--            app:destination="@id/navigation_random_result">-->
+<!--        </action>-->
         <action
             android:id="@+id/action_navigation_random_theme_to_navigation_random_option"
             app:destination="@id/navigation_random_option" />
+        <action
+            android:id="@+id/action_navigation_random_theme_to_navigation_select_region"
+            app:destination="@id/navigation_select_region" />
     </fragment>
 
     <fragment
@@ -49,9 +66,13 @@
         tools:layout="@layout/fragment_random_result">
         <action
             android:id="@+id/action_navigation_random_result_to_navigation_place_list"
-            app:destination="@id/navigation_place_list" />
+            app:destination="@id/mainActivity"/>
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_random_result_to_navigation_place_list"-->
+<!--            app:destination="@id/navigation_place_list" />-->
     </fragment>
 
+<!--    아래의 방법처럼 써야 하는지? 83번째처럼 액티비티로 연결해도 되는지?-->
     <fragment
         android:id="@+id/navigation_place_list"
         android:name="com.twoday.todaytrip.ui.place_list.PlaceListFragment"
@@ -59,4 +80,9 @@
         tools:layout="@layout/fragment_place_list">
     </fragment>
 
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.twoday.todaytrip.ui.record_detail.RecordDetailActivity"
+        android:label="메인 화면"
+        tools:layout="@layout/activity_main"/>
 </navigation>

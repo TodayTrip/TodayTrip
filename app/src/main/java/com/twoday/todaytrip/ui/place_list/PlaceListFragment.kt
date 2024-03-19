@@ -1,6 +1,6 @@
 package com.twoday.todaytrip.ui.place_list
 
-import android.content.Intent
+//import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,15 +9,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.ViewPagerAdapter
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.weatherApi.Item
 import com.twoday.todaytrip.weatherApi.WeatherClient
 import com.twoday.todaytrip.weatherApi.weather
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.Exception
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -42,8 +42,8 @@ class PlaceListFragment : Fragment() {
 
         initAdapter()
         weatherInfo()
-    }
 
+    }
 
     private fun initAdapter() {
         val viewPagerAdapter = PagerFragmentStateAdapter(requireActivity())
@@ -54,15 +54,19 @@ class PlaceListFragment : Fragment() {
             addFragment(CafeRecyclerViewFragment())
             addFragment(EventRecyclerViewFragment())
         }
-        binding.vpViewpagerMain.adapter = viewPagerAdapter
-        binding.tvTravelAddress.text = coordinates?.name
-        coordinates?.image?.let { binding.ivLocal.setImageResource(it) }
 
-        binding.ivLocal.setOnClickListener {
-            val intent = Intent(context, FullScreenImageActivity::class.java)
-            intent.putExtra("imageResource", coordinates?.image)
-            startActivity(intent)
-        }
+        val adapter = ViewPagerAdapter()
+        binding.viewpagerRecommend.adapter = adapter
+
+        binding.vpViewpagerMain.adapter = viewPagerAdapter
+        binding.vpViewpagerMain.isUserInputEnabled = false
+        binding.tvTravelAddress.text = coordinates?.name
+//        binding.ivLocal.setImageResource(coordinates?.image!!)
+//        binding.ivLocal.setOnClickListener {
+//            val intent = Intent(context, FullScreenImageActivity::class.java)
+//            intent.putExtra("imageResource", coordinates.image)
+//            startActivity(intent)
+//        }
 
         TabLayoutMediator(binding.tlTabLayout, binding.vpViewpagerMain) { tab, position ->
             tab.text = resources.getText(
@@ -160,8 +164,9 @@ class PlaceListFragment : Fragment() {
                 "$temp°".also { tvWeatherInfo.text = it }
                 tvWeatherInfo2.text = result
             }
+        } catch (e: Exception) {
+            e.stackTrace
         }
-        catch (e:Exception){e.stackTrace}
     }
 
     private fun getBaseTime(h: String): String {
@@ -194,17 +199,124 @@ class PlaceListFragment : Fragment() {
 
     private fun localLocation(location: String): Coordinates? {
         return when (location) {
-            "서울" -> Coordinates("60", "127", "서울", listOf(R.drawable.img_seoul1, R.drawable.img_seoul2, R.drawable.img_seoul3, R.drawable.img_seoul4).random())
-            "인천" -> Coordinates("55", "124", "인천", listOf(R.drawable.img_incheon1, R.drawable.img_incheon2, R.drawable.img_incheon3).random())
-            "전북" -> Coordinates("63", "89", "전라북도", listOf(R.drawable.img_jeonbuk1, R.drawable.img_jeonbuk2).random())
-            "전남" -> Coordinates("51", "67", "전라남도", listOf(R.drawable.img_jeonnam1, R.drawable.img_jeonnam2, R.drawable.img_jeonnam3,R.drawable.img_jeonnam4,R.drawable.img_jeonnam5).random())
-            "경북" -> Coordinates("89", "91", "경상북도", listOf(R.drawable.img_gyeongbuk1, R.drawable.img_gyeongbuk2, R.drawable.img_gyeongbuk3).random())
-            "경남" -> Coordinates("91", "77", "경상남도", listOf(R.drawable.img_gyeongnam1, R.drawable.img_gyeongnam2, R.drawable.img_gyeongnam3).random())
-            "충북" -> Coordinates("69", "107", "충청북도", listOf(R.drawable.img_chungbuk2, R.drawable.img_chungbuk3,R.drawable.img_chungbuk4,R.drawable.img_chungbuk5).random())
-            "충남" -> Coordinates("68", "100", "충청남도",listOf(R.drawable.img_chungnam1, R.drawable.img_chungnam2, R.drawable.img_chungnam3).random())
-            "강원" -> Coordinates("73", "134", "강원도", listOf(R.drawable.img_gangwon1, R.drawable.img_gangwon2, R.drawable.img_gangwon3).random())
-            "대구" -> Coordinates("89", "90", "대구", listOf(R.drawable.img_daegu1, R.drawable.img_daegu2, R.drawable.img_daegu3).random())
-            "부산" -> Coordinates("98", "76", "부산", listOf(R.drawable.img_busan1, R.drawable.img_busan2, R.drawable.img_busan3, R.drawable.img_busan4).random())
+            "서울" -> Coordinates(
+                "60",
+                "127",
+                "서울",
+                listOf(
+                    R.drawable.img_seoul1,
+                    R.drawable.img_seoul2,
+                    R.drawable.img_seoul3,
+                    R.drawable.img_seoul4
+                ).random()
+            )
+
+            "인천" -> Coordinates(
+                "55",
+                "124",
+                "인천",
+                listOf(
+                    R.drawable.img_incheon1,
+                    R.drawable.img_incheon2,
+                    R.drawable.img_incheon3
+                ).random()
+            )
+
+            "전북" -> Coordinates(
+                "63",
+                "89",
+                "전라북도",
+                listOf(R.drawable.img_jeonbuk1, R.drawable.img_jeonbuk2).random()
+            )
+
+            "전남" -> Coordinates(
+                "51",
+                "67",
+                "전라남도",
+                listOf(
+                    R.drawable.img_jeonnam1,
+                    R.drawable.img_jeonnam2,
+                    R.drawable.img_jeonnam3,
+                    R.drawable.img_jeonnam4,
+                    R.drawable.img_jeonnam5
+                ).random()
+            )
+
+            "경북" -> Coordinates(
+                "89",
+                "91",
+                "경상북도",
+                listOf(
+                    R.drawable.img_gyeongbuk1,
+                    R.drawable.img_gyeongbuk2,
+                    R.drawable.img_gyeongbuk3
+                ).random()
+            )
+
+            "경남" -> Coordinates(
+                "91",
+                "77",
+                "경상남도",
+                listOf(
+                    R.drawable.img_gyeongnam1,
+                    R.drawable.img_gyeongnam2,
+                    R.drawable.img_gyeongnam3
+                ).random()
+            )
+
+            "충북" -> Coordinates(
+                "69",
+                "107",
+                "충청북도",
+                listOf(
+                    R.drawable.img_chungbuk2,
+                    R.drawable.img_chungbuk3,
+                    R.drawable.img_chungbuk4,
+                    R.drawable.img_chungbuk5
+                ).random()
+            )
+
+            "충남" -> Coordinates(
+                "68",
+                "100",
+                "충청남도",
+                listOf(
+                    R.drawable.img_chungnam1,
+                    R.drawable.img_chungnam2,
+                    R.drawable.img_chungnam3
+                ).random()
+            )
+
+            "강원" -> Coordinates(
+                "73",
+                "134",
+                "강원도",
+                listOf(
+                    R.drawable.img_gangwon1,
+                    R.drawable.img_gangwon2,
+                    R.drawable.img_gangwon3
+                ).random()
+            )
+
+            "대구" -> Coordinates(
+                "89",
+                "90",
+                "대구",
+                listOf(R.drawable.img_daegu1, R.drawable.img_daegu2, R.drawable.img_daegu3).random()
+            )
+
+            "부산" -> Coordinates(
+                "98",
+                "76",
+                "부산",
+                listOf(
+                    R.drawable.img_busan1,
+                    R.drawable.img_busan2,
+                    R.drawable.img_busan3,
+                    R.drawable.img_busan4
+                ).random()
+            )
+
             "대전" -> Coordinates("67", "100", "대전", listOf(R.drawable.img_seoul1).random())
             "제주" -> Coordinates("52", "38", "제주도", listOf(R.drawable.img_jeju1, R.drawable.img_jeju2, R.drawable.img_jeju3).random())
             "경기" -> Coordinates("60", "120", "경기도", listOf(R.drawable.img_gyeonggi1, R.drawable.img_gyeonggi2, R.drawable.img_gyeonggi3).random())
