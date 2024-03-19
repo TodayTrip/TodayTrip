@@ -94,14 +94,6 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
         model.destination.observe(viewLifecycleOwner) { destination ->
             binding.tvTravelAddress.text = destination
         }
-        model.titleImageId.observe(viewLifecycleOwner) {
-//        binding.ivLocal.setImageResource(coordinates?.image!!)
-//        binding.ivLocal.setOnClickListener {
-//            val intent = Intent(context, FullScreenImageActivity::class.java)
-//            intent.putExtra("imageResource", coordinates.image)
-//            startActivity(intent)
-//        }
-        }
 
         model.weatherInfo.observe(viewLifecycleOwner) { weatherInfo ->
             try {
