@@ -5,6 +5,7 @@ import android.graphics.ColorMatrixColorFilter
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -73,6 +74,7 @@ class PlaceListAdapter :
         list?.forEach {
             it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
         }
+
         super.submitList(list)
     }
 
@@ -117,6 +119,12 @@ class PlaceListAdapter :
                     .into(firstImageView)
             }
 
+            if (item.isAdded){
+                binding.ivBookmark.visibility = View.VISIBLE
+            } else {
+                binding.ivBookmark.visibility = View.INVISIBLE
+            }
+
             when (item.getContentTypeId()) {
                 TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                     val startDate = item.getDetailInfoWithLabel()[3].second
@@ -127,6 +135,10 @@ class PlaceListAdapter :
                         val filter = ColorMatrixColorFilter(matrix)
                         firstImageView.setColorFilter(filter)
                         binding.layoutEntire.setBackgroundResource(R.color.light_gray)
+                    }
+                    else {
+                        firstImageView.setColorFilter(null)
+                        binding.layoutEntire.setBackgroundResource(R.color.white)
                     }
                 }
                 TourContentTypeId.RESTAURANT.contentTypeId ->{

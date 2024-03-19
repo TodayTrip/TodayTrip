@@ -142,6 +142,7 @@ class SavePhotoActivity : AppCompatActivity() {
         binding.btnRouteFinish.setOnClickListener {
             val frag = RecordBottomSheetDialog()
             frag.show(supportFragmentManager, frag.tag)
+            Log.d("SavePhotoActivity 토스트", "토스트")
 //            RecordPrefUtil.addRecord(Record(savePhotoDataList))
 //            ContentIdPrefUtil.resetContentIdListPref()
 //            finish()

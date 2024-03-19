@@ -55,6 +55,11 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         initRecyclerView()
         initModelObserver()
     }
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchCafeList()
+    }
+
     private fun initUI(){
         setLoadingUI(true)
         setNoResultUI(false)
