@@ -1,13 +1,11 @@
 package com.twoday.todaytrip.ui.record_gallery
 
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,7 +36,6 @@ class RecordGalleryFragment : Fragment() {
         val columnWidthDp = 400
         val layoutManager = GridLayoutManager(requireContext(), calColumns(columnWidthDp))
         recyclerView.layoutManager = layoutManager
-        Log.d("asd", calColumns(columnWidthDp).toString())
     }
 
     private fun initModelObserver() {
@@ -54,7 +51,6 @@ class RecordGalleryFragment : Fragment() {
     private fun getDisplayWidth(): Int {
         val displayMetrics = DisplayMetrics()
         requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
-        Log.d("qqq",displayMetrics.widthPixels.toString())
         return displayMetrics.widthPixels
     }
 
