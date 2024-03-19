@@ -81,6 +81,7 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
         when (fragment) {
             is RecordDetailListFragment -> {
                 viewModel.setMarkersFromSavePhotoDataList(record?.savePhotoDataList)
+                viewModel.savePhotoDataSetList(record?.savePhotoDataList)
                 supportFragmentManager.commit {
                     replace(R.id.container_record_detail, fragment)
                     setReorderingAllowed(true)

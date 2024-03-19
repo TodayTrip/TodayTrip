@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.overlay.Marker
+import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 
 class RecordDetailViewModel : ViewModel() {
@@ -26,6 +27,9 @@ class RecordDetailViewModel : ViewModel() {
 
     private val _imageUriList = MutableLiveData<List<String>>()
     val imageUriList: LiveData<List<String>> = _imageUriList
+
+    private val _dataSetList = MutableLiveData<List<SavePhotoData>>()
+    val dataSetList:LiveData<List<SavePhotoData>> = _dataSetList
 
     init {
         _isOptionMap.value = true
@@ -80,5 +84,13 @@ class RecordDetailViewModel : ViewModel() {
             }
         }
         _imageUriList.value = uriList
+    }
+
+    fun savePhotoDataSetList(savePhotoDataList: List<SavePhotoData>?){
+        val dataList = mutableListOf<SavePhotoData>()
+        savePhotoDataList?.forEach { savePhotoData ->
+            dataList.add(savePhotoData)
+        }
+        _dataSetList.value = dataList
     }
 }

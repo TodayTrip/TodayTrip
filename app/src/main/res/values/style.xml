@@ -91,4 +91,12 @@
         <item name="android:colorBackground">@android:color/transparent</item>
     </style>
 
+    <style name="SelectedChip" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/selector_chip_bg_color</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:textColor">@color/selector_chip_text</item>
+        <item name="rippleColor">@null</item>
+        <item name="itemRippleColor">@null</item>
+        <item name="android:clickable">true</item>
+    </style>
 </resources>
