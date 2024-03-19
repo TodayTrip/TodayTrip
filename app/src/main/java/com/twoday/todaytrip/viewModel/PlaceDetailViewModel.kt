@@ -1,10 +1,11 @@
-package com.twoday.todaytrip.ui.place_detail
+package com.twoday.todaytrip.viewModel
 
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_detail.MemoryData
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.RecordPrefUtil
