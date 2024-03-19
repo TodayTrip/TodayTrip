@@ -19,10 +19,6 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecommendViewPagerAdapter
     private var recommendDataList = listOf<RecommendData>()
     var onTourItemClickListener: OnTourItemClickListener? = null
 
-    override fun getItemViewType(position: Int): Int {
-        return recommendDataList[position].getViewType()
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding = ItemPlaceListRecommendBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
@@ -44,6 +40,11 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecommendViewPagerAdapter
         }
     }
 
+    fun changeDataSet(newRecommendDataList: List<RecommendData>){
+        recommendDataList = newRecommendDataList
+        notifyDataSetChanged()
+    }
+
     inner class Holder(binding: ItemPlaceListRecommendBinding): RecyclerView.ViewHolder(binding.root){
         private val imageView: ImageView = binding.ivItemPlaceListRecommendImage
         private val subTitleTextView: TextView = binding.tvItemPlaceListRecommendSubTitle
@@ -55,9 +56,11 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecommendViewPagerAdapter
             titleTextView.text = recommendCover.title
         }
         fun bindTourItem(recommendTourItem: RecommendTourItem){
-            Glide.with(MyApplication.appContext!!)
-                .load(recommendTourItem.imageUrl)
-                .into(imageView)
+            recommendTourItem.imageUrl?.let {
+                Glide.with(MyApplication.appContext!!)
+                    .load(recommendTourItem.imageUrl)
+                    .into(imageView)
+            }
             subTitleTextView.setText(recommendTourItem.subTitleId)
             titleTextView.text = recommendTourItem.title
         }
