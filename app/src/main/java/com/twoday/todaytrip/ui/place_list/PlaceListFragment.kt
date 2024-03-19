@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
@@ -16,6 +18,7 @@ import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
+import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 
 
@@ -28,6 +31,14 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
     private val model by lazy {
         ViewModelProvider(this@PlaceListFragment)[PlaceListViewModel::class.java]
     }
+    private val mainModel: MainViewModel by activityViewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                MainViewModel() as T
+        }
+    }
+
+    private lateinit var recommendAdapter: RecommendViewPagerAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,6 +53,7 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
 
         initAdapter()
         initModelObserver()
+        initMainModelObserver()
     }
 
     private fun initAdapter() {
@@ -50,7 +62,7 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecommendAdapter() {
-        val recommendAdapter = RecommendViewPagerAdapter().apply {
+        recommendAdapter = RecommendViewPagerAdapter().apply {
             onTourItemClickListener = this@PlaceListFragment
         }
         binding.viewpagerRecommend.adapter = recommendAdapter
@@ -111,6 +123,11 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
             } catch (e: Exception) {
                 e.stackTrace
             }
+        }
+    }
+    private fun initMainModelObserver(){
+        mainModel.recommendDataList.observe(viewLifecycleOwner){
+            recommendAdapter.changeDataSet(it)
         }
     }
 
