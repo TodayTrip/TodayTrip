@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapView
@@ -29,7 +28,7 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
     private val TAG = "RecordDetailListFragment"
     private var _binding: FragmentRecordDetailListBinding? = null
     private val binding get() = _binding!!
-    private val recordDetailMapAdapter by lazy { RecordDetailMapAdapter() }
+    private val recordDetailListAdapter by lazy { RecordDetailListAdapter() }
     private val viewModel: RecordDetailViewModel by activityViewModels()
 
     private lateinit var naverMap: NaverMap
@@ -79,9 +78,10 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
 
     private fun initImageRecyclerView() {
         binding.rvRecordDetailList.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            adapter = recordDetailMapAdapter
+//            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            adapter = this@RecordDetailListFragment.recordDetailListAdapter
         }
+        Log.d(TAG, "어댑터 $binding.rvRecordDetailList.adapter.toString()")
     }
 
     private fun initModelObserver() {
@@ -89,6 +89,10 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
             markerList = it
             Log.d("RecordDetailListFragment", "뷰모델에서 받아온 위도 경도: $markerList")
         })
+        viewModel.dataSetList.observe(viewLifecycleOwner){ dataSetList ->
+            this.recordDetailListAdapter.submitList(dataSetList)
+            Log.d(TAG,"옵저브 ${this.recordDetailListAdapter.submitList(dataSetList).toString()}")
+        }
     }
 
     override fun onMapReady(naverMap: NaverMap) {

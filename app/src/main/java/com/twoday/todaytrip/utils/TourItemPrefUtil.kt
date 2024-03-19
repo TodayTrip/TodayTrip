@@ -8,9 +8,6 @@ import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.decodeFromJsonElement
-import kotlinx.serialization.json.encodeToJsonElement
 
 object TourItemPrefUtil {
     private val TAG = "TourItemPrefUtil"

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -30,11 +31,14 @@ import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.naver.maps.map.overlay.PolylineOverlay
+import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
@@ -203,10 +207,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
     //클릭 이벤트
     private fun initRouteButton() {
         binding.layoutRouteFinishButton.setOnClickListener {
-            activity?.let {
-                val intent = Intent(context, SavePhotoActivity::class.java)
-                startActivity(intent)
-            }
+            if (routeViewModel.routeListDataSet.value?.isNotEmpty() == true) {
+                activity?.let {
+                    val intent = Intent(context, SavePhotoActivity::class.java)
+                    startActivity(intent)
+                }
+            } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }
 
         binding.tvRouteRemoveButton.setOnClickListener {

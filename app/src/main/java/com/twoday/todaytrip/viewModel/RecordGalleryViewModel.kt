@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.ui.record_gallery
+package com.twoday.todaytrip.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

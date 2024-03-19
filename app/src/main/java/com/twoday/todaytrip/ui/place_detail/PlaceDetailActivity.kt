@@ -12,6 +12,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.viewModel.PlaceDetailViewModel
 
 class PlaceDetailActivity : AppCompatActivity() {
     private val TAG = "PlaceDetailActivity"
