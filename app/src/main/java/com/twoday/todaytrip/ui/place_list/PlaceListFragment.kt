@@ -2,6 +2,7 @@ package com.twoday.todaytrip.ui.place_list
 
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
-import com.twoday.todaytrip.ui.place_list.adapter.ViewPagerAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 
 
-class PlaceListFragment : Fragment() {
+class PlaceListFragment : Fragment(), OnTourItemClickListener {
     private val TAG = "PlaceListFragment"
 
     private var _binding: FragmentPlaceListBinding? = null
@@ -46,8 +50,20 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun initRecommendAdapter() {
-        val recommendAdapter = ViewPagerAdapter()
+        val recommendAdapter = RecommendViewPagerAdapter().apply {
+            onTourItemClickListener = this@PlaceListFragment
+        }
         binding.viewpagerRecommend.adapter = recommendAdapter
+    }
+
+    override fun onTourItemClick(tourItem: TourItem) {
+        Log.d(TAG, "onTourItemClick) called, ${tourItem.getTitle()}")
+        val placeDetailIntent = PlaceDetailActivity.newIntent(
+            requireContext(),
+            tourItem.getContentTypeId(),
+            tourItem
+        )
+        startActivity(placeDetailIntent)
     }
 
     private fun initMainAdapter() {
