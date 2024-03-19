@@ -38,7 +38,7 @@
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
     
-    <string name="place_list_recommend_sub_title_cover">오늘여행이 추천하는 랜덤 코스</string>
+    <string name="place_list_recommend_sub_title_cover">오늘의 랜덤 코스</string>
     <string name="place_list_recommend_sub_title_tourist_attraction">오늘의 랜덤 관광지</string>
     <string name="place_list_recommend_sub_title_restaurant">오늘의 랜덤 음식점</string>
     <string name="place_list_recommend_sub_title_cafe">오늘의 랜덤 카페</string>
