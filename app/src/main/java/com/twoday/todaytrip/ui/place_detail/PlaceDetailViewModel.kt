@@ -1,11 +1,8 @@
 package com.twoday.todaytrip.ui.place_detail
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.viewModel.MainViewModel
 import kotlinx.coroutines.Dispatchers

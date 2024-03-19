@@ -1,15 +1,11 @@
 package com.twoday.todaytrip.ui.place_detail
 
-import android.annotation.SuppressLint
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.databinding.ItemPlaceDetailExtraInfoBinding
-import com.twoday.todaytrip.tourData.TourItem
 
 class PlaceDetailExtraInfoAdapter(
     private val placeInfoList: List<Pair<String, String>>

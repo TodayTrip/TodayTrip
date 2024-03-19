@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.sangcomz.fishbun.FishBun
 import com.sangcomz.fishbun.FishBun.Companion.INTENT_PATH
 import com.sangcomz.fishbun.adapter.image.impl.GlideAdapter
@@ -18,9 +19,11 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivitySavePhotoBinding
 import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.route.RecordBottomSheetDialog
+import com.twoday.todaytrip.ui.route.RouteAdapter
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.viewModel.SavePhotoViewModel
 
 
 class SavePhotoActivity : AppCompatActivity() {
@@ -30,37 +33,49 @@ class SavePhotoActivity : AppCompatActivity() {
         ActivitySavePhotoBinding.inflate(layoutInflater)
     }
 
-    private lateinit var adapter: SavePhotoAdapter
+    private val adapter: SavePhotoAdapter by lazy {
+        SavePhotoAdapter()
+    }
     val savePhotoDataList = mutableListOf<SavePhotoData>()
     private var position = 0
+    private val savePhotoViewModel by viewModels<SavePhotoViewModel>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
+        initModelObserver()
         initSavePhotoDataList()
         initSavePhotoRecylerView()
         initRouteFinishButton()
+
+    }
+
+    private fun initModelObserver(){
+        savePhotoViewModel.savePhotoDataList.observe(this, Observer{savePhotoList ->
+            adapter.submitList(savePhotoList)
+        })
     }
 
     private fun initSavePhotoDataList() {
-        val allTourItemList = TourItemPrefUtil.loadAllTourItemList()
-        val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
-
-        addedContentIdList.forEach { contentID ->
-            val tourItem = allTourItemList.find {
-                it.getContentId() == contentID
-            }!!
-            savePhotoDataList.add(SavePhotoData(tourItem))
-            if (allTourItemList.isNotEmpty()) {
-//                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
-            }
-        }
+        savePhotoViewModel.savePhotoData()
+//        val allTourItemList = TourItemPrefUtil.loadAllTourItemList()
+//        val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
+//
+//        addedContentIdList.forEach { contentID ->
+//            val tourItem = allTourItemList.find {
+//                it.getContentId() == contentID
+//            }!!
+//            savePhotoDataList.add(SavePhotoData(tourItem))
+//            if (allTourItemList.isNotEmpty()) {
+////                binding.layoutRouteEmptyFrame.visibility = View.INVISIBLE
+//            }
+//        }
     }
 
     private fun initSavePhotoRecylerView() {
-        adapter = SavePhotoAdapter(savePhotoDataList)
+        adapter.submitList(savePhotoDataList)
         binding.rvSavephotoRecyclerview.adapter = adapter
 
         adapter.itemClick = object : SavePhotoAdapter.ItemClick {
@@ -126,6 +141,7 @@ class SavePhotoActivity : AppCompatActivity() {
                         imageList.add(imageUri.toString())
                     }
                     adapter.addImagesUriList(imageList,position)
+                    savePhotoViewModel.savePhotoDataList.value?.get(position)?.imageUriList = imageList
 //                adapter.addImageUri(imageList[0], position)
                 }
             }

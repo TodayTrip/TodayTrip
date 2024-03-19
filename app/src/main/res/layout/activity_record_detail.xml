@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/iv_record_detail_back"
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
             android:src="@drawable/ic_record_detail_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,11 +41,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="4dp"
         android:text="부산"
         android:textStyle="bold"
         android:textColor="@color/place_title_gray"
-        android:textSize="30sp"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layout_record_detail_top" />
 
@@ -56,15 +56,15 @@
         android:layout_marginStart="16dp"
         android:text="2024/02/26"
         android:textColor="@color/place_addr_gray"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_detail_title" />
 
     <ImageView
         android:id="@+id/iv_record_detail_option"
         app:tint = "@color/place_title_gray"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
         android:layout_marginEnd="16dp"
         android:src="@drawable/ic_record_detail_list"
         app:layout_constraintBottom_toBottomOf="@id/tv_record_detail_date"
