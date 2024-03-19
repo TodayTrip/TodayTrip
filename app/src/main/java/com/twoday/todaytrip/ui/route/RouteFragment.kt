@@ -39,6 +39,10 @@ import androidx.fragment.app.viewModels
 import com.naver.maps.map.overlay.PolylineOverlay
 import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
+import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.utils.MapUtils.createIconWithText
+import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
 import com.twoday.todaytrip.viewModel.RouteViewModel
 
 class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
@@ -108,17 +112,23 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             clearMarkers()
             polylineOverlay.map = null
             if (locations.isNotEmpty()) {
-                val markerIconBitmap =
-                    MapUtils.resizeMapIcons(
-                        MyApplication.appContext!!,
-                        R.drawable.img_pic_marker,
-                        100,
-                        100
-                    )
-                locations.forEach { latLng ->
+                locations.forEachIndexed { index, latLng ->
+                    val text = (index + 1).toString()
+                    val iconWithTextBitmap =
+                        createIconWithText(
+                            requireContext(),
+                            R.drawable.ic_blue_marker,
+                            text
+                        )
+                    val resizedIconBitmap =
+                        resizeBitmap(
+                            iconWithTextBitmap,
+                            90,
+                            90
+                        )
                     val marker = Marker().apply {
                         position = latLng
-                        icon = OverlayImage.fromBitmap(markerIconBitmap)
+                        icon = OverlayImage.fromBitmap(resizedIconBitmap)
                         map = naverMap
                     }
                     markers.add(marker) // 마커 리스트에 추가
@@ -131,7 +141,14 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                     naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
                 }
             } else {
-                // TODO : locations에 저장된 값이 없을 때 현재 선택한 지역이 카메라에 보이게 수정
+                val destination = DestinationPrefUtil.loadDestination()
+                val location = destinationLatLng[destination]
+                val cameraUpdate = location?.let { CameraUpdate.scrollTo(it) }
+                if (cameraUpdate != null) {
+                    naverMap.moveCamera(cameraUpdate)
+                }
+
+                naverMap.moveCamera(CameraUpdate.zoomTo(9.0))
             }
 
             if (locations.size > 1) {
@@ -244,6 +261,8 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
+        naverMap.uiSettings.isZoomControlEnabled = false
+
         routeViewModel.setIsMapReady(true)
     }
 

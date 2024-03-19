@@ -57,6 +57,11 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         initModelObserver()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchEventList()
+    }
+
     private fun initUI() {
         setLoadingUI(true)
         setNoResultUI(false)

@@ -59,6 +59,11 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         initModelObserver()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchTouristAttractionList()
+    }
+
     private fun initUI(){
         setLoadingUI(true)
         setNoResultUI(false)

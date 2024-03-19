@@ -52,6 +52,7 @@
     <string name="bottom_sheet_record_title">현재까지의 경로가 기록됩니다.</string>
     <string name="bottom_sheet_record_description">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
     <string name="bottom_sheet_record_button">기록하기</string>
+    <string name="record_finish">추억이 추가되었습니다!</string>
 
     <string name="bottom_sheet_random_title">새로운 여행을 떠나보세요!</string>
     <string name="bottom_sheet_random_description">지금까지의 경로는 초기화됩니다.</string>

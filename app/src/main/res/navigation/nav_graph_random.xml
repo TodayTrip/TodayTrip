@@ -66,9 +66,13 @@
         tools:layout="@layout/fragment_random_result">
         <action
             android:id="@+id/action_navigation_random_result_to_navigation_place_list"
-            app:destination="@id/navigation_place_list" />
+            app:destination="@id/mainActivity"/>
+<!--        <action-->
+<!--            android:id="@+id/action_navigation_random_result_to_navigation_place_list"-->
+<!--            app:destination="@id/navigation_place_list" />-->
     </fragment>
 
+<!--    아래의 방법처럼 써야 하는지? 83번째처럼 액티비티로 연결해도 되는지?-->
     <fragment
         android:id="@+id/navigation_place_list"
         android:name="com.twoday.todaytrip.ui.place_list.PlaceListFragment"
@@ -76,4 +80,9 @@
         tools:layout="@layout/fragment_place_list">
     </fragment>
 
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.twoday.todaytrip.ui.record_detail.RecordDetailActivity"
+        android:label="메인 화면"
+        tools:layout="@layout/activity_main"/>
 </navigation>

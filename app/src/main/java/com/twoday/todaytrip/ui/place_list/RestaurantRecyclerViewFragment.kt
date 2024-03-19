@@ -61,6 +61,11 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         initModelObserver()
     }
 
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchRestaurantList()
+    }
+
     private fun initUI() {
         setLoadingUI(true)
         setNoResultUI(false)
