@@ -2,9 +2,13 @@ package com.twoday.todaytrip.ui.route
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
@@ -37,6 +41,7 @@ class RecordBottomSheetDialog : BottomSheetDialogFragment() {
             RecordPrefUtil.addRecord(Record(savePhotoDataList = savePhotoDataList))
             ContentIdPrefUtil.resetContentIdListPref()
             dismiss()
+            Toast.makeText(requireActivity(), R.string.record_finish, Toast.LENGTH_SHORT).show()
         }
     }
 }
