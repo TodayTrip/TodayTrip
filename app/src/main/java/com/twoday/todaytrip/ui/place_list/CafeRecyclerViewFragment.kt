@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -17,10 +18,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
 import com.twoday.todaytrip.utils.showSnackBar
 import com.twoday.todaytrip.viewModel.MainViewModel
 
@@ -90,6 +91,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             this.adapter = cafeAdapter
             initScrollListener(this)
         }
+        initFloatingButton()
     }
     private fun initScrollListener(recyclerView: RecyclerView){
         recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
@@ -142,6 +144,33 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
                 anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
             )
             mainModel.setCafeMoreLoadedDefault()
+        }
+    }
+
+    private fun initFloatingButton(){
+        // 플로팅 버튼
+        val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
+        val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }
+        var isTop = true
+        binding.rvCafeRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.rvCafeRecyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    binding.fbContactFloating.startAnimation(fadeOut)
+                    binding.fbContactFloating.visibility = View.GONE
+                    isTop = true
+                } else {
+                    if (isTop) {
+                        binding.fbContactFloating.visibility = View.VISIBLE
+                        binding.fbContactFloating.startAnimation(fadeIn)
+                        isTop = false
+                    }
+                }
+            }
+        })
+        binding.fbContactFloating.setOnClickListener {
+            binding.rvCafeRecyclerView.smoothScrollToPosition(0)
         }
     }
 

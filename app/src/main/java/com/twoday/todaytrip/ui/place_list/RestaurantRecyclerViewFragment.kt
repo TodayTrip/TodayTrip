@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -99,6 +100,7 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             this.adapter = restaurantAdapter
             initScrollListener(this)
         }
+        initFloatingButton()
     }
 
     private fun initScrollListener(recyclerView: RecyclerView) {
@@ -154,6 +156,33 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
                 anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
             )
             mainModel.setRestaurantMoreLoadedDefault()
+        }
+    }
+
+    private fun initFloatingButton() {
+        // 플로팅 버튼
+        val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
+        val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }
+        var isTop = true
+        binding.rvRestaurantRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.rvRestaurantRecyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    binding.fbContactFloating.startAnimation(fadeOut)
+                    binding.fbContactFloating.visibility = View.GONE
+                    isTop = true
+                } else {
+                    if (isTop) {
+                        binding.fbContactFloating.visibility = View.VISIBLE
+                        binding.fbContactFloating.startAnimation(fadeIn)
+                        isTop = false
+                    }
+                }
+            }
+        })
+        binding.fbContactFloating.setOnClickListener {
+            binding.rvRestaurantRecyclerView.smoothScrollToPosition(0)
         }
     }
 
