@@ -136,6 +136,10 @@ class PlaceListAdapter :
                         firstImageView.setColorFilter(filter)
                         binding.layoutEntire.setBackgroundResource(R.color.light_gray)
                     }
+                    else {
+                        firstImageView.setColorFilter(null)
+                        binding.layoutEntire.setBackgroundResource(R.color.white)
+                    }
                 }
                 TourContentTypeId.RESTAURANT.contentTypeId ->{
                     // do nothing
