@@ -18,7 +18,6 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DateTimeUtil
-import kotlinx.coroutines.currentCoroutineContext
 
 enum class PlaceListViewType(val viewType: Int){
     TOUR_ITEM(0),
