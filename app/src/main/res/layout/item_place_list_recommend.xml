@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_local"
+        android:id="@+id/iv_item_place_list_recommend_image"
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:scaleType="centerCrop"
@@ -16,17 +16,17 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_place_list_fragment_blur"
+        android:id="@+id/iv_item_place_list_recommend_blur"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:src="@drawable/img_place_list_blur"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_local"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_list_recommend_image"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tv_item_place_list_recommend_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
@@ -36,32 +36,18 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_place_list_fragment_blur" />
+        app:layout_constraintTop_toTopOf="@+id/iv_item_place_list_recommend_blur" />
 
     <TextView
-        android:id="@+id/tv_selected_destination"
+        android:id="@+id/tv_item_place_list_recommend_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="경기도"
+        android:text="경기도 전체"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/iv_place_list_fragment_blur"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
-
-    <TextView
-        android:id="@+id/spinner_selected_destination_sigungu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:text="전체"
-        android:textColor="@color/white"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_selected_destination"
-        app:layout_constraintStart_toEndOf="@+id/tv_selected_destination"
-        app:layout_constraintTop_toTopOf="@+id/tv_selected_destination" />
-
+        app:layout_constraintStart_toStartOf="@+id/iv_item_place_list_recommend_blur"
+        app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_recommend_sub_title" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
