@@ -12,7 +12,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import androidx.transition.TransitionInflater
-import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
