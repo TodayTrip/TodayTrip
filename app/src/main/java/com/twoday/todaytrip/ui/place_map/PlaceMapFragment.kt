@@ -9,10 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.transition.TransitionInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
@@ -44,9 +45,8 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private var _binding: FragmentPlaceMapBinding? = null
     private val binding get() = _binding!!
     private val placeMapAdapter by lazy { PlaceMapAdapter(onItemClick) }
-    private val viewModel by lazy {
-        ViewModelProvider(this@PlaceMapFragment)[PlaceMapViewModel::class.java]
-    }
+    private val viewModel: PlaceMapViewModel by viewModels()
+
     private val pagerSnapHelper = PagerSnapHelper()
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
@@ -67,6 +67,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             tourItem.getContentTypeId(),
             tourItem)
         startActivity(placeDetailIntent)
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     override fun onCreateView(
@@ -203,20 +204,20 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             val markerIconBitmap =
                 resizeMapIcons(requireContext(), R.drawable.ic_white_circle_marker, 100, 100)
 
-            locations.forEachIndexed { index, location ->
+            locations.forEachIndexed { index, locationInfo ->
                 val marker = Marker().apply {
-                    position = location.latLng
+                    position = locationInfo.latLng
                     icon = OverlayImage.fromBitmap(markerIconBitmap)
                     map = naverMap
                     if (index < placeMapAdapter.currentList.size) {
-                        tag = placeMapAdapter.currentList[index].getTitle()
+                        tag = locationInfo.title
                     }
                 }
                 markers.add(marker) // 마커 리스트에 추가
             }
 
             val bounds = createBoundsForAllMarkers(markers)
-            updateCameraToBounds(naverMap, bounds, 250)
+            updateCameraToBounds(naverMap, bounds, 200)
         }
     }
 
@@ -261,7 +262,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onDestroyView() {
-        Log.d(TAG,"onDestroyView")
+        Log.d(TAG,"onDestroyView\n--------------------------------------")
         super.onDestroyView()
         mapView.onDestroy()
         _binding = null

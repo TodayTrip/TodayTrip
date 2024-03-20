@@ -2,19 +2,19 @@ package com.twoday.todaytrip.ui.record_detail
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemSavePhotoListBinding
-import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
+
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 
 class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAdapter.Holder>(
     TourItemDiffCallback()
 ) {
-
     class TourItemDiffCallback : DiffUtil.ItemCallback<SavePhotoData>() {
         override fun areItemsTheSame(oldItem: SavePhotoData, newItem: SavePhotoData): Boolean {
             return oldItem.imageUriList == newItem.imageUriList
@@ -42,6 +42,10 @@ class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAda
         private val title = binding.tvSavePhotoRoadText
         private val address = binding.tvSavePhotoAddress
         val position = binding.tvSavePhotoPocketNumber
+
+        val icon = binding.ivSavePhotoIcon
+        val iconText = binding.tvSavePhotoPlustext
+
         fun bind(item: SavePhotoData) {
             title.text = item.tourItem.getTitle()
             address.text = item.tourItem.getAddress()
@@ -56,6 +60,10 @@ class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAda
                     .placeholder(R.drawable.img_default)
                     .into(image)
             }
+            image.clipToOutline = true
+
+            icon.isVisible = false
+            iconText.isVisible = false
         }
     }
 }

@@ -25,6 +25,7 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
+import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
@@ -35,7 +36,6 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import com.naver.maps.map.overlay.PolylineOverlay
 import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
@@ -43,7 +43,6 @@ import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
-import com.twoday.todaytrip.viewModel.RecordViewModel
 import com.twoday.todaytrip.viewModel.RouteViewModel
 
 class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
@@ -52,17 +51,14 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     private lateinit var binding: FragmentRouteBinding
 
-    private val routeAdapter: RouteAdapter by lazy {
-        RouteAdapter()
-    }
+    private val routeAdapter = RouteAdapter()
+
+    private val routeViewModel by viewModels<RouteViewModel>()
 
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
-    private lateinit var locationSource: FusedLocationSource
     private val polylineOverlay = PolylineOverlay()
-
     private val markers = mutableListOf<Marker>()
-    private val routeViewModel by viewModels<RouteViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -186,6 +182,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 clickedTourItem
             )
         )
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     //drag & drop
@@ -212,6 +209,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 activity?.let {
                     val intent = Intent(context, SavePhotoActivity::class.java)
                     startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
                 }
             } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }

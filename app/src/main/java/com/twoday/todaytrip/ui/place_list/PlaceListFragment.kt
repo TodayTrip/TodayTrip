@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.TransitionInflater
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding

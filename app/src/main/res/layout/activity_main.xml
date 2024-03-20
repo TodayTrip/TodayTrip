@@ -60,10 +60,10 @@
             android:background="@color/white"
             android:backgroundTint="@color/main_blue"
             android:tint="@color/white"
-            app:srcCompat="@drawable/ic_bottom_question"
-            app:tint="@color/white"
+            app:srcCompat="@drawable/ic_bottom_dice"
+            app:tint="@color/transparent"
             app:fabCustomSize="64dp"
             app:layout_anchor="@id/bottomAppBar"
-            app:maxImageSize="40dp" />
+            app:maxImageSize="64dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
