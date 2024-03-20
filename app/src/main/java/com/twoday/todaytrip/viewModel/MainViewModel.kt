@@ -7,9 +7,6 @@ import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.ui.place_list.RecommendCover
-import com.twoday.todaytrip.ui.place_list.RecommendData
-import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.PageNoPrefUtil
@@ -29,7 +26,8 @@ class MainViewModel : ViewModel() {
     private val destination by lazy {
         DestinationPrefUtil.loadDestination()
     }
-    // TODO 여행지 시군구 선택
+
+    // TODO 여행지 시군구 선택 - 목~금 작업
     private val destinationSigungu = "전체"
 
     private val areaCode by lazy {
@@ -63,10 +61,6 @@ class MainViewModel : ViewModel() {
     val eventList: LiveData<List<TourItem>>
         get() = _eventList
 
-    // 오늘의 랜덤 코스에 뜰 관광지 정보
-    private val _recommendDataList = MutableLiveData<List<RecommendData>>()
-    val recommendDataList: LiveData<List<RecommendData>> get() = _recommendDataList
-
     // 무한 스크롤을 위한 API 호출 성공 여부 저장
     // 초기값 = 0 (무한 스크롤 호출 전)
     // 페이지 번호가 1로 바뀌었다면 무한 스크롤 성공적, -1로 바뀌었다면 무한 스크롤 실패
@@ -81,18 +75,7 @@ class MainViewModel : ViewModel() {
     val eventMoreLoaded get() = _eventMoreLoaded
 
     init {
-        initRecommendDataList()
-        getTourItemAndRecommendDataList()
-    }
-
-    private fun initRecommendDataList() {
-        _recommendDataList.value = listOf(
-            RecommendCover(
-                imageId = getTitleImageId(destination)!!,
-                subTitleId = R.string.place_list_recommend_sub_title_cover,
-                title = "$destination $destinationSigungu"
-            )
-        )
+        initTourItemList()
     }
 
     private fun getTitleImageId(destination: String): Int? {
@@ -203,115 +186,13 @@ class MainViewModel : ViewModel() {
         if (destination.isNullOrBlank()) ""
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
-    // 관광지,음식점,카페,행사/축제 정보 목록 & 추천 관광지 정보 목록 초기화 함수
+    // 관광지,음식점,카페,행사/축제 정보 목록 초기화 함수
     // MainViewModel이 생성될 때(init) 최초로 한 번만 호출됨
-    private fun getTourItemAndRecommendDataList() = CoroutineScope(Dispatchers.IO).launch {
-        val touristAttractionJob = loadOrFetchTouristAttractionList()
-        val restaurantJob = loadOrFetchRestaurantList()
-        val cafeJob = loadOrFetchCafeList()
-        val eventJob = loadOrFetchEventList()
-
-        touristAttractionJob.join()
-        CoroutineScope(Dispatchers.Main).launch {
-            addRecommendTouristAttraction()
-        }
-
-        restaurantJob.join()
-        CoroutineScope(Dispatchers.Main).launch {
-            addRecommendRestaurant()
-        }
-
-        cafeJob.join()
-        CoroutineScope(Dispatchers.Main).launch {
-            addRecommendCafe()
-        }
-
-        eventJob.join()
-        CoroutineScope(Dispatchers.Main).launch {
-            addRecommendEvent()
-        }
-    }
-
-    private fun addRecommendTouristAttraction() {
-        if (!_touristAttractionList.value.isNullOrEmpty()) {
-            val recommendTouristAttraction = _touristAttractionList.value!!.random()
-//            _touristAttractionList.value = _touristAttractionList.value!!.filter {
-//                it.getContentId() != recommendTouristAttraction.getContentId()
-//            }
-
-            Log.d(TAG, "added recommend: ${recommendTouristAttraction.getTitle()}")
-            _recommendDataList.value = _recommendDataList.value!!.toMutableList().apply {
-                add(
-                    RecommendTourItem(
-                        imageUrl = recommendTouristAttraction.getImage(),
-                        subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
-                        title = recommendTouristAttraction.getTitle(),
-                        tourItem = recommendTouristAttraction
-                    )
-                )
-            }
-        }
-    }
-
-    private fun addRecommendRestaurant() {
-        if (!_restaurantList.value.isNullOrEmpty()) {
-            val recommendRestaurant = _restaurantList.value!!.random()
-//            _restaurantList.value = _restaurantList.value!!.filter {
-//                it.getContentId() != recommendRestaurant.getContentId()
-//            }
-
-            Log.d(TAG, "added recommend: ${recommendRestaurant.getTitle()}")
-            _recommendDataList.value = _recommendDataList.value!!.toMutableList().apply {
-                add(
-                    RecommendTourItem(
-                        imageUrl = recommendRestaurant.getImage(),
-                        subTitleId = R.string.place_list_recommend_sub_title_restaurant,
-                        title = recommendRestaurant.getTitle(),
-                        tourItem = recommendRestaurant
-                    )
-                )
-            }
-        }
-    }
-    private fun addRecommendCafe() {
-        if (!_cafeList.value.isNullOrEmpty()) {
-            val recommendCafe = _cafeList.value!!.random()
-//            _cafeList.value = _cafeList.value!!.filter {
-//                it.getContentId() != recommendCafe.getContentId()
-//            }
-
-            Log.d(TAG, "added recommend: ${recommendCafe.getTitle()}")
-            _recommendDataList.value = _recommendDataList.value!!.toMutableList().apply {
-                add(
-                    RecommendTourItem(
-                        imageUrl = recommendCafe.getImage(),
-                        subTitleId = R.string.place_list_recommend_sub_title_cafe,
-                        title = recommendCafe.getTitle(),
-                        tourItem = recommendCafe
-                    )
-                )
-            }
-        }
-    }
-    private fun addRecommendEvent() {
-        if (!_eventList.value.isNullOrEmpty()) {
-            val recommendEvent = _eventList.value!!.random()
-//            _eventList.value = _eventList.value!!.filter {
-//                it.getContentId() != recommendEvent.getContentId()
-//            }
-
-            Log.d(TAG, "added recommend: ${recommendEvent.getTitle()}")
-            _recommendDataList.value = _recommendDataList.value!!.toMutableList().apply {
-                add(
-                    RecommendTourItem(
-                        imageUrl = recommendEvent.getImage(),
-                        subTitleId = R.string.place_list_recommend_sub_title_event,
-                        title = recommendEvent.getTitle(),
-                        tourItem = recommendEvent
-                    )
-                )
-            }
-        }
+    private fun initTourItemList() = CoroutineScope(Dispatchers.IO).launch {
+        loadOrFetchTouristAttractionList()
+        loadOrFetchRestaurantList()
+        loadOrFetchCafeList()
+        loadOrFetchEventList()
     }
 
     // 관광지 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
