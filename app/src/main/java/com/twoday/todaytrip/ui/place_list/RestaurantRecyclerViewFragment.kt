@@ -38,7 +38,7 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var restaurantAdapter: PlaceListAdapter
+    private val restaurantAdapter = PlaceListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -97,9 +97,7 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecyclerView() {
-        restaurantAdapter = PlaceListAdapter().apply {
-            onTourItemClickListener = this@RestaurantRecyclerViewFragment
-        }
+        restaurantAdapter.onTourItemClickListener = this@RestaurantRecyclerViewFragment
         binding.rvRestaurantRecyclerView.run {
             this.adapter = restaurantAdapter
             initScrollListener(this)

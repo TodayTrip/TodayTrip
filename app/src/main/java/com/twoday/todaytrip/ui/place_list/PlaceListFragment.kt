@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayoutMediator
@@ -28,9 +29,8 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
-    private val model by lazy {
-        ViewModelProvider(this@PlaceListFragment)[PlaceListViewModel::class.java]
-    }
+    private val model by viewModels<PlaceListViewModel>()
+
     private val mainModel: MainViewModel by activityViewModels {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T =
@@ -38,7 +38,7 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var recommendAdapter: RecommendViewPagerAdapter
+    private val recommendAdapter = RecommendViewPagerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,9 +62,7 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecommendAdapter() {
-        recommendAdapter = RecommendViewPagerAdapter().apply {
-            onTourItemClickListener = this@PlaceListFragment
-        }
+        recommendAdapter.onTourItemClickListener = this@PlaceListFragment
         binding.viewpagerRecommend.adapter = recommendAdapter
     }
 
