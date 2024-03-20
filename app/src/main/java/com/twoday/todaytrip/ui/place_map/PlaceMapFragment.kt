@@ -13,6 +13,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.transition.TransitionInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
@@ -66,6 +67,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             tourItem.getContentTypeId(),
             tourItem)
         startActivity(placeDetailIntent)
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     override fun onCreateView(

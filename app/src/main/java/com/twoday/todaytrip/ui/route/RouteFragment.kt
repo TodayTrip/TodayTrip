@@ -34,6 +34,7 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.transition.TransitionInflater
 import com.naver.maps.map.overlay.PolylineOverlay
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
@@ -179,6 +180,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 clickedTourItem
             )
         )
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     //drag & drop
@@ -205,6 +207,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                 activity?.let {
                     val intent = Intent(context, SavePhotoActivity::class.java)
                     startActivity(intent)
+                    requireActivity().overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
                 }
             } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }

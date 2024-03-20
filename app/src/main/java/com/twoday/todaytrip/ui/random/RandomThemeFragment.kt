@@ -1,16 +1,15 @@
 package com.twoday.todaytrip.ui.random
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
-import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 
 class RandomThemeFragment : Fragment() {
@@ -31,7 +30,9 @@ class RandomThemeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpClickListener()
         setUpButtonClickState(false)
-
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
     }
 
     private fun setUpButtonClickState(status: Boolean) {

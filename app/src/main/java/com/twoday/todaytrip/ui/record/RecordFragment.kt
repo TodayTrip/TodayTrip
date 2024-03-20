@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.TransitionInflater
 import com.jolenechong.wordcloud.WordCloud
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordBinding
@@ -107,6 +108,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
         startActivity(
             RecordDetailActivity.newIntent(this.requireContext(), record)
         )
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
     private fun setRecordRecyclerViewVisibility(isVisible:Boolean){
         binding.rvRecord.isVisible = isVisible
