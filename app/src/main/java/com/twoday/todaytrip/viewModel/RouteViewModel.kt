@@ -46,12 +46,6 @@ class RouteViewModel: ViewModel() {
         _routeListDataSet.value = list
     }
 
-    fun locationRemove(){
-
-    }
-
-
-
     fun getRouteDataSet(){
         val contentIdList = ContentIdPrefUtil.loadContentIdList() //담은 목록
         val tourList = TourItemPrefUtil.loadAllTourItemList() //관광지 전부
