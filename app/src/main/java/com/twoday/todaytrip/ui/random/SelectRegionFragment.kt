@@ -162,6 +162,14 @@ class SelectRegionFragment : Fragment() {
                 updateNextBtn()
             }
         }
+//        map.findRichPathByName("")?.setOnPathClickListener {
+//
+//        }
+//        for (i in 0..15) {
+//            map.findRichPathByIndex(i)?.setOnPathClickListener {
+//                Log.d("richpath", "path=${map.findRichPathByIndex(i).toString()}")
+//            }
+//        }
         binding.btnRegionSelectNext.setOnClickListener {
             SelectRegionPrefUtil.resetSelectRegionListPref()
             SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList.toMutableList())
