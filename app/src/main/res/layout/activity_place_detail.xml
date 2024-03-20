@@ -17,18 +17,19 @@
         android:clickable="false"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
+        android:transitionName="thumbnail"
         app:layout_constraintBottom_toTopOf="@+id/nsv_place_detail_scroll_area"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_back_bg" />
 
-    <ImageView
-        android:id="@+id/iv_place_detail_back_bg"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="@drawable/shape_circle"
-        app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
-        app:layout_constraintTop_toTopOf="@id/iv_place_detail_back" />
+<!--    <ImageView-->
+<!--        android:id="@+id/iv_place_detail_back_bg"-->
+<!--        android:layout_width="48dp"-->
+<!--        android:layout_height="48dp"-->
+<!--        android:background="@drawable/shape_circle"-->
+<!--        app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"-->
+<!--        app:layout_constraintTop_toTopOf="@id/iv_place_detail_back" />-->
 
     <ImageView
         android:id="@+id/iv_place_detail_back"
@@ -50,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tv_place_detail_add_path_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_pic">

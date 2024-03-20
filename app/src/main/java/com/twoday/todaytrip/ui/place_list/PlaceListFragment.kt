@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.TransitionInflater
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
@@ -38,6 +39,7 @@ class PlaceListFragment : Fragment() {
 
         initAdapter()
         initModelObserver()
+
     }
 
     private fun initAdapter() {

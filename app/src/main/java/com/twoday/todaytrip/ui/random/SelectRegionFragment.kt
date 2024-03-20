@@ -9,9 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.devs.vectorchildfinder.VectorChildFinder
 import com.google.android.material.chip.Chip
 import com.twoday.todaytrip.R
@@ -82,14 +83,25 @@ class SelectRegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
         initView()
-        viewModel = ViewModelProvider(this).get(SelectRegionViewModel::class.java)
-        viewModel
+        initViewModel()
     }
 
     private fun initView() {
         initChipSet()
         setUpClickListener()
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this)[SelectRegionViewModel::class.java]
+        viewModel.selectedRegionList.observe(viewLifecycleOwner, Observer {
+            if (it.size == 16){
+
+            }
+        })
     }
 
     private fun initChipSet() {
@@ -114,6 +126,7 @@ class SelectRegionFragment : Fragment() {
             }
     }
 
+    // 지도 지역별로 클릭
     private fun setUpClickListener() {
         updateNextBtn()
         binding.btnSelectRegionAll.setOnClickListener {

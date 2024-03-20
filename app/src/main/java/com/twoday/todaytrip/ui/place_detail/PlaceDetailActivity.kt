@@ -7,6 +7,7 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
@@ -150,6 +151,7 @@ class PlaceDetailActivity : AppCompatActivity() {
     private fun initBackButton() {
         binding.ivPlaceDetailBack.setOnClickListener {
             if (!isFinishing) finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 

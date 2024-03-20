@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.transition.TransitionInflater
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
@@ -36,6 +38,9 @@ class RandomResultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initModelObserver()
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
     }
 
     private fun initModelObserver(){
