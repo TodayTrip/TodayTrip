@@ -68,6 +68,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecommendViewPagerAdapter
                 recommendCover.destination,
                 recommendCover.destinationSigungu
             )
+            noResultImageView.isVisible = false
         }
 
         fun bindTourItem(recommendTourItem: RecommendTourItem) {
@@ -79,6 +80,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecommendViewPagerAdapter
             }
             subTitleTextView.setText(recommendTourItem.subTitleId)
             titleTextView.text = recommendTourItem.tourItem.getTitle()
+            noResultImageView.isVisible = false
         }
 
         fun bindEmpty(recommendEmpty: RecommendEmpty) {
