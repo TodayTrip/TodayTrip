@@ -3,9 +3,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-    <!--  RandomActivity   -->
-    <string name="login_fail">로그인에 실패하였습니다.\n다시 시도해주세요</string>
-
     <!--  StartFragment  -->
     <string name="start_select_region">지역 옵션 지정하기</string>
     <string name="start_start_btn">시작하기</string>
@@ -30,7 +27,7 @@
     <string name="place_detail_add_to_path">경로에 추가하기</string>
     <string name="place_detail_remove_from_path">경로에서 빼기</string>
     <string name="place_detail_my_memory">이 장소의 추억</string>
-    <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다.</string>
+    <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다</string>
 
     <!-- PlaceListFragment -->
     <string name="place_list_tourist_attraction">관광지</string>
@@ -44,10 +41,15 @@
     <string name="place_list_recommend_sub_title_cafe">오늘의 랜덤 카페</string>
     <string name="place_list_recommend_sub_title_event">오늘의 랜덤 행사/축제</string>
 
-    <string name="place_list_tourist_attraction_no_result">네트워크/서버 오류로 인해\n관광지 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
-    <string name="place_list_restaurant_no_result">네트워크/서버 오류로 인해\n음식점 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
-    <string name="place_list_cafe_no_result">네트워크/서버 오류로 인해\n카페 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
-    <string name="place_list_event_no_result">네트워크/서버 오류로 인해\n행사/축제 정보를 불러오지 못했습니다.\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_recommend_tourist_attraction_no_result">관광지 정보가 없어\n 추천을 제공하지 못했습니다</string>
+    <string name="place_list_recommend_restaurant_no_result">음식점 정보가 없어\n 추천을 제공하지 못했습니다</string>
+    <string name="place_list_recommend_cafe_no_result">카페 정보가 없어\n 추천을 제공하지 못했습니다</string>
+    <string name="place_list_recommend_event_no_result">행사/축제 정보가 없어\n 추천을 제공하지 못했습니다</string>
+
+    <string name="place_list_tourist_attraction_no_result">네트워크/서버 오류로 인해\n관광지 정보를 불러오지 못했습니다\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_restaurant_no_result">네트워크/서버 오류로 인해\n음식점 정보를 불러오지 못했습니다\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_cafe_no_result">네트워크/서버 오류로 인해\n카페 정보를 불러오지 못했습니다\n<b>아래로 스와이프하여 다시 시도</b></string>
+    <string name="place_list_event_no_result">네트워크/서버 오류로 인해\n행사/축제 정보를 불러오지 못했습니다\n<b>아래로 스와이프하여 다시 시도</b></string>
 
     <string name="place_list_more_tourist_attraction_no_result">관광지 더 불러오기 실패</string>
     <string name="place_list_more_restaurant_no_result">음식점 더 불러오기 실패</string>
@@ -56,7 +58,7 @@
 
     <!--  Bottom Sheet  -->
     <string name="bottom_sheet_record_title">현재까지의 경로가 기록됩니다.</string>
-    <string name="bottom_sheet_record_description">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다.</string>
+    <string name="bottom_sheet_record_description">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다</string>
     <string name="bottom_sheet_record_button">기록하기</string>
     <string name="record_finish">추억이 추가되었습니다!</string>
 
@@ -66,7 +68,7 @@
 
     <!--  Alert Dialog  -->
     <string name="alert_dialog_delete_title">여행 기록을 삭제하시겠습니까?</string>
-    <string name="alert_dialog_delete_description">삭제한 여행 기록은 복구할 수 없습니다.</string>
+    <string name="alert_dialog_delete_description">삭제한 여행 기록은 복구할 수 없습니다</string>
     <string name="alert_dialog_positive">삭제</string>
     <string name="alert_dialog_negative">취소</string>
 
