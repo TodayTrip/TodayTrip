@@ -25,6 +25,7 @@
             android:clipToOutline="true"
             android:scaleType="centerCrop"
             android:src="@drawable/img_default"
+            android:transitionName="thumbnail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
