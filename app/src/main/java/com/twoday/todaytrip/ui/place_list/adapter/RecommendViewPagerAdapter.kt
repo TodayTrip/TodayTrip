@@ -60,10 +60,14 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecommendViewPagerAdapter
         private val noResultImageView: ImageView = binding.ivItemPlaceListRecommendNoResult
 
         fun bindCover(recommendCover: RecommendCover) {
-            Log.d(TAG, "bindCover) title: ${recommendCover.title}")
+            Log.d(TAG,"bindCover) called")
             imageView.setImageResource(recommendCover.imageId)
             subTitleTextView.setText(recommendCover.subTitleId)
-            titleTextView.text = recommendCover.title
+            titleTextView.text = String.format(
+                itemView.context.getString(recommendCover.titleId),
+                recommendCover.destination,
+                recommendCover.destinationSigungu
+            )
         }
 
         fun bindTourItem(recommendTourItem: RecommendTourItem) {
