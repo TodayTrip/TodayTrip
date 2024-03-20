@@ -12,11 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
@@ -24,7 +26,6 @@ import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
-
 
 class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommendClickListener {
     private val TAG = "PlaceListFragment"
@@ -96,7 +97,7 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
             mainModel.loadOrFetchEventList()
         }
         else{
-            // TODO 경로 화면으로 이동
+            (requireActivity() as MainActivity).moveToRouteFragment()
         }
     }
 
