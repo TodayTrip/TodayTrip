@@ -9,7 +9,7 @@
         android:id="@+id/iv_item_place_list_recommend_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/middle_gray"
+        android:background="@color/background_white"
         android:scaleType="centerCrop"
         app:layout_collapseMode="parallax"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,12 +20,24 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_item_place_list_recommend_blur"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
         android:src="@drawable/img_place_list_blur"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="3:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
+    <ImageView
+        android:id="@+id/iv_item_place_list_recommend_no_result"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        tools:src = "@drawable/gif_loading_reading_glasses"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_item_place_list_recommend_sub_title"
@@ -42,13 +54,13 @@
         android:id="@+id/tv_item_place_list_recommend_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="16dp"
         android:textColor="@color/white"
         android:textSize="30sp"
         android:textStyle="bold"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="경기도 전체" />
+        tools:text="@string/place_list_recommend_title_cover" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
