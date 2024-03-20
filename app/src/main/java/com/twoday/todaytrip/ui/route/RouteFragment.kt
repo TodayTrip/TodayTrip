@@ -51,7 +51,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     private lateinit var binding: FragmentRouteBinding
 
-    private val routeAdapter: RouteAdapter by lazy {
+    private val routeAdapter: RouteAdapter by lazy(LazyThreadSafetyMode.NONE) {
         RouteAdapter()
     }
 
