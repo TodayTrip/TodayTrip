@@ -15,13 +15,14 @@
         android:id="@+id/btn_item_place_list_recommend_add_all"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="24dp"
+        android:layout_margin="16dp"
         android:background="@drawable/shape_radius_16"
         android:backgroundTint="@color/main_blue"
+        android:elevation="20dp"
         android:padding="8dp"
         android:text="@string/place_list_recommend_add_all"
         android:textColor="@color/white"
-        android:textSize="16dp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
