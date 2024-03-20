@@ -17,6 +17,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/img_busan1" />
 
+    <ImageView
+        android:id="@+id/iv_item_place_list_recommend_no_result"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        tools:src = "@drawable/gif_loading_reading_glasses"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_item_place_list_recommend_blur"
         android:layout_width="match_parent"
@@ -28,16 +38,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-
-    <ImageView
-        android:id="@+id/iv_item_place_list_recommend_no_result"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        tools:src = "@drawable/gif_loading_reading_glasses"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_item_place_list_recommend_sub_title"
