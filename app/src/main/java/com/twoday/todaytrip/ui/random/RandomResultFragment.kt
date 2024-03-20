@@ -9,6 +9,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
@@ -35,6 +37,7 @@ class RandomResultFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initView()
         initModelObserver()
     }
 
@@ -47,6 +50,13 @@ class RandomResultFragment : Fragment() {
             }
         })
     }
+
+    private fun initView() {
+        Glide.with(this)
+            .load(R.drawable.gif_map)
+            .into(binding.ivRandomMapGif)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
