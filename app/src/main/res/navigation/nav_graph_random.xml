@@ -64,9 +64,6 @@
         android:name="com.twoday.todaytrip.ui.random.RandomResultFragment"
         android:label="fragment_random_result"
         tools:layout="@layout/fragment_random_result">
-        <action
-            android:id="@+id/action_navigation_random_result_to_navigation_place_list"
-            app:destination="@id/mainActivity"/>
 <!--        <action-->
 <!--            android:id="@+id/action_navigation_random_result_to_navigation_place_list"-->
 <!--            app:destination="@id/navigation_place_list" />-->
