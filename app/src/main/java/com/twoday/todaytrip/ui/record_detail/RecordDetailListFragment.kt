@@ -89,14 +89,16 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
             markerList = it
             Log.d("RecordDetailListFragment", "뷰모델에서 받아온 위도 경도: $markerList")
         })
-        viewModel.dataSetList.observe(viewLifecycleOwner){ dataSetList ->
+        viewModel.dataSetList.observe(viewLifecycleOwner) { dataSetList ->
             this.recordDetailListAdapter.submitList(dataSetList)
-            Log.d(TAG,"옵저브 ${this.recordDetailListAdapter.submitList(dataSetList).toString()}")
+            Log.d(TAG, "옵저브 ${this.recordDetailListAdapter.submitList(dataSetList).toString()}")
         }
     }
 
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
+
+        naverMap.uiSettings.isZoomControlEnabled = false
 
         markerList.forEachIndexed { index, latLng ->
             val text = (index + 1).toString() // 마커에 표시할 텍스트
