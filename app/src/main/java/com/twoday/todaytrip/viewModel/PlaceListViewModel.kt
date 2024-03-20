@@ -11,6 +11,7 @@ import com.twoday.todaytrip.ui.place_list.RecommendCover
 import com.twoday.todaytrip.ui.place_list.RecommendData
 import com.twoday.todaytrip.ui.place_list.RecommendEmpty
 import com.twoday.todaytrip.ui.place_list.RecommendTourItem
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.RecommendPrefUtil
 import com.twoday.todaytrip.weatherApi.Item
@@ -428,5 +429,13 @@ class PlaceListViewModel : ViewModel() {
             }
         }
         return locations.toList()
+    }
+
+    fun addAllRecommend(){
+        _recommendDataList.value
+            ?.filterIsInstance<RecommendTourItem>()
+            ?.forEach {
+            ContentIdPrefUtil.addContentId(it.tourItem.getContentId())
+        }
     }
 }

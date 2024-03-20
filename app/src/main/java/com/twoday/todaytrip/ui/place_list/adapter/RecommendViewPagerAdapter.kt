@@ -33,11 +33,17 @@ enum class RecommendViewType(val viewType: Int){
     NOT_MAP(0),
     MAP(1)
 }
+
+interface OnAddAllRecommendClickListener{
+    fun onAddAllRecommendClick()
+}
+
 class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TAG = "RecommendViewPagerAdapter"
 
     private var recommendDataList = listOf<RecommendData>()
     var onTourItemClickListener: OnTourItemClickListener? = null
+    var onAddAllRecommendClickListener: OnAddAllRecommendClickListener? = null
 
     override fun getItemViewType(position: Int): Int {
         return when(recommendDataList[position]){
@@ -81,7 +87,10 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     (holder as Holder).bindEmpty(currentRecommendData)
                 }
                 is RecommendMap ->{
-                    (holder as MapHolder).bindMap(currentRecommendData)
+                    (holder as MapHolder).run{
+                        bindMap(currentRecommendData)
+                        setOnClickListener()
+                    }
                 }
             }
     }
@@ -156,6 +165,12 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             polylineOverlay.map = null
             markers.clear()
             mapView.getMapAsync(this@MapHolder)
+        }
+
+        fun setOnClickListener(){
+            addAllButton.setOnClickListener {
+                onAddAllRecommendClickListener?.onAddAllRecommendClick()
+            }
         }
 
         override fun onMapReady(naverMap: NaverMap) {

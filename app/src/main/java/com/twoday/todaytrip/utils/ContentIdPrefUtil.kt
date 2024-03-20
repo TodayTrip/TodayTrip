@@ -12,7 +12,7 @@ object ContentIdPrefUtil {
     private val TAG = "ContentIdPrefUtil"
 
     fun loadContentIdList() = loadContentIdList(PrefConstants.ADDED_CONTENT_ID_LIST_KEY)
-    fun saveContentIdList(contentIdList: List<String>) = saveContentIDList(
+    private fun saveContentIdList(contentIdList: List<String>) = saveContentIDList(
         contentIdList,
         PrefConstants.ADDED_CONTENT_ID_LIST_KEY
     )
@@ -21,6 +21,7 @@ object ContentIdPrefUtil {
 
     fun addContentId(contentId: String) = saveContentIdList(
         loadContentIdList().toMutableList().apply {
+            remove(contentId)
             add(contentId)
         }
     )
@@ -29,7 +30,7 @@ object ContentIdPrefUtil {
         loadContentIdList().filter { it != contentId }
     )
 
-    fun swapContentId(selectedPosition:Int, targetPosition:Int) {
+    fun swapContentId(selectedPosition: Int, targetPosition: Int) {
         val contentIdList = loadContentIdList().toMutableList()
         Collections.swap(
             contentIdList,

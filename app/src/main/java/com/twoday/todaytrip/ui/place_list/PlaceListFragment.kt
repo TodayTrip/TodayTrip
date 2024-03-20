@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -16,6 +17,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
@@ -23,7 +25,7 @@ import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 
 
-class PlaceListFragment : Fragment(), OnTourItemClickListener {
+class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommendClickListener {
     private val TAG = "PlaceListFragment"
 
     private var _binding: FragmentPlaceListBinding? = null
@@ -62,7 +64,10 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecommendAdapter() {
-        recommendAdapter.onTourItemClickListener = this@PlaceListFragment
+        recommendAdapter.run{
+            onTourItemClickListener = this@PlaceListFragment
+            onAddAllRecommendClickListener = this@PlaceListFragment
+        }
         binding.viewpagerRecommend.adapter = recommendAdapter
     }
 
@@ -74,6 +79,15 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
             tourItem
         )
         startActivity(placeDetailIntent)
+    }
+    override fun onAddAllRecommendClick() {
+        Toast.makeText(requireActivity(), R.string.place_list_recommend_add_all_toast, Toast.LENGTH_SHORT).show()
+        model.addAllRecommend()
+
+        mainModel.loadOrFetchTouristAttractionList()
+        mainModel.loadOrFetchRestaurantList()
+        mainModel.loadOrFetchCafeList()
+        mainModel.loadOrFetchEventList()
     }
 
     private fun initMainAdapter() {
