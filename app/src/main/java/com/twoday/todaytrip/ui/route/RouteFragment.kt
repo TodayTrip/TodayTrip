@@ -25,7 +25,6 @@ import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
@@ -36,6 +35,7 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.naver.maps.map.overlay.PolylineOverlay
 import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
@@ -43,6 +43,7 @@ import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
+import com.twoday.todaytrip.viewModel.RecordViewModel
 import com.twoday.todaytrip.viewModel.RouteViewModel
 
 class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
@@ -180,7 +181,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         }!!
         startActivity(
             PlaceDetailActivity.newIntent(
-                MyApplication.appContext!!,
+                requireContext(),
                 clickedTourItem.getContentTypeId(),
                 clickedTourItem
             )
