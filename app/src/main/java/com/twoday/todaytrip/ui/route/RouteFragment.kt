@@ -20,7 +20,6 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.FusedLocationSource
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
@@ -31,14 +30,11 @@ import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.MapUtils
-import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.naver.maps.map.overlay.PolylineOverlay
-import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
@@ -54,14 +50,12 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
     private val routeAdapter: RouteAdapter by lazy(LazyThreadSafetyMode.NONE) {
         RouteAdapter()
     }
+    private val routeViewModel by viewModels<RouteViewModel>()
 
     private lateinit var naverMap: NaverMap
     private lateinit var mapView: MapView
-    private lateinit var locationSource: FusedLocationSource
     private val polylineOverlay = PolylineOverlay()
-
     private val markers = mutableListOf<Marker>()
-    private val routeViewModel by viewModels<RouteViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
