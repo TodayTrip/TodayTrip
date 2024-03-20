@@ -80,9 +80,9 @@
         tools:layout="@layout/fragment_place_list">
     </fragment>
 
-    <activity
-        android:id="@+id/mainActivity"
-        android:name="com.twoday.todaytrip.ui.record_detail.RecordDetailActivity"
-        android:label="메인 화면"
-        tools:layout="@layout/activity_main"/>
+<!--    <activity-->
+<!--        android:id="@+id/mainActivity"-->
+<!--        android:name="com.twoday.todaytrip.ui.MainActivity"-->
+<!--        android:label="메인 화면"-->
+<!--        tools:layout="@layout/activity_main"/>-->
 </navigation>
