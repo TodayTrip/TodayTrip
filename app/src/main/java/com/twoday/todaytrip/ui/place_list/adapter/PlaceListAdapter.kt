@@ -75,6 +75,13 @@ class PlaceListAdapter :
             it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
         }
 
+        if(list != null){
+            val newList = mutableListOf<TourItem>()
+            newList.addAll(list.filter { it.isAdded })
+            newList.addAll(list.filter { !it.isAdded })
+            list.clear()
+            list.addAll(newList)
+        }
         super.submitList(list)
     }
 
