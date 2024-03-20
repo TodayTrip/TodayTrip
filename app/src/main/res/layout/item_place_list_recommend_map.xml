@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,19 +12,55 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_item_place_list_recommend_add_all"
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_item_place_list_recommend_map_blur"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_place_list_blur"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="3:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_item_place_list_recommend_map_sub_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_place_list_recommend_map_title"
+        app:layout_constraintStart_toStartOf="@id/tv_item_place_list_recommend_map_title"
+        android:text="@string/place_list_recommend_sub_title_map" />
+
+    <TextView
+        android:id="@+id/tv_item_place_list_recommend_map_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="26dp"
+        android:textColor="@color/white"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="@string/place_list_recommend_title" />
+
+    <TextView
+        android:padding="12dp"
+        android:id="@+id/tv_item_place_list_recommend_map_add_all"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
         android:background="@drawable/shape_radius_16"
         android:backgroundTint="@color/main_blue"
         android:elevation="20dp"
-        android:padding="8dp"
         android:text="@string/place_list_recommend_add_all"
         android:textColor="@color/white"
         android:textSize="14dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/tv_item_place_list_recommend_map_title"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

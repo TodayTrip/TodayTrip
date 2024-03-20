@@ -30,13 +30,14 @@
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
     
-    <string name="place_list_recommend_sub_title_cover">오늘 여행이 추천하는</string>
-    <string name="place_list_recommend_title_cover">%s %s 랜덤 코스</string>
+    <string name="place_list_recommend_sub_title_cover">오늘 여행이 <font color="#FFD15B">추천</font>하는</string>
+    <string name="place_list_recommend_sub_title_map">지도로 한 눈에 보기</string>
+    <string name="place_list_recommend_title">%s %s 랜덤 코스</string>
 
-    <string name="place_list_recommend_sub_title_tourist_attraction">오늘의 랜덤 관광지</string>
-    <string name="place_list_recommend_sub_title_restaurant">오늘의 랜덤 음식점</string>
-    <string name="place_list_recommend_sub_title_cafe">오늘의 랜덤 카페</string>
-    <string name="place_list_recommend_sub_title_event">오늘의 랜덤 행사/축제</string>
+    <string name="place_list_recommend_sub_title_tourist_attraction">오늘의 랜덤 <font color="#FFD15B">관광지</font></string>
+    <string name="place_list_recommend_sub_title_restaurant">오늘의 랜덤 <font color="#FFD15B">음식점</font></string>
+    <string name="place_list_recommend_sub_title_cafe">오늘의 랜덤 <font color="#FFD15B">카페</font></string>
+    <string name="place_list_recommend_sub_title_event">오늘의 랜덤 <font color="#FFD15B">행사/축제</font></string>
 
     <string name="place_list_recommend_tourist_attraction_no_result">관광지 정보가 없어\n추천을 제공하지 못했습니다</string>
     <string name="place_list_recommend_restaurant_no_result">음식점 정보가 없어\n추천을 제공하지 못했습니다</string>
