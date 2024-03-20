@@ -2,7 +2,7 @@ package com.twoday.todaytrip.ui.place_list
 
 import com.twoday.todaytrip.tourData.TourItem
 
-interface RecommendData{}
+sealed interface RecommendData{}
 data class RecommendCover(
     val imageId: Int,
     val subTitleId: Int,
@@ -10,8 +10,11 @@ data class RecommendCover(
 ): RecommendData
 
 data class RecommendTourItem(
-    val imageUrl: String?,
     val subTitleId: Int,
-    val title: String,
     val tourItem: TourItem
+): RecommendData
+
+data class RecommendEmpty(
+    val subTitleId: Int,
+    val titleId: Int
 ): RecommendData
