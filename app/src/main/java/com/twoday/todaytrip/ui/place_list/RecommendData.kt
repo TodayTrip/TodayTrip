@@ -8,7 +8,7 @@ sealed interface RecommendData{}
 data class RecommendCover(
     val imageId: Int,
     val subTitleId: Int = R.string.place_list_recommend_sub_title_cover,
-    val titleId: Int = R.string.place_list_recommend_title_cover,
+    val titleId: Int = R.string.place_list_recommend_title,
     val destination: String,
     val destinationSigungu: String
 ): RecommendData
@@ -24,5 +24,8 @@ data class RecommendEmpty(
 ): RecommendData
 
 data class RecommendMap(
-    val locations: List<LatLng>
+    val titleId: Int = R.string.place_list_recommend_title,
+    val destination: String,
+    val destinationSigungu: String,
+    var locations: List<LatLng>
 ): RecommendData

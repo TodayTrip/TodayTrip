@@ -10,6 +10,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.RecommendCover
 import com.twoday.todaytrip.ui.place_list.RecommendData
 import com.twoday.todaytrip.ui.place_list.RecommendEmpty
+import com.twoday.todaytrip.ui.place_list.RecommendMap
 import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationPrefUtil
@@ -187,6 +188,11 @@ class PlaceListViewModel : ViewModel() {
             RecommendEmpty(
                 subTitleId = R.string.place_list_recommend_sub_title_event,
                 titleId = R.string.place_list_recommend_event_no_result
+            ),
+            RecommendMap(
+                destination = _destination.value!!,
+                destinationSigungu = _destinationSigungu.value!!,
+                locations = emptyList()
             )
         )
 

@@ -29,12 +29,12 @@ import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 
-enum class RecommendViewType(val viewType: Int){
+enum class RecommendViewType(val viewType: Int) {
     NOT_MAP(0),
     MAP(1)
 }
 
-interface OnAddAllRecommendClickListener{
+interface OnAddAllRecommendClickListener {
     fun onAddAllRecommendClick()
 }
 
@@ -46,21 +46,22 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     var onAddAllRecommendClickListener: OnAddAllRecommendClickListener? = null
 
     override fun getItemViewType(position: Int): Int {
-        return when(recommendDataList[position]){
+        return when (recommendDataList[position]) {
             is RecommendMap -> RecommendViewType.MAP.viewType
             else -> RecommendViewType.NOT_MAP.viewType
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType){
-            RecommendViewType.MAP.viewType ->{
+        return when (viewType) {
+            RecommendViewType.MAP.viewType -> {
                 val binding = ItemPlaceListRecommendMapBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
                 MapHolder(binding)
             }
-            else->{
+
+            else -> {
                 val binding = ItemPlaceListRecommendBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -108,7 +109,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val noResultImageView: ImageView = binding.ivItemPlaceListRecommendNoResult
 
         fun bindCover(recommendCover: RecommendCover) {
-            Log.d(TAG,"bindCover) called")
+            Log.d(TAG, "bindCover) called")
             imageView.setImageResource(recommendCover.imageId)
             subTitleTextView.setText(recommendCover.subTitleId)
             titleTextView.text = String.format(
@@ -150,8 +151,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    inner class MapHolder(binding: ItemPlaceListRecommendMapBinding):
-        RecyclerView.ViewHolder(binding.root), OnMapReadyCallback{
+    inner class MapHolder(binding: ItemPlaceListRecommendMapBinding) :
+        RecyclerView.ViewHolder(binding.root), OnMapReadyCallback {
 
         private lateinit var naverMap: NaverMap
         private var locations = listOf<LatLng>()
@@ -159,15 +160,22 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val markers = mutableListOf<Marker>()
 
         private val mapView: MapView = binding.mapItemPlaceListRecommendMap
-        private val addAllButton: Button = binding.btnItemPlaceListRecommendAddAll
-        fun bindMap(recommendMap: RecommendMap){
+        private val titleTextView: TextView = binding.tvItemPlaceListRecommendMapTitle
+        private val addAllButton: TextView = binding.tvItemPlaceListRecommendMapAddAll
+        fun bindMap(recommendMap: RecommendMap) {
+            titleTextView.text = String.format(
+                itemView.context.getString(recommendMap.titleId),
+                recommendMap.destination,
+                recommendMap.destinationSigungu
+            )
+
             locations = recommendMap.locations
             polylineOverlay.map = null
             markers.clear()
             mapView.getMapAsync(this@MapHolder)
         }
 
-        fun setOnClickListener(){
+        fun setOnClickListener() {
             addAllButton.setOnClickListener {
                 onAddAllRecommendClickListener?.onAddAllRecommendClick()
             }

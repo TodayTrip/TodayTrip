@@ -137,11 +137,10 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
             }
         }
         model.recommendDataList.observe(viewLifecycleOwner){recommendDataList ->
-            val recommendDataListWithMap = mutableListOf<RecommendData>().apply{
-                addAll(recommendDataList)
-                add(RecommendMap(locations = model.getRecommendLocations()))
+            if(recommendDataList.isNotEmpty()){
+                (recommendDataList.last() as RecommendMap).locations = model.getRecommendLocations()
             }
-            recommendAdapter.changeDataSet(recommendDataListWithMap)
+            recommendAdapter.changeDataSet(recommendDataList)
         }
     }
     private fun initMainModelObserver(){
