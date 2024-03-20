@@ -70,6 +70,7 @@
             android:id="@+id/iv_tourist_attraction_recycler_view_no_result"
             android:layout_width="150dp"
             android:layout_height="150dp"
+            tools:src = "@drawable/gif_loading_reading_glasses"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

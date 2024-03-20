@@ -2,29 +2,44 @@ package com.twoday.todaytrip.ui.place_list
 
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.TransitionInflater
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
+import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
-import com.twoday.todaytrip.ui.place_list.adapter.ViewPagerAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
+import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 
 
-class PlaceListFragment : Fragment() {
+class PlaceListFragment : Fragment(), OnTourItemClickListener {
     private val TAG = "PlaceListFragment"
 
     private var _binding: FragmentPlaceListBinding? = null
     private val binding get() = _binding!!
 
-    private val model by lazy {
-        ViewModelProvider(this@PlaceListFragment)[PlaceListViewModel::class.java]
+    private val model by viewModels<PlaceListViewModel>()
+
+    private val mainModel: MainViewModel by activityViewModels {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel> create(modelClass: Class<T>): T =
+                MainViewModel() as T
+        }
     }
+
+    private val recommendAdapter = RecommendViewPagerAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +54,7 @@ class PlaceListFragment : Fragment() {
 
         initAdapter()
         initModelObserver()
-
+        initMainModelObserver()
     }
 
     private fun initAdapter() {
@@ -48,8 +63,18 @@ class PlaceListFragment : Fragment() {
     }
 
     private fun initRecommendAdapter() {
-        val recommendAdapter = ViewPagerAdapter()
+        recommendAdapter.onTourItemClickListener = this@PlaceListFragment
         binding.viewpagerRecommend.adapter = recommendAdapter
+    }
+
+    override fun onTourItemClick(tourItem: TourItem) {
+        Log.d(TAG, "onTourItemClick) called, ${tourItem.getTitle()}")
+        val placeDetailIntent = PlaceDetailActivity.newIntent(
+            requireContext(),
+            tourItem.getContentTypeId(),
+            tourItem
+        )
+        startActivity(placeDetailIntent)
     }
 
     private fun initMainAdapter() {
@@ -80,14 +105,6 @@ class PlaceListFragment : Fragment() {
         model.destination.observe(viewLifecycleOwner) { destination ->
             binding.tvTravelAddress.text = destination
         }
-        model.titleImageId.observe(viewLifecycleOwner) {
-//        binding.ivLocal.setImageResource(coordinates?.image!!)
-//        binding.ivLocal.setOnClickListener {
-//            val intent = Intent(context, FullScreenImageActivity::class.java)
-//            intent.putExtra("imageResource", coordinates.image)
-//            startActivity(intent)
-//        }
-        }
 
         model.weatherInfo.observe(viewLifecycleOwner) { weatherInfo ->
             try {
@@ -105,6 +122,23 @@ class PlaceListFragment : Fragment() {
             } catch (e: Exception) {
                 e.stackTrace
             }
+        }
+        model.recommendDataList.observe(viewLifecycleOwner){
+            recommendAdapter.changeDataSet(it)
+        }
+    }
+    private fun initMainModelObserver(){
+        mainModel.touristAttractionList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendTouristAttraction(it)
+        }
+        mainModel.restaurantList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendRestaurant(it)
+        }
+        mainModel.cafeList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendCafe(it)
+        }
+        mainModel.eventList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendEvent(it)
         }
     }
 

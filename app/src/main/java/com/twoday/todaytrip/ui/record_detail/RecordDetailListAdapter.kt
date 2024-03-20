@@ -1,9 +1,8 @@
 package com.twoday.todaytrip.ui.record_detail
 
-import android.graphics.Color
-import android.graphics.PorterDuff
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -49,6 +48,8 @@ class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAda
         val address = binding.tvSavePhotoAddress
         val position = binding.tvSavePhotoPocketNumber
         val filter = binding.layoutSavePhotoFrame
+        val icon = binding.ivSavePhotoIcon
+        val iconText = binding.tvSavePhotoPlustext
         fun bind(item: SavePhotoData) {
             title.text = item.tourItem.getTitle()
             address.text = item.tourItem.getAddress()
@@ -63,7 +64,9 @@ class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAda
                     .placeholder(R.drawable.img_default)
                     .into(image)
             }
-//            binding.ivItemPlaceMapThumbnail.clipToOutline = true
+            icon.isVisible = false
+            iconText.isVisible = false
+            image.clipToOutline = true
         }
     }
 }

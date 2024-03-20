@@ -37,7 +37,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         }
     }
 
-    private lateinit var touristAttractionAdapter: PlaceListAdapter
+    private val touristAttractionAdapter = PlaceListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -57,6 +57,11 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         initSwipeRefreshLayout()
         initRecyclerView()
         initModelObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchTouristAttractionList()
     }
 
     private fun initUI(){
@@ -87,9 +92,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         }
     }
     private fun initRecyclerView() {
-        touristAttractionAdapter = PlaceListAdapter().apply {
-            onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
-        }
+        touristAttractionAdapter.onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
         binding.rvTouristAttractionRecyclerView.run{
             this.adapter = touristAttractionAdapter
             initScrollListener(this)
