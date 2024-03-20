@@ -3,7 +3,6 @@ package com.twoday.todaytrip.ui.place_list.adapter
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
@@ -35,7 +34,7 @@ enum class RecommendViewType(val viewType: Int) {
 }
 
 interface OnAddAllRecommendClickListener {
-    fun onAddAllRecommendClick()
+    fun onAddAllRecommendClick(isAllAdded: Boolean)
 }
 
 class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -74,32 +73,40 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     override fun getItemCount(): Int = recommendDataList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-            when (val currentRecommendData = recommendDataList[position]) {
-                is RecommendCover -> {
-                    (holder as Holder).bindCover(currentRecommendData)
-                }
-                is RecommendTourItem -> {
-                    (holder as Holder).run{
-                        bindTourItem(currentRecommendData)
-                        setOnClickListener(currentRecommendData)
-                    }
-                }
-                is RecommendEmpty -> {
-                    (holder as Holder).bindEmpty(currentRecommendData)
-                }
-                is RecommendMap ->{
-                    (holder as MapHolder).run{
-                        bindMap(currentRecommendData)
-                        setOnClickListener()
-                    }
+        when (val currentRecommendData = recommendDataList[position]) {
+            is RecommendCover -> {
+                (holder as Holder).bindCover(currentRecommendData)
+            }
+
+            is RecommendTourItem -> {
+                (holder as Holder).run {
+                    bindTourItem(currentRecommendData)
+                    setOnClickListener(currentRecommendData)
                 }
             }
+
+            is RecommendEmpty -> {
+                (holder as Holder).bindEmpty(currentRecommendData)
+            }
+
+            is RecommendMap -> {
+                (holder as MapHolder).run {
+                    bindMap(currentRecommendData)
+                    setOnClickListener(currentRecommendData)
+                }
+            }
+        }
     }
 
     fun changeDataSet(newRecommendDataList: List<RecommendData>) {
         recommendDataList = newRecommendDataList
         notifyDataSetChanged()
     }
+    fun changeDataSet(newRecommendDataList: List<RecommendData>, position:Int) {
+        recommendDataList = newRecommendDataList
+        notifyItemChanged(position)
+    }
+    fun getDataSet(): List<RecommendData> = recommendDataList
 
     inner class Holder(binding: ItemPlaceListRecommendBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -173,11 +180,32 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             polylineOverlay.map = null
             markers.clear()
             mapView.getMapAsync(this@MapHolder)
+
+            setAllAddButtonUI(recommendMap.isAllAdded)
         }
 
-        fun setOnClickListener() {
+        private fun setAllAddButtonUI(isAllAdded: Boolean) {
+            addAllButton.run {
+                backgroundTintList = itemView.context.getColorStateList(
+                    if (isAllAdded) R.color.white
+                    else R.color.main_blue
+                )
+                setText(
+                    if (isAllAdded) R.string.place_list_recommend_add_all_move
+                    else R.string.place_list_recommend_add_all
+                )
+                setTextColor(
+                    itemView.resources.getColor(
+                        if (isAllAdded) R.color.place_title_gray
+                        else R.color.white
+                    )
+                )
+            }
+        }
+
+        fun setOnClickListener(recommendMap: RecommendMap) {
             addAllButton.setOnClickListener {
-                onAddAllRecommendClickListener?.onAddAllRecommendClick()
+                onAddAllRecommendClickListener?.onAddAllRecommendClick(recommendMap.isAllAdded)
             }
         }
 

@@ -81,14 +81,23 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
         )
         startActivity(placeDetailIntent)
     }
-    override fun onAddAllRecommendClick() {
-        Toast.makeText(requireActivity(), R.string.place_list_recommend_add_all_toast, Toast.LENGTH_SHORT).show()
-        model.addAllRecommend()
+    override fun onAddAllRecommendClick(isAllAdded:Boolean) {
+        if(!isAllAdded) {
+            Toast.makeText(
+                requireActivity(),
+                R.string.place_list_recommend_add_all_toast,
+                Toast.LENGTH_SHORT
+            ).show()
+            model.addAllRecommend()
 
-        mainModel.loadOrFetchTouristAttractionList()
-        mainModel.loadOrFetchRestaurantList()
-        mainModel.loadOrFetchCafeList()
-        mainModel.loadOrFetchEventList()
+            mainModel.loadOrFetchTouristAttractionList()
+            mainModel.loadOrFetchRestaurantList()
+            mainModel.loadOrFetchCafeList()
+            mainModel.loadOrFetchEventList()
+        }
+        else{
+            // TODO 경로 화면으로 이동
+        }
     }
 
     private fun initMainAdapter() {
@@ -143,6 +152,14 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
             }
             recommendAdapter.changeDataSet(recommendDataList)
         }
+
+        model.isAllRecommendAdded.observe(viewLifecycleOwner){isAllRecommendAdded ->
+            val recommendDataList = recommendAdapter.getDataSet()
+            if(recommendDataList.isNotEmpty()){
+                (recommendDataList.last() as RecommendMap).isAllAdded = isAllRecommendAdded
+            }
+            recommendAdapter.changeDataSet(recommendDataList, 5)
+        }
     }
     private fun initMainModelObserver(){
         mainModel.touristAttractionList.observe(viewLifecycleOwner){
@@ -159,6 +176,10 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        model.setIsAllRecommendAdded()
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

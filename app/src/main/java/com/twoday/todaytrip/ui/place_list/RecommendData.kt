@@ -27,5 +27,6 @@ data class RecommendMap(
     val titleId: Int = R.string.place_list_recommend_title,
     val destination: String,
     val destinationSigungu: String,
-    var locations: List<LatLng>
+    var locations: List<LatLng>,
+    var isAllAdded: Boolean = false
 ): RecommendData
