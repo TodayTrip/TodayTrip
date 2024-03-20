@@ -27,9 +27,6 @@ class MainViewModel : ViewModel() {
         DestinationPrefUtil.loadDestination()
     }
 
-    // TODO 여행지 시군구 선택 - 목~금 작업
-    private val destinationSigungu = "전체"
-
     private val areaCode by lazy {
         getDestinationAreaCode(destination)
     }
@@ -77,110 +74,6 @@ class MainViewModel : ViewModel() {
     init {
         initTourItemList()
     }
-
-    private fun getTitleImageId(destination: String): Int? {
-        return when (destination) {
-            "서울" -> listOf(
-                R.drawable.img_seoul1,
-                R.drawable.img_seoul2,
-                R.drawable.img_seoul3,
-                R.drawable.img_seoul4
-            ).random()
-
-            "인천" -> listOf(
-                R.drawable.img_incheon1,
-                R.drawable.img_incheon2,
-                R.drawable.img_incheon3
-            ).random()
-
-            "전북" -> listOf(
-                R.drawable.img_jeonbuk1,
-                R.drawable.img_jeonbuk2
-            ).random()
-
-            "전남" -> listOf(
-                R.drawable.img_jeonnam1,
-                R.drawable.img_jeonnam2,
-                R.drawable.img_jeonnam3,
-                R.drawable.img_jeonnam4,
-                R.drawable.img_jeonnam5
-            ).random()
-
-            "경북" -> listOf(
-                R.drawable.img_gyeongbuk1,
-                R.drawable.img_gyeongbuk2,
-                R.drawable.img_gyeongbuk3
-            ).random()
-
-            "경남" -> listOf(
-                R.drawable.img_gyeongnam1,
-                R.drawable.img_gyeongnam2,
-                R.drawable.img_gyeongnam3
-            ).random()
-
-            "충북" -> listOf(
-                R.drawable.img_chungbuk2,
-                R.drawable.img_chungbuk3,
-                R.drawable.img_chungbuk4,
-                R.drawable.img_chungbuk5
-            ).random()
-
-            "충남" -> listOf(
-                R.drawable.img_chungnam1,
-                R.drawable.img_chungnam2,
-                R.drawable.img_chungnam3
-            ).random()
-
-            "강원" -> listOf(
-                R.drawable.img_gangwon1,
-                R.drawable.img_gangwon2,
-                R.drawable.img_gangwon3
-            ).random()
-
-            "대구" -> listOf(
-                R.drawable.img_daegu1,
-                R.drawable.img_daegu2,
-                R.drawable.img_daegu3
-            ).random()
-
-
-            "부산" -> listOf(
-                R.drawable.img_busan1,
-                R.drawable.img_busan2,
-                R.drawable.img_busan3,
-                R.drawable.img_busan4
-            ).random()
-
-            "대전" -> listOf(
-                R.drawable.img_seoul1
-            ).random()
-
-            "제주" -> listOf(
-                R.drawable.img_jeju1,
-                R.drawable.img_jeju2,
-                R.drawable.img_jeju3
-            ).random()
-
-            "경기" -> listOf(
-                R.drawable.img_gyeonggi1,
-                R.drawable.img_gyeonggi2,
-                R.drawable.img_gyeonggi3
-            ).random()
-
-            "광주" -> listOf(
-                R.drawable.img_gwangju1,
-                R.drawable.img_gwangju2,
-                R.drawable.img_gwangju3
-            ).random()
-
-            "울산" -> listOf(
-                R.drawable.img_ulsan1
-            ).random()
-
-            else -> null
-        }
-    }
-
 
     private fun getDestinationAreaCode(destination: String): String =
         if (destination.isNullOrBlank()) ""

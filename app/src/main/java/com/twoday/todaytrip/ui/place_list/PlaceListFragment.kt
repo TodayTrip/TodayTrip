@@ -124,10 +124,22 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener {
                 e.stackTrace
             }
         }
+        model.recommendDataList.observe(viewLifecycleOwner){
+            recommendAdapter.changeDataSet(it)
+        }
     }
     private fun initMainModelObserver(){
-        mainModel.recommendDataList.observe(viewLifecycleOwner){
-            recommendAdapter.changeDataSet(it)
+        mainModel.touristAttractionList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendTouristAttraction(it)
+        }
+        mainModel.restaurantList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendRestaurant(it)
+        }
+        mainModel.cafeList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendCafe(it)
+        }
+        mainModel.eventList.observe(viewLifecycleOwner){
+            model.pickAndSaveRecommendEvent(it)
         }
     }
 
