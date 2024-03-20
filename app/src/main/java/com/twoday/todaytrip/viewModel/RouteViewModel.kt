@@ -66,13 +66,14 @@ class RouteViewModel: ViewModel() {
 
         val loadedLocations = mutableListOf<LatLng>()
         contentIdList.forEach { contentId ->
-            val tourItem = tourList.find { it.getContentId() == contentId }!!
-            loadedLocations.add(
-                LatLng(
-                    tourItem.getLatitude()?.toDouble() ?: 0.0,
-                    tourItem.getLongitude()?.toDouble() ?: 0.0
+            val tourItem = tourList.find { it.getContentId() == contentId }?.let{
+                loadedLocations.add(
+                    LatLng(
+                        it.getLatitude()?.toDouble() ?: 0.0,
+                        it.getLongitude()?.toDouble() ?: 0.0
+                    )
                 )
-            )
+            }
 
             Log.d("마커 사이즈 확인", loadedLocations.size.toString())
             Log.d("locations", _locations.value.toString())
