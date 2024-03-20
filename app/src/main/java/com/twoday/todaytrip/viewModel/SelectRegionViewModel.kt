@@ -8,22 +8,28 @@ import com.twoday.todaytrip.utils.SelectRegionPrefUtil
 class SelectRegionViewModel: ViewModel() {
 
     private var _selectedRegionList = MutableLiveData<MutableSet<String>>()
-    private val selectedRegionList: LiveData<MutableSet<String>> = _selectedRegionList
+    val selectedRegionList: LiveData<MutableSet<String>> = _selectedRegionList
 
     init {
-
+        loadSelectedRegionList()
     }
 
-    fun loadSelectedRegionList() {
+    private fun loadSelectedRegionList() {
         _selectedRegionList.value = SelectRegionPrefUtil.loadSelectRegionList().toMutableSet()
     }
 
-    fun updateSelectedRegion() {
+    fun updateSelectedRegion(region: String, isSelected: Boolean) {
         val currentList = _selectedRegionList.value ?: mutableSetOf()
-//        if ()
+        if (isSelected) {
+            currentList.add(region)
+        } else {
+            currentList.remove(region)
+        }
+        _selectedRegionList.value = currentList
     }
 
     fun resetSharedPrefRegionList() {
-        SelectRegionPrefUtil
+        SelectRegionPrefUtil.resetSelectRegionListPref()
     }
 }
+//선택된 지역 목록 라이브데이터
