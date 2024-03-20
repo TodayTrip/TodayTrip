@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.naver.maps.geometry.LatLng
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.RecommendCover
@@ -12,7 +13,6 @@ import com.twoday.todaytrip.ui.place_list.RecommendEmpty
 import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.RecommendPrefUtil
-import com.twoday.todaytrip.utils.RecordPrefUtil
 import com.twoday.todaytrip.weatherApi.Item
 import com.twoday.todaytrip.weatherApi.WeatherClient
 import com.twoday.todaytrip.weatherApi.weather
@@ -194,6 +194,7 @@ class PlaceListViewModel : ViewModel() {
         loadRecommendCafe()
         loadRecommendEvent()
     }
+
     private fun getTitleImageId(destination: String): Int? {
         return when (destination) {
             "서울" -> listOf(
@@ -297,8 +298,8 @@ class PlaceListViewModel : ViewModel() {
         }
     }
 
-    private fun  loadRecommendTouristAttraction(){
-        RecommendPrefUtil.loadRecommendTouristAttraction()?.let{recommendTouristAttraction ->
+    private fun loadRecommendTouristAttraction() {
+        RecommendPrefUtil.loadRecommendTouristAttraction()?.let { recommendTouristAttraction ->
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
@@ -306,11 +307,12 @@ class PlaceListViewModel : ViewModel() {
                 subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
                 tourItem = recommendTouristAttraction
             )
-            _recommendDataList.value   = newRecommendDataList
+            _recommendDataList.value = newRecommendDataList
         }
     }
-    private fun  loadRecommendRestaurant(){
-        RecommendPrefUtil.loadRecommendRestaurant()?.let{recommendRestaurant ->
+
+    private fun loadRecommendRestaurant() {
+        RecommendPrefUtil.loadRecommendRestaurant()?.let { recommendRestaurant ->
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
@@ -318,11 +320,12 @@ class PlaceListViewModel : ViewModel() {
                 subTitleId = R.string.place_list_recommend_sub_title_restaurant,
                 tourItem = recommendRestaurant
             )
-            _recommendDataList.value   = newRecommendDataList
+            _recommendDataList.value = newRecommendDataList
         }
     }
-    private fun  loadRecommendCafe(){
-        RecommendPrefUtil.loadRecommendCafe()?.let{recommendCafe ->
+
+    private fun loadRecommendCafe() {
+        RecommendPrefUtil.loadRecommendCafe()?.let { recommendCafe ->
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
@@ -330,11 +333,12 @@ class PlaceListViewModel : ViewModel() {
                 subTitleId = R.string.place_list_recommend_sub_title_cafe,
                 tourItem = recommendCafe
             )
-            _recommendDataList.value   = newRecommendDataList
+            _recommendDataList.value = newRecommendDataList
         }
     }
-    private fun  loadRecommendEvent(){
-        RecommendPrefUtil.loadRecommendEvent()?.let{recommendEvent ->
+
+    private fun loadRecommendEvent() {
+        RecommendPrefUtil.loadRecommendEvent()?.let { recommendEvent ->
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
@@ -342,12 +346,13 @@ class PlaceListViewModel : ViewModel() {
                 subTitleId = R.string.place_list_recommend_sub_title_event,
                 tourItem = recommendEvent
             )
-            _recommendDataList.value   = newRecommendDataList
+            _recommendDataList.value = newRecommendDataList
         }
     }
 
-    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>){
-        if(_recommendDataList.value!!.get(RECOMMEND_INDEX_TOURIST_ATTRACTION) is RecommendTourItem)
+    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>) {
+        if(touristAttractionList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_TOURIST_ATTRACTION] is RecommendTourItem)
             return
 
         val recommendTouristAttraction = touristAttractionList.random()
@@ -358,12 +363,13 @@ class PlaceListViewModel : ViewModel() {
             subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
             tourItem = recommendTouristAttraction
         )
-        _recommendDataList.value   = newRecommendDataList
+        _recommendDataList.value = newRecommendDataList
         RecommendPrefUtil.saveRecommendTouristAttraction(recommendTouristAttraction)
     }
-    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>){
-        if(_recommendDataList.value!!.get(RECOMMEND_INDEX_RESTAURANT) is RecommendTourItem)
-            return
+
+    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>) {
+        if(restaurantList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_RESTAURANT] is RecommendTourItem) return
 
         val recommendRestaurant = restaurantList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
@@ -373,12 +379,13 @@ class PlaceListViewModel : ViewModel() {
             subTitleId = R.string.place_list_recommend_sub_title_restaurant,
             tourItem = recommendRestaurant
         )
-        _recommendDataList.value   = newRecommendDataList
+        _recommendDataList.value = newRecommendDataList
         RecommendPrefUtil.saveRecommendRestaurant(recommendRestaurant)
     }
-    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>){
-        if(_recommendDataList.value!!.get(RECOMMEND_INDEX_CAFE) is RecommendTourItem)
-            return
+
+    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>) {
+        if(cafeList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_CAFE] is RecommendTourItem) return
 
         val recommendCafe = cafeList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
@@ -388,12 +395,13 @@ class PlaceListViewModel : ViewModel() {
             subTitleId = R.string.place_list_recommend_sub_title_cafe,
             tourItem = recommendCafe
         )
-        _recommendDataList.value   = newRecommendDataList
+        _recommendDataList.value = newRecommendDataList
         RecommendPrefUtil.saveRecommendCafe(recommendCafe)
     }
-    fun pickAndSaveRecommendEvent(eventList: List<TourItem>){
-        if(_recommendDataList.value!!.get(RECOMMEND_INDEX_EVENT) is RecommendTourItem)
-            return
+
+    fun pickAndSaveRecommendEvent(eventList: List<TourItem>) {
+        if(eventList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_EVENT] is RecommendTourItem) return
 
         val recommendEvent = eventList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
@@ -403,7 +411,22 @@ class PlaceListViewModel : ViewModel() {
             subTitleId = R.string.place_list_recommend_sub_title_event,
             tourItem = recommendEvent
         )
-        _recommendDataList.value   = newRecommendDataList
+        _recommendDataList.value = newRecommendDataList
         RecommendPrefUtil.saveEventTouristAttraction(recommendEvent)
+    }
+
+    fun getRecommendLocations(): List<LatLng> {
+        val locations = mutableListOf<LatLng>()
+        _recommendDataList.value?.forEach { recommendData ->
+            if (recommendData is RecommendTourItem) {
+                locations.add(
+                    LatLng(
+                        recommendData.tourItem.getLatitude()?.toDouble() ?: 0.0,
+                        recommendData.tourItem.getLongitude()?.toDouble() ?: 0.0
+                    )
+                )
+            }
+        }
+        return locations.toList()
     }
 }
