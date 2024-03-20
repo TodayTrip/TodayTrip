@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
@@ -22,10 +23,12 @@ class MainViewModel : ViewModel() {
     private val theme by lazy {
         DestinationPrefUtil.loadTheme()
     }
+    private val destination by lazy {
+        DestinationPrefUtil.loadDestination()
+    }
+
     private val areaCode by lazy {
-        getDestinationAreaCode(
-            DestinationPrefUtil.loadDestination()
-        )
+        getDestinationAreaCode(destination)
     }
 
     private val MAX_API_CALL_COUNT = 3
@@ -69,16 +72,16 @@ class MainViewModel : ViewModel() {
     val eventMoreLoaded get() = _eventMoreLoaded
 
     init {
-        getTourItemList()
+        initTourItemList()
     }
 
     private fun getDestinationAreaCode(destination: String): String =
         if (destination.isNullOrBlank()) ""
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
-    // 관광지 & 음식점 & 카페 & 행사/축제 정보 목록 초기화 함수
+    // 관광지,음식점,카페,행사/축제 정보 목록 초기화 함수
     // MainViewModel이 생성될 때(init) 최초로 한 번만 호출됨
-    private fun getTourItemList() {
+    private fun initTourItemList() = CoroutineScope(Dispatchers.IO).launch {
         loadOrFetchTouristAttractionList()
         loadOrFetchRestaurantList()
         loadOrFetchCafeList()
@@ -111,6 +114,7 @@ class MainViewModel : ViewModel() {
         }
         return@launch
     }
+
     // 음식점 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
     // 음식점 탭에서 RecyclerView를 초기화할 때/ 불러오기 재시도할 때 호출됨
     fun loadOrFetchRestaurantList() = CoroutineScope(Dispatchers.IO).launch {
@@ -132,6 +136,7 @@ class MainViewModel : ViewModel() {
         }
         return@launch
     }
+
     // 카페 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
     // 카페 탭에서 RecyclerView를 초기화할 때/ 불러오기 재시도할 때 호출됨
     fun loadOrFetchCafeList() = CoroutineScope(Dispatchers.IO).launch {
@@ -153,6 +158,7 @@ class MainViewModel : ViewModel() {
         }
         return@launch
     }
+
     // 행사/축제 정보 Shared Preference에 있는 경우 가져오고, 없는 경우 API 호출(최대 3번)을 통해 가져오는 함수
     // 행사/축제 탭에서 RecyclerView를 초기화할 때/ 불러오기 재시도할 때 호출됨
     fun loadOrFetchEventList() = CoroutineScope(Dispatchers.IO).launch {
@@ -185,13 +191,18 @@ class MainViewModel : ViewModel() {
             if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, pageNo)
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
+                    theme,
+                    areaCode,
+                    pageNo
+                )
         }
 
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList.await())
-        if(touristAttractionList.await().isNotEmpty())
-            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
+        if (touristAttractionList.await().isNotEmpty())
+            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo + 1)
     }
+
     // 음식점 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchRestaurantList() 함수에서 호출됨
     private suspend fun fetchAndSaveRestaurantList() {
@@ -202,22 +213,24 @@ class MainViewModel : ViewModel() {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveRestaurantList(restaurantList.await())
-        if(restaurantList.await().isNotEmpty())
+        if (restaurantList.await().isNotEmpty())
             PageNoPrefUtil.saveRestaurantPageNo(pageNo + 1)
     }
+
     // 카페 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchCafeList() 함수에서 호출됨
     private suspend fun fetchAndSaveCafeList() {
         val pageNo = PageNoPrefUtil.loadCafePageNo()
-        Log.d(TAG,"fetchAndSaveCafeList) pageNo: $pageNo")
+        Log.d(TAG, "fetchAndSaveCafeList) pageNo: $pageNo")
 
         val cafeList = CoroutineScope(Dispatchers.IO).async {
             TourNetworkInterfaceUtils.fetchCafeTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveCafeList(cafeList.await())
-        if(cafeList.await().isNotEmpty())
-                PageNoPrefUtil.saveCafePageNo(pageNo + 1)
+        if (cafeList.await().isNotEmpty())
+            PageNoPrefUtil.saveCafePageNo(pageNo + 1)
     }
+
     // 행사/축제 정보를 API 호출을 통해 가져오고, Shared Preference에 저장하는 함수
     // loadOrFetchEventList() 함수에서 호출됨
     private suspend fun fetchAndSaveEventList() {
@@ -228,14 +241,14 @@ class MainViewModel : ViewModel() {
             TourNetworkInterfaceUtils.fetchEventTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveEventList(eventList.await())
-        if(eventList.await().isNotEmpty())
+        if (eventList.await().isNotEmpty())
             PageNoPrefUtil.saveEventPageNo(pageNo + 1)
     }
 
     // 다음 페이지의 관광지 정보를 API 호출을 총해 가져온 뒤,
     // 기존의 목록 뒤에 붙여 Shared Preference에 저장하는 함수
     // Infinite Scroll을 위해 사용됨
-    fun fetchAndSaveMoreTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch{
+    fun fetchAndSaveMoreTouristAttractionList() = CoroutineScope(Dispatchers.IO).launch {
         CoroutineScope(Dispatchers.Main).launch {
             _isTouristAttractionLoadReady = false
         }
@@ -254,8 +267,11 @@ class MainViewModel : ViewModel() {
                 )
         }.await()
 
-        Log.d(TAG, "fetchAndSaveMoreTouristAttractionList) moreTouristAttractionList size: ${moreTouristAttractionList.size}")
-        if(moreTouristAttractionList.isEmpty()){
+        Log.d(
+            TAG,
+            "fetchAndSaveMoreTouristAttractionList) moreTouristAttractionList size: ${moreTouristAttractionList.size}"
+        )
+        if (moreTouristAttractionList.isEmpty()) {
             delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _touristAttractionMoreLoaded.value = -1
@@ -273,10 +289,11 @@ class MainViewModel : ViewModel() {
             _isTouristAttractionLoadReady = true
         }
     }
+
     // 다음 페이지의 음식점 정보를 API 호출을 총해 가져온 뒤,
     // 기존의 목록 뒤에 붙여 Shared Preference에 저장하는 함수
     // Infinite Scroll을 위해 사용됨
-    fun fetchAndSaveMoreRestaurantList() = CoroutineScope(Dispatchers.IO).launch{
+    fun fetchAndSaveMoreRestaurantList() = CoroutineScope(Dispatchers.IO).launch {
         CoroutineScope(Dispatchers.Main).launch {
             _isRestaurantLoadReady = false
         }
@@ -288,8 +305,11 @@ class MainViewModel : ViewModel() {
             TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
         }.await()
 
-        Log.d(TAG, "fetchAndSaveMoreRestaurantList) moreRestaurantList size: ${moreRestaurantList.size}")
-        if(moreRestaurantList.isEmpty()){
+        Log.d(
+            TAG,
+            "fetchAndSaveMoreRestaurantList) moreRestaurantList size: ${moreRestaurantList.size}"
+        )
+        if (moreRestaurantList.isEmpty()) {
             delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _restaurantMoreLoaded.value = -1
@@ -306,10 +326,11 @@ class MainViewModel : ViewModel() {
             _isRestaurantLoadReady = true
         }
     }
+
     // 다음 페이지의 카페 정보를 API 호출을 총해 가져온 뒤,
     // 기존의 목록 뒤에 붙여 Shared Preference에 저장하는 함수
     // Infinite Scroll을 위해 사용됨
-    fun fetchAndSaveMoreCafeList() = CoroutineScope(Dispatchers.IO).launch{
+    fun fetchAndSaveMoreCafeList() = CoroutineScope(Dispatchers.IO).launch {
         CoroutineScope(Dispatchers.Main).launch {
             _isCafeLoadReady = false
         }
@@ -322,7 +343,7 @@ class MainViewModel : ViewModel() {
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreCafeList) moreCafeList size: ${moreCafeList.size}")
-        if(moreCafeList.isEmpty()){
+        if (moreCafeList.isEmpty()) {
             delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _cafeMoreLoaded.value = -1
@@ -340,10 +361,11 @@ class MainViewModel : ViewModel() {
             _isCafeLoadReady = true
         }
     }
+
     // 다음 페이지의 행사/축제 정보를 API 호출을 총해 가져온 뒤,
     // 기존의 목록 뒤에 붙여 Shared Preference에 저장하는 함수
     // Infinite Scroll을 위해 사용됨
-    fun fetchAndSaveMoreEventList() = CoroutineScope(Dispatchers.IO).launch{
+    fun fetchAndSaveMoreEventList() = CoroutineScope(Dispatchers.IO).launch {
         CoroutineScope(Dispatchers.Main).launch {
             _isEventLoadReady = false
         }
@@ -355,7 +377,7 @@ class MainViewModel : ViewModel() {
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreEventList) moreEventList size: ${moreEventList.size}")
-        if(moreEventList.isEmpty()){
+        if (moreEventList.isEmpty()) {
             delay(700)
             CoroutineScope(Dispatchers.Main).launch {
                 _eventMoreLoaded.value = -1
@@ -375,16 +397,19 @@ class MainViewModel : ViewModel() {
     }
 
     // API 추가 로딩 후, 추가 로딩 실패/성공 저장 변수 디폴트 값으로 돌려놓는 함수
-    fun setTouristAttractionMoreLoadedDefault(){
+    fun setTouristAttractionMoreLoadedDefault() {
         _touristAttractionMoreLoaded.value = 0
     }
-    fun setRestaurantMoreLoadedDefault(){
+
+    fun setRestaurantMoreLoadedDefault() {
         _restaurantMoreLoaded.value = 0
     }
-    fun setCafeMoreLoadedDefault(){
+
+    fun setCafeMoreLoadedDefault() {
         _cafeMoreLoaded.value = 0
     }
-    fun setEventMoreLoadedDefault(){
+
+    fun setEventMoreLoadedDefault() {
         _eventMoreLoaded.value = 0
     }
 }
