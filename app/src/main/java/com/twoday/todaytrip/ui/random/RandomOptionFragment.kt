@@ -37,11 +37,11 @@ class RandomOptionFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.btnOptionSelect.visibility = View.INVISIBLE
+        binding.btnOptionNext.visibility = View.INVISIBLE
     }
 
     private fun setUpClickListener() {
-        binding.btnOptionSelect.setOnClickListener {
+        binding.btnOptionNext.setOnClickListener {
             if (isSelectedAllRandomBtn) {
                 // 전체 랜덤 선택 시 Sharf에 여행지 랜덤 저장
 //                viewModel.selectRandomDestination()
@@ -73,9 +73,9 @@ class RandomOptionFragment : Fragment() {
     }
 
     private fun updateNextButtonStyle(isButtonClickable: Boolean) {
-        binding.btnOptionSelect.visibility = View.VISIBLE
-        binding.btnOptionSelect.isEnabled = isButtonClickable
-        binding.btnOptionSelect.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
+        binding.btnOptionNext.visibility = View.VISIBLE
+        binding.btnOptionNext.isEnabled = isButtonClickable
+        binding.btnOptionNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
     }
 
     private fun updateRandomButtonStyle() {
