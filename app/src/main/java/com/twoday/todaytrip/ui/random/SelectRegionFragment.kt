@@ -3,6 +3,7 @@ package com.twoday.todaytrip.ui.random
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,10 +24,6 @@ import com.twoday.todaytrip.viewModel.SelectRegionViewModel
 class SelectRegionFragment : Fragment() {
 
     private val TAG = "SelectRegionBinding"
-
-//    companion object {
-//        fun newInstance() = SelectRegionFragment()
-//    }
 
     private var _binding: FragmentSelectRegionBinding? = null
     private val binding get() = _binding!!
@@ -54,9 +51,7 @@ class SelectRegionFragment : Fragment() {
         )
     }
 
-    private val map by lazy { binding.ivSelectRegionMap }
-    private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_korea_map, map) }
-//    private val richP리athMap by lazy { binding.rpvSelectRegionMap }
+    private val richPathMap by lazy { binding.rpvSelectRegionMap }
 
     private val blueColorIdMap by lazy{
         mapOf<String, Int>(
@@ -104,8 +99,6 @@ class SelectRegionFragment : Fragment() {
 
     private fun initModelObserver() {
         viewModel.selectedRegionList.observe(viewLifecycleOwner) { selectedRegionList ->
-//            richPathMap.invalidate()
-            map.invalidate()
             chips.forEach {
                 it.isChecked = selectedRegionList.contains(it.text)
                 it.fillMap()
@@ -116,12 +109,13 @@ class SelectRegionFragment : Fragment() {
     }
 
     private fun Chip.fillMap() {
-        val selected = mapVector.findPathByName(this.text.toString())
-//        val selected = richPathMap.findRichPathByName(this.text.toString())
-        if (this.isChecked) {
-            selected.fillColor = resources.getColor(blueColorIdMap[this.text.toString()]!!)
-        } else {
-            selected.fillColor = Color.rgb(217, 217, 217)
+        richPathMap.findRichPathByName(this.text.toString())?.let{richPath ->
+            Log.d(TAG, "fillMap) selected: ${this.text}")
+            if (this.isChecked) {
+                richPath.fillColor = resources.getColor(blueColorIdMap[this.text.toString()]!!)
+            } else {
+                richPath.fillColor = resources.getColor(R.color.map_gray)
+            }
         }
     }
 
@@ -148,15 +142,16 @@ class SelectRegionFragment : Fragment() {
             }
         }
     }
-
-    private var pathClicked = true
     private fun setUpMapRegionClickListener() {
-//        val seoul = richPathMap.findRichPathByName("전북")
-//        seoul?.setOnPathClickListener {
-//            pathClicked = !pathClicked
-//            if (pathClicked) seoul.fillColor = Color.GREEN
-//        }
-
+        chips.forEach { chip ->
+            val regionName = chip.text.toString()
+            richPathMap.findRichPathByName(regionName)?.let {
+                it.setOnPathClickListener {
+                    Log.d(TAG, "map clicked! regionName: ${regionName}")
+                    viewModel.toggleSelectedRegion(regionName)
+                }
+            }
+        }
     }
 
     @SuppressLint("ResourceAsColor")

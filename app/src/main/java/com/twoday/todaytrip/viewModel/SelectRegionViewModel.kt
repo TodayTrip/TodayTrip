@@ -53,4 +53,11 @@ class SelectRegionViewModel : ViewModel() {
         }
         _selectedRegionList.value = newSelectedRegionList
     }
+
+    fun toggleSelectedRegion(selectedRegion: String){
+        if(_selectedRegionList.value!!.contains(selectedRegion))
+            removeSelectedRegion(selectedRegion)
+        else
+            addSelectedRegion(selectedRegion)
+    }
 }
