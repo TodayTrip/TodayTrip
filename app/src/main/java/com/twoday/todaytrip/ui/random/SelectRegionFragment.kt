@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.devs.vectorchildfinder.VectorChildFinder
 import com.google.android.material.chip.Chip
-import com.richpath.RichPathView
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentSelectRegionBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
@@ -51,7 +50,8 @@ class SelectRegionFragment : Fragment() {
         )
     }
 
-    private val richPathMap by lazy { binding.rpvSelectRegionMap }
+    private val map by lazy { binding.ivSelectRegionMap }
+    private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_korea_map, map) }
 
     private val blueColorIdMap by lazy{
         mapOf<String, Int>(
@@ -92,13 +92,13 @@ class SelectRegionFragment : Fragment() {
         setUpAllButtonClickListener()
         setUpChipClickListener()
         setUpNextButtonListener()
-        setUpMapRegionClickListener()
-
         initModelObserver()
     }
 
     private fun initModelObserver() {
         viewModel.selectedRegionList.observe(viewLifecycleOwner) { selectedRegionList ->
+            map.invalidate()
+
             chips.forEach {
                 it.isChecked = selectedRegionList.contains(it.text)
                 it.fillMap()
@@ -109,13 +109,11 @@ class SelectRegionFragment : Fragment() {
     }
 
     private fun Chip.fillMap() {
-        richPathMap.findRichPathByName(this.text.toString())?.let{richPath ->
-            Log.d(TAG, "fillMap) selected: ${this.text}")
-            if (this.isChecked) {
-                richPath.fillColor = resources.getColor(blueColorIdMap[this.text.toString()]!!)
-            } else {
-                richPath.fillColor = resources.getColor(R.color.map_gray)
-            }
+        val selected = mapVector.findPathByName(this.text.toString())
+        if (this.isChecked) {
+            selected.fillColor = resources.getColor(blueColorIdMap[this.text.toString()]!!)
+        } else {
+            selected.fillColor = Color.rgb(217, 217, 217)
         }
     }
 
@@ -142,6 +140,7 @@ class SelectRegionFragment : Fragment() {
             }
         }
     }
+
     private fun setUpMapRegionClickListener() {
         chips.forEach { chip ->
             val regionName = chip.text.toString()

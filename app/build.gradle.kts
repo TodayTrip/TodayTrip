@@ -116,5 +116,4 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     // vector img color
     implementation("com.github.devsideal:VectorChildFinder:1.0.0")
-    implementation("com.github.tarek360.RichPath:animator:0.1.1")
 }
