@@ -6,6 +6,7 @@ import com.twoday.todaytrip.tourData.TourCategoryId2
 import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.TourItemDTOConverter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.runBlocking
@@ -13,42 +14,47 @@ import kotlinx.coroutines.withContext
 
 object TourNetworkInterfaceUtils {
     private val TAG = "TourNetworkInterfaceUtils"
-    fun fetchTouristAttractionList(areaCode: String, pageNo:Int): List<TourItem> = runBlocking(Dispatchers.IO) {
-        val touristAttractionList = mutableListOf<TourItem>()
+    fun fetchTouristAttractionList(areaCode: String, pageNo: Int): List<TourItem> =
+        runBlocking(Dispatchers.IO) {
+            val touristAttractionList = mutableListOf<TourItem>()
 
-        withContext(Dispatchers.Default) {
-            fetchAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                numOfRows = 5,
-                pageNo = pageNo
-            )
-        }?.let { areaBasedList ->
-            areaBasedList.response.body.items.item.forEach { item ->
-                fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    touristAttractionList.add(TourItem.TouristDestination(item, it))
+            withContext(Dispatchers.Default) {
+                fetchAreaBasedList(
+                    areaCode = areaCode,
+                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                    numOfRows = 5,
+                    pageNo = pageNo
+                )
+            }?.let { areaBasedList ->
+                areaBasedList.response.body.items.item.forEach { item ->
+                    fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                        touristAttractionList.add(TourItem.TouristDestination(item, it))
+                    }
                 }
             }
-        }
-        withContext(Dispatchers.Default) {
-            fetchAreaBasedList(
-                areaCode = areaCode,
-                contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
-                numOfRows = 5,
-                pageNo = pageNo
-            )
-        }?.let { areaBasedList ->
-            areaBasedList.response.body.items.item.forEach { item ->
-                fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    touristAttractionList.add(TourItem.CulturalFacilities(item, it))
+            withContext(Dispatchers.Default) {
+                fetchAreaBasedList(
+                    areaCode = areaCode,
+                    contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
+                    numOfRows = 5,
+                    pageNo = pageNo
+                )
+            }?.let { areaBasedList ->
+                areaBasedList.response.body.items.item.forEach { item ->
+                    fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                        touristAttractionList.add(TourItem.CulturalFacilities(item, it))
+                    }
                 }
             }
+
+            return@runBlocking touristAttractionList.toList()
         }
 
-        return@runBlocking touristAttractionList.toList()
-    }
-
-    fun fetchTouristAttractionListWithTheme(theme: String, areaCode: String, pageNo: Int): List<TourItem> =
+    fun fetchTouristAttractionListWithTheme(
+        theme: String,
+        areaCode: String,
+        pageNo: Int
+    ): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val touristAttractionList = mutableListOf<TourItem>()
             when (theme) {
@@ -253,7 +259,7 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    private fun fetchHistoricalTheme(areaCode: String, pageNo:Int): AreaBasedList? =
+    private fun fetchHistoricalTheme(areaCode: String, pageNo: Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
@@ -265,7 +271,7 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    private fun fetchRecreationalTheme(areaCode: String, pageNo:Int): AreaBasedList? =
+    private fun fetchRecreationalTheme(areaCode: String, pageNo: Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
@@ -277,7 +283,7 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    private fun fetchExperientialTheme(areaCode: String, pageNo:Int): AreaBasedList? =
+    private fun fetchExperientialTheme(areaCode: String, pageNo: Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
@@ -289,7 +295,7 @@ object TourNetworkInterfaceUtils {
             )
         }
 
-    private fun fetchLeisureSportsTheme(areaCode: String, pageNo:Int): AreaBasedList? =
+    private fun fetchLeisureSportsTheme(areaCode: String, pageNo: Int): AreaBasedList? =
         runBlocking(Dispatchers.IO) {
             fetchAreaBasedList(
                 areaCode = areaCode,
@@ -406,7 +412,7 @@ object TourNetworkInterfaceUtils {
         return@runBlocking cafeTabList.toList()
     }
 
-    fun fetchEventTabList(areaCode: String, pageNo:Int): List<TourItem> =
+    fun fetchEventTabList(areaCode: String, pageNo: Int): List<TourItem> =
         runBlocking(Dispatchers.IO) {
             val eventList = fetchAreaBasedList(
                 areaCode = areaCode,
@@ -438,6 +444,72 @@ object TourNetworkInterfaceUtils {
             return@runBlocking eventTabList.toList()
         }
 
+    fun fetchNearByList(tourItem: TourItem): List<TourItem> = runBlocking(Dispatchers.IO) {
+        val nearByList = mutableListOf<TourItem>()
+
+        val locationBasedList = fetchLocationBasedList(
+            mapX = tourItem.getLongitude(),
+            mapY = tourItem.getLatitude()
+        )
+        Log.d(TAG, "fetchNearByList) locationBasedList is null: ${locationBasedList == null}")
+        locationBasedList?.response?.body?.items?.item?.forEach { item ->
+            Log.d(TAG, "fetchNearByList) item.contentId: ${item.contentid}")
+            fetchIntroDetail(item.contentid, item.contenttypeid)?.let {
+                when (it.contentTypeId) {
+                    TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
+                        nearByList.add(
+                            TourItem.TouristDestination(
+                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                it
+                            )
+                        )
+                    }
+
+                    TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
+                        nearByList.add(
+                            TourItem.CulturalFacilities(
+                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                it
+                            )
+                        )
+                    }
+
+                    TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
+                        nearByList.add(
+                            TourItem.LeisureSports(
+                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                it
+                            )
+                        )
+                    }
+
+                    TourContentTypeId.RESTAURANT.contentTypeId -> {
+                        nearByList.add(
+                            TourItem.Restaurant(
+                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                it
+                            )
+                        )
+                    }
+
+                    TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
+                        nearByList.add(
+                            TourItem.EventPerformanceFestival(
+                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                it
+                            )
+                        )
+                    }
+
+                    else ->{
+                        // do nothing
+                    }
+                }
+            }
+        }
+        return@runBlocking nearByList
+    }
+
     private suspend fun fetchAreaBasedList(
         areaCode: String,
         contentTypeId: String,
@@ -445,7 +517,7 @@ object TourNetworkInterfaceUtils {
         category2: String? = null,
         category3: String? = null,
         numOfRows: Int,
-        pageNo:Int
+        pageNo: Int
     ): AreaBasedList? {
         try {
             val areaBasedResponse = TourNetworkClient.tourNetWork.fetchAreaBasedList(
@@ -476,9 +548,10 @@ object TourNetworkInterfaceUtils {
             return null
         }
     }
+
     private suspend fun fetchLocationBasedList(
-        mapX:String,
-        mapY:String
+        mapX: String,
+        mapY: String
     ): LocationBasedList? {
         try {
             val locationBasedResponse = TourNetworkClient.tourNetWork.fetchLocationBasedList(
@@ -511,6 +584,7 @@ object TourNetworkInterfaceUtils {
         contentId: String,
         contentTypeId: String
     ): IntroDetailItem? {
+        Log.d(TAG, "fetchIntroDetail) contentId: ${contentId}")
         try {
             val introDetailResponse = TourNetworkClient.tourNetWork.fetchIntroDetail(
                 contentId = contentId,

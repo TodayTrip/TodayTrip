@@ -28,7 +28,7 @@ data class LocationBasedItem(
     val cat1: String,
     val cat2: String,
     val cat3: String,
-    val contentId:String,
+    val contentid:String,
     val contenttypeid:String,
     val createdtime:String,
     val dist:String,
