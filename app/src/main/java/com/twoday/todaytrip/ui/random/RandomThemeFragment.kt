@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
@@ -29,6 +30,9 @@ class RandomThemeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setUpClickListener()
         setUpButtonClickState(false)
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
         initView()
 
     }

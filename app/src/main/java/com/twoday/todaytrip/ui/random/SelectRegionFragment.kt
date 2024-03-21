@@ -8,13 +8,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.devs.vectorchildfinder.VectorChildFinder
 import com.google.android.material.chip.Chip
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentSelectRegionBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.SelectRegionPrefUtil
+import com.twoday.todaytrip.viewModel.SelectRegionViewModel
 
 class SelectRegionFragment : Fragment() {
 
@@ -27,7 +32,7 @@ class SelectRegionFragment : Fragment() {
     private var _binding: FragmentSelectRegionBinding? = null
     private val binding get() = _binding!!
 
-//    private lateinit var viewModel: SelectRegionViewModel
+    private lateinit var viewModel: SelectRegionViewModel
 
     private val chips by lazy {
         listOf(
@@ -78,12 +83,25 @@ class SelectRegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
         initView()
+        initViewModel()
     }
 
     private fun initView() {
         initChipSet()
         setUpClickListener()
+    }
+
+    private fun initViewModel() {
+        viewModel = ViewModelProvider(this)[SelectRegionViewModel::class.java]
+        viewModel.selectedRegionList.observe(viewLifecycleOwner, Observer {
+            if (it.size == 16){
+
+            }
+        })
     }
 
     private fun initChipSet() {
@@ -108,6 +126,7 @@ class SelectRegionFragment : Fragment() {
             }
     }
 
+    // 지도 지역별로 클릭
     private fun setUpClickListener() {
         updateNextBtn()
         binding.btnSelectRegionAll.setOnClickListener {
@@ -143,6 +162,14 @@ class SelectRegionFragment : Fragment() {
                 updateNextBtn()
             }
         }
+//        map.findRichPathByName("")?.setOnPathClickListener {
+//
+//        }
+//        for (i in 0..15) {
+//            map.findRichPathByIndex(i)?.setOnPathClickListener {
+//                Log.d("richpath", "path=${map.findRichPathByIndex(i).toString()}")
+//            }
+//        }
         binding.btnRegionSelectNext.setOnClickListener {
             SelectRegionPrefUtil.resetSelectRegionListPref()
             SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList.toMutableList())
@@ -167,9 +194,10 @@ class SelectRegionFragment : Fragment() {
     private fun updateSelectAllBtn(isChecked: Boolean) {
         if (isChecked) {
             binding.btnSelectRegionAll.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
-            binding.btnSelectRegionAll.setTextColor(R.color.selector_chip_text)
+            binding.btnSelectRegionAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         } else {
             binding.btnSelectRegionAll.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
+            binding.btnSelectRegionAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_gray))
         }
     }
 

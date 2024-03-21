@@ -7,7 +7,6 @@ import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.twoday.todaytrip.databinding.ActivityMainBinding
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.place_list.RandomBottomSheetDialog
@@ -45,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHomeFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
         setupFabVisibility(navController)
-
     }
 
     // 홈 화면이 아닌 다른 화면에서의 가운데 FloatingActionButton 가시성 조절
@@ -58,5 +56,9 @@ class MainActivity : AppCompatActivity() {
                 else -> binding.fabBottomRandom.visibility = View.VISIBLE
             }
         }
+    }
+
+    fun moveToRouteFragment() {
+        binding.bottomNavigationView.selectedItemId = R.id.navigation_route
     }
 }
