@@ -13,9 +13,10 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.viewModel.PlaceDetailViewModel
 
-class PlaceDetailActivity : AppCompatActivity() {
+class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener{
     private val TAG = "PlaceDetailActivity"
 
     private lateinit var binding: ActivityPlaceDetailBinding
@@ -25,6 +26,7 @@ class PlaceDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var placeInfoAdapter: PlaceInfoAdapter
+    private lateinit var nearByAdapter: NearByAdapter
     private lateinit var memoryDataAdapter: MemoryDataAdapter
 
     private val tourItemExtra by lazy {
@@ -73,6 +75,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 
         initTitleUI()
         initPlaceInfoRecyclerView()
+        initNearByRecyclerView()
         initMyMemoryRecyclerView()
 
         initModelObserver()
@@ -112,9 +115,23 @@ class PlaceDetailActivity : AppCompatActivity() {
         binding.rvPlaceDetailExtraInfoList.adapter = placeInfoAdapter
     }
 
+    private fun initNearByRecyclerView(){
+        nearByAdapter = NearByAdapter().apply{
+            onTourItemClickListener = this@PlaceDetailActivity
+        }
+        binding.rvPlaceDetailNearby.adapter = nearByAdapter
+    }
+
     private fun initMyMemoryRecyclerView() {
         memoryDataAdapter = MemoryDataAdapter()
         binding.rvPlaceDetailMyMemory.adapter = memoryDataAdapter
+    }
+
+    override fun onTourItemClick(tourItem: TourItem) {
+        Log.d(TAG, "onTourItemClick) current TourItem: ${tourItemExtra!!.getTitle()} -> clicked TourItem: ${tourItem.getTitle()}")
+        startActivity(
+            newIntent(this@PlaceDetailActivity, tourItem.getContentTypeId(), tourItem)
+        )
     }
 
     private fun initModelObserver() {
@@ -139,6 +156,14 @@ class PlaceDetailActivity : AppCompatActivity() {
         model.placeInfoList.observe(this@PlaceDetailActivity) {
             placeInfoAdapter.setDataSet(it)
         }
+        model.nearByList.observe(this@PlaceDetailActivity){
+            Log.d(TAG, "observe) nearByList.size: ${it.size}")
+            nearByAdapter.changeDataSet(it)
+
+            binding.rvPlaceDetailNearby.isVisible = it.isNotEmpty()
+            binding.tvPlaceDetailNoNearby.isVisible = it.isEmpty()
+        }
+
         model.memoryDataList.observe(this@PlaceDetailActivity) {
             Log.d(TAG, "observe) memoryDataList.size: ${it.size}")
             memoryDataAdapter.submitList(it.toMutableList())

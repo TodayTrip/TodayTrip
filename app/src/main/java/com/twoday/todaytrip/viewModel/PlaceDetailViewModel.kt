@@ -29,7 +29,7 @@ class PlaceDetailViewModel() : ViewModel() {
     val placeInfoList: LiveData<List<Pair<String, String>>> get() = _placeInfoList
 
     private val _nearByList = MutableLiveData<List<TourItem>>()
-    private val nearByList: LiveData<List<TourItem>> get() = _nearByList
+    val nearByList: LiveData<List<TourItem>> get() = _nearByList
 
     private val _memoryDataList = MutableLiveData<List<MemoryData>>()
     val memoryDataList: LiveData<List<MemoryData>> = _memoryDataList
