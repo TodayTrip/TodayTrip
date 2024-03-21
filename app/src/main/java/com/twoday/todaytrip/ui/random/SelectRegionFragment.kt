@@ -3,6 +3,7 @@ package com.twoday.todaytrip.ui.random
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -139,17 +140,6 @@ class SelectRegionFragment : Fragment() {
             }
         }
     }
-
-    private var pathClicked = true
-    private fun setUpMapRegionClickListener() {
-//        val seoul = richPathMap.findRichPathByName("전북")
-//        seoul?.setOnPathClickListener {
-//            pathClicked = !pathClicked
-//            if (pathClicked) seoul.fillColor = Color.GREEN
-//        }
-
-    }
-
     @SuppressLint("ResourceAsColor")
     private fun updateSelectAllBtn(isChecked: Boolean) {
         if (isChecked) {
