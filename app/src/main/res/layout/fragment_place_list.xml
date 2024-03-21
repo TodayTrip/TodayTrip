@@ -102,6 +102,60 @@
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <View
+                    android:id="@+id/place_indicator3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="7.5dp"
+                    android:background="@drawable/shape_circle_gray" />
+
+                <View
+                    android:id="@+id/place_indicator2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22.5dp"
+                    android:background="@drawable/shape_circle_gray" />
+
+                <View
+                    android:id="@+id/place_indicator1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="37.5dp"
+                    android:background="@drawable/shape_circle_blue" />
+
+                <View
+                    android:id="@+id/place_indicator4"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_circle_gray"
+                    android:layout_marginStart="7.5dp"/>
+
+                <View
+                    android:id="@+id/place_indicator5"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_circle_gray"
+                    android:layout_marginStart="22.5dp"/>
+
+                <View
+                    android:id="@+id/place_indicator6"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_circle_gray"
+                    android:layout_marginStart="37.5dp"/>
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
             <!-- 뷰페이저와 연결할 탭 -->
