@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.devs.vectorchildfinder.VectorChildFinder
 import com.google.android.material.chip.Chip
-import com.richpath.RichPathView
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentSelectRegionBinding
 import com.twoday.todaytrip.utils.DestinationPrefUtil
@@ -24,9 +23,6 @@ class SelectRegionFragment : Fragment() {
 
     private val TAG = "SelectRegionBinding"
 
-//    companion object {
-//        fun newInstance() = SelectRegionFragment()
-//    }
 
     private var _binding: FragmentSelectRegionBinding? = null
     private val binding get() = _binding!!
@@ -56,7 +52,6 @@ class SelectRegionFragment : Fragment() {
 
     private val map by lazy { binding.ivSelectRegionMap }
     private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_korea_map, map) }
-//    private val richP리athMap by lazy { binding.rpvSelectRegionMap }
 
     private val blueColorIdMap by lazy{
         mapOf<String, Int>(
@@ -97,14 +92,11 @@ class SelectRegionFragment : Fragment() {
         setUpAllButtonClickListener()
         setUpChipClickListener()
         setUpNextButtonListener()
-        setUpMapRegionClickListener()
-
         initModelObserver()
     }
 
     private fun initModelObserver() {
         viewModel.selectedRegionList.observe(viewLifecycleOwner) { selectedRegionList ->
-//            richPathMap.invalidate()
             map.invalidate()
             chips.forEach {
                 it.isChecked = selectedRegionList.contains(it.text)
@@ -117,7 +109,6 @@ class SelectRegionFragment : Fragment() {
 
     private fun Chip.fillMap() {
         val selected = mapVector.findPathByName(this.text.toString())
-//        val selected = richPathMap.findRichPathByName(this.text.toString())
         if (this.isChecked) {
             selected.fillColor = resources.getColor(blueColorIdMap[this.text.toString()]!!)
         } else {
@@ -147,16 +138,6 @@ class SelectRegionFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private var pathClicked = true
-    private fun setUpMapRegionClickListener() {
-//        val seoul = richPathMap.findRichPathByName("전북")
-//        seoul?.setOnPathClickListener {
-//            pathClicked = !pathClicked
-//            if (pathClicked) seoul.fillColor = Color.GREEN
-//        }
-
     }
 
     @SuppressLint("ResourceAsColor")
