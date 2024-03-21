@@ -7,10 +7,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemRecordBinding
-import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 
 class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallback) {
     private val TAG = "RecordAdapter"
@@ -51,7 +49,7 @@ class RecordAdapter : ListAdapter<Record, RecordAdapter.Holder>(RecordDiffCallba
 
             }
             if (savePhotoDataWithImage != null) {
-                Glide.with(MyApplication.appContext!!)
+                Glide.with(itemView.context)
                     .load(savePhotoDataWithImage.imageUriList[0])
                     .placeholder(R.drawable.ic_launcher)
                     .into(imageView)

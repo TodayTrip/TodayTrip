@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
 import com.twoday.todaytrip.tourData.TourItem
@@ -45,7 +44,7 @@ class PlaceMapAdapter(
             binding.tvItemPlaceMapTitle.text = item.getTitle()
             binding.tvItemPlaceMapAddress.text = item.getAddress()
 
-            Glide.with(MyApplication.appContext!!)
+            Glide.with(itemView.context)
                 .load(item.getThumbnailImage())
                 .placeholder(R.drawable.img_default)
                 .into(binding.ivItemPlaceMapThumbnail)
