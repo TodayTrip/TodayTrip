@@ -118,30 +118,21 @@ class SelectRegionFragment : Fragment() {
     }
 
     private fun Chip.fillMap() {
-            val selected = mapVector.findPathByName(this.text.toString())
-            if (this.isChecked) {
-                selected.fillColor = blueColorRGBList.random()
-            } else {
-                selected.fillColor = Color.rgb(217,217,217)
-            }
+        val selected = mapVector.findPathByName(this.text.toString())
+        if (this.isChecked) {
+            selected.fillColor = resources.getColor(blueColorIdMap[this.text.toString()]!!)
+        } else {
+            selected.fillColor = Color.rgb(217, 217, 217)
+        }
     }
 
-    // 지도 지역별로 클릭
-    private fun setUpClickListener() {
-        updateNextBtn()
+    private fun setUpAllButtonClickListener() {
         binding.btnSelectRegionAll.setOnClickListener {
-            if (selectedRegionList.size == 16) {
-                chips.forEach {
-                    it.isChecked = false
-                    it.fillMap()
-                }
-                selectedRegionList.clear()
-                updateSelectAllBtn(false)
+            if (viewModel.selectedRegionList.value!!.size == 16) {
+                viewModel.clearSelectedRegionList()
             } else {
                 chips.forEach {
-                    it.isChecked = true
-                    selectedRegionList.add(it.text.toString())
-                    it.fillMap()
+                    viewModel.addSelectedRegion(it.text.toString())
                 }
                 updateSelectAllBtn(true)
             }
@@ -149,10 +140,8 @@ class SelectRegionFragment : Fragment() {
         chips.forEach {
             val selected = mapVector.findPathByName(it.text.toString())
             it.setOnCheckedChangeListener { _, isChecked ->
-                Log.d(TAG, "selected chip=${it.text.toString()}, selected map=${selected.toString()}")
-                Log.d(TAG, "selected regions=${selectedRegionList}")
-                if (it.isChecked) {
-                    selectedRegionList.add(it.text.toString())
+                if (isChecked) {
+                    viewModel.addSelectedRegion(it.text.toString())
                 } else {
                     selectedRegionList.remove(it.text.toString())
                 }
@@ -180,24 +169,28 @@ class SelectRegionFragment : Fragment() {
         }
     }
 
-    private fun updateNextBtn() {
-        if (selectedRegionList.isNotEmpty()) {
-            binding.btnRegionSelectNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
-            binding.btnRegionSelectNext.isEnabled = true
-        } else {
-            binding.btnRegionSelectNext.setBackgroundResource(R.drawable.shape_middle_gray_12_radius)
-            binding.btnRegionSelectNext.isEnabled = false
-        }
+    private fun setUpMapRegionClickListener() {
+
     }
 
     @SuppressLint("ResourceAsColor")
     private fun updateSelectAllBtn(isChecked: Boolean) {
         if (isChecked) {
             binding.btnSelectRegionAll.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
-            binding.btnSelectRegionAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+            binding.btnSelectRegionAll.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.white
+                )
+            )
         } else {
             binding.btnSelectRegionAll.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
-            binding.btnSelectRegionAll.setTextColor(ContextCompat.getColor(requireContext(), R.color.dark_gray))
+            binding.btnSelectRegionAll.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.dark_gray
+                )
+            )
         }
     }
 

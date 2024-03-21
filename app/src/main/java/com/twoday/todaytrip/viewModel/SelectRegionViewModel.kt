@@ -3,9 +3,10 @@ package com.twoday.todaytrip.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.SelectRegionPrefUtil
 
-class SelectRegionViewModel: ViewModel() {
+class SelectRegionViewModel : ViewModel() {
 
     private var _selectedRegionList = MutableLiveData<MutableSet<String>>()
     val selectedRegionList: LiveData<MutableSet<String>> = _selectedRegionList
@@ -18,18 +19,38 @@ class SelectRegionViewModel: ViewModel() {
         _selectedRegionList.value = SelectRegionPrefUtil.loadSelectRegionList().toMutableSet()
     }
 
-    fun updateSelectedRegion(region: String, isSelected: Boolean) {
-        val currentList = _selectedRegionList.value ?: mutableSetOf()
-        if (isSelected) {
-            currentList.add(region)
-        } else {
-            currentList.remove(region)
-        }
-        _selectedRegionList.value = currentList
+    fun saveSelectedRegionList() {
+        SelectRegionPrefUtil.resetSelectRegionListPref()
+        SelectRegionPrefUtil.saveSelectRegionList(_selectedRegionList.value!!.toMutableList())
     }
 
-    fun resetSharedPrefRegionList() {
-        SelectRegionPrefUtil.resetSelectRegionListPref()
+    fun selectAndSaveDestination() {
+        val selectedDestination = _selectedRegionList.value!!.random()
+        DestinationPrefUtil.saveDestination(selectedDestination)
+    }
+
+    fun clearSelectedRegionList() {
+        _selectedRegionList.value = emptySet()
+    }
+
+    fun addSelectedRegion(selectedRegion: String) {
+        val newSelectedRegionList = mutableSetOf<String>().apply {
+            _selectedRegionList.value?.let {
+                addAll(it.toSet())
+            }
+            add(selectedRegion)
+        }
+        _selectedRegionList.value = newSelectedRegionList
+    }
+
+    fun removeSelectedRegion(selectedRegion: String) {
+        val newSelectedRegionList = mutableSetOf<String>().apply {
+            _selectedRegionList.value?.let {
+                addAll(
+                    it.filter { region -> region != selectedRegion }.toSet()
+                )
+            }
+        }
+        _selectedRegionList.value = newSelectedRegionList
     }
 }
-//선택된 지역 목록 라이브데이터
