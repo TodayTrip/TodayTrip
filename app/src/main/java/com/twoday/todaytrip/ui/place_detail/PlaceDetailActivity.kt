@@ -114,7 +114,7 @@ class PlaceDetailActivity : AppCompatActivity() {
 
     private fun initMyMemoryRecyclerView() {
         memoryDataAdapter = MemoryDataAdapter()
-        binding.rvPlaceDetailMyMemoryList.adapter = memoryDataAdapter
+        binding.rvPlaceDetailMyMemory.adapter = memoryDataAdapter
     }
 
     private fun initModelObserver() {
@@ -143,7 +143,7 @@ class PlaceDetailActivity : AppCompatActivity() {
             Log.d(TAG, "observe) memoryDataList.size: ${it.size}")
             memoryDataAdapter.submitList(it.toMutableList())
 
-            binding.rvPlaceDetailMyMemoryList.isVisible = it.isNotEmpty()
+            binding.rvPlaceDetailMyMemory.isVisible = it.isNotEmpty()
             binding.tvPlaceDetailNoMemory.isVisible = it.isEmpty()
         }
     }

@@ -21,7 +21,9 @@
     <!--  PlaceDetailActivity  -->
     <string name="place_detail_add_to_path">경로에 추가하기</string>
     <string name="place_detail_remove_from_path">경로에서 빼기</string>
-    <string name="place_detail_my_memory">이 장소에서의 나의 추억</string>
+    <string name="place_detail_nearby">이 장소 근처 가볼만 한 곳</string>
+    <string name="place_detail_no_nearby">이 장소 근처 정보가 없습니다</string>
+    <string name="place_detail_my_memory">이 장소에서 나의 추억</string>
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다</string>
 
     <!-- PlaceListFragment -->
@@ -30,7 +32,7 @@
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
     
-    <string name="place_list_recommend_sub_title_cover">오늘 여행이 <font color="#FFD15B">추천</font>하는</string>
+    <string name="place_list_recommend_sub_title_cover"><font color="#FFD15B">오늘 여행</font>이 추천하는</string>
     <string name="place_list_recommend_sub_title_map">지도로 한 눈에 보기</string>
     <string name="place_list_recommend_title">%s %s 랜덤 코스</string>
 
