@@ -36,7 +36,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TodayTrip"
         android:usesCleartextTraffic="true"
-        android:enableOnBackInvokedCallback="true"
         tools:targetApi="31">
         <activity
             android:name=".ui.place_list.FullScreenImageActivity"
