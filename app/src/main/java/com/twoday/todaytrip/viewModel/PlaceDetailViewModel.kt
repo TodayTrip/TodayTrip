@@ -71,21 +71,7 @@ class PlaceDetailViewModel() : ViewModel() {
     }
     private fun saveNearByList(){
         _nearByList.value?.forEach { tourItem ->
-            when(tourItem){
-                is TourItem.Restaurant ->{
-                    if((!tourItem.tourItemInfo.category3.isNullOrEmpty()) &&
-                        (tourItem.tourItemInfo.category3 == TourCategoryId3.CAFE_AND_TEA.id))
-                        TourItemPrefUtil.saveMoreCafeList(listOf(tourItem))
-                    else
-                        TourItemPrefUtil.saveMoreRestaurantList(listOf(tourItem))
-                }
-                is TourItem.EventPerformanceFestival -> {
-                    TourItemPrefUtil.saveMoreEventList(listOf(tourItem))
-                }
-                else ->{ // TouristDestination, CulturalFacilities, LeisureSports
-                    TourItemPrefUtil.saveMoreTouristAttractionList(listOf(tourItem))
-                }
-            }
+            TourItemPrefUtil.addTourItem(tourItem)
         }
     }
     private fun initMemoryDataList() {
