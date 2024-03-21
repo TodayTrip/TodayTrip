@@ -140,19 +140,6 @@ class SelectRegionFragment : Fragment() {
             }
         }
     }
-
-    private fun setUpMapRegionClickListener() {
-        chips.forEach { chip ->
-            val regionName = chip.text.toString()
-            richPathMap.findRichPathByName(regionName)?.let {
-                it.setOnPathClickListener {
-                    Log.d(TAG, "map clicked! regionName: ${regionName}")
-                    viewModel.toggleSelectedRegion(regionName)
-                }
-            }
-        }
-    }
-
     @SuppressLint("ResourceAsColor")
     private fun updateSelectAllBtn(isChecked: Boolean) {
         if (isChecked) {
