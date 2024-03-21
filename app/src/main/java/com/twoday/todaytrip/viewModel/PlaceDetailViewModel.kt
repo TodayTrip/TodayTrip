@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.naver.maps.geometry.LatLng
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourItem
@@ -35,6 +36,9 @@ class PlaceDetailViewModel() : ViewModel() {
 
     private val _isLoadingNearByList = MutableLiveData<Boolean>(true)
     val isLoadingNearByList: LiveData<Boolean> get() = _isLoadingNearByList
+
+    private val _nearByLocations = MutableLiveData<List<LatLng>>()
+    val nearByLocations: LiveData<List<LatLng>> get() = _nearByLocations
 
     private val _memoryDataList = MutableLiveData<List<MemoryData>>()
     val memoryDataList: LiveData<List<MemoryData>> = _memoryDataList
@@ -77,6 +81,16 @@ class PlaceDetailViewModel() : ViewModel() {
         _nearByList.value?.forEach { tourItem ->
             TourItemPrefUtil.addTourItem(tourItem)
         }
+    }
+
+    fun getNearByLocations(){
+        val locations = mutableListOf<LatLng>()
+        _nearByList.value?.forEach { tourItem ->
+            locations.add(
+                LatLng(tourItem.getLatitude().toDouble(), tourItem.getLongitude().toDouble())
+            )
+        }
+        _nearByLocations.value = locations
     }
     private fun initMemoryDataList() {
         val loadedMemoryDataList = mutableListOf<MemoryData>()
