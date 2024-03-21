@@ -476,6 +476,36 @@ object TourNetworkInterfaceUtils {
             return null
         }
     }
+    private suspend fun fetchLocationBasedList(
+        mapX:String,
+        mapY:String
+    ): LocationBasedList? {
+        try {
+            val locationBasedResponse = TourNetworkClient.tourNetWork.fetchLocationBasedList(
+                mapX = mapX,
+                mapY = mapY,
+                radius = 20000,
+                numOfRows = 6
+            )
+            if (locationBasedResponse.response.body.totalCount == 0) {
+                Log.d(TAG, "getLocationBasedList) totalCount = 0")
+                return null
+            }
+            locationBasedResponse.response.body.items.item
+                .toMutableList()
+                .run {
+                    val filteredList = this.filter {
+                        (!it.mapx.isNullOrBlank()) && (!it.mapy.isNullOrBlank())
+                    }
+                    clear()
+                    addAll(filteredList)
+                }
+            return locationBasedResponse
+        } catch (e: Exception) {
+            Log.d(TAG, "getLocationBasedList) error!")
+            return null
+        }
+    }
 
     private suspend fun fetchIntroDetail(
         contentId: String,

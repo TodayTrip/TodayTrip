@@ -13,9 +13,9 @@ data class LocationBasedListResponseHeader(
 )
 data class LocationBasedListResponseBody(
     val items: LocationBasedItems,
-    val numOfRows: String,
-    val pageNo:String,
-    val totalCount:String
+    val numOfRows: Int,
+    val pageNo:Int,
+    val totalCount:Int
 )
 data class LocationBasedItems(
     val item: List<LocationBasedItem>
