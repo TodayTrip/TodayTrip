@@ -3,10 +3,10 @@ package com.twoday.todaytrip.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.twoday.todaytrip.databinding.ActivityMainBinding
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.place_list.RandomBottomSheetDialog
@@ -17,9 +17,7 @@ class MainActivity : AppCompatActivity() {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private val model by lazy {
-        ViewModelProvider(this@MainActivity)[MainViewModel::class.java]
-    }
+    private val model by viewModels<MainViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHomeFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
         setupFabVisibility(navController)
-
     }
 
     // 홈 화면이 아닌 다른 화면에서의 가운데 FloatingActionButton 가시성 조절
@@ -59,5 +56,9 @@ class MainActivity : AppCompatActivity() {
                 else -> binding.fabBottomRandom.visibility = View.VISIBLE
             }
         }
+    }
+
+    fun moveToRouteFragment() {
+        binding.bottomNavigationView.selectedItemId = R.id.navigation_route
     }
 }

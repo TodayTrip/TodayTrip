@@ -5,11 +5,11 @@ import android.graphics.ColorMatrixColorFilter
 import android.text.Html
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.databinding.ItemPlaceListSkeletonShimmerBinding
@@ -73,6 +73,14 @@ class PlaceListAdapter :
         list?.forEach {
             it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
         }
+
+        if(list != null){
+            val newList = mutableListOf<TourItem>()
+            newList.addAll(list.filter { it.isAdded })
+            newList.addAll(list.filter { !it.isAdded })
+            list.clear()
+            list.addAll(newList)
+        }
         super.submitList(list)
     }
 
@@ -111,10 +119,16 @@ class PlaceListAdapter :
             val currentDay = DateTimeUtil.getCurrentDay()
 
             item.getThumbnailImage()?.let { url ->
-                Glide.with(MyApplication.appContext!!)
+                Glide.with(itemView.context)
                     .load(url)
                     .placeholder(R.drawable.img_default)
                     .into(firstImageView)
+            }
+
+            if (item.isAdded){
+                binding.ivBookmark.visibility = View.VISIBLE
+            } else {
+                binding.ivBookmark.visibility = View.INVISIBLE
             }
 
             when (item.getContentTypeId()) {
@@ -127,6 +141,10 @@ class PlaceListAdapter :
                         val filter = ColorMatrixColorFilter(matrix)
                         firstImageView.setColorFilter(filter)
                         binding.layoutEntire.setBackgroundResource(R.color.light_gray)
+                    }
+                    else {
+                        firstImageView.setColorFilter(null)
+                        binding.layoutEntire.setBackgroundResource(R.color.white)
                     }
                 }
                 TourContentTypeId.RESTAURANT.contentTypeId ->{

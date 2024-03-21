@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.DialogAlertBinding
 

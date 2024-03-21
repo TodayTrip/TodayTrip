@@ -39,7 +39,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var cafeAdapter: PlaceListAdapter
+    private val cafeAdapter = PlaceListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -56,6 +56,11 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         initRecyclerView()
         initModelObserver()
     }
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchCafeList()
+    }
+
     private fun initUI(){
         setLoadingUI(true)
         setNoResultUI(false)
@@ -84,9 +89,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
     private fun initRecyclerView(){
-        cafeAdapter = PlaceListAdapter().apply{
-            onTourItemClickListener = this@CafeRecyclerViewFragment
-        }
+        cafeAdapter.onTourItemClickListener = this@CafeRecyclerViewFragment
         binding.rvCafeRecyclerView.run{
             this.adapter = cafeAdapter
             initScrollListener(this)
@@ -122,6 +125,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             tourItem.getContentTypeId(),
             tourItem)
         startActivity(placeDetailIntent)
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun initModelObserver(){

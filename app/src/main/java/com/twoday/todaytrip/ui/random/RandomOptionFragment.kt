@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
-import com.twoday.todaytrip.viewModel.RandomViewModel
 
 class RandomOptionFragment : Fragment() {
 
@@ -34,6 +33,9 @@ class RandomOptionFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         setUpClickListener()
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
     }
 
     private fun initView() {

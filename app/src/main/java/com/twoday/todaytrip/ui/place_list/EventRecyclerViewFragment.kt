@@ -39,7 +39,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         }
     }
 
-    private lateinit var eventAdapter: PlaceListAdapter
+    private val eventAdapter = PlaceListAdapter()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -56,6 +56,11 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         initSwipeRefreshLayout()
         initRecyclerView()
         initModelObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainModel.loadOrFetchEventList()
     }
 
     private fun initUI() {
@@ -89,9 +94,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initRecyclerView() {
-        eventAdapter = PlaceListAdapter().apply {
-            onTourItemClickListener = this@EventRecyclerViewFragment
-        }
+        eventAdapter.onTourItemClickListener = this@EventRecyclerViewFragment
         binding.rvEventRecyclerView.run {
             this.adapter = eventAdapter
             initScrollListener(this)
@@ -130,6 +133,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             tourItem
         )
         startActivity(placeDetailIntent)
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     private fun initModelObserver() {

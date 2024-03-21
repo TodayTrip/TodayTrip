@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.overlay.Marker
+import com.twoday.todaytrip.ui.place_map.LocationInfo
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 
 class PlaceMapViewModel : ViewModel() {
@@ -15,8 +16,10 @@ class PlaceMapViewModel : ViewModel() {
         get() {
             return _furthestPair
         }
-    private val _locations = MutableLiveData<List<LatLng>>()
-    val locations: LiveData<List<LatLng>> = _locations
+    // 지도에 표시될 위도/경도, 장소 이름을 저장하는 라이브 데이터
+    private val _locations = MutableLiveData<List<LocationInfo>>()
+    val locations: LiveData<List<LocationInfo>>
+        get() = _locations
 
     // 지도에서 가장 멀리 있는 마커 구하는 함수(최적 경로 구할 때 사용)
     fun findFurthestMarkers(markers: List<Marker>) {
@@ -52,28 +55,40 @@ class PlaceMapViewModel : ViewModel() {
     private fun loadTouristAttractionList() {
         val attractions = TourItemPrefUtil.loadTouristAttractionList()
         val newLocations = attractions.map {
-            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+            LocationInfo(
+                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble()),
+                it.getTitle()
+            )
         }
         _locations.value = newLocations
     }
     private fun loadRestaurantList() {
         val attractions = TourItemPrefUtil.loadRestaurantList()
         val newLocations = attractions.map {
-            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+            LocationInfo(
+                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble()),
+                it.getTitle()
+            )
         }
         _locations.value = newLocations
     }
     private fun loadCafeList() {
         val attractions = TourItemPrefUtil.loadCafeList()
         val newLocations = attractions.map {
-            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+            LocationInfo(
+                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble()),
+                it.getTitle()
+            )
         }
         _locations.value = newLocations
     }
     private fun loadEventList() {
         val attractions = TourItemPrefUtil.loadEventList()
         val newLocations = attractions.map {
-            LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
+            LocationInfo(
+                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble()),
+                it.getTitle()
+            )
         }
         _locations.value = newLocations
     }

@@ -4,8 +4,17 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.naver.maps.geometry.LatLng
 import com.twoday.todaytrip.R
+import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_list.RecommendCover
+import com.twoday.todaytrip.ui.place_list.RecommendData
+import com.twoday.todaytrip.ui.place_list.RecommendEmpty
+import com.twoday.todaytrip.ui.place_list.RecommendMap
+import com.twoday.todaytrip.ui.place_list.RecommendTourItem
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.utils.RecommendPrefUtil
 import com.twoday.todaytrip.weatherApi.Item
 import com.twoday.todaytrip.weatherApi.WeatherClient
 import com.twoday.todaytrip.weatherApi.weather
@@ -25,25 +34,34 @@ class PlaceListViewModel : ViewModel() {
 
     private val _destination = MutableLiveData<String>()
     val destination: LiveData<String> get() = _destination
-
-    private val _titleImageId = MutableLiveData<Int>()
-    val titleImageId: LiveData<Int> get() = _titleImageId
+    private val _destinationSigungu = MutableLiveData<String>()
+    val destinationSigungu: LiveData<String> get() = _destinationSigungu
 
     private val _weatherInfo = MutableLiveData<WeatherInfo>()
     val weatherInfo: LiveData<WeatherInfo> get() = _weatherInfo
 
+    // 오늘의 랜덤 코스에 뜰 관광지 정보
+    private val _recommendDataList = MutableLiveData<List<RecommendData>>()
+    val recommendDataList: LiveData<List<RecommendData>> get() = _recommendDataList
+    // 오늘의 랜덤 코스가 모두 경로에 담겼는가
+    private val _isAllRecommendAdded = MutableLiveData<Boolean>()
+    val isAllRecommendAdded: LiveData<Boolean> = _isAllRecommendAdded
+
+    // 오늘 랜덤 코스에 뜰 관광지 정보 인덱스 상수
+    private val RECOMMEND_INDEX_TOURIST_ATTRACTION = 1
+    private val RECOMMEND_INDEX_RESTAURANT = 2
+    private val RECOMMEND_INDEX_CAFE = 3
+    private val RECOMMEND_INDEX_EVENT = 4
+
     init {
         initDestination()
-        initTitleImageId()
         initWeatherInfo()
+        initRecommendDataList()
     }
 
     private fun initDestination() {
         _destination.value = DestinationPrefUtil.loadDestination()!!
-    }
-
-    private fun initTitleImageId() {
-        _titleImageId.value = getTitleImageId(_destination.value!!)!!
+        _destinationSigungu.value = "전체" // TODO 스피너로 시군구 선택 구현
     }
 
     private fun initWeatherInfo() {
@@ -124,6 +142,68 @@ class PlaceListViewModel : ViewModel() {
         else -> "0000"
     }
 
+    private data class Coordinates(
+        val latitude: String,
+        val longitude: String
+    )
+
+    private fun getCoordinates(destination: String): Coordinates? {
+        return when (destination) {
+            "서울" -> Coordinates("60", "127")
+            "인천" -> Coordinates("55", "124")
+            "전북" -> Coordinates("63", "89")
+            "전남" -> Coordinates("51", "67")
+            "경북" -> Coordinates("89", "91")
+            "경남" -> Coordinates("91", "77")
+            "충북" -> Coordinates("69", "107")
+            "충남" -> Coordinates("68", "100")
+            "강원" -> Coordinates("73", "134")
+            "대구" -> Coordinates("89", "90")
+            "부산" -> Coordinates("98", "76")
+            "대전" -> Coordinates("67", "100")
+            "제주" -> Coordinates("52", "38")
+            "경기" -> Coordinates("60", "120")
+            "광주" -> Coordinates("58", "74")
+            "울산" -> Coordinates("102", "84")
+            else -> null
+        }
+    }
+
+    private fun initRecommendDataList() {
+        _recommendDataList.value = listOf(
+            RecommendCover(
+                imageId = getTitleImageId(_destination.value!!)!!,
+                destination = _destination.value!!,
+                destinationSigungu = _destinationSigungu.value!!
+            ),
+            RecommendEmpty(
+                subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
+                titleId = R.string.place_list_recommend_tourist_attraction_no_result
+            ),
+            RecommendEmpty(
+                subTitleId = R.string.place_list_recommend_sub_title_restaurant,
+                titleId = R.string.place_list_recommend_restaurant_no_result
+            ),
+            RecommendEmpty(
+                subTitleId = R.string.place_list_recommend_sub_title_cafe,
+                titleId = R.string.place_list_recommend_cafe_no_result
+            ),
+            RecommendEmpty(
+                subTitleId = R.string.place_list_recommend_sub_title_event,
+                titleId = R.string.place_list_recommend_event_no_result
+            ),
+            RecommendMap(
+                destination = _destination.value!!,
+                destinationSigungu = _destinationSigungu.value!!,
+                locations = emptyList()
+            )
+        )
+
+        loadRecommendTouristAttraction()
+        loadRecommendRestaurant()
+        loadRecommendCafe()
+        loadRecommendEvent()
+    }
 
     private fun getTitleImageId(destination: String): Int? {
         return when (destination) {
@@ -228,31 +308,157 @@ class PlaceListViewModel : ViewModel() {
         }
     }
 
-    private data class Coordinates(
-        val latitude: String,
-        val longitude: String
-    )
-
-    private fun getCoordinates(destination: String): Coordinates? {
-        return when (destination) {
-            "서울" -> Coordinates("60", "127")
-            "인천" -> Coordinates("55", "124")
-            "전북" -> Coordinates("63", "89")
-            "전남" -> Coordinates("51", "67")
-            "경북" -> Coordinates("89", "91")
-            "경남" -> Coordinates("91", "77")
-            "충북" -> Coordinates("69", "107")
-            "충남" -> Coordinates("68", "100")
-            "강원" -> Coordinates("73", "134")
-            "대구" -> Coordinates("89", "90")
-            "부산" -> Coordinates("98", "76")
-            "대전" -> Coordinates("67", "100")
-            "제주" -> Coordinates("52", "38")
-            "경기" -> Coordinates("60", "120")
-            "광주" -> Coordinates("58", "74")
-            "울산" -> Coordinates("102", "84")
-            else -> null
+    private fun loadRecommendTouristAttraction() {
+        RecommendPrefUtil.loadRecommendTouristAttraction()?.let { recommendTouristAttraction ->
+            val newRecommendDataList = mutableListOf<RecommendData>().apply {
+                addAll(_recommendDataList.value!!)
+            }
+            newRecommendDataList[RECOMMEND_INDEX_TOURIST_ATTRACTION] = RecommendTourItem(
+                subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
+                tourItem = recommendTouristAttraction
+            )
+            _recommendDataList.value = newRecommendDataList
         }
     }
 
+    private fun loadRecommendRestaurant() {
+        RecommendPrefUtil.loadRecommendRestaurant()?.let { recommendRestaurant ->
+            val newRecommendDataList = mutableListOf<RecommendData>().apply {
+                addAll(_recommendDataList.value!!)
+            }
+            newRecommendDataList[RECOMMEND_INDEX_RESTAURANT] = RecommendTourItem(
+                subTitleId = R.string.place_list_recommend_sub_title_restaurant,
+                tourItem = recommendRestaurant
+            )
+            _recommendDataList.value = newRecommendDataList
+        }
+    }
+
+    private fun loadRecommendCafe() {
+        RecommendPrefUtil.loadRecommendCafe()?.let { recommendCafe ->
+            val newRecommendDataList = mutableListOf<RecommendData>().apply {
+                addAll(_recommendDataList.value!!)
+            }
+            newRecommendDataList[RECOMMEND_INDEX_CAFE] = RecommendTourItem(
+                subTitleId = R.string.place_list_recommend_sub_title_cafe,
+                tourItem = recommendCafe
+            )
+            _recommendDataList.value = newRecommendDataList
+        }
+    }
+
+    private fun loadRecommendEvent() {
+        RecommendPrefUtil.loadRecommendEvent()?.let { recommendEvent ->
+            val newRecommendDataList = mutableListOf<RecommendData>().apply {
+                addAll(_recommendDataList.value!!)
+            }
+            newRecommendDataList[RECOMMEND_INDEX_EVENT] = RecommendTourItem(
+                subTitleId = R.string.place_list_recommend_sub_title_event,
+                tourItem = recommendEvent
+            )
+            _recommendDataList.value = newRecommendDataList
+        }
+    }
+
+    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>) {
+        if(touristAttractionList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_TOURIST_ATTRACTION] is RecommendTourItem)
+            return
+
+        val recommendTouristAttraction = touristAttractionList.random()
+        val newRecommendDataList = mutableListOf<RecommendData>().apply {
+            addAll(_recommendDataList.value!!)
+        }
+        newRecommendDataList[RECOMMEND_INDEX_TOURIST_ATTRACTION] = RecommendTourItem(
+            subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
+            tourItem = recommendTouristAttraction
+        )
+        _recommendDataList.value = newRecommendDataList
+        RecommendPrefUtil.saveRecommendTouristAttraction(recommendTouristAttraction)
+    }
+
+    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>) {
+        if(restaurantList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_RESTAURANT] is RecommendTourItem) return
+
+        val recommendRestaurant = restaurantList.random()
+        val newRecommendDataList = mutableListOf<RecommendData>().apply {
+            addAll(_recommendDataList.value!!)
+        }
+        newRecommendDataList[RECOMMEND_INDEX_RESTAURANT] = RecommendTourItem(
+            subTitleId = R.string.place_list_recommend_sub_title_restaurant,
+            tourItem = recommendRestaurant
+        )
+        _recommendDataList.value = newRecommendDataList
+        RecommendPrefUtil.saveRecommendRestaurant(recommendRestaurant)
+    }
+
+    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>) {
+        if(cafeList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_CAFE] is RecommendTourItem) return
+
+        val recommendCafe = cafeList.random()
+        val newRecommendDataList = mutableListOf<RecommendData>().apply {
+            addAll(_recommendDataList.value!!)
+        }
+        newRecommendDataList[RECOMMEND_INDEX_CAFE] = RecommendTourItem(
+            subTitleId = R.string.place_list_recommend_sub_title_cafe,
+            tourItem = recommendCafe
+        )
+        _recommendDataList.value = newRecommendDataList
+        RecommendPrefUtil.saveRecommendCafe(recommendCafe)
+    }
+
+    fun pickAndSaveRecommendEvent(eventList: List<TourItem>) {
+        if(eventList.isEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_EVENT] is RecommendTourItem) return
+
+        val recommendEvent = eventList.random()
+        val newRecommendDataList = mutableListOf<RecommendData>().apply {
+            addAll(_recommendDataList.value!!)
+        }
+        newRecommendDataList[RECOMMEND_INDEX_EVENT] = RecommendTourItem(
+            subTitleId = R.string.place_list_recommend_sub_title_event,
+            tourItem = recommendEvent
+        )
+        _recommendDataList.value = newRecommendDataList
+        RecommendPrefUtil.saveEventTouristAttraction(recommendEvent)
+    }
+
+    fun getRecommendLocations(): List<LatLng> {
+        val locations = mutableListOf<LatLng>()
+        _recommendDataList.value?.forEach { recommendData ->
+            if (recommendData is RecommendTourItem) {
+                locations.add(
+                    LatLng(
+                        recommendData.tourItem.getLatitude()?.toDouble() ?: 0.0,
+                        recommendData.tourItem.getLongitude()?.toDouble() ?: 0.0
+                    )
+                )
+            }
+        }
+        return locations.toList()
+    }
+
+    fun addAllRecommend(){
+        _recommendDataList.value
+            ?.filterIsInstance<RecommendTourItem>()
+            ?.forEach {
+            ContentIdPrefUtil.addContentId(it.tourItem.getContentId())
+        }
+        _isAllRecommendAdded.value = true
+    }
+
+    fun setIsAllRecommendAdded(){
+        val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
+        _recommendDataList.value
+            ?.filterIsInstance<RecommendTourItem>()
+            ?.forEach {
+            if(!addedContentIdList.contains(it.tourItem.getContentId())) {
+                _isAllRecommendAdded.value = false
+                return
+            }
+        }
+        _isAllRecommendAdded.value = true
+    }
 }
