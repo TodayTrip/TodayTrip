@@ -6,13 +6,13 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordGalleryBinding
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
@@ -56,8 +56,8 @@ class RecordGalleryFragment : Fragment() {
                                 putStringArrayListExtra("imageUris", ArrayList(uriList))
                                 putExtra("position", position)
                             }
-                        startActivity(intent)
-                        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view,"gallery_photo")
+                        startActivity(intent, options.toBundle())
                     }
                 }
             }
