@@ -108,7 +108,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
         startActivity(
             RecordDetailActivity.newIntent(this.requireContext(), record)
         )
-        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+//        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
     private fun setRecordRecyclerViewVisibility(isVisible:Boolean){
         binding.rvRecord.isVisible = isVisible
