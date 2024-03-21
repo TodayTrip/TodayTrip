@@ -108,7 +108,7 @@ class PlaceListViewModel : ViewModel() {
                             "PTY" -> rainType = item.fcstValue
                         }
                     }
-                    _weatherInfo.value = WeatherInfo(sky, temp, getWeatherResult(rainType))
+                    _weatherInfo.value = WeatherInfo(sky, "$temp°C", getWeatherResult(rainType))
                 }
             }
 
