@@ -11,78 +11,83 @@ import com.twoday.todaytrip.tourData.TourItem
 
 object TourItemPrefUtil {
     private val TAG = "TourItemPrefUtil"
-    fun loadAllTourItemList():List<TourItem> = mutableListOf<TourItem>().apply{
-            addAll(loadTouristAttractionList())
-            addAll(loadRestaurantList())
-            addAll(loadCafeList())
-            addAll(loadEventList())
-        }
+    fun loadAllTourItemList(): List<TourItem> = mutableListOf<TourItem>().apply {
+        addAll(loadTouristAttractionList())
+        addAll(loadRestaurantList())
+        addAll(loadCafeList())
+        addAll(loadEventList())
+    }
 
     fun loadTouristAttractionList() = loadTourItemList(PrefConstants.TOURIST_ATTRACTION_LIST_KEY)
-    fun saveTouristAttractionList(touristAttractionList:List<TourItem>) = saveTourItemList(
-            touristAttractionList,
-            PrefConstants.TOURIST_ATTRACTION_LIST_KEY
-        )
-    fun saveMoreTouristAttractionList(moreTouristAttractionList:List<TourItem>){
-        val newTouristAttractionList = mutableListOf<TourItem>()
-        newTouristAttractionList.addAll(loadTouristAttractionList())
-        newTouristAttractionList.addAll(moreTouristAttractionList)
+    fun saveTouristAttractionList(touristAttractionList: List<TourItem>) = saveTourItemList(
+        touristAttractionList,
+        PrefConstants.TOURIST_ATTRACTION_LIST_KEY
+    )
+
+    fun saveMoreTouristAttractionList(moreTouristAttractionList: List<TourItem>) {
+        val newTouristAttractionList = mutableListOf<TourItem>().apply {
+            addAll(loadTouristAttractionList())
+            addAll(moreTouristAttractionList)
+        }
 
         saveTourItemList(
-            newTouristAttractionList,
+            newTouristAttractionList.distinct(),
             PrefConstants.TOURIST_ATTRACTION_LIST_KEY
         )
     }
 
     fun loadRestaurantList() = loadTourItemList(PrefConstants.RESTAURANT_LIST_KEY)
-    fun saveRestaurantList(restaurantList:List<TourItem>) = saveTourItemList(
-            restaurantList,
-            PrefConstants.RESTAURANT_LIST_KEY
-        )
-    fun saveMoreRestaurantList(moreRestaurantList:List<TourItem>){
+    fun saveRestaurantList(restaurantList: List<TourItem>) = saveTourItemList(
+        restaurantList,
+        PrefConstants.RESTAURANT_LIST_KEY
+    )
+
+    fun saveMoreRestaurantList(moreRestaurantList: List<TourItem>) {
         val newRestaurantList = mutableListOf<TourItem>()
         newRestaurantList.addAll(loadRestaurantList())
         newRestaurantList.addAll(moreRestaurantList)
 
         saveTourItemList(
-            newRestaurantList,
+            newRestaurantList.distinct(),
             PrefConstants.RESTAURANT_LIST_KEY
         )
     }
 
     fun loadCafeList() = loadTourItemList(PrefConstants.CAFE_LIST_KEY)
     fun saveCafeList(cafeList: List<TourItem>) = saveTourItemList(
-            cafeList,
-            PrefConstants.CAFE_LIST_KEY
-        )
-    fun saveMoreCafeList(moreCafeList:List<TourItem>){
+        cafeList,
+        PrefConstants.CAFE_LIST_KEY
+    )
+
+    fun saveMoreCafeList(moreCafeList: List<TourItem>) {
         val newCafeList = mutableListOf<TourItem>()
         newCafeList.addAll(loadCafeList())
         newCafeList.addAll(moreCafeList)
 
         saveTourItemList(
-            newCafeList,
+            newCafeList.distinct(),
             PrefConstants.CAFE_LIST_KEY
         )
     }
 
     fun loadEventList() = loadTourItemList(PrefConstants.EVENT_LIST_KEY)
-    fun saveEventList(eventList:List<TourItem>) = saveTourItemList(
-            eventList,
-            PrefConstants.EVENT_LIST_KEY
-        )
-    fun saveMoreEventList(moreEventList:List<TourItem>){
+    fun saveEventList(eventList: List<TourItem>) = saveTourItemList(
+        eventList,
+        PrefConstants.EVENT_LIST_KEY
+    )
+
+    fun saveMoreEventList(moreEventList: List<TourItem>) {
         val newEventList = mutableListOf<TourItem>()
         newEventList.addAll(loadEventList())
         newEventList.addAll(moreEventList)
 
         saveTourItemList(
-            newEventList,
+            newEventList.distinct(),
             PrefConstants.EVENT_LIST_KEY
         )
     }
 
-    fun resetTourItemListPref(){
+    fun resetTourItemListPref() {
         Log.d(TAG, "resetTourItemListPref called")
         saveTouristAttractionList(emptyList())
         saveRestaurantList(emptyList())
@@ -95,8 +100,12 @@ object TourItemPrefUtil {
             PrefConstants.PREFERENCE_TOUR_ITEM_LIST_KEY,
             Context.MODE_PRIVATE
         )
-    private fun saveTourItemList(tourItemList:List<TourItem>, destinationKey: String){
-        Log.d(TAG, "saveTourItemList) destination key: ${destinationKey}, list size: ${tourItemList.size}")
+
+    private fun saveTourItemList(tourItemList: List<TourItem>, destinationKey: String) {
+        Log.d(
+            TAG,
+            "saveTourItemList) destination key: ${destinationKey}, list size: ${tourItemList.size}"
+        )
 
         val prefs = getTourItemListPreferences()
 
@@ -108,38 +117,44 @@ object TourItemPrefUtil {
         val json = Gson().toJson(serializedTourItemList)
         prefs.edit().putString(destinationKey, json).apply()
     }
-    private fun loadTourItemList(destinationKey: String):List<TourItem>{
+
+    private fun loadTourItemList(destinationKey: String): List<TourItem> {
         Log.d(TAG, "loadTourItemList) destination key: ${destinationKey}")
 
         val prefs = getTourItemListPreferences()
 
         val json = prefs.getString(destinationKey, null)
-        if((json == null) || (json.toString() == "[]"))
+        if ((json == null) || (json.toString() == "[]"))
             return emptyList()
 
         // (1) List<Pair> 역직렬화
         val type = object : TypeToken<List<Pair<String, String>>>() {}.type
-        val serializedTourItemList:List<Pair<String, String>> = Gson().fromJson(json, type)
+        val serializedTourItemList: List<Pair<String, String>> = Gson().fromJson(json, type)
 
         // (2) Pair에서 꺼내기 -> TourItem JSON 역직렬화
         val tourItemList = mutableListOf<TourItem>()
-        serializedTourItemList.forEach{
-            val tourItemType = when(it.first){
+        serializedTourItemList.forEach {
+            val tourItemType = when (it.first) {
                 TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
                     object : TypeToken<TourItem.TouristDestination>() {}.type
                 }
-                TourContentTypeId.CULTURAL_FACILITIES.contentTypeId ->{
+
+                TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
                     object : TypeToken<TourItem.CulturalFacilities>() {}.type
                 }
-                TourContentTypeId.RESTAURANT.contentTypeId ->{
+
+                TourContentTypeId.RESTAURANT.contentTypeId -> {
                     object : TypeToken<TourItem.Restaurant>() {}.type
                 }
-                TourContentTypeId.LEISURE_SPORTS.contentTypeId ->{
+
+                TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
                     object : TypeToken<TourItem.LeisureSports>() {}.type
                 }
-                TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId ->{
+
+                TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                     object : TypeToken<TourItem.EventPerformanceFestival>() {}.type
                 }
+
                 else -> {
                     object : TypeToken<TourItem.TouristDestination>() {}.type
                 }
