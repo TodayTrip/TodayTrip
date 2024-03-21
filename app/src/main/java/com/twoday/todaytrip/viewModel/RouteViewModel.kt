@@ -46,12 +46,6 @@ class RouteViewModel: ViewModel() {
         _routeListDataSet.value = list
     }
 
-    fun locationRemove(){
-
-    }
-
-
-
     fun getRouteDataSet(){
         val contentIdList = ContentIdPrefUtil.loadContentIdList() //담은 목록
         val tourList = TourItemPrefUtil.loadAllTourItemList() //관광지 전부
@@ -72,13 +66,14 @@ class RouteViewModel: ViewModel() {
 
         val loadedLocations = mutableListOf<LatLng>()
         contentIdList.forEach { contentId ->
-            val tourItem = tourList.find { it.getContentId() == contentId }!!
-            loadedLocations.add(
-                LatLng(
-                    tourItem.getLatitude()?.toDouble() ?: 0.0,
-                    tourItem.getLongitude()?.toDouble() ?: 0.0
+            val tourItem = tourList.find { it.getContentId() == contentId }?.let{
+                loadedLocations.add(
+                    LatLng(
+                        it.getLatitude()?.toDouble() ?: 0.0,
+                        it.getLongitude()?.toDouble() ?: 0.0
+                    )
                 )
-            )
+            }
 
             Log.d("마커 사이즈 확인", loadedLocations.size.toString())
             Log.d("locations", _locations.value.toString())

@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.databinding.ItemPlaceDetailMyMemoryBinding
 
 class MemoryDataAdapter(): ListAdapter<MemoryData, MemoryDataAdapter.ViewHolder>(MemoryDataDiffCallback) {
@@ -38,7 +37,7 @@ class MemoryDataAdapter(): ListAdapter<MemoryData, MemoryDataAdapter.ViewHolder>
         fun bind(memoryData: MemoryData) {
             Log.d(TAG, "bind) called")
             travelDateTextView.text = memoryData.date
-            Glide.with(MyApplication.appContext!!)
+            Glide.with(itemView.context)
                 .load(memoryData.url)
                 .into(memoryImageView)
         }

@@ -20,6 +20,7 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
+import com.naver.maps.map.util.FusedLocationSource
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
@@ -30,12 +31,14 @@ import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.transition.TransitionInflater
 import com.naver.maps.map.overlay.PolylineOverlay
+import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
+import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
@@ -48,9 +51,8 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     private lateinit var binding: FragmentRouteBinding
 
-    private val routeAdapter: RouteAdapter by lazy(LazyThreadSafetyMode.NONE) {
-        RouteAdapter()
-    }
+    private val routeAdapter = RouteAdapter()
+
     private val routeViewModel by viewModels<RouteViewModel>()
 
     private lateinit var naverMap: NaverMap
@@ -175,7 +177,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         }!!
         startActivity(
             PlaceDetailActivity.newIntent(
-                MyApplication.appContext!!,
+                requireContext(),
                 clickedTourItem.getContentTypeId(),
                 clickedTourItem
             )
