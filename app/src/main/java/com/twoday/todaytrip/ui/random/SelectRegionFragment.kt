@@ -3,14 +3,12 @@ package com.twoday.todaytrip.ui.random
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.devs.vectorchildfinder.VectorChildFinder
@@ -32,7 +30,7 @@ class SelectRegionFragment : Fragment() {
     private var _binding: FragmentSelectRegionBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var viewModel: SelectRegionViewModel
+    private val viewModel by viewModels<SelectRegionViewModel>()
 
     private val chips by lazy {
         listOf(
@@ -55,23 +53,29 @@ class SelectRegionFragment : Fragment() {
         )
     }
 
-    private lateinit var selectedRegionList: MutableSet<String>
-
     private val map by lazy { binding.ivSelectRegionMap }
     private val mapVector by lazy { VectorChildFinder(context, R.drawable.img_korea_map, map) }
 
-    private val blueColorRGBList
-        get() = listOf(
-            Color.rgb(5, 8, 98),
-            Color.rgb(4, 63, 136),
-            Color.rgb(0, 121, 180),
-            Color.rgb(2, 151, 201),
-            Color.rgb(6, 180, 214),
-            Color.rgb(68, 204, 233),
-            Color.rgb(145, 225, 238),
-            Color.rgb(175, 231, 249),
-            Color.rgb(202, 240, 246),
+    private val blueColorIdMap by lazy{
+        mapOf<String, Int>(
+            "서울" to R.color.map_blue3,
+        "인천" to R.color.map_blue1,
+        "전북" to R.color.map_blue2,
+        "전남" to R.color.map_blue3,
+        "경북" to R.color.map_blue2,
+        "경남" to R.color.map_blue5,
+        "충북" to R.color.map_blue4,
+        "충남" to R.color.map_blue3,
+        "강원" to R.color.map_blue6,
+        "대구" to R.color.map_blue4,
+        "부산" to R.color.map_blue1,
+        "대전" to R.color.map_blue1,
+        "제주" to R.color.map_blue2,
+        "경기" to R.color.map_blue2,
+        "광주" to R.color.map_blue5,
+        "울산" to R.color.map_blue6
         )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,38 +87,30 @@ class SelectRegionFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val inflater = TransitionInflater.from(requireContext())
         exitTransition = inflater.inflateTransition(R.transition.fade)
         enterTransition = inflater.inflateTransition(R.transition.slide_right)
-        initView()
-        initViewModel()
+
+        setUpAllButtonClickListener()
+        setUpChipClickListener()
+        setUpNextButtonListener()
+        setUpMapRegionClickListener()
+
+        initModelObserver()
     }
 
-    private fun initView() {
-        initChipSet()
-        setUpClickListener()
-    }
-
-    private fun initViewModel() {
-        viewModel = ViewModelProvider(this)[SelectRegionViewModel::class.java]
-        viewModel.selectedRegionList.observe(viewLifecycleOwner, Observer {
-            if (it.size == 16){
-
+    private fun initModelObserver() {
+        viewModel.selectedRegionList.observe(viewLifecycleOwner) { selectedRegionList ->
+//            richPathMap.invalidate()
+            map.invalidate()
+            chips.forEach {
+                it.isChecked = selectedRegionList.contains(it.text)
+                it.fillMap()
             }
-        })
-    }
-
-    private fun initChipSet() {
-        val selectedRegionPrefList = SelectRegionPrefUtil.loadSelectRegionList()
-        selectedRegionList = selectedRegionPrefList.toMutableSet()
-
-        chips.forEach {
-            if (selectedRegionPrefList.contains(it.text)){
-                it.isChecked = true
-            }
-            it.fillMap()
+            updateSelectAllBtn(selectedRegionList.size == 16)
+            updateNextBtn(selectedRegionList.isNotEmpty())
         }
-        updateSelectAllBtn(selectedRegionList.size == 16)
     }
 
     private fun Chip.fillMap() {
@@ -134,38 +130,19 @@ class SelectRegionFragment : Fragment() {
                 chips.forEach {
                     viewModel.addSelectedRegion(it.text.toString())
                 }
-                updateSelectAllBtn(true)
             }
         }
+    }
+
+    private fun setUpChipClickListener() {
         chips.forEach {
-            val selected = mapVector.findPathByName(it.text.toString())
             it.setOnCheckedChangeListener { _, isChecked ->
                 if (isChecked) {
                     viewModel.addSelectedRegion(it.text.toString())
                 } else {
-                    selectedRegionList.remove(it.text.toString())
+                    viewModel.removeSelectedRegion(it.text.toString())
                 }
-                updateSelectAllBtn(selectedRegionList.size == 16)
-                it.fillMap()
-                map.invalidate()
-                updateNextBtn()
             }
-        }
-//        map.findRichPathByName("")?.setOnPathClickListener {
-//
-//        }
-//        for (i in 0..15) {
-//            map.findRichPathByIndex(i)?.setOnPathClickListener {
-//                Log.d("richpath", "path=${map.findRichPathByIndex(i).toString()}")
-//            }
-//        }
-        binding.btnRegionSelectNext.setOnClickListener {
-            SelectRegionPrefUtil.resetSelectRegionListPref()
-            SelectRegionPrefUtil.saveSelectRegionList(selectedRegionList.toMutableList())
-
-            val selectedDestination = SelectRegionPrefUtil.loadSelectRegionList().random()
-            DestinationPrefUtil.saveDestination(selectedDestination)
-            findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
         }
     }
 
@@ -194,6 +171,21 @@ class SelectRegionFragment : Fragment() {
         }
     }
 
+    private fun updateNextBtn(isEnabled: Boolean) {
+        binding.btnRegionSelectNext.setBackgroundResource(
+            if (isEnabled) R.drawable.shape_main_blue_12_radius
+            else R.drawable.shape_middle_gray_12_radius
+        )
+        binding.btnRegionSelectNext.isEnabled = isEnabled
+    }
+
+    private fun setUpNextButtonListener() {
+        binding.btnRegionSelectNext.setOnClickListener {
+            viewModel.saveSelectedRegionList()
+            viewModel.selectAndSaveDestination()
+            findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

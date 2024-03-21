@@ -10,6 +10,13 @@
     <color name="sub_blue">#E8F5FF</color>
     <color name="sub_btn_blue">#9DD0FF</color>
     <color name="point_yellow">#FFD15B</color>
+    
+    <color name="map_blue1">#04085F</color>
+    <color name="map_blue2">#023F8A</color>
+    <color name="map_blue3">#0078B4</color>
+    <color name="map_blue4">#0096C5</color>
+    <color name="map_blue5">#42CDE9</color>
+    <color name="map_blue6">#93E0F1</color>
 
     <color name="button_gray">#4E4E4E</color>
 

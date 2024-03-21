@@ -8,15 +8,15 @@ import com.twoday.todaytrip.utils.SelectRegionPrefUtil
 
 class SelectRegionViewModel : ViewModel() {
 
-    private var _selectedRegionList = MutableLiveData<MutableSet<String>>()
-    val selectedRegionList: LiveData<MutableSet<String>> = _selectedRegionList
+    private val _selectedRegionList = MutableLiveData<Set<String>>()
+    val selectedRegionList: LiveData<Set<String>> = _selectedRegionList
 
     init {
         loadSelectedRegionList()
     }
 
     private fun loadSelectedRegionList() {
-        _selectedRegionList.value = SelectRegionPrefUtil.loadSelectRegionList().toMutableSet()
+        _selectedRegionList.value = SelectRegionPrefUtil.loadSelectRegionList().toSet()
     }
 
     fun saveSelectedRegionList() {
