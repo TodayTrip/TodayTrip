@@ -159,9 +159,11 @@ class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener{
         model.nearByList.observe(this@PlaceDetailActivity){
             Log.d(TAG, "observe) nearByList.size: ${it.size}")
             nearByAdapter.changeDataSet(it)
-
-            binding.rvPlaceDetailNearby.isVisible = it.isNotEmpty()
-            binding.tvPlaceDetailNoNearby.isVisible = it.isEmpty()
+        }
+        model.isLoadingNearByList.observe(this@PlaceDetailActivity){isLoading ->
+            setLoadingUI(isLoading)
+            if(!isLoading && model.nearByList.value.isNullOrEmpty())
+                binding.tvPlaceDetailNoNearby.isVisible = true
         }
 
         model.memoryDataList.observe(this@PlaceDetailActivity) {
@@ -171,6 +173,14 @@ class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener{
             binding.rvPlaceDetailMyMemory.isVisible = it.isNotEmpty()
             binding.tvPlaceDetailNoMemory.isVisible = it.isEmpty()
         }
+    }
+
+    private fun setLoadingUI(isLoading:Boolean){
+        binding.shimmerPlaceDetailNearby.run{
+            startShimmer()
+            isVisible = isLoading
+        }
+        binding.rvPlaceDetailNearby.isVisible = !isLoading
     }
 
     private fun initBackButton() {

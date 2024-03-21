@@ -33,6 +33,9 @@ class PlaceDetailViewModel() : ViewModel() {
     private val _nearByList = MutableLiveData<List<TourItem>>()
     val nearByList: LiveData<List<TourItem>> get() = _nearByList
 
+    private val _isLoadingNearByList = MutableLiveData<Boolean>(true)
+    val isLoadingNearByList: LiveData<Boolean> get() = _isLoadingNearByList
+
     private val _memoryDataList = MutableLiveData<List<MemoryData>>()
     val memoryDataList: LiveData<List<MemoryData>> = _memoryDataList
 
@@ -65,6 +68,7 @@ class PlaceDetailViewModel() : ViewModel() {
             withContext(Dispatchers.Main){
                 Log.d(TAG, "initNearbyList) fetchedNearByList: ${fetchedNearByList.toString()}")
                 _nearByList.value = fetchedNearByList
+                _isLoadingNearByList.value = false
                 saveNearByList()
             }
         }

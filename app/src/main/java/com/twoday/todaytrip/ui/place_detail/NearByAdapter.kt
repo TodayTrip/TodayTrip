@@ -6,6 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceDetailNearbyBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
@@ -42,6 +43,7 @@ class NearByAdapter : RecyclerView.Adapter<NearByAdapter.Holder>(){
         fun bind(tourItem: TourItem){
             Glide.with(itemView.context)
                 .load(tourItem.getImage())
+                .placeholder(R.drawable.ic_launcher)
                 .into(imageView)
             titleTextView.text = tourItem.getTitle()
         }
