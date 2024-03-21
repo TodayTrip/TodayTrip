@@ -41,7 +41,7 @@ class NearByAdapter : RecyclerView.Adapter<NearByAdapter.Holder>(){
 
         fun bind(tourItem: TourItem){
             Glide.with(itemView.context)
-                .load(tourItem.getThumbnailImage())
+                .load(tourItem.getImage())
                 .into(imageView)
             titleTextView.text = tourItem.getTitle()
         }
