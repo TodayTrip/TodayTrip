@@ -3,6 +3,7 @@ package com.twoday.todaytrip.ui.random
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -22,7 +23,6 @@ import com.twoday.todaytrip.viewModel.SelectRegionViewModel
 class SelectRegionFragment : Fragment() {
 
     private val TAG = "SelectRegionBinding"
-
 
     private var _binding: FragmentSelectRegionBinding? = null
     private val binding get() = _binding!!
@@ -98,6 +98,7 @@ class SelectRegionFragment : Fragment() {
     private fun initModelObserver() {
         viewModel.selectedRegionList.observe(viewLifecycleOwner) { selectedRegionList ->
             map.invalidate()
+
             chips.forEach {
                 it.isChecked = selectedRegionList.contains(it.text)
                 it.fillMap()
@@ -135,6 +136,18 @@ class SelectRegionFragment : Fragment() {
                     viewModel.addSelectedRegion(it.text.toString())
                 } else {
                     viewModel.removeSelectedRegion(it.text.toString())
+                }
+            }
+        }
+    }
+
+    private fun setUpMapRegionClickListener() {
+        chips.forEach { chip ->
+            val regionName = chip.text.toString()
+            richPathMap.findRichPathByName(regionName)?.let {
+                it.setOnPathClickListener {
+                    Log.d(TAG, "map clicked! regionName: ${regionName}")
+                    viewModel.toggleSelectedRegion(regionName)
                 }
             }
         }
