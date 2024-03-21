@@ -5,6 +5,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -44,6 +45,7 @@ class RecordGalleryFragment : Fragment() {
                 this.uriList = it
                 val adapter = RecordGalleryAdapter(it)
                 binding.rvRecordGallery.adapter = adapter
+                if(it.isEmpty()) binding.layoutRecordEmpty.isVisible = isVisible
             }
         })
     }
