@@ -76,7 +76,7 @@ class PlaceListViewModel : ViewModel() {
             "체험" -> R.string.theme_title_fifth to R.color.theme_title5
             "레포츠" -> R.string.theme_title_sixth to R.color.theme_title6
             "문화시설" -> R.string.theme_title_seventh to R.color.theme_title7
-            else -> -1 to -1
+            else -> R.string.theme_title_random to R.color.main_blue
         }
     }
 
