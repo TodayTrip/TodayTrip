@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.overlay.Marker
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.RecommendCover
@@ -431,19 +432,67 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveEventTouristAttraction(recommendEvent)
     }
 
-    fun getRecommendLocations(): List<LatLng> {
-        val locations = mutableListOf<LatLng>()
+    fun getMarkerPositions(): List<LatLng> {
+        val markerList = mutableListOf<Marker>()
         _recommendDataList.value?.forEach { recommendData ->
             if (recommendData is RecommendTourItem) {
-                locations.add(
-                    LatLng(
-                        recommendData.tourItem.getLatitude()?.toDouble() ?: 0.0,
-                        recommendData.tourItem.getLongitude()?.toDouble() ?: 0.0
-                    )
+                val latLng = LatLng(
+                    recommendData.tourItem.getLatitude()?.toDouble() ?: 0.0,
+                    recommendData.tourItem.getLongitude()?.toDouble() ?: 0.0
                 )
+                // LatLng 정보를 바탕으로 Marker 객체를 생성
+                val marker = Marker().apply {
+                    position = latLng
+                }
+                markerList.add(marker)
             }
         }
-        return locations.toList()
+
+        // Marker 리스트를 사용하여 순서대로 연결
+        return regenerateMarkerRoute(markerList)
+    }
+
+
+    // 시작점을 정하는 함수(가장 먼 거리 마커 2개를 찾음)
+    private fun findFurthestMarkers(markers: List<Marker>): Pair<Marker, Marker>? {
+        if (markers.size < 2) return null
+
+        var furthestPair: Pair<Marker, Marker>? = null
+        var longestDistance = 0.0
+
+        markers.forEach { marker1 ->
+            markers.forEach { marker2 ->
+                val distance = marker1.position.distanceTo(marker2.position)
+                if (distance > longestDistance) {
+                    longestDistance = distance
+                    furthestPair = Pair(marker1, marker2)
+                }
+            }
+        }
+        return furthestPair
+    }
+
+    // 마커 경로 재생성하는 함수
+    private fun regenerateMarkerRoute(markers: MutableList<Marker>): List<LatLng> {
+        val furthestPair = findFurthestMarkers(markers)
+        var markerLatlng = mutableListOf<LatLng>()
+        furthestPair?.let {
+            var currentMarker = it.first // 시작점으로 설정할 마커
+            val connectedMarkers = mutableListOf(currentMarker)
+            markers.remove(currentMarker)
+            markerLatlng.add(currentMarker.position)
+
+            while (markers.isNotEmpty()) {
+                val closestMarker = markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
+                closestMarker?.let { marker ->
+                    currentMarker = marker
+                    connectedMarkers.add(marker)
+                    markerLatlng.add(marker.position)
+                    markers.remove(marker)
+                }
+            }
+        }
+        return markerLatlng
     }
 
     fun addAllRecommend() {

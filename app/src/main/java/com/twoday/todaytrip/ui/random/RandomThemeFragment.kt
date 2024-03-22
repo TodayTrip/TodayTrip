@@ -22,7 +22,7 @@ class RandomThemeFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         _binding = FragmentRandomThemeBinding.inflate(inflater, container, false)
-        binding.btnNext.isEnabled = false
+        binding.btnThemeNext.isEnabled = false
         return binding.root
     }
 
@@ -33,15 +33,20 @@ class RandomThemeFragment : Fragment() {
         val inflater = TransitionInflater.from(requireContext())
         exitTransition = inflater.inflateTransition(R.transition.fade)
         enterTransition = inflater.inflateTransition(R.transition.slide_right)
+        initView()
+
+    }
+    private fun initView() {
+        binding.btnThemeNext.visibility = View.INVISIBLE
     }
 
     private fun setUpButtonClickState(status: Boolean) {
-        binding.btnNext.isEnabled = status
+        binding.btnThemeNext.isEnabled = status
         if(status){
-            binding.btnNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
+            binding.btnThemeNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         }else{
-            binding.btnNext.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
+            binding.btnThemeNext.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.middle_gray))
         }
     }
@@ -50,7 +55,8 @@ class RandomThemeFragment : Fragment() {
         binding.btnBack.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_random_option)
         }
-        binding.btnNext.setOnClickListener {
+        binding.btnThemeNext.setOnClickListener {
+
             selectedTheme?.let {
                 findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_select_region)
             }
@@ -89,17 +95,16 @@ class RandomThemeFragment : Fragment() {
             }
         }
         setUpButtonClickState(true)
+        updateNextButtonStyle()
+    }
+
+    private fun updateNextButtonStyle() {
+        binding.btnThemeNext.visibility = View.VISIBLE
+        binding.btnThemeNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
     }
 
     private fun selectRandomDestination(theme: String) {
-//        val themeDestination = DestinationData.themeDestinations[theme]?.random()
-//        Log.d("themeDestination", themeDestination.toString())
-        // 지역 선택으로 넘어가서 여행지 선택하니까 테마만 선택된 거 저장하면 될 것 같습니다
-//        themeDestination?.let {
-//            Log.d("themeDestination", it)
-//            DestinationPrefUtil.saveDestination(it)
-            DestinationPrefUtil.saveTheme(theme)
-//        }
+        DestinationPrefUtil.saveTheme(theme)
     }
 
     override fun onDestroyView() {

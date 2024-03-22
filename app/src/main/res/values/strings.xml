@@ -8,6 +8,26 @@
     <string name="start_start_btn">시작하기</string>
     <string name="start_title">오늘 여행을 시작해볼까요?</string>
 
+    <string name="random_next">다음</string>
+
+    <!--  RandomOptionFragment  -->
+    <string name="option_choice_region">랜덤 선택 옵션을 선택해주세요.</string>
+    <string name="option_all_random">완전 랜덤</string>
+    <string name="option_theme_random">테마별 랜덤</string>
+
+    <!--  RandomThemeFragment  -->
+    <string name="select_theme">어떤 테마 여행을 하고 싶으신가요?</string>
+    <string name="theme_first">풀내음이\n가득한</string>
+    <string name="theme_second">청량함이\n있는</string>
+    <string name="theme_third">시간을 \n넘나드는</string>
+    <string name="theme_fourth">근심이\n없어지는</string>
+    <string name="theme_fifth">감각을\n자극하는</string>
+    <string name="theme_sixth">활력이 \n넘치는</string>
+    <string name="theme_seventh">예술이\n숨 쉬는</string>
+
+    <!--  RandomResultFragment  -->
+    <string name="result_choice_region">선택된 지역은···\n두구두구두구!!</string>
+
     <!--  RecordActivity  -->
     <string name="record_title">여행 캘린더</string>
     <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>

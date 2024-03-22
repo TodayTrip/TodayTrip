@@ -12,8 +12,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
@@ -168,7 +166,7 @@ class PlaceListFragment : Fragment(),
         }
         model.recommendDataList.observe(viewLifecycleOwner){recommendDataList ->
             if(recommendDataList.isNotEmpty()){
-                (recommendDataList.last() as RecommendMap).locations = model.getRecommendLocations()
+                (recommendDataList.last() as RecommendMap).locations = model.getMarkerPositions()
             }
             recommendAdapter.changeDataSet(recommendDataList)
         }
