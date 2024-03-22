@@ -356,8 +356,13 @@ class PlaceListViewModel : ViewModel() {
         }
     }
 
-    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>) {
-        if (touristAttractionList.isEmpty()) return
+    fun refreshRecommendList(){
+        RecommendPrefUtil.resetRecommendTourItemPref()
+        initRecommendDataList()
+    }
+
+    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>?) {
+        if (touristAttractionList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_TOURIST_ATTRACTION] is RecommendTourItem)
             return
 
@@ -373,8 +378,8 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveRecommendTouristAttraction(recommendTouristAttraction)
     }
 
-    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>) {
-        if (restaurantList.isEmpty()) return
+    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>?) {
+        if (restaurantList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_RESTAURANT] is RecommendTourItem) return
 
         val recommendRestaurant = restaurantList.random()
@@ -389,8 +394,8 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveRecommendRestaurant(recommendRestaurant)
     }
 
-    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>) {
-        if (cafeList.isEmpty()) return
+    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>?) {
+        if (cafeList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_CAFE] is RecommendTourItem) return
 
         val recommendCafe = cafeList.random()
@@ -405,12 +410,14 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveRecommendCafe(recommendCafe)
     }
 
-    fun pickAndSaveRecommendEvent(eventList: List<TourItem>) {
+    fun pickAndSaveRecommendEvent(eventList: List<TourItem>?) {
+        if(eventList.isNullOrEmpty()) return
+        if (_recommendDataList.value!![RECOMMEND_INDEX_EVENT] is RecommendTourItem) return
+
         val filteredEventList = eventList?.filter{
             !(it as TourItem.EventPerformanceFestival).isEventPerformanceFestivalOver()
         }
         if (filteredEventList.isNullOrEmpty()) return
-        if (_recommendDataList.value!![RECOMMEND_INDEX_EVENT] is RecommendTourItem) return
 
         val recommendEvent = filteredEventList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {

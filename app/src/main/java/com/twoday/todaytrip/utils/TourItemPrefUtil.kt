@@ -138,10 +138,7 @@ object TourItemPrefUtil {
 
     fun resetTourItemListPref() {
         Log.d(TAG, "resetTourItemListPref called")
-        saveTouristAttractionList(emptyList())
-        saveRestaurantList(emptyList())
-        saveCafeList(emptyList())
-        saveEventList(emptyList())
+        getTourItemListPreferences().edit().clear().commit()
     }
 
     private fun getTourItemListPreferences(): SharedPreferences =

@@ -22,11 +22,11 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:visibility="invisible"
-        tools:src = "@drawable/gif_loading_reading_glasses"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/gif_loading_reading_glasses" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_item_place_list_recommend_blur"
@@ -48,12 +48,11 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_item_place_list_recommend_title"
         app:layout_constraintStart_toStartOf="@id/tv_item_place_list_recommend_title"
-        tools:text="@string/place_list_recommend_sub_title_cover" />
+        tools:text="@string/place_list_recommend_sub_title_tourist_attraction" />
 
     <TextView
         android:id="@+id/tv_item_place_list_recommend_title"
         android:layout_width="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="26dp"
@@ -61,6 +60,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="장소이름 장소이름 장소이름 장소이름 장소이름" />
 
