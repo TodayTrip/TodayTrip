@@ -29,4 +29,8 @@ object DestinationPrefUtil {
         Log.d(TAG, "LoadDestination) destination key: ${destinationKey}, loaded value: ${getDestPreferences().getString(destinationKey, null)}")
         return getDestPreferences().getString(destinationKey, null)
     }
+
+    fun resetDestinationPref() {
+        getDestPreferences().edit().clear().commit()
+    }
 }
