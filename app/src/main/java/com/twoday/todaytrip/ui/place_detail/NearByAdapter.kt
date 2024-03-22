@@ -43,8 +43,10 @@ class NearByAdapter : RecyclerView.Adapter<NearByAdapter.Holder>(){
         fun bind(tourItem: TourItem){
             Glide.with(itemView.context)
                 .load(tourItem.getImage())
-                .placeholder(R.drawable.ic_launcher)
+                .placeholder(R.drawable.img_default)
                 .into(imageView)
+            imageView.clipToOutline = true
+
             titleTextView.text = tourItem.getTitle()
         }
         fun setClickListener(tourItem:TourItem){
