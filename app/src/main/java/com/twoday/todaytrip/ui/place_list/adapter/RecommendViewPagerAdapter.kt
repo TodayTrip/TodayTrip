@@ -35,6 +35,9 @@ enum class RecommendViewType(val viewType: Int) {
     MAP(2)
 }
 
+interface OnRefreshRecommentClickListener{
+    fun onRefreshRecommendClick()
+}
 interface OnAddAllRecommendClickListener {
     fun onAddAllRecommendClick(isAllAdded: Boolean)
 }
@@ -43,6 +46,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     private val TAG = "RecommendViewPagerAdapter"
 
     private var recommendDataList = listOf<RecommendData>()
+
+    var onRefreshRecommentClickListener: OnRefreshRecommentClickListener? = null
     var onTourItemClickListener: OnTourItemClickListener? = null
     var onAddAllRecommendClickListener: OnAddAllRecommendClickListener? = null
 
@@ -134,7 +139,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         fun setOnClickListener(){
             refreshLayout.setOnClickListener {
                 Log.d(TAG, "refresh clicked")
-                // TODO 새로고침 버튼 클릭 이벤트 처리
+                onRefreshRecommentClickListener?.onRefreshRecommendClick()
             }
         }
 
@@ -192,11 +197,18 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             destinationTextView.text = recommendMap.destination
             locations = recommendMap.locations
 
-            polylineOverlay.map = null
-            markers.clear()
+            clearMap()
             mapView.getMapAsync(this@MapHolder)
 
             setAllAddButtonUI(recommendMap.isAllAdded)
+        }
+
+        private fun clearMap(){
+            polylineOverlay.map = null
+            markers.forEach {
+                it.map = null
+            }
+            markers.clear()
         }
 
         private fun setAllAddButtonUI(isAllAdded: Boolean) {
