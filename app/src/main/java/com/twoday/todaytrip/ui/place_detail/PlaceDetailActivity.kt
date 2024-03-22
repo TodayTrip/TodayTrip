@@ -9,13 +9,23 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
+import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.CameraUpdate
+import com.naver.maps.map.NaverMap
+import com.naver.maps.map.OnMapReadyCallback
+import com.naver.maps.map.overlay.Marker
+import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.utils.DestinationData
+import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.viewModel.PlaceDetailViewModel
 
-class PlaceDetailActivity : AppCompatActivity() {
+class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener, OnMapReadyCallback{
     private val TAG = "PlaceDetailActivity"
 
     private lateinit var binding: ActivityPlaceDetailBinding
@@ -25,7 +35,14 @@ class PlaceDetailActivity : AppCompatActivity() {
     }
 
     private lateinit var placeInfoAdapter: PlaceInfoAdapter
+    private lateinit var nearByAdapter: NearByAdapter
     private lateinit var memoryDataAdapter: MemoryDataAdapter
+
+    private val mapView by lazy{
+        binding.mapPlaceDetailNearby
+    }
+    private lateinit var naverMap: NaverMap
+    private val markers = mutableListOf<Marker>()
 
     private val tourItemExtra by lazy {
         when (intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)) {
@@ -71,8 +88,11 @@ class PlaceDetailActivity : AppCompatActivity() {
         binding = ActivityPlaceDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mapView.onCreate(savedInstanceState)
+
         initTitleUI()
         initPlaceInfoRecyclerView()
+        initNearByRecyclerView()
         initMyMemoryRecyclerView()
 
         initModelObserver()
@@ -113,9 +133,23 @@ class PlaceDetailActivity : AppCompatActivity() {
         binding.rvPlaceDetailExtraInfoList.adapter = placeInfoAdapter
     }
 
+    private fun initNearByRecyclerView(){
+        nearByAdapter = NearByAdapter().apply{
+            onTourItemClickListener = this@PlaceDetailActivity
+        }
+        binding.rvPlaceDetailNearby.adapter = nearByAdapter
+    }
+
     private fun initMyMemoryRecyclerView() {
         memoryDataAdapter = MemoryDataAdapter()
-        binding.rvPlaceDetailMyMemoryList.adapter = memoryDataAdapter
+        binding.rvPlaceDetailMyMemory.adapter = memoryDataAdapter
+    }
+
+    override fun onTourItemClick(tourItem: TourItem) {
+        Log.d(TAG, "onTourItemClick) current TourItem: ${tourItemExtra!!.getTitle()} -> clicked TourItem: ${tourItem.getTitle()}")
+        startActivity(
+            newIntent(this@PlaceDetailActivity, tourItem.getContentTypeId(), tourItem)
+        )
     }
 
     private fun initModelObserver() {
@@ -140,13 +174,35 @@ class PlaceDetailActivity : AppCompatActivity() {
         model.placeInfoList.observe(this@PlaceDetailActivity) {
             placeInfoAdapter.setDataSet(it)
         }
+        model.nearByList.observe(this@PlaceDetailActivity){
+            Log.d(TAG, "observe) nearByList.size: ${it.size}")
+            nearByAdapter.changeDataSet(it)
+            model.getNearByLocations()
+        }
+        model.isLoadingNearByList.observe(this@PlaceDetailActivity){isLoading ->
+            setLoadingUI(isLoading)
+            if(!isLoading && model.nearByList.value.isNullOrEmpty())
+                binding.tvPlaceDetailNoNearby.isVisible = true
+        }
+        model.nearByLocations.observe(this@PlaceDetailActivity){locations ->
+            // TODO MapView에 근처 관광지 위치 표시하기
+        }
+
         model.memoryDataList.observe(this@PlaceDetailActivity) {
             Log.d(TAG, "observe) memoryDataList.size: ${it.size}")
             memoryDataAdapter.submitList(it.toMutableList())
 
-            binding.rvPlaceDetailMyMemoryList.isVisible = it.isNotEmpty()
+            binding.rvPlaceDetailMyMemory.isVisible = it.isNotEmpty()
             binding.tvPlaceDetailNoMemory.isVisible = it.isEmpty()
         }
+    }
+
+    private fun setLoadingUI(isLoading:Boolean){
+        binding.shimmerPlaceDetailNearby.run{
+            startShimmer()
+            isVisible = isLoading
+        }
+        binding.rvPlaceDetailNearby.isVisible = !isLoading
     }
 
     private fun initBackButton() {
@@ -160,5 +216,47 @@ class PlaceDetailActivity : AppCompatActivity() {
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             model.addButtonClicked()
         }
+    }
+
+    override fun onMapReady(naverMap: NaverMap) {
+        this.naverMap = naverMap
+    }
+
+    private fun clearMarkers() {
+        markers.forEach { marker ->
+            marker.map = null // 마커를 지도에서 제거
+        }
+        markers.clear() // 마커 리스트 비우기
+    }
+
+    override fun onStart() {
+        super.onStart()
+        mapView.onStart()
+    }
+
+    override fun onResume() {
+        mapView.onResume()
+        mapView.getMapAsync(this)
+        super.onResume()
+    }
+
+    override fun onPause() {
+        mapView.onPause()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        mapView.onStop()
+        super.onStop()
+    }
+
+    override fun onLowMemory() {
+        super.onLowMemory()
+        mapView.onLowMemory()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        mapView.onSaveInstanceState(outState)
     }
 }

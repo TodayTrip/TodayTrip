@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.overlay.Marker
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.RecommendCover
@@ -34,8 +35,6 @@ class PlaceListViewModel : ViewModel() {
 
     private val _destination = MutableLiveData<String>()
     val destination: LiveData<String> get() = _destination
-    private val _destinationSigungu = MutableLiveData<String>()
-    val destinationSigungu: LiveData<String> get() = _destinationSigungu
 
     private val _weatherInfo = MutableLiveData<WeatherInfo>()
     val weatherInfo: LiveData<WeatherInfo> get() = _weatherInfo
@@ -43,6 +42,7 @@ class PlaceListViewModel : ViewModel() {
     // 오늘의 랜덤 코스에 뜰 관광지 정보
     private val _recommendDataList = MutableLiveData<List<RecommendData>>()
     val recommendDataList: LiveData<List<RecommendData>> get() = _recommendDataList
+
     // 오늘의 랜덤 코스가 모두 경로에 담겼는가
     private val _isAllRecommendAdded = MutableLiveData<Boolean>()
     val isAllRecommendAdded: LiveData<Boolean> = _isAllRecommendAdded
@@ -61,7 +61,6 @@ class PlaceListViewModel : ViewModel() {
 
     private fun initDestination() {
         _destination.value = DestinationPrefUtil.loadDestination()!!
-        _destinationSigungu.value = "전체" // TODO 스피너로 시군구 선택 구현
     }
 
     private fun initWeatherInfo() {
@@ -107,7 +106,7 @@ class PlaceListViewModel : ViewModel() {
                             "PTY" -> rainType = item.fcstValue
                         }
                     }
-                    _weatherInfo.value = WeatherInfo(sky, temp, getWeatherResult(rainType))
+                    _weatherInfo.value = WeatherInfo(sky, "$temp°C", getWeatherResult(rainType))
                 }
             }
 
@@ -174,8 +173,7 @@ class PlaceListViewModel : ViewModel() {
             RecommendCover(
                 imageId = getTitleImageId(_destination.value!!)!!,
                 destination = _destination.value!!,
-                destinationSigungu = _destinationSigungu.value!!
-            ),
+                ),
             RecommendEmpty(
                 subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
                 titleId = R.string.place_list_recommend_tourist_attraction_no_result
@@ -194,7 +192,6 @@ class PlaceListViewModel : ViewModel() {
             ),
             RecommendMap(
                 destination = _destination.value!!,
-                destinationSigungu = _destinationSigungu.value!!,
                 locations = emptyList()
             )
         )
@@ -360,8 +357,13 @@ class PlaceListViewModel : ViewModel() {
         }
     }
 
-    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>) {
-        if(touristAttractionList.isEmpty()) return
+    fun refreshRecommendList(){
+        RecommendPrefUtil.resetRecommendTourItemPref()
+        initRecommendDataList()
+    }
+
+    fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>?) {
+        if (touristAttractionList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_TOURIST_ATTRACTION] is RecommendTourItem)
             return
 
@@ -377,8 +379,8 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveRecommendTouristAttraction(recommendTouristAttraction)
     }
 
-    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>) {
-        if(restaurantList.isEmpty()) return
+    fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>?) {
+        if (restaurantList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_RESTAURANT] is RecommendTourItem) return
 
         val recommendRestaurant = restaurantList.random()
@@ -393,8 +395,8 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveRecommendRestaurant(recommendRestaurant)
     }
 
-    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>) {
-        if(cafeList.isEmpty()) return
+    fun pickAndSaveRecommendCafe(cafeList: List<TourItem>?) {
+        if (cafeList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_CAFE] is RecommendTourItem) return
 
         val recommendCafe = cafeList.random()
@@ -409,11 +411,16 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveRecommendCafe(recommendCafe)
     }
 
-    fun pickAndSaveRecommendEvent(eventList: List<TourItem>) {
-        if(eventList.isEmpty()) return
+    fun pickAndSaveRecommendEvent(eventList: List<TourItem>?) {
+        if(eventList.isNullOrEmpty()) return
         if (_recommendDataList.value!![RECOMMEND_INDEX_EVENT] is RecommendTourItem) return
 
-        val recommendEvent = eventList.random()
+        val filteredEventList = eventList?.filter{
+            !(it as TourItem.EventPerformanceFestival).isEventPerformanceFestivalOver()
+        }
+        if (filteredEventList.isNullOrEmpty()) return
+
+        val recommendEvent = filteredEventList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
             addAll(_recommendDataList.value!!)
         }
@@ -425,40 +432,88 @@ class PlaceListViewModel : ViewModel() {
         RecommendPrefUtil.saveEventTouristAttraction(recommendEvent)
     }
 
-    fun getRecommendLocations(): List<LatLng> {
-        val locations = mutableListOf<LatLng>()
+    fun getMarkerPositions(): List<LatLng> {
+        val markerList = mutableListOf<Marker>()
         _recommendDataList.value?.forEach { recommendData ->
             if (recommendData is RecommendTourItem) {
-                locations.add(
-                    LatLng(
-                        recommendData.tourItem.getLatitude()?.toDouble() ?: 0.0,
-                        recommendData.tourItem.getLongitude()?.toDouble() ?: 0.0
-                    )
+                val latLng = LatLng(
+                    recommendData.tourItem.getLatitude()?.toDouble() ?: 0.0,
+                    recommendData.tourItem.getLongitude()?.toDouble() ?: 0.0
                 )
+                // LatLng 정보를 바탕으로 Marker 객체를 생성
+                val marker = Marker().apply {
+                    position = latLng
+                }
+                markerList.add(marker)
             }
         }
-        return locations.toList()
+
+        // Marker 리스트를 사용하여 순서대로 연결
+        return regenerateMarkerRoute(markerList)
     }
 
-    fun addAllRecommend(){
+
+    // 시작점을 정하는 함수(가장 먼 거리 마커 2개를 찾음)
+    private fun findFurthestMarkers(markers: List<Marker>): Pair<Marker, Marker>? {
+        if (markers.size < 2) return null
+
+        var furthestPair: Pair<Marker, Marker>? = null
+        var longestDistance = 0.0
+
+        markers.forEach { marker1 ->
+            markers.forEach { marker2 ->
+                val distance = marker1.position.distanceTo(marker2.position)
+                if (distance > longestDistance) {
+                    longestDistance = distance
+                    furthestPair = Pair(marker1, marker2)
+                }
+            }
+        }
+        return furthestPair
+    }
+
+    // 마커 경로 재생성하는 함수
+    private fun regenerateMarkerRoute(markers: MutableList<Marker>): List<LatLng> {
+        val furthestPair = findFurthestMarkers(markers)
+        var markerLatlng = mutableListOf<LatLng>()
+        furthestPair?.let {
+            var currentMarker = it.first // 시작점으로 설정할 마커
+            val connectedMarkers = mutableListOf(currentMarker)
+            markers.remove(currentMarker)
+            markerLatlng.add(currentMarker.position)
+
+            while (markers.isNotEmpty()) {
+                val closestMarker = markers.minByOrNull { marker -> currentMarker.position.distanceTo(marker.position) }
+                closestMarker?.let { marker ->
+                    currentMarker = marker
+                    connectedMarkers.add(marker)
+                    markerLatlng.add(marker.position)
+                    markers.remove(marker)
+                }
+            }
+        }
+        return markerLatlng
+    }
+
+    fun addAllRecommend() {
         _recommendDataList.value
             ?.filterIsInstance<RecommendTourItem>()
             ?.forEach {
-            ContentIdPrefUtil.addContentId(it.tourItem.getContentId())
-        }
+                ContentIdPrefUtil.addContentId(it.tourItem.getContentId())
+            }
         _isAllRecommendAdded.value = true
     }
 
-    fun setIsAllRecommendAdded(){
+    fun setIsAllRecommendAdded() {
         val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
         _recommendDataList.value
             ?.filterIsInstance<RecommendTourItem>()
             ?.forEach {
-            if(!addedContentIdList.contains(it.tourItem.getContentId())) {
-                _isAllRecommendAdded.value = false
-                return
+                if (!addedContentIdList.contains(it.tourItem.getContentId())) {
+                    _isAllRecommendAdded.value = false
+                    return
+                }
             }
-        }
         _isAllRecommendAdded.value = true
     }
 }

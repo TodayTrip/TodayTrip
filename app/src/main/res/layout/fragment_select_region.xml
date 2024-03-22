@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_select_region_fragment"
     tools:context=".ui.random.SelectRegionFragment">
@@ -235,7 +236,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/SmallBoldText"
-            android:text="다음"
+            android:text="@string/random_next"
             android:textSize="16sp"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

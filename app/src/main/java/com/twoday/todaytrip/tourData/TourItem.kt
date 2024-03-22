@@ -5,6 +5,7 @@ import android.os.Parcelable
 import android.util.Log
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
+import com.twoday.todaytrip.utils.DateTimeUtil
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 import kotlinx.serialization.Serializable
@@ -196,6 +197,12 @@ sealed interface TourItem : Parcelable {
     ) : TourItem {
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
+
+        fun isEventPerformanceFestivalOver(): Boolean{
+            val currentDate = DateTimeUtil.getCurrentDateWithNoLine()
+            val endDate = super.getInfoWithNoBlank(eventPerformanceFestivalInfo.eventenddate)
+            return (currentDate > endDate)
+        }
         override fun getTimeInfoWithLabel(): List<Pair<String, String>> =
             mutableListOf<Pair<String, String>>().apply {
                 add("행사 시간" to super.getInfoWithNoBlank(eventPerformanceFestivalInfo.playtime))

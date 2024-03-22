@@ -13,7 +13,6 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
-import androidx.transition.TransitionInflater
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
@@ -26,18 +25,19 @@ import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Align
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
+import com.twoday.todaytrip.MapModel
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceMapBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.utils.MapUtils.createBoundsForAllMarkers
-import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
 import com.twoday.todaytrip.utils.MapUtils.updateCameraToBounds
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadCafeList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadEventList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadTouristAttractionList
 import com.twoday.todaytrip.viewModel.PlaceMapViewModel
+import ted.gun0912.clustering.naver.TedNaverClustering
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PlaceMapFragment : Fragment(), OnMapReadyCallback {
@@ -52,6 +52,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var mapView: MapView
 
     private val markers = mutableListOf<Marker>()
+    lateinit var tedNaverClustering: TedNaverClustering<MapModel>
 
     private var locations =
         loadTouristAttractionList().map {
@@ -200,24 +201,34 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private fun onMarkerReady() {
         Log.d(TAG,"onMarkerReady")
 
+        tedNaverClustering = TedNaverClustering.with<MapModel>(requireContext(), naverMap)
+            .customMarker { naverItem ->
+                Marker().apply {
+                    icon = OverlayImage.fromResource(R.drawable.ic_white_circle_marker)
+                    width = 100
+                    height = 100
+                    position = LatLng(naverItem.getTedLatLng().latitude, naverItem.getTedLatLng().longitude)
+                }
+            }
+            .make()
+
         if (locations.isNotEmpty()) {
-            val markerIconBitmap =
-                resizeMapIcons(requireContext(), R.drawable.ic_white_circle_marker, 100, 100)
 
             locations.forEachIndexed { index, locationInfo ->
+
+                val naverItem = MapModel(locationInfo.latLng.latitude,locationInfo.latLng.longitude)
                 val marker = Marker().apply {
                     position = locationInfo.latLng
-                    icon = OverlayImage.fromBitmap(markerIconBitmap)
-                    map = naverMap
                     if (index < placeMapAdapter.currentList.size) {
                         tag = locationInfo.title
                     }
                 }
                 markers.add(marker) // 마커 리스트에 추가
+                tedNaverClustering.addItem(naverItem)
             }
 
             val bounds = createBoundsForAllMarkers(markers)
-            updateCameraToBounds(naverMap, bounds, 200)
+            updateCameraToBounds(naverMap, bounds, 100)
         }
     }
 
