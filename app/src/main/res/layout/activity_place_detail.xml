@@ -23,14 +23,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_place_detail_back_bg" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/iv_place_detail_back_bg"-->
-<!--        android:layout_width="48dp"-->
-<!--        android:layout_height="48dp"-->
-<!--        android:background="@drawable/shape_circle"-->
-<!--        app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"-->
-<!--        app:layout_constraintTop_toTopOf="@id/iv_place_detail_back" />-->
-
     <ImageView
         android:id="@+id/iv_place_detail_back"
         android:layout_width="48dp"
@@ -82,7 +74,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="4dp"
                 android:src="@drawable/ic_place_detail_location"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_title" />
@@ -92,12 +84,12 @@
                 style="@style/SmallBoldText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="-3dp"
+                android:layout_marginStart="1dp"
                 android:layout_marginEnd="16dp"
-                android:text="주소"
+                android:text="주소 주소 주소 주소 주소 "
                 android:textColor="@color/black"
                 android:textStyle="normal"
+                app:layout_constraintBottom_toBottomOf="@id/iv_place_detail_address"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_place_detail_address"
                 app:layout_constraintTop_toTopOf="@+id/iv_place_detail_address" />
@@ -106,10 +98,10 @@
                 android:id="@+id/rv_place_detail_extra_info_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:nestedScrollingEnabled="false"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp"
                 android:visibility="visible"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -118,46 +110,127 @@
                 tools:itemCount="4"
                 tools:listitem="@layout/item_place_detail_extra_info" />
 
-            <TextView
-                android:id="@+id/tv_place_detail_my_memory_title"
-                style="@style/MiddleTitleBoldText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:text="@string/place_detail_my_memory"
-                android:textColor="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/rv_place_detail_extra_info_list" />
-
-            <TextView
-                android:id="@+id/tv_place_detail_no_memory"
-                style="@style/TinyText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="56dp"
-                android:layout_marginBottom="56dp"
-                android:text="@string/place_detail_no_photo"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_place_detail_my_memory_list"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_place_detail_nearby"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="70dp"
-                android:nestedScrollingEnabled="false"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="24dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title"
-                tools:listitem="@layout/item_place_detail_my_memory" />
+                app:layout_constraintTop_toBottomOf="@id/rv_place_detail_extra_info_list">
+
+                <TextView
+                    android:id="@+id/tv_place_detail_nearby_title"
+                    style="@style/MiddleTitleBoldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/place_detail_nearby"
+                    android:textColor="@color/place_title_gray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tv_place_detail_no_nearby"
+                    style="@style/TinyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:visibility="invisible"
+                    android:text="@string/place_detail_no_nearby"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_nearby_title" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_place_detail_nearby"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    android:visibility="invisible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_nearby_title"
+                    tools:listitem="@layout/item_place_detail_nearby" />
+
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/shimmer_place_detail_nearby"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_nearby_title"
+                    tools:listitem="@layout/item_place_detail_nearby">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                        <include layout="@layout/item_place_detail_nearby_skeleton"/>
+                        <include layout="@layout/item_place_detail_nearby_skeleton"/>
+                        <include layout="@layout/item_place_detail_nearby_skeleton"/>
+                        <include layout="@layout/item_place_detail_nearby_skeleton"/>
+                        <include layout="@layout/item_place_detail_nearby_skeleton"/>
+                    </LinearLayout>
+                </com.facebook.shimmer.ShimmerFrameLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.naver.maps.map.MapView
+                android:id="@+id/map_place_detail_nearby"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintEnd_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layout_place_detail_nearby"
+                tools:background="@color/middle_gray" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_place"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="50dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/map_place_detail_nearby">
+
+                <TextView
+                    android:id="@+id/tv_place_detail_my_memory_title"
+                    style="@style/MiddleTitleBoldText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/place_detail_my_memory"
+                    android:textColor="@color/place_title_gray"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"/>
+
+                <TextView
+                    android:id="@+id/tv_place_detail_no_memory"
+                    style="@style/TinyText"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:gravity="center"
+                    android:text="@string/place_detail_no_photo"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_place_detail_my_memory_title" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_place_detail_my_memory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_place_detail_my_memory_title"
+                    tools:listitem="@layout/item_place_detail_my_memory" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
