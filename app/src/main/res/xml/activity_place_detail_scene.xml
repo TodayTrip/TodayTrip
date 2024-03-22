@@ -101,6 +101,22 @@
             android:background="@color/white"
             android:alpha="0.0"
             />
+        <Constraint
+            android:id="@+id/tv_place_detail_scroll_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:alpha="0.0"
+            android:maxLines="1"
+            android:maxWidth="320dp"
+            style="@style/MiddleTitleBoldText"
+            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
+            motion:layout_constraintBottom_toBottomOf="@+id/iv_place_detail_back"
+            motion:layout_constraintStart_toEndOf="@+id/iv_place_detail_back"
+            motion:layout_constraintEnd_toEndOf="parent"
+            />
     </ConstraintSet>
 
     <ConstraintSet android:id="@+id/end">
@@ -148,6 +164,22 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/white"
             android:alpha="1.0"
+            />
+        <Constraint
+            android:id="@+id/tv_place_detail_scroll_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="48dp"
+            android:gravity="center"
+            android:visibility="visible"
+            android:alpha="1.0"
+            android:maxLines="1"
+            android:maxWidth="320dp"
+            style="@style/MiddleTitleBoldText"
+            motion:layout_constraintTop_toTopOf="@id/iv_place_detail_back"
+            motion:layout_constraintBottom_toBottomOf="@+id/iv_place_detail_back"
+            motion:layout_constraintStart_toEndOf="@+id/iv_place_detail_back"
+            motion:layout_constraintEnd_toEndOf="parent"
             />
     </ConstraintSet>
 </MotionScene>
