@@ -22,18 +22,18 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:visibility="invisible"
-        tools:src = "@drawable/gif_loading_reading_glasses"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@drawable/gif_loading_reading_glasses" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_item_place_list_recommend_blur"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_place_list_gray_blur"
+        android:src="@drawable/img_gray_blur"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="3:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -48,19 +48,20 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_item_place_list_recommend_title"
         app:layout_constraintStart_toStartOf="@id/tv_item_place_list_recommend_title"
-        tools:text="@string/place_list_recommend_sub_title_cover" />
+        tools:text="@string/place_list_recommend_sub_title_tourist_attraction" />
 
     <TextView
         android:id="@+id/tv_item_place_list_recommend_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="26dp"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/place_list_recommend_title" />
+        tools:text="장소이름 장소이름 장소이름 장소이름 장소이름" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

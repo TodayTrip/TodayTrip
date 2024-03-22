@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="220dp"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="4dp"
+    tools:context=".ui.place_detail.PlaceDetailActivity">
+
+    <ImageView
+        android:id="@+id/iv_item_place_detail_nearby_skeleton"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/shape_middle_gray_16_radius"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_item_place_detail_nearby_skeleton_title"
+        android:layout_width="120dp"
+        android:layout_height="24dp"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/shape_middle_gray_16_radius"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/iv_item_place_detail_nearby_skeleton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

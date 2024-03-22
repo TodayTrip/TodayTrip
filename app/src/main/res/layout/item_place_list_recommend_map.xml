@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/img_place_list_gray_blur"
+        android:src="@drawable/img_gray_blur"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="3:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,22 +31,35 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/tv_item_place_list_recommend_map_title"
-        app:layout_constraintStart_toStartOf="@id/tv_item_place_list_recommend_map_title"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_place_list_recommend_map_destination"
+        app:layout_constraintStart_toStartOf="@id/tv_item_place_list_recommend_map_destination"
         android:text="@string/place_list_recommend_sub_title_map" />
+
+    <TextView
+        android:id="@+id/tv_item_place_list_recommend_map_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="26dp"
+        android:textColor="@color/point_yellow"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="여행지 이름" />
 
     <TextView
         android:id="@+id/tv_item_place_list_recommend_map_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="6dp"
         android:layout_marginBottom="26dp"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/place_list_recommend_title" />
+        app:layout_constraintStart_toEndOf="@id/tv_item_place_list_recommend_map_destination"
+        android:text="@string/place_list_recommend_title" />
 
     <TextView
         android:padding="12dp"

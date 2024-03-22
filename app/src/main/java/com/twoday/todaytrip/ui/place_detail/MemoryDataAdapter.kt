@@ -31,8 +31,8 @@ class MemoryDataAdapter(): ListAdapter<MemoryData, MemoryDataAdapter.ViewHolder>
     }
 
     inner class ViewHolder(binding: ItemPlaceDetailMyMemoryBinding): RecyclerView.ViewHolder(binding.root) {
-        private val travelDateTextView: TextView = binding.tvItemPlaceDetailMemoryTime
-        private val memoryImageView: ImageView = binding.ivItemPlaceDetailMemoryPhoto
+        private val travelDateTextView: TextView = binding.tvItemPlaceDetailMyMemoryTime
+        private val memoryImageView: ImageView = binding.ivItemPlaceDetailMyMemory
 
         fun bind(memoryData: MemoryData) {
             Log.d(TAG, "bind) called")
@@ -40,6 +40,7 @@ class MemoryDataAdapter(): ListAdapter<MemoryData, MemoryDataAdapter.ViewHolder>
             Glide.with(itemView.context)
                 .load(memoryData.url)
                 .into(memoryImageView)
+            memoryImageView.clipToOutline = true
         }
     }
 }

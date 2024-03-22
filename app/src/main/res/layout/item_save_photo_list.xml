@@ -95,6 +95,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/iv_save_photo_icon" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToOutline="true"
+                android:background="@drawable/img_light_gray_blur_12"/>
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView

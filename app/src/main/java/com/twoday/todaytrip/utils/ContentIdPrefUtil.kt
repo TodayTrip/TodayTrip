@@ -42,7 +42,7 @@ object ContentIdPrefUtil {
 
     fun resetContentIdListPref() {
         Log.d(TAG, "resetContentIdListPref) called")
-        saveContentIdList(emptyList())
+        getContentIdListPreferences().edit().clear().commit()
     }
 
     private fun getContentIdListPreferences(): SharedPreferences =

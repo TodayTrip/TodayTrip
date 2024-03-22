@@ -31,6 +31,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:clipToOutline="true"
+            android:background="@drawable/img_light_gray_blur_10"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_list_thumbnail"
+            app:layout_constraintEnd_toEndOf="@+id/iv_item_place_list_thumbnail" />
+
         <TextView
             android:id="@+id/tv_item_place_list_title"
             style="@style/PlaceTitleBoldText"
