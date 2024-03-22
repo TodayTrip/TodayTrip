@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_white"
-    tools:context=".ui.random.RandomOptionFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white"
+    tools:context=".ui.random.RandomResultOneFragment">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:id="@+id/tv_result_one_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:gravity="center"
-        android:text="선택된 여행지는···\n두구두구두구!!"
+        android:text="@string/random_result_one_loading"
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        />
 
     <ImageView
-        android:id="@+id/iv_random_map_gif"
+        android:id="@+id/iv_result_one_image"
         android:layout_width="0dp"
         android:layout_height="440dp"
-        android:layout_margin="30dp"
-        android:layout_marginTop="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="60dp"
+        android:padding="40dp"
+        android:src="@drawable/gif_loading"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@+id/tv_result_one_title"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

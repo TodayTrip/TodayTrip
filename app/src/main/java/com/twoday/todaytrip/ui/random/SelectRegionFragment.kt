@@ -173,7 +173,11 @@ class SelectRegionFragment : Fragment() {
         binding.btnRegionSelectNext.setOnClickListener {
             viewModel.saveSelectedRegionList()
             viewModel.selectAndSaveDestination()
-            findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
+            if ((viewModel.selectedRegionList.value?.size ?: 0) == 1) {
+                findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result_one)
+            } else {
+                findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
+            }
         }
     }
 
