@@ -8,12 +8,13 @@
         android:id="@+id/gallery_photo"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher"
+        android:layout_margin="6dp"
+        android:background="@drawable/shape_radius_16"
+        android:transitionName="gallery_photo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

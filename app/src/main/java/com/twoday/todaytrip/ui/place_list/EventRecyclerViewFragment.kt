@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AlphaAnimation
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -98,6 +99,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             this.adapter = eventAdapter
             initScrollListener(this)
         }
+        initFloatingButton()
     }
 
     private fun initScrollListener(recyclerView: RecyclerView) {
@@ -155,6 +157,33 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
                 anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
             )
             mainModel.setEventMoreLoadedDefault()
+        }
+    }
+
+    private fun initFloatingButton(){
+        // 플로팅 버튼
+        val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
+        val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }
+        var isTop = true
+        binding.rvEventRecyclerView.addOnScrollListener(object :
+            RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (!binding.rvEventRecyclerView.canScrollVertically(-1) && newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    binding.fbContactFloating.startAnimation(fadeOut)
+                    binding.fbContactFloating.visibility = View.GONE
+                    isTop = true
+                } else {
+                    if (isTop) {
+                        binding.fbContactFloating.visibility = View.VISIBLE
+                        binding.fbContactFloating.startAnimation(fadeIn)
+                        isTop = false
+                    }
+                }
+            }
+        })
+        binding.fbContactFloating.setOnClickListener {
+            binding.rvEventRecyclerView.smoothScrollToPosition(0)
         }
     }
 
