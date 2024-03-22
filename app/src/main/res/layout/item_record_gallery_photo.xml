@@ -10,7 +10,7 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher"
-        android:layout_margin="4dp"
+        android:layout_margin="6dp"
         android:background="@drawable/shape_radius_16"
         android:transitionName="gallery_photo"
         app:layout_constraintTop_toTopOf="parent"

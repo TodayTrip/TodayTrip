@@ -1,8 +1,5 @@
 package com.twoday.todaytrip.ui.record
 
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -12,7 +9,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.transition.TransitionInflater
 import com.jolenechong.wordcloud.WordCloud
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordBinding
@@ -100,7 +96,7 @@ class RecordFragment : Fragment(), OnRecordClickListener {
         }
         binding.rvRecord.run{
             adapter = recordAdapter
-            addItemDecoration(GridSpaceItemDecoration(2, 30))
+//            addItemDecoration(GridSpaceItemDecoration(2, 10))
         }
     }
     override fun onRecordClick(record: Record) {

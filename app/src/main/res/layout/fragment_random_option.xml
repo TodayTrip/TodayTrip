@@ -13,11 +13,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="랜덤으로 여행 할 지역이 정해집니다.\n지역 선택 방식을 선택해 주세요."
+        android:text="랜덤으로 여행 할 지역이 정해집니다\n지역 선택 방식을 선택해 주세요"
         android:textColor="@color/dark_gray"
         android:textSize="22sp"
         android:textStyle="bold"
         android:layout_marginTop="100dp"
+        android:letterSpacing="0.04"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
