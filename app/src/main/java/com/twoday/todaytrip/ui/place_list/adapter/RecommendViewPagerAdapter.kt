@@ -240,6 +240,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         override fun onMapReady(naverMap: NaverMap) {
             this.naverMap = naverMap
 
+            naverMap.uiSettings.isZoomControlEnabled = false
+
             if (locations.isNotEmpty()) {
                 locations.forEachIndexed { index, latLng ->
                     val text = (index + 1).toString()

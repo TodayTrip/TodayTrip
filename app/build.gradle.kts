@@ -116,6 +116,11 @@ dependencies {
     implementation("com.google.android.material:material:1.11.0")
     // vector img color
     implementation("com.github.devsideal:VectorChildFinder:1.0.0")
-    //indicator
-    implementation("com.tbuonomo:dotsindicator:5.0")
+    //toggle Button
+    implementation("com.polyak:icon-switch:1.0.0")
+
+    implementation("com.github.tarek360.RichPath:animator:0.1.1")
+    // clustering
+    implementation("io.github.ParkSangGwon:tedclustering-naver:1.0.2")
+
 }

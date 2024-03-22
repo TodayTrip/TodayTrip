@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -78,10 +79,6 @@ class PlaceListFragment : Fragment(),
         initRecommendAdapter()
         initMainAdapter()
         initAutoScroll()
-//        val pagerAdapter = RecommendViewPagerAdapter()
-//        binding.viewpagerRecommend.adapter = pagerAdapter
-//        binding.viewpagerRecommend.setCurrentItem(1,true)
-//        binding.springDotsIndicator.setViewPager2(binding.viewpagerRecommend)
     }
 
     /***/
@@ -106,7 +103,6 @@ class PlaceListFragment : Fragment(),
     }
 
     private fun initAutoScroll() {
-//        binding.viewpagerRecommend.text = numBanner.toString()
         binding.viewpagerRecommend.adapter = recommendAdapter
         binding.viewpagerRecommend.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         binding.viewpagerRecommend.setCurrentItem(currentPosition, false)
@@ -131,26 +127,6 @@ class PlaceListFragment : Fragment(),
         }
     }
 
-//    viewPager_main.addOnPageChangeListener(object : ViewPager.OnPageChangeListener{
-//        override fun onPageScrollStateChanged(p0: Int) {
-//        }
-//
-//        override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
-//        }
-//
-//        override fun onPageSelected(p0: Int) {
-//
-//            indicator0_iv_main.setImageDrawable(getDrawable(R.drawable.shape_circle_gray))
-//            indicator1_iv_main.setImageDrawable(getDrawable(R.drawable.shape_circle_gray))
-//            indicator2_iv_main.setImageDrawable(getDrawable(R.drawable.shape_circle_gray))
-//
-//            when(p0){
-//                0 -> indicator0_iv_main.setImageDrawable(getDrawable(R.drawable.shape_circle_purple))
-//                1 -> indicator1_iv_main.setImageDrawable(getDrawable(R.drawable.shape_circle_purple))
-//                2 -> indicator2_iv_main.setImageDrawable(getDrawable(R.drawable.shape_circle_purple))
-//            }
-//        }
-//    })
 
 
     private fun initRecommendAdapter() {
@@ -251,8 +227,20 @@ class PlaceListFragment : Fragment(),
     }
 
     private fun initModelObserver() {
+        model.themeTitleInfo.observe(viewLifecycleOwner){themeTitleInfo ->
+            if(themeTitleInfo.first == -1) {
+                binding.tvTravelTheme.isVisible = false
+            }
+            else {
+                binding.tvTravelTheme.run{
+                    isVisible = true
+                    setText(themeTitleInfo.first)
+                    setTextColor(resources.getColor(themeTitleInfo.second))
+                }
+            }
+        }
         model.destination.observe(viewLifecycleOwner) { destination ->
-            binding.tvTravelAddress.text = destination
+            binding.tvTravelDestination.text = destination
         }
 
         model.weatherInfo.observe(viewLifecycleOwner) { weatherInfo ->
@@ -272,33 +260,32 @@ class PlaceListFragment : Fragment(),
                 e.stackTrace
             }
         }
-        model.recommendDataList.observe(viewLifecycleOwner) { recommendDataList ->
-            if (recommendDataList.isNotEmpty()) {
-                (recommendDataList.last() as RecommendMap).locations = model.getRecommendLocations()
+        model.recommendDataList.observe(viewLifecycleOwner){recommendDataList ->
+            if(recommendDataList.isNotEmpty()){
+                (recommendDataList.last() as RecommendMap).locations = model.getMarkerPositions()
             }
             recommendAdapter.changeDataSet(recommendDataList)
         }
 
-        model.isAllRecommendAdded.observe(viewLifecycleOwner) { isAllRecommendAdded ->
+        model.isAllRecommendAdded.observe(viewLifecycleOwner){isAllRecommendAdded ->
             val recommendDataList = recommendAdapter.getDataSet()
-            if (recommendDataList.isNotEmpty()) {
+            if(recommendDataList.isNotEmpty()){
                 (recommendDataList.last() as RecommendMap).isAllAdded = isAllRecommendAdded
             }
             recommendAdapter.changeDataSet(recommendDataList, 5)
         }
     }
-
-    private fun initMainModelObserver() {
-        mainModel.touristAttractionList.observe(viewLifecycleOwner) {
+    private fun initMainModelObserver(){
+        mainModel.touristAttractionList.observe(viewLifecycleOwner){
             model.pickAndSaveRecommendTouristAttraction(it)
         }
-        mainModel.restaurantList.observe(viewLifecycleOwner) {
+        mainModel.restaurantList.observe(viewLifecycleOwner){
             model.pickAndSaveRecommendRestaurant(it)
         }
-        mainModel.cafeList.observe(viewLifecycleOwner) {
+        mainModel.cafeList.observe(viewLifecycleOwner){
             model.pickAndSaveRecommendCafe(it)
         }
-        mainModel.eventList.observe(viewLifecycleOwner) {
+        mainModel.eventList.observe(viewLifecycleOwner){
             model.pickAndSaveRecommendEvent(it)
         }
     }
@@ -307,17 +294,6 @@ class PlaceListFragment : Fragment(),
         super.onResume()
         model.setIsAllRecommendAdded()
         autoScrollStart(intervalTime) // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
-//        binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
-//            override fun onPageSelected(position: Int) {
-//                super.onPageSelected(position)
-//                indicatorList.forEach {
-//                    it.setBackgroundResource(R.drawable.shape_circle_gray)
-//                    Log.d(TAG,"position forEach ${position}")
-//                }
-//                indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
-//                Log.d(TAG,"position % 6 ${position }")
-//            }
-//        })
     }
 
     // 다른 페이지로 떠나있는 동안 스크롤이 동작할 필요는 없음. 정지
@@ -330,5 +306,4 @@ class PlaceListFragment : Fragment(),
         super.onDestroyView()
         _binding = null
     }
-
 }

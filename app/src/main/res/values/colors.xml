@@ -11,6 +11,14 @@
     <color name="sub_btn_blue">#9DD0FF</color>
     <color name="point_yellow">#FFD15B</color>
 
+    <color name="theme_title1">#53B386</color>
+    <color name="theme_title2">#78CAEA</color>
+    <color name="theme_title3">#836546</color>
+    <color name="theme_title4">#6BA8D7</color>
+    <color name="theme_title5">#8D62B6</color>
+    <color name="theme_title6">#F06F79</color>
+    <color name="theme_title7">#EE9811</color>
+
     <color name="map_gray">#DADADA</color>
     <color name="map_blue1">#04085F</color>
     <color name="map_blue2">#023F8A</color>

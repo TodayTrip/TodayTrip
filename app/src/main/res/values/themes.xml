@@ -8,6 +8,7 @@
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowActivityTransitions">true</item>
+        <item name="android:windowContentTransitions">true</item>
     </style>
 
     <style name="tab_text" parent="@android:style/TextAppearance.Widget.TabWidget">

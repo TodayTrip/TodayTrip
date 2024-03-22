@@ -149,12 +149,18 @@
             android:layout_height="wrap_content"
             android:letterSpacing="0.05"
             android:text="기록하기"
-            android:textColor="@color/black"
+            android:textColor="@color/main_blue"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintBottom_toTopOf="@+id/rv_route_recyclerview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

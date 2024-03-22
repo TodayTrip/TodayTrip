@@ -1,13 +1,14 @@
 package com.twoday.todaytrip.ui.record_gallery
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityOptionsCompat
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -38,7 +39,6 @@ class RecordGalleryFragment : Fragment() {
         val columnWidthDp = 400
         val layoutManager = GridLayoutManager(requireContext(), calColumns(columnWidthDp))
         recyclerView.layoutManager = layoutManager
-        Log.d("asd", calColumns(columnWidthDp).toString())
     }
 
     private fun initModelObserver() {
@@ -47,6 +47,19 @@ class RecordGalleryFragment : Fragment() {
                 this.uriList = it
                 val adapter = RecordGalleryAdapter(it)
                 binding.rvRecordGallery.adapter = adapter
+                if (it.isEmpty()) binding.layoutRecordEmpty.isVisible = isVisible
+
+                adapter.itemClick = object : RecordGalleryAdapter.ItemClick {
+                    override fun onClick(view: View, position: Int) {
+                        val intent =
+                            Intent(requireContext(), FullScreenImageActivity::class.java).apply {
+                                putStringArrayListExtra("imageUris", ArrayList(uriList))
+                                putExtra("position", position)
+                            }
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view,"gallery_photo")
+                        startActivity(intent, options.toBundle())
+                    }
+                }
             }
         })
     }
@@ -54,7 +67,6 @@ class RecordGalleryFragment : Fragment() {
     private fun getDisplayWidth(): Int {
         val displayMetrics = DisplayMetrics()
         requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
-        Log.d("qqq",displayMetrics.widthPixels.toString())
         return displayMetrics.widthPixels
     }
 

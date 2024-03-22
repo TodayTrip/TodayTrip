@@ -13,12 +13,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="start"
-        android:text="랜덤으로 여행 할 지역이 정해집니다.\n지역 선택 방식을 선택해 주세요."
+        android:layout_marginTop="100dp"
+        android:letterSpacing="0.04"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="20dp"
+        android:text="@string/option_choice_region"
         android:textColor="@color/dark_gray"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginTop="100dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -90,7 +92,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="완전 랜덤"
+        android:text="@string/option_all_random"
         android:textColor="@color/dark_gray"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -101,7 +103,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="테마별 랜덤"
+        android:text="@string/option_theme_random"
         android:textColor="@color/dark_gray"
         android:layout_marginTop="10dp"
         android:textSize="20sp"
@@ -110,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_theme_random" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_option_select"
+        android:id="@+id/btn_option_next"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_marginStart="20dp"
@@ -126,7 +128,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/SmallBoldText"
-        android:text="다음"
+        android:text="@string/random_next"
         android:textSize="16sp"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"

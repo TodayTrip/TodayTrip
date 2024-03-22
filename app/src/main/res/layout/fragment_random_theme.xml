@@ -14,7 +14,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="85dp"
         android:letterSpacing="-0.04"
-        android:text="어떤 테마 여행을 하고 싶으신가요?"
+        android:text="@string/select_theme"
         android:textColor="@color/dark_gray"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/btn_next"
+        app:layout_constraintBottom_toTopOf="@+id/btn_theme_next"
         app:layout_constraintTop_toBottomOf="@+id/tv_theme_select_description"
         app:layout_constraintVertical_bias="0.0"
         tools:layout_editor_absoluteX="-16dp">
@@ -41,7 +41,7 @@
                 android:layout_height="105dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginEnd="18dp"
                 android:background="@drawable/shape_white_12_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme2"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -51,7 +51,7 @@
                 <TextView
                     android:id="@+id/tv_theme1"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="풀내음이\n가득한 "
+                    android:text="@string/theme_first"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -68,6 +68,7 @@
                 android:id="@+id/btn_theme2"
                 android:layout_width="0dp"
                 android:layout_height="105dp"
+                android:layout_marginStart="-2dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/shape_white_12_radius"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,15 +79,15 @@
                 <TextView
                     android:id="@+id/tv_theme2"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="청량함이\n있는 "
+                    android:text="@string/theme_second"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/img_random_theme_second"
                     android:layout_marginEnd="14dp"
+                    android:src="@drawable/img_random_theme_second"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -95,8 +96,8 @@
                 android:id="@+id/btn_theme3"
                 android:layout_width="0dp"
                 android:layout_height="105dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme4"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -106,7 +107,7 @@
                 <TextView
                     android:id="@+id/tv_theme3"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="시간을 \n넘나드는 "
+                    android:text="@string/theme_third"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,6 +126,7 @@
                 android:id="@+id/btn_theme4"
                 android:layout_width="0dp"
                 android:layout_height="105dp"
+                android:layout_marginStart="-2dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -135,15 +137,15 @@
                 <TextView
                     android:id="@+id/tv_theme4"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="근심이\n없어지는 "
+                    android:text="@string/theme_fourth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/img_random_theme_fourth"
                     android:layout_marginEnd="14dp"
+                    android:src="@drawable/img_random_theme_fourth"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -152,8 +154,8 @@
                 android:id="@+id/btn_theme5"
                 android:layout_width="0dp"
                 android:layout_height="105dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="18dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toStartOf="@+id/btn_theme6"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -163,7 +165,7 @@
                 <TextView
                     android:id="@+id/tv_theme5"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="감각을\n자극하는 "
+                    android:text="@string/theme_fifth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -181,6 +183,7 @@
                 android:id="@+id/btn_theme6"
                 android:layout_width="0dp"
                 android:layout_height="105dp"
+                android:layout_marginStart="-2dp"
                 android:layout_marginEnd="20dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -191,15 +194,15 @@
                 <TextView
                     android:id="@+id/tv_theme6"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="활력이 \n넘치는"
+                    android:text="@string/theme_sixth"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/img_random_theme_sixth"
                     android:layout_marginEnd="14dp"
+                    android:src="@drawable/img_random_theme_sixth"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -208,7 +211,7 @@
                 android:id="@+id/btn_theme7"
                 android:layout_width="0dp"
                 android:layout_height="105dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="3dp"
                 android:background="@drawable/shape_white_10_radius"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -220,7 +223,7 @@
                 <TextView
                     android:id="@+id/tv_theme7"
                     style="@style/RandomThemeBlueBoldText"
-                    android:text="예술이\n숨 쉬는 "
+                    android:text="@string/theme_seventh"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -236,7 +239,7 @@
     </ScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/btn_next"
+        android:id="@+id/btn_theme_next"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:layout_marginStart="20dp"
@@ -252,7 +255,7 @@
             style="@style/SmallBoldText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="다음"
+            android:text="@string/random_next"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"

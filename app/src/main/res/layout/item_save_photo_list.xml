@@ -37,21 +37,21 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cv_save_photo_text_frame"
         android:layout_width="0dp"
-        android:layout_height="75dp"
+        android:layout_height="85dp"
         android:layout_marginStart="51dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/shape_white_10_radius"
         android:backgroundTint="@color/white"
-        android:padding="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_save_photo_frame"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
             android:backgroundTint="@color/light_gray"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,9 +61,9 @@
                 android:id="@+id/iv_save_photo_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
                 android:background="@drawable/shape_light_gray_12_radius"
                 android:clipToOutline="true"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -79,7 +79,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
                 android:id="@+id/tv_save_photo_plustext"
@@ -88,7 +89,7 @@
                 android:layout_gravity="bottom|center"
                 android:text="사진추가"
                 android:textSize="12sp"
-                android:letterSpacing="-0.04"
+                android:layout_marginTop="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -98,8 +99,8 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clipToOutline="true"
-                android:background="@drawable/img_light_gray_blur_12"/>
+                android:background="@drawable/img_light_gray_blur_12"
+                android:clipToOutline="true" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -110,16 +111,16 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
-            app:layout_goneMarginStart="30dp"
+            android:ellipsize="end"
+            android:maxLines="1"
             android:text="경로1"
             android:textSize="18sp"
-            android:maxLines="1"
-            android:ellipsize="end"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/tv_save_photo_address"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout_save_photo_frame"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="spread" />
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
             android:id="@+id/tv_save_photo_address"
@@ -129,9 +130,9 @@
             android:text="주소"
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/tv_save_photo_road_text"
             app:layout_constraintStart_toStartOf="@+id/tv_save_photo_road_text"
-            app:layout_constraintTop_toBottomOf="@+id/tv_save_photo_road_text"
-            app:layout_constraintEnd_toEndOf="@id/tv_save_photo_road_text"/>
+            app:layout_constraintTop_toBottomOf="@+id/tv_save_photo_road_text" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
