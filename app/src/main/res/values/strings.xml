@@ -33,8 +33,8 @@
     <string name="place_list_event">행사/축제</string>
     
     <string name="place_list_recommend_sub_title_cover"><font color="#FFD15B">오늘 여행</font>이 추천하는</string>
-    <string name="place_list_recommend_sub_title_map">지도로 한 눈에 보기</string>
-    <string name="place_list_recommend_title">%s %s 랜덤 코스</string>
+    <string name="place_list_recommend_sub_title_map"><font color="#FFD15B">지도</font>로 한 눈에 보기</string>
+    <string name="place_list_recommend_title">%s 랜덤 코스</string>
 
     <string name="place_list_recommend_sub_title_tourist_attraction">오늘의 랜덤 <font color="#FFD15B">관광지</font></string>
     <string name="place_list_recommend_sub_title_restaurant">오늘의 랜덤 <font color="#FFD15B">음식점</font></string>

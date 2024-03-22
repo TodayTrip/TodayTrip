@@ -121,8 +121,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             subTitleTextView.setText(recommendCover.subTitleId)
             titleTextView.text = String.format(
                 itemView.context.getString(recommendCover.titleId),
-                recommendCover.destination,
-                recommendCover.destinationSigungu
+                recommendCover.destination
             )
             noResultImageView.isVisible = false
         }
@@ -172,8 +171,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         fun bindMap(recommendMap: RecommendMap) {
             titleTextView.text = String.format(
                 itemView.context.getString(recommendMap.titleId),
-                recommendMap.destination,
-                recommendMap.destinationSigungu
+                recommendMap.destination
             )
 
             locations = recommendMap.locations

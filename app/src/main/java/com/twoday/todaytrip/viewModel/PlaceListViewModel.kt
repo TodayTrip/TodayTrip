@@ -34,8 +34,6 @@ class PlaceListViewModel : ViewModel() {
 
     private val _destination = MutableLiveData<String>()
     val destination: LiveData<String> get() = _destination
-    private val _destinationSigungu = MutableLiveData<String>()
-    val destinationSigungu: LiveData<String> get() = _destinationSigungu
 
     private val _weatherInfo = MutableLiveData<WeatherInfo>()
     val weatherInfo: LiveData<WeatherInfo> get() = _weatherInfo
@@ -62,7 +60,6 @@ class PlaceListViewModel : ViewModel() {
 
     private fun initDestination() {
         _destination.value = DestinationPrefUtil.loadDestination()!!
-        _destinationSigungu.value = "전체" // TODO 스피너로 시군구 선택 구현
     }
 
     private fun initWeatherInfo() {
@@ -175,8 +172,7 @@ class PlaceListViewModel : ViewModel() {
             RecommendCover(
                 imageId = getTitleImageId(_destination.value!!)!!,
                 destination = _destination.value!!,
-                destinationSigungu = _destinationSigungu.value!!
-            ),
+                ),
             RecommendEmpty(
                 subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
                 titleId = R.string.place_list_recommend_tourist_attraction_no_result
@@ -195,7 +191,6 @@ class PlaceListViewModel : ViewModel() {
             ),
             RecommendMap(
                 destination = _destination.value!!,
-                destinationSigungu = _destinationSigungu.value!!,
                 locations = emptyList()
             )
         )

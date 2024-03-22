@@ -9,8 +9,7 @@ data class RecommendCover(
     val imageId: Int,
     val subTitleId: Int = R.string.place_list_recommend_sub_title_cover,
     val titleId: Int = R.string.place_list_recommend_title,
-    val destination: String,
-    val destinationSigungu: String
+    val destination: String
 ): RecommendData
 
 data class RecommendTourItem(
@@ -26,7 +25,6 @@ data class RecommendEmpty(
 data class RecommendMap(
     val titleId: Int = R.string.place_list_recommend_title,
     val destination: String,
-    val destinationSigungu: String,
     var locations: List<LatLng>,
     var isAllAdded: Boolean = false
 ): RecommendData
