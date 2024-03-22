@@ -114,10 +114,6 @@ class PlaceListAdapter :
         )
 
         fun bind(item: TourItem) {
-            val currentDate = DateTimeUtil.getCurrentDateWithNoLine()
-            val currentTime = DateTimeUtil.getCurrentTime()
-            val currentDay = DateTimeUtil.getCurrentDay()
-
             item.getThumbnailImage()?.let { url ->
                 Glide.with(itemView.context)
                     .load(url)
@@ -131,24 +127,21 @@ class PlaceListAdapter :
                 binding.ivBookmark.visibility = View.INVISIBLE
             }
 
-            when (item.getContentTypeId()) {
-                TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
-                    val startDate = item.getDetailInfoWithLabel()[3].second
-                    val endDate = item.getDetailInfoWithLabel()[4].second
-                    if (currentDate > endDate) {
-                        val matrix = ColorMatrix()
-                        matrix.setSaturation(0F)
-                        val filter = ColorMatrixColorFilter(matrix)
-                        firstImageView.setColorFilter(filter)
+            when (item) {
+                is TourItem.EventPerformanceFestival -> {
+                    if (item.isEventPerformanceFestivalOver()) {
+                        val filter = ColorMatrixColorFilter(
+                            ColorMatrix().apply {
+                                setSaturation(0F)
+                            }
+                        )
+                        firstImageView.colorFilter = filter
                         binding.layoutEntire.setBackgroundResource(R.color.light_gray)
                     }
                     else {
-                        firstImageView.setColorFilter(null)
+                        firstImageView.colorFilter = null
                         binding.layoutEntire.setBackgroundResource(R.color.white)
                     }
-                }
-                TourContentTypeId.RESTAURANT.contentTypeId ->{
-                    // do nothing
                 }
                 else ->{
                     // do nothing

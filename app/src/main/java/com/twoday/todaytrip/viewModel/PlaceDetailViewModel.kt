@@ -4,11 +4,20 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.naver.maps.geometry.LatLng
+import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
+import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.MemoryData
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.RecordPrefUtil
+import com.twoday.todaytrip.utils.TourItemPrefUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class PlaceDetailViewModel() : ViewModel() {
@@ -22,6 +31,15 @@ class PlaceDetailViewModel() : ViewModel() {
     private val _placeInfoList = MutableLiveData<List<Pair<String, String>>>()
     val placeInfoList: LiveData<List<Pair<String, String>>> get() = _placeInfoList
 
+    private val _nearByList = MutableLiveData<List<TourItem>>()
+    val nearByList: LiveData<List<TourItem>> get() = _nearByList
+
+    private val _isLoadingNearByList = MutableLiveData<Boolean>(true)
+    val isLoadingNearByList: LiveData<Boolean> get() = _isLoadingNearByList
+
+    private val _nearByLocations = MutableLiveData<List<LatLng>>()
+    val nearByLocations: LiveData<List<LatLng>> get() = _nearByLocations
+
     private val _memoryDataList = MutableLiveData<List<MemoryData>>()
     val memoryDataList: LiveData<List<MemoryData>> = _memoryDataList
 
@@ -32,6 +50,7 @@ class PlaceDetailViewModel() : ViewModel() {
         _isTourItemAdded.value = tourItem?.isAdded
 
         initPlaceInfoList()
+        initNearbyList()
         initMemoryDataList()
     }
 
@@ -41,7 +60,37 @@ class PlaceDetailViewModel() : ViewModel() {
     }
 
     private fun initPlaceInfoList(){
-        _placeInfoList.value = tourItem!!.getDetailInfoWithLabel()
+        _placeInfoList.value = tourItem?.getDetailInfoWithLabel()
+    }
+
+    private fun initNearbyList() = CoroutineScope(Dispatchers.IO).launch {
+        tourItem?.let {
+            val fetchedNearByList = async{
+                TourNetworkInterfaceUtils.fetchNearByList(tourItem!!)
+            }.await()
+
+            withContext(Dispatchers.Main){
+                Log.d(TAG, "initNearbyList) fetchedNearByList: ${fetchedNearByList.toString()}")
+                _nearByList.value = fetchedNearByList
+                _isLoadingNearByList.value = false
+                saveNearByList()
+            }
+        }
+    }
+    private fun saveNearByList(){
+        _nearByList.value?.forEach { tourItem ->
+            TourItemPrefUtil.addTourItem(tourItem)
+        }
+    }
+
+    fun getNearByLocations(){
+        val locations = mutableListOf<LatLng>()
+        _nearByList.value?.forEach { tourItem ->
+            locations.add(
+                LatLng(tourItem.getLatitude().toDouble(), tourItem.getLongitude().toDouble())
+            )
+        }
+        _nearByLocations.value = locations
     }
     private fun initMemoryDataList() {
         val loadedMemoryDataList = mutableListOf<MemoryData>()

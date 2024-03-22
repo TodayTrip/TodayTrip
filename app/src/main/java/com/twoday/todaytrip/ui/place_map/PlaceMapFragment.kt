@@ -68,7 +68,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             tourItem.getContentTypeId(),
             tourItem)
         startActivity(placeDetailIntent)
-        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
+//        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
     override fun onCreateView(

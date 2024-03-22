@@ -19,13 +19,17 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.OnRefreshRecommentClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 
-class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommendClickListener {
+class PlaceListFragment : Fragment(),
+    OnRefreshRecommentClickListener,
+    OnTourItemClickListener,
+    OnAddAllRecommendClickListener {
     private val TAG = "PlaceListFragment"
 
     private var _binding: FragmentPlaceListBinding? = null
@@ -65,10 +69,25 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
 
     private fun initRecommendAdapter() {
         recommendAdapter.run{
+            onRefreshRecommentClickListener = this@PlaceListFragment
             onTourItemClickListener = this@PlaceListFragment
             onAddAllRecommendClickListener = this@PlaceListFragment
         }
         binding.viewpagerRecommend.adapter = recommendAdapter
+    }
+
+    override fun onRefreshRecommendClick() {
+        model.refreshRecommendList()
+        model.pickAndSaveRecommendTouristAttraction(mainModel.touristAttractionList.value)
+        model.pickAndSaveRecommendRestaurant(mainModel.restaurantList.value)
+        model.pickAndSaveRecommendCafe(mainModel.cafeList.value)
+        model.pickAndSaveRecommendEvent(mainModel.eventList.value)
+
+        Toast.makeText(
+            requireActivity(),
+            R.string.place_list_recommend_refresh_toast,
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
     override fun onTourItemClick(tourItem: TourItem) {
