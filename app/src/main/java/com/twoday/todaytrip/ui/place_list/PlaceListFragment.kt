@@ -2,6 +2,8 @@ package com.twoday.todaytrip.ui.place_list
 
 //import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import android.os.Bundle
+import android.os.Handler
+import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
@@ -23,6 +29,7 @@ import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnRefreshRecommentClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
+import com.twoday.todaytrip.ui.place_list.adapter.PlaceInfiniteAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
@@ -47,6 +54,11 @@ class PlaceListFragment : Fragment(),
 
     private val recommendAdapter = RecommendViewPagerAdapter()
 
+    private var numBanner = 6
+    private var currentPosition = Int.MAX_VALUE / 2 - 3
+    private var myHandler = MyHandler()
+    private val intervalTime = 3000.toLong() // 몇초 간격으로 페이지를 넘길것인지 (1500 = 1.5초)
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
@@ -66,7 +78,56 @@ class PlaceListFragment : Fragment(),
     private fun initAdapter() {
         initRecommendAdapter()
         initMainAdapter()
+        initAutoScroll()
     }
+
+    /***/
+    private fun autoScrollStart(intervalTime: Long) {
+        myHandler.removeMessages(0) // 이거 안하면 핸들러가 1개, 2개, 3개 ... n개 만큼 계속 늘어남
+        myHandler.sendEmptyMessageDelayed(0, intervalTime) // intervalTime 만큼 반복해서 핸들러를 실행하게 함
+    }
+
+    private fun autoScrollStop() {
+        myHandler.removeMessages(0) // 핸들러를 중지시킴
+    }
+
+    private inner class MyHandler : Handler() {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+
+            if (msg.what == 0) {
+                binding.viewpagerRecommend.setCurrentItem(++currentPosition, true) // 다음 페이지로 이동
+                autoScrollStart(intervalTime) // 스크롤을 계속 이어서 한다.
+            }
+        }
+    }
+
+    private fun initAutoScroll() {
+        binding.viewpagerRecommend.adapter = recommendAdapter
+        binding.viewpagerRecommend.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.viewpagerRecommend.setCurrentItem(currentPosition, false)
+
+        binding.viewpagerRecommend.apply {
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+//                    binding.textViewCurrentBanner.text = "${(position % 3) + 1}"  //필요없는거 같음
+                }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    when (state) {
+                        // 뷰페이저에서 손 떼었을때 / 뷰페이저 멈춰있을 때
+                        ViewPager2.SCROLL_STATE_IDLE -> autoScrollStart(intervalTime)
+                        // 뷰페이저 움직이는 중
+                        ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
+                    }
+                }
+            })
+        }
+    }
+
+
 
     private fun initRecommendAdapter() {
         recommendAdapter.run{
@@ -75,6 +136,28 @@ class PlaceListFragment : Fragment(),
             onAddAllRecommendClickListener = this@PlaceListFragment
         }
         binding.viewpagerRecommend.adapter = recommendAdapter
+
+        binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val indicatorList =
+                    listOf(binding.placeIndicator1,
+                        binding.placeIndicator2,
+                        binding.placeIndicator3,
+                        binding.placeIndicator4,
+                        binding.placeIndicator5,
+                        binding.placeIndicator6)
+
+//                Log.d(TAG,"position ${position}")
+//                Log.d(TAG,"indicator ${indicatorList.toString()}")
+                indicatorList.forEach {
+                    it.setBackgroundResource(R.drawable.shape_circle_gray)
+                    Log.d(TAG,"position forEach ${position}")
+                }
+                indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
+                Log.d(TAG,"position % 6 ${position }")
+            }
+        })
     }
 
     override fun onRefreshRecommendClick() {
@@ -100,8 +183,9 @@ class PlaceListFragment : Fragment(),
         )
         startActivity(placeDetailIntent)
     }
-    override fun onAddAllRecommendClick(isAllAdded:Boolean) {
-        if(!isAllAdded) {
+
+    override fun onAddAllRecommendClick(isAllAdded: Boolean) {
+        if (!isAllAdded) {
             Toast.makeText(
                 requireActivity(),
                 R.string.place_list_recommend_add_all_toast,
@@ -113,8 +197,7 @@ class PlaceListFragment : Fragment(),
             mainModel.loadOrFetchRestaurantList()
             mainModel.loadOrFetchCafeList()
             mainModel.loadOrFetchEventList()
-        }
-        else{
+        } else {
             (requireActivity() as MainActivity).moveToRouteFragment()
         }
     }
@@ -210,7 +293,15 @@ class PlaceListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         model.setIsAllRecommendAdded()
+        autoScrollStart(intervalTime) // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
     }
+
+    // 다른 페이지로 떠나있는 동안 스크롤이 동작할 필요는 없음. 정지
+    override fun onPause() {
+        super.onPause()
+        autoScrollStop()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

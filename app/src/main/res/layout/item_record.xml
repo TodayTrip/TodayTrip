@@ -7,9 +7,9 @@
 
     <ImageView
         android:id="@+id/iv_item_record_image"
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@drawable/shape_white_16_radius"
+        android:background="@drawable/shape_radius_16"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
@@ -20,10 +20,10 @@
 
     <ImageView
         android:id="@+id/iv_item_record_image_mask"
-        android:layout_width="180dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:alpha="0.5"
-        android:background="@drawable/shape_white_16_radius"
+        android:background="@drawable/shape_radius_16"
         android:backgroundTint="@color/button_gray"
         android:clipToOutline="true"
         app:layout_constraintDimensionRatio="1:1"

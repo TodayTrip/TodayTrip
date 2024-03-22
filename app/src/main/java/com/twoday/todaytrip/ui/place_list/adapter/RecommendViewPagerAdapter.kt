@@ -52,7 +52,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     var onAddAllRecommendClickListener: OnAddAllRecommendClickListener? = null
 
     override fun getItemViewType(position: Int): Int {
-        return when (recommendDataList[position]) {
+        return when (recommendDataList[position % 6]) {  //6추가
             is RecommendCover -> RecommendViewType.COVER.viewType
             is RecommendMap -> RecommendViewType.MAP.viewType
             else -> RecommendViewType.TOUR_ITEM_OR_EMPTY.viewType
@@ -85,10 +85,11 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     }
 
-    override fun getItemCount(): Int = recommendDataList.size
+//    override fun getItemCount(): Int = recommendDataList.size
+    override fun getItemCount(): Int = Int.MAX_VALUE
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        when (val currentRecommendData = recommendDataList[position]) {
+        when (val currentRecommendData = recommendDataList[position % 6]) {  //6추가
             is RecommendCover -> {
                 (holder as CoverHolder).run{
                     bindCover(currentRecommendData)

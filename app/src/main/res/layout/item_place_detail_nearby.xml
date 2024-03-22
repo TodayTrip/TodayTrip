@@ -22,6 +22,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@drawable/img_default" />
 
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/img_light_gray_blur_16"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_detail_nearby"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <TextView
         android:id="@+id/tv_item_place_detail_nearby_title"
         android:layout_width="match_parent"
