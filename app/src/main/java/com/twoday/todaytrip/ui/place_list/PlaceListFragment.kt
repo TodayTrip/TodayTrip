@@ -146,7 +146,7 @@ class PlaceListFragment : Fragment(),
 
     private fun initModelObserver() {
         model.destination.observe(viewLifecycleOwner) { destination ->
-            binding.tvTravelAddress.text = destination
+            binding.tvTravelDestination.text = destination
         }
 
         model.weatherInfo.observe(viewLifecycleOwner) { weatherInfo ->

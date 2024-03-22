@@ -35,6 +35,9 @@ class PlaceListViewModel : ViewModel() {
     private val _destination = MutableLiveData<String>()
     val destination: LiveData<String> get() = _destination
 
+    private val _themeTitle = MutableLiveData<String>()
+    val themeTitle: LiveData<String> get() = _themeTitle
+
     private val _weatherInfo = MutableLiveData<WeatherInfo>()
     val weatherInfo: LiveData<WeatherInfo> get() = _weatherInfo
 
@@ -60,6 +63,10 @@ class PlaceListViewModel : ViewModel() {
 
     private fun initDestination() {
         _destination.value = DestinationPrefUtil.loadDestination()!!
+    }
+    private fun initThemeTitle(){
+        val loadedTheme = DestinationPrefUtil.loadTheme()
+        // TODO 테마 별 타이틀 문자열 반환
     }
 
     private fun initWeatherInfo() {
