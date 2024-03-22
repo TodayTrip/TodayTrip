@@ -36,6 +36,9 @@ class PlaceListViewModel : ViewModel() {
     private val _destination = MutableLiveData<String>()
     val destination: LiveData<String> get() = _destination
 
+    private val _themeTitleInfo = MutableLiveData<Pair<Int,Int>>()
+    val themeTitleInfo: LiveData<Pair<Int, Int>> get() = _themeTitleInfo
+
     private val _weatherInfo = MutableLiveData<WeatherInfo>()
     val weatherInfo: LiveData<WeatherInfo> get() = _weatherInfo
 
@@ -54,6 +57,7 @@ class PlaceListViewModel : ViewModel() {
     private val RECOMMEND_INDEX_EVENT = 4
 
     init {
+        initThemeTitleInfo()
         initDestination()
         initWeatherInfo()
         initRecommendDataList()
@@ -61,6 +65,19 @@ class PlaceListViewModel : ViewModel() {
 
     private fun initDestination() {
         _destination.value = DestinationPrefUtil.loadDestination()!!
+    }
+    private fun initThemeTitleInfo(){
+        val loadedTheme = DestinationPrefUtil.loadTheme()
+        _themeTitleInfo.value = when(loadedTheme){
+            "산" -> R.string.theme_title_first to R.color.theme_title1
+            "바다" -> R.string.theme_title_second to R.color.theme_title2
+            "역사" -> R.string.theme_title_third to R.color.theme_title3
+            "휴양" -> R.string.theme_title_fourth to R.color.theme_title4
+            "체험" -> R.string.theme_title_fifth to R.color.theme_title5
+            "레포츠" -> R.string.theme_title_sixth to R.color.theme_title6
+            "문화시설" -> R.string.theme_title_seventh to R.color.theme_title7
+            else -> R.string.theme_title_random to R.color.main_blue
+        }
     }
 
     private fun initWeatherInfo() {
