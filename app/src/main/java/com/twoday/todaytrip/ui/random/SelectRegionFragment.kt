@@ -3,7 +3,6 @@ package com.twoday.todaytrip.ui.random
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,8 +15,6 @@ import com.devs.vectorchildfinder.VectorChildFinder
 import com.google.android.material.chip.Chip
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentSelectRegionBinding
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.SelectRegionPrefUtil
 import com.twoday.todaytrip.viewModel.SelectRegionViewModel
 
 class SelectRegionFragment : Fragment() {
@@ -151,7 +148,7 @@ class SelectRegionFragment : Fragment() {
                 )
             )
         } else {
-            binding.btnSelectRegionAll.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
+            binding.btnSelectRegionAll.setBackgroundResource(R.drawable.shape_light_gray_16_radius)
             binding.btnSelectRegionAll.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -173,7 +170,11 @@ class SelectRegionFragment : Fragment() {
         binding.btnRegionSelectNext.setOnClickListener {
             viewModel.saveSelectedRegionList()
             viewModel.selectAndSaveDestination()
-            findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
+            if ((viewModel.selectedRegionList.value?.size ?: 0) == 1) {
+                findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result_one)
+            } else {
+                findNavController().navigate(R.id.action_navigation_select_region_to_navigation_random_result)
+            }
         }
     }
 

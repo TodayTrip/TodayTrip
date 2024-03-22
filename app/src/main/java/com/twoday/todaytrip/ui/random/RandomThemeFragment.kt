@@ -46,7 +46,7 @@ class RandomThemeFragment : Fragment() {
             binding.btnThemeNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
         }else{
-            binding.btnThemeNext.setBackgroundResource(R.drawable.shape_light_gray_12_radius)
+            binding.btnThemeNext.setBackgroundResource(R.drawable.shape_light_gray_16_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.middle_gray))
         }
     }
