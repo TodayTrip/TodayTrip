@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
+import com.polyak.iconswitch.IconSwitch.Checked
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.ui.record.Record
@@ -68,11 +69,11 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
 
     private fun setOptionIconAsMap(isOptionMap: Boolean) {
         if (isOptionMap) {
-            binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_gallery)
+//            binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_gallery)
             setFragment(RecordDetailListFragment())
 
         } else {
-            binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_list)
+//            binding.ivRecordDetailOption.setImageResource(R.drawable.ic_record_detail_list)
             setFragment(RecordGalleryFragment())
         }
     }
@@ -131,8 +132,18 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
     }
 
     private fun initOptionButton() {
-        binding.ivRecordDetailOption.setOnClickListener {
-            viewModel.toggleIsOptionMap()
+//        binding.ivRecordDetailOption.setOnClickListener {
+//            viewModel.toggleIsOptionMap()
+//        }
+        binding.ivRecordDetailOption.setCheckedChangeListener{ current ->
+            when(current?.name) {
+                Checked.RIGHT.toString() -> {
+                    viewModel.toggleIsOptionMap()
+                }
+                else->{
+                    viewModel.toggleIsOptionMap()
+                }
+            }
         }
     }
 }
