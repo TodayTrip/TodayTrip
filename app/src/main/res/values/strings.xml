@@ -21,7 +21,9 @@
     <!--  PlaceDetailActivity  -->
     <string name="place_detail_add_to_path">경로에 추가하기</string>
     <string name="place_detail_remove_from_path">경로에서 빼기</string>
-    <string name="place_detail_my_memory">이 장소의 추억</string>
+    <string name="place_detail_nearby">이 장소 근처 가볼만 한 곳</string>
+    <string name="place_detail_no_nearby">이 장소 근처 정보가 없습니다</string>
+    <string name="place_detail_my_memory">이 장소에서 나의 추억</string>
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다</string>
 
     <!-- PlaceListFragment -->
@@ -30,9 +32,9 @@
     <string name="place_list_cafe">카페</string>
     <string name="place_list_event">행사/축제</string>
     
-    <string name="place_list_recommend_sub_title_cover">오늘 여행이 <font color="#FFD15B">추천</font>하는</string>
+    <string name="place_list_recommend_sub_title_cover">오늘 여행이 추천하는</string>
     <string name="place_list_recommend_sub_title_map">지도로 한 눈에 보기</string>
-    <string name="place_list_recommend_title">%s %s 랜덤 코스</string>
+    <string name="place_list_recommend_title">랜덤 코스</string>
 
     <string name="place_list_recommend_sub_title_tourist_attraction">오늘의 랜덤 <font color="#FFD15B">관광지</font></string>
     <string name="place_list_recommend_sub_title_restaurant">오늘의 랜덤 <font color="#FFD15B">음식점</font></string>
@@ -44,9 +46,11 @@
     <string name="place_list_recommend_cafe_no_result">카페 정보가 없어\n추천을 제공하지 못했습니다</string>
     <string name="place_list_recommend_event_no_result">행사/축제 정보가 없어\n추천을 제공하지 못했습니다</string>
 
-    <string name="place_list_recommend_add_all">랜덤 코스 경로에 담기</string>
+    <string name="place_list_recommend_add_all">코스 전체 경로에 담기</string>
     <string name="place_list_recommend_add_all_move">경로 화면으로 이동</string>
+    
     <string name="place_list_recommend_add_all_toast">랜덤 코스가 경로에 담겼어요!</string>
+    <string name="place_list_recommend_refresh_toast">랜덤 코스가 새로 추천되었어요!</string>
 
     <string name="place_list_tourist_attraction_no_result">네트워크/서버 오류로 인해\n관광지 정보를 불러오지 못했습니다\n<b>아래로 스와이프하여 다시 시도</b></string>
     <string name="place_list_restaurant_no_result">네트워크/서버 오류로 인해\n음식점 정보를 불러오지 못했습니다\n<b>아래로 스와이프하여 다시 시도</b></string>

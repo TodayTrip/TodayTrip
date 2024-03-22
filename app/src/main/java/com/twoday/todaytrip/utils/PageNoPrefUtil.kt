@@ -32,10 +32,7 @@ object PageNoPrefUtil {
 
     fun resetPageNoPref(){
         Log.d(TAG, "resetPageNoPref called")
-        saveTouristAttractionPageNo(FIRST_PAGE)
-        saveRestaurantPageNo(FIRST_PAGE)
-        saveCafePageNo(FIRST_PAGE)
-        saveEventPageNo(FIRST_PAGE)
+        getPageNoPreferences().edit().clear().commit()
     }
 
 
