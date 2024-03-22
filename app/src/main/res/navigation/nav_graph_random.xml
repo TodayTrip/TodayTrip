@@ -24,6 +24,9 @@
         <action
             android:id="@+id/action_navigation_select_region_to_navigation_random_result"
             app:destination="@id/navigation_random_result" />
+        <action
+            android:id="@+id/action_navigation_select_region_to_navigation_random_result_one"
+            app:destination="@id/navigation_random_result_one" />
     </fragment>
 
     <fragment
@@ -67,6 +70,13 @@
 <!--        <action-->
 <!--            android:id="@+id/action_navigation_random_result_to_navigation_place_list"-->
 <!--            app:destination="@id/navigation_place_list" />-->
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_random_result_one"
+        android:name="com.twoday.todaytrip.ui.random.RandomResultOneFragment"
+        android:label="fragment_random_result_one"
+        tools:layout="@layout/fragment_random_result_one">
     </fragment>
 
 <!--    아래의 방법처럼 써야 하는지? 83번째처럼 액티비티로 연결해도 되는지?-->
