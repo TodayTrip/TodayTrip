@@ -3,28 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="24dp">
+    android:layout_margin="8dp">
 
     <ImageView
         android:id="@+id/iv_item_record_image"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
-        android:background="@drawable/shape_circle"
+        android:layout_width="180dp"
+        android:layout_height="0dp"
+        android:background="@drawable/shape_white_16_radius"
         android:clipToOutline="true"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_launcher_foreground"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/iv_item_record_image_mask"
-        android:layout_width="160dp"
-        android:layout_height="160dp"
+        android:layout_width="180dp"
+        android:layout_height="0dp"
         android:alpha="0.5"
-        android:background="@drawable/shape_circle"
+        android:background="@drawable/shape_white_16_radius"
         android:backgroundTint="@color/button_gray"
         android:clipToOutline="true"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -33,10 +35,9 @@
         android:id="@+id/constraintLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_margin="6dp"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_item_record_image"
+        app:layout_constraintStart_toStartOf="@+id/iv_item_record_image">
 
         <TextView
             android:id="@+id/tv_item_record_title"
@@ -45,7 +46,6 @@
             android:text="부산"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
