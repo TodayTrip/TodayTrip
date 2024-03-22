@@ -13,11 +13,11 @@
 
     <color name="theme_title1">#53B386</color>
     <color name="theme_title2">#78CAEA</color>
-    <color name="theme_title3">#8E62B4</color>
+    <color name="theme_title3">#836546</color>
     <color name="theme_title4">#6BA8D7</color>
-    <color name="theme_title5">#F5B56F</color>
-    <color name="theme_title6">#DB6B77</color>
-    <color name="theme_title7">#876442</color>
+    <color name="theme_title5">#8D62B6</color>
+    <color name="theme_title6">#F06F79</color>
+    <color name="theme_title7">#EE9811</color>
 
     <color name="map_gray">#DADADA</color>
     <color name="map_blue1">#04085F</color>
