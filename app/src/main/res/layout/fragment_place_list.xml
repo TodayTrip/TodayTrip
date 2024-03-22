@@ -5,17 +5,28 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/tv_travel_address"
+        android:id="@+id/tv_travel_theme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
-        android:text="지역이름"
         android:textAppearance="@style/address"
-        android:textColor="@color/black"
+        android:textColor="@color/place_title_gray"
         android:textSize="25sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="근심이 없어지는" />
+
+    <TextView
+        android:id="@+id/tv_travel_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="여행지"
+        android:textAppearance="@style/address"
+        android:textColor="@color/main_blue"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@id/tv_travel_theme"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -84,9 +95,9 @@
                         android:id="@+id/viewpager_recommend"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        app:layout_constraintDimensionRatio="3:2"
                         app:layout_collapseMode="parallax"
                         app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="3:2"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
