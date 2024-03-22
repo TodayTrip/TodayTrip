@@ -50,7 +50,7 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
     private val recommendAdapter = RecommendViewPagerAdapter()
 
     private var numBanner = 6
-    private var currentPosition = Int.MAX_VALUE / 2
+    private var currentPosition = Int.MAX_VALUE / 2 - 3
     private var myHandler = MyHandler()
     private val intervalTime = 3000.toLong() // 몇초 간격으로 페이지를 넘길것인지 (1500 = 1.5초)
 
@@ -64,6 +64,12 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+//        val springDotsIndicator = binding.springDotsIndicator
+//        val viewPager = binding.viewpagerRecommend
+//        val adapter = RecommendViewPagerAdapter()
+//        viewPager.adapter = adapter
+//        springDotsIndicator.attachTo(viewPager)
+
 
         initAdapter()
         initModelObserver()
@@ -74,6 +80,10 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
         initRecommendAdapter()
         initMainAdapter()
         initAutoScroll()
+//        val pagerAdapter = RecommendViewPagerAdapter()
+//        binding.viewpagerRecommend.adapter = pagerAdapter
+//        binding.viewpagerRecommend.setCurrentItem(1,true)
+//        binding.springDotsIndicator.setViewPager2(binding.viewpagerRecommend)
     }
 
     /***/
@@ -151,6 +161,28 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
             onAddAllRecommendClickListener = this@PlaceListFragment
         }
         binding.viewpagerRecommend.adapter = recommendAdapter
+
+        binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                val indicatorList =
+                    listOf(binding.placeIndicator1,
+                        binding.placeIndicator2,
+                        binding.placeIndicator3,
+                        binding.placeIndicator4,
+                        binding.placeIndicator5,
+                        binding.placeIndicator6)
+
+//                Log.d(TAG,"position ${position}")
+//                Log.d(TAG,"indicator ${indicatorList.toString()}")
+                indicatorList.forEach {
+                    it.setBackgroundResource(R.drawable.shape_circle_gray)
+                    Log.d(TAG,"position forEach ${position}")
+                }
+                indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
+                Log.d(TAG,"position % 6 ${position }")
+            }
+        })
     }
 
     override fun onTourItemClick(tourItem: TourItem) {
@@ -262,6 +294,17 @@ class PlaceListFragment : Fragment(), OnTourItemClickListener, OnAddAllRecommend
         super.onResume()
         model.setIsAllRecommendAdded()
         autoScrollStart(intervalTime) // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
+//        binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                indicatorList.forEach {
+//                    it.setBackgroundResource(R.drawable.shape_circle_gray)
+//                    Log.d(TAG,"position forEach ${position}")
+//                }
+//                indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
+//                Log.d(TAG,"position % 6 ${position }")
+//            }
+//        })
     }
 
     // 다른 페이지로 떠나있는 동안 스크롤이 동작할 필요는 없음. 정지

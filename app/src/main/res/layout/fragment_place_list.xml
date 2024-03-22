@@ -104,8 +104,8 @@
 
                 <View
                     android:id="@+id/place_indicator3"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="7.5dp"
@@ -113,8 +113,8 @@
 
                 <View
                     android:id="@+id/place_indicator2"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="22.5dp"
@@ -122,17 +122,17 @@
 
                 <View
                     android:id="@+id/place_indicator1"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:layout_marginEnd="37.5dp"
-                    android:background="@drawable/shape_circle_blue" />
+                    android:background="@drawable/shape_circle_gray" />
 
                 <View
                     android:id="@+id/place_indicator4"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/shape_circle_gray"
@@ -140,8 +140,8 @@
 
                 <View
                     android:id="@+id/place_indicator5"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/shape_circle_gray"
@@ -149,14 +149,30 @@
 
                 <View
                     android:id="@+id/place_indicator6"
-                    android:layout_width="10dp"
-                    android:layout_height="10dp"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
                     android:layout_marginBottom="10dp"
                     android:background="@drawable/shape_circle_gray"
                     android:layout_marginStart="37.5dp"/>
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+<!--            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator-->
+<!--                android:id="@+id/spring_dots_indicator"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                app:dampingRatio="0.5"-->
+<!--                app:dotsColor="@color/main_blue"-->
+<!--                app:dotsStrokeColor="@color/main_blue"-->
+<!--                app:dotsCornerRadius="100dp"-->
+<!--                app:dotsSize="16dp"-->
+<!--                app:dotsSpacing="6dp"-->
+<!--                app:dotsStrokeWidth="2dp"-->
+<!--                app:stiffness="300"-->
+
+<!--                />-->
 
             <!-- 뷰페이저와 연결할 탭 -->
             <androidx.constraintlayout.widget.ConstraintLayout
