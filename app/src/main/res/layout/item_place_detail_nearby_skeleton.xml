@@ -12,10 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="4dp"
-        android:background="@drawable/shape_radius_16"
-        android:clipToOutline="true"
+        android:background="@drawable/shape_middle_gray_16_radius"
         android:scaleType="centerCrop"
-        android:src="@color/middle_gray"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -27,9 +25,7 @@
         android:layout_height="24dp"
         android:layout_marginHorizontal="4dp"
         android:layout_marginTop="1dp"
-        android:background="@drawable/shape_radius_16"
-        android:clipToOutline="true"
-        android:src="@color/middle_gray"
+        android:background="@drawable/shape_middle_gray_16_radius"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_item_place_detail_nearby_skeleton" />
 
