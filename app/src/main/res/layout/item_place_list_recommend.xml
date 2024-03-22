@@ -52,15 +52,16 @@
 
     <TextView
         android:id="@+id/tv_item_place_list_recommend_title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="26dp"
         android:textColor="@color/white"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:text="@string/place_list_recommend_title" />
+        tools:text="장소이름 장소이름 장소이름 장소이름 장소이름" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
