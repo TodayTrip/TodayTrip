@@ -11,13 +11,13 @@
     <color name="sub_btn_blue">#9DD0FF</color>
     <color name="point_yellow">#FFD15B</color>
 
-    <color name="theme_title1">#CCDF6E</color>
-    <color name="theme_title2">#4BC2EE</color>
-    <color name="theme_title3">#ACADC5</color>
-    <color name="theme_title4">#A9BFD0</color>
-    <color name="theme_title5">#FED6AF</color>
-    <color name="theme_title6">#DF2424</color>
-    <color name="theme_title7">#B17A49</color>
+    <color name="theme_title1">#53B386</color>
+    <color name="theme_title2">#78CAEA</color>
+    <color name="theme_title3">#8E62B4</color>
+    <color name="theme_title4">#6BA8D7</color>
+    <color name="theme_title5">#F5B56F</color>
+    <color name="theme_title6">#DB6B77</color>
+    <color name="theme_title7">#876442</color>
 
     <color name="map_gray">#DADADA</color>
     <color name="map_blue1">#04085F</color>
