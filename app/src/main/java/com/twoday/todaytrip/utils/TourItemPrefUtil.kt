@@ -44,13 +44,19 @@ object TourItemPrefUtil {
         PrefConstants.TOURIST_ATTRACTION_LIST_KEY
     )
     fun saveMoreTouristAttractionList(moreTouristAttractionList: List<TourItem>) {
+        val loadedTouristAttractionList = loadTouristAttractionList()
+        val filteredTouristAttractionList = moreTouristAttractionList.filter { moreTourItem  ->
+            loadedTouristAttractionList.find{
+                it.getContentId() == moreTourItem.getContentId()
+            } == null
+        }
         val newTouristAttractionList = mutableListOf<TourItem>().apply {
-            addAll(loadTouristAttractionList())
-            addAll(moreTouristAttractionList)
+            addAll(loadedTouristAttractionList)
+            addAll(filteredTouristAttractionList)
         }
 
         saveTourItemList(
-            newTouristAttractionList.distinct(),
+            newTouristAttractionList,
             PrefConstants.TOURIST_ATTRACTION_LIST_KEY
         )
     }
@@ -63,12 +69,19 @@ object TourItemPrefUtil {
         PrefConstants.RESTAURANT_LIST_KEY
     )
     fun saveMoreRestaurantList(moreRestaurantList: List<TourItem>) {
-        val newRestaurantList = mutableListOf<TourItem>()
-        newRestaurantList.addAll(loadRestaurantList())
-        newRestaurantList.addAll(moreRestaurantList)
+        val loadedRestaurantList = loadRestaurantList()
+        val filteredRestaurantList = moreRestaurantList.filter { moreTourItem  ->
+            loadedRestaurantList.find{
+                it.getContentId() == moreTourItem.getContentId()
+            } == null
+        }
+        val newRestaurantList = mutableListOf<TourItem>().apply {
+            addAll(loadedRestaurantList)
+            addAll(filteredRestaurantList)
+        }
 
         saveTourItemList(
-            newRestaurantList.distinct(),
+            newRestaurantList,
             PrefConstants.RESTAURANT_LIST_KEY
         )
     }
@@ -80,9 +93,16 @@ object TourItemPrefUtil {
         PrefConstants.CAFE_LIST_KEY
     )
     fun saveMoreCafeList(moreCafeList: List<TourItem>) {
-        val newCafeList = mutableListOf<TourItem>()
-        newCafeList.addAll(loadCafeList())
-        newCafeList.addAll(moreCafeList)
+        val loadedCafeList = loadCafeList()
+        val filteredCafeList = moreCafeList.filter { moreTourItem  ->
+            loadedCafeList.find{
+                it.getContentId() == moreTourItem.getContentId()
+            } == null
+        }
+        val newCafeList = mutableListOf<TourItem>().apply {
+            addAll(loadedCafeList)
+            addAll(filteredCafeList)
+        }
 
         saveTourItemList(
             newCafeList.distinct(),
@@ -98,9 +118,16 @@ object TourItemPrefUtil {
     )
 
     fun saveMoreEventList(moreEventList: List<TourItem>) {
-        val newEventList = mutableListOf<TourItem>()
-        newEventList.addAll(loadEventList())
-        newEventList.addAll(moreEventList)
+        val loadedEventList = loadEventList()
+        val filteredEventList = moreEventList.filter { moreTourItem  ->
+            loadedEventList.find{
+                it.getContentId() == moreTourItem.getContentId()
+            } == null
+        }
+        val newEventList = mutableListOf<TourItem>().apply {
+            addAll(loadedEventList)
+            addAll(filteredEventList)
+        }
 
         saveTourItemList(
             newEventList.distinct(),
