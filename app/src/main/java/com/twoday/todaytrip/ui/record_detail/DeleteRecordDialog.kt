@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.LayoutInflater
+import android.widget.Toast
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.DialogAlertBinding
 
@@ -49,6 +50,7 @@ class DeleteRecordDialog(val context: Context) {
         binding.layoutAlertPositive.setOnClickListener {
             Log.d(TAG, "deleteBtn clicked")
             onPositiveClickListener?.onPositiveClick()
+            Toast.makeText(context,"여행 기록이 삭제되었습니다.",Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
     }

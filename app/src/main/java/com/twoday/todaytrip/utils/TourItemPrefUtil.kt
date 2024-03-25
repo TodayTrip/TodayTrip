@@ -113,7 +113,9 @@ object TourItemPrefUtil {
 
     fun loadEventList() = loadTourItemList(PrefConstants.EVENT_LIST_KEY)
     fun saveEventList(eventList: List<TourItem>) = saveTourItemList(
-        eventList,
+        eventList.filter{
+            !(it as TourItem.EventPerformanceFestival).isEventPerformanceFestivalOver()
+        },
         PrefConstants.EVENT_LIST_KEY
     )
 
@@ -123,6 +125,8 @@ object TourItemPrefUtil {
             loadedEventList.find{
                 it.getContentId() == moreTourItem.getContentId()
             } == null
+        }.filter {
+            !(it as TourItem.EventPerformanceFestival).isEventPerformanceFestivalOver()
         }
         val newEventList = mutableListOf<TourItem>().apply {
             addAll(loadedEventList)
