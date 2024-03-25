@@ -4,25 +4,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
-import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
-import com.naver.maps.geometry.LatLng
-import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
-import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
-import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.viewModel.PlaceDetailViewModel
 
 class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener, OnMapReadyCallback{
@@ -160,7 +154,9 @@ class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener, OnMap
                     else R.drawable.shape_main_blue_10_radius
                 )
             binding.tvPlaceDetailAddPathBtn.text = this.resources.getText(
-                if (isAdded) R.string.place_detail_remove_from_path
+                if (isAdded) {
+                    R.string.place_detail_remove_from_path
+                }
                 else R.string.place_detail_add_to_path
             )
             binding.tvPlaceDetailAddPathBtn.setTextColor(
@@ -215,6 +211,9 @@ class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener, OnMap
     private fun initAddButton() {
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             model.addButtonClicked()
+            if(binding.tvPlaceDetailAddPathBtn.text == "경로에 추가하기") Toast.makeText(this@PlaceDetailActivity, "경로 탭에서 삭제되었습니다.",
+                Toast.LENGTH_SHORT).show()
+            else Toast.makeText(this@PlaceDetailActivity, "경로 탭에 추가되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
