@@ -123,6 +123,7 @@ class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener, OnMap
                     .into(binding.ivPlaceDetailPic)
             }
             binding.tvPlaceDetailTitle.text = it.getTitle()
+            binding.tvPlaceDetailScrollTitle.text = it.getTitle()
             binding.tvPlaceDetailAddress.text = it.getAddress()
         }
     }

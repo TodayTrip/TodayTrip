@@ -64,6 +64,6 @@
             app:tint="@color/transparent"
             app:fabCustomSize="64dp"
             app:layout_anchor="@id/bottomAppBar"
-            app:maxImageSize="64dp" />
+            app:maxImageSize="60dp" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

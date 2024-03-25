@@ -25,6 +25,7 @@
         android:paddingTop="4dp"
         android:paddingEnd="8dp"
         android:paddingBottom="4dp"
+        android:background="@drawable/shape_button_click"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_random_back_black" />
