@@ -50,7 +50,6 @@ class PlaceListFragment : Fragment(),
     private val recommendAdapter = RecommendViewPagerAdapter()
 
     private lateinit var myHandler : MyHandler
-    private var currentPosition = Int.MAX_VALUE / 2 - 3
     private val intervalTime = 3000.toLong() // 몇초 간격으로 페이지를 넘길것인지 (1500 = 1.5초)
 
     override fun onCreateView(
@@ -88,7 +87,7 @@ class PlaceListFragment : Fragment(),
             super.handleMessage(msg)
 
             if (msg.what == 0) {
-                binding?.viewpagerRecommend?.setCurrentItem(++currentPosition, true) // 다음 페이지로 이동
+                binding?.viewpagerRecommend?.setCurrentItem(model.recommendPosition.value!! + 1, true) // 다음 페이지로 이동
                 autoScrollStart(intervalTime) // 스크롤을 계속 이어서 한다.
             }
         }
@@ -104,8 +103,7 @@ class PlaceListFragment : Fragment(),
             adapter = recommendAdapter
             orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-            setCurrentItem(currentPosition, false)
-            setRecommendPageIndicator(currentPosition)
+            setCurrentItem(model.recommendPosition.value!!, false)
         }
         binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {
@@ -120,8 +118,7 @@ class PlaceListFragment : Fragment(),
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 Log.d(TAG,"position % 6  = ${position % 6}")
-                currentPosition = position
-                setRecommendPageIndicator(position)
+                model.setRecommendPosition(position)
             }
         })
     }
@@ -245,6 +242,10 @@ class PlaceListFragment : Fragment(),
                 (recommendDataList.last() as RecommendMap).locations = model.getMarkerPositions()
             }
             recommendAdapter.changeDataSet(recommendDataList)
+        }
+
+        model.recommendPosition.observe(viewLifecycleOwner){recommendPosition ->
+            setRecommendPageIndicator(recommendPosition)
         }
 
         model.isAllRecommendAdded.observe(viewLifecycleOwner){isAllRecommendAdded ->
