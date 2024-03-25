@@ -3,11 +3,13 @@ package com.twoday.todaytrip.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.window.OnBackInvokedDispatcher
 import androidx.activity.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.twoday.todaytrip.databinding.ActivityMainBinding
 import androidx.navigation.NavController
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.place_list.RandomBottomSheetDialog
 import com.twoday.todaytrip.viewModel.MainViewModel
@@ -44,6 +46,15 @@ class MainActivity : AppCompatActivity() {
         val navController = navHomeFragment.navController
         binding.bottomNavigationView.setupWithNavController(navController)
         setupFabVisibility(navController)
+    }
+
+    fun hideBottomNav(state: Boolean) {
+        val bottomNav = binding.bottomAppBar
+        if (state) {
+            bottomNav.visibility = View.GONE
+        } else {
+            bottomNav.visibility = View.VISIBLE
+        }
     }
 
     // 홈 화면이 아닌 다른 화면에서의 가운데 FloatingActionButton 가시성 조절

@@ -1,6 +1,9 @@
 package com.twoday.todaytrip.ui.route
 
+import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -36,7 +40,9 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.naver.maps.map.overlay.PolylineOverlay
+import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
@@ -45,7 +51,7 @@ import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
 import com.twoday.todaytrip.viewModel.RouteViewModel
 
-class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
+class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
     OnMoveEndListener {
     private val TAG = "RouteFragment"
 
@@ -60,6 +66,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
     private val polylineOverlay = PolylineOverlay()
     private val markers = mutableListOf<Marker>()
 
+    private lateinit var backCallback: OnBackPressedCallback
+    private var isEditing = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,6 +77,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -214,12 +224,24 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }
 
+        val main = activity as MainActivity
         binding.tvRouteRemoveButton.setOnClickListener {
             routeViewModel.toggleEditMode()
+            isEditing = true
+            main.hideBottomNav(isEditing)
+            binding.layoutRouteFinishButton.isEnabled = !isEditing
+            binding.tvRouteFinishButton.setTextColor(resources.getColor(R.color.button_gray))
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
         }
         binding.tvRouteComplitButton.setOnClickListener {
             routeViewModel.toggleEditMode()
+            isEditing = false
+            main.hideBottomNav(isEditing)
+            binding.layoutRouteFinishButton.isEnabled = !isEditing
+            binding.tvRouteFinishButton.setTextColor(resources.getColor(R.color.main_blue))
+            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
         }
+//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
     }
 
     override fun onRouteListDataRemove(item: RouteListData, position: Int) {
@@ -284,6 +306,17 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         super.onResume()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        backCallback = object : OnBackPressedCallback(!isEditing) {
+            override fun handleOnBackPressed() {
+//                requireActivity().supportFragmentManager.beginTransaction()
+//                    .remove(this@RouteFragment)
+//                    .commit()
+            }
+        }
+    }
+
     override fun onPause() {
         routeViewModel.setIsMapReady(false)
         mapView.onPause()
@@ -304,4 +337,5 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
     }
+
 }
