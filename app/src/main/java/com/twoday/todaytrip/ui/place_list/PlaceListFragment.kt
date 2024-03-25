@@ -72,7 +72,6 @@ class PlaceListFragment : Fragment(),
     private fun initAdapter() {
         initRecommendAdapter()
         initMainAdapter()
-        initAutoScroll()
     }
 
     private fun autoScrollStart(intervalTime: Long) {
@@ -95,52 +94,50 @@ class PlaceListFragment : Fragment(),
         }
     }
 
-    private fun initAutoScroll() {
-        binding.viewpagerRecommend.adapter = recommendAdapter
-        binding.viewpagerRecommend.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.viewpagerRecommend.setCurrentItem(currentPosition, false)
-
-        binding.viewpagerRecommend.apply {
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrollStateChanged(state: Int) {
-                    super.onPageScrollStateChanged(state)
-                    when (state) {
-                        // 뷰페이저에서 손 떼었을때 / 뷰페이저 멈춰있을 때
-                        ViewPager2.SCROLL_STATE_IDLE -> autoScrollStart(intervalTime)
-                        // 뷰페이저 움직이는 중
-                        ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
-                    }
-                }
-            })
-        }
-    }
-
     private fun initRecommendAdapter() {
         recommendAdapter.run{
             onRefreshRecommendClickListener = this@PlaceListFragment
             onTourItemClickListener = this@PlaceListFragment
             onAddAllRecommendClickListener = this@PlaceListFragment
         }
-        binding.viewpagerRecommend.adapter = recommendAdapter
+        binding.viewpagerRecommend.run{
+            adapter = recommendAdapter
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
+            setCurrentItem(currentPosition, false)
+            setRecommendPageIndicator(currentPosition)
+        }
         binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                when (state) {
+                    // 뷰페이저에서 손 떼었을때 / 뷰페이저 멈춰있을 때
+                    ViewPager2.SCROLL_STATE_IDLE -> autoScrollStart(intervalTime)
+                    // 뷰페이저 움직이는 중
+                    ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
+                }
+            }
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val indicatorList =
-                    listOf(binding.placeIndicator1,
-                        binding.placeIndicator2,
-                        binding.placeIndicator3,
-                        binding.placeIndicator4,
-                        binding.placeIndicator5,
-                        binding.placeIndicator6)
-                indicatorList.forEach {
-                    it.setBackgroundResource(R.drawable.shape_circle_gray)
-                    Log.d(TAG,"position forEach ${position}")
-                }
-                indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
-                Log.d(TAG,"position % 6 ${position }")
+                Log.d(TAG,"position % 6  = ${position % 6}")
+                currentPosition = position
+                setRecommendPageIndicator(position)
             }
         })
+    }
+
+    private fun setRecommendPageIndicator(position: Int){
+        val indicatorList =
+            listOf(binding.placeIndicator1,
+                binding.placeIndicator2,
+                binding.placeIndicator3,
+                binding.placeIndicator4,
+                binding.placeIndicator5,
+                binding.placeIndicator6)
+        indicatorList.forEach {
+            it.setBackgroundResource(R.drawable.shape_circle_gray)
+        }
+        indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
     }
 
     override fun onRefreshRecommendClick() {
