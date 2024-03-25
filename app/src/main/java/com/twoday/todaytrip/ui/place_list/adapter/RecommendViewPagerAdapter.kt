@@ -35,7 +35,7 @@ enum class RecommendViewType(val viewType: Int) {
     MAP(2)
 }
 
-interface OnRefreshRecommentClickListener{
+interface OnRefreshRecommendClickListener{
     fun onRefreshRecommendClick()
 }
 interface OnAddAllRecommendClickListener {
@@ -46,8 +46,9 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     private val TAG = "RecommendViewPagerAdapter"
 
     private var recommendDataList = listOf<RecommendData>()
+    private val recommendMapIndex = 5
 
-    var onRefreshRecommentClickListener: OnRefreshRecommentClickListener? = null
+    var onRefreshRecommendClickListener: OnRefreshRecommendClickListener? = null
     var onTourItemClickListener: OnTourItemClickListener? = null
     var onAddAllRecommendClickListener: OnAddAllRecommendClickListener? = null
 
@@ -82,13 +83,12 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 Holder(binding)
             }
         }
-
     }
 
-//    override fun getItemCount(): Int = recommendDataList.size
     override fun getItemCount(): Int = Int.MAX_VALUE
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d(TAG, "onBindViewHolder) called, position: ${position % 6}")
         when (val currentRecommendData = recommendDataList[position % 6]) {  //6추가
             is RecommendCover -> {
                 (holder as CoverHolder).run{
@@ -127,6 +127,16 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
     fun getDataSet(): List<RecommendData> = recommendDataList
 
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        Log.d(TAG, "onViewAttachedToWindow) called, position: ${holder.position % 6}")
+        super.onViewAttachedToWindow(holder)
+        if(holder is MapHolder) holder.startMapLifecycle()
+    }
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        Log.d(TAG, "onViewDetachedToWindow) called, position: ${holder.position % 6}")
+        super.onViewDetachedFromWindow(holder)
+    }
+
     inner class CoverHolder(binding: ItemPlaceListRecommendCoverBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val imageView: ImageView = binding.ivItemPlaceListRecommendCoverImage
@@ -140,7 +150,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         fun setOnClickListener(){
             refreshLayout.setOnClickListener {
                 Log.d(TAG, "refresh clicked")
-                onRefreshRecommentClickListener?.onRefreshRecommendClick()
+                onRefreshRecommendClickListener?.onRefreshRecommendClick()
             }
         }
 
@@ -195,6 +205,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val destinationTextView: TextView = binding.tvItemPlaceListRecommendMapDestination
         private val addAllButton: TextView = binding.tvItemPlaceListRecommendMapAddAll
         fun bindMap(recommendMap: RecommendMap) {
+            Log.d(TAG, "bindMap) called")
             destinationTextView.text = recommendMap.destination
             locations = recommendMap.locations
 
@@ -238,8 +249,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
 
         override fun onMapReady(naverMap: NaverMap) {
+            Log.d(TAG, "onMapReady) called")
             this.naverMap = naverMap
-
             naverMap.uiSettings.isZoomControlEnabled = false
 
             if (locations.isNotEmpty()) {
@@ -289,6 +300,19 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     map = naverMap
                 }
             }
+        }
+
+        fun startMapLifecycle(){
+            Log.d(TAG, "startMapLifecycle) called")
+            mapView.onCreate(null)
+            mapView.onStart()
+            mapView.onResume()
+        }
+        fun stopMapLifecycle(){
+            Log.d(TAG, "stopMapLifecycle) called")
+            mapView.onPause()
+            mapView.onStop()
+            mapView.onDestroy()
         }
     }
 }
