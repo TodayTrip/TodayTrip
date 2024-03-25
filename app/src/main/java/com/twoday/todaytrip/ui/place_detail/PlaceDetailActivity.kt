@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -163,7 +164,9 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
                     else R.drawable.shape_main_blue_10_radius
                 )
             binding.tvPlaceDetailAddPathBtn.text = this.resources.getText(
-                if (isAdded) R.string.place_detail_remove_from_path
+                if (isAdded) {
+                    R.string.place_detail_remove_from_path
+                }
                 else R.string.place_detail_add_to_path
             )
             binding.tvPlaceDetailAddPathBtn.setTextColor(
@@ -276,6 +279,9 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
     private fun initAddButton() {
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             model.addButtonClicked()
+            if(binding.tvPlaceDetailAddPathBtn.text == "경로에 추가하기") Toast.makeText(this@PlaceDetailActivity, "경로 탭에서 삭제되었습니다.",
+                Toast.LENGTH_SHORT).show()
+            else Toast.makeText(this@PlaceDetailActivity, "경로 탭에 추가되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 

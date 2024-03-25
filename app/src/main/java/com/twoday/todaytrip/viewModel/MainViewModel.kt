@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
@@ -81,7 +80,7 @@ class MainViewModel : ViewModel() {
 
     // 관광지,음식점,카페,행사/축제 정보 목록 초기화 함수
     // MainViewModel이 생성될 때(init) 최초로 한 번만 호출됨
-    private fun initTourItemList() = CoroutineScope(Dispatchers.IO).launch {
+    fun initTourItemList() = CoroutineScope(Dispatchers.IO).launch {
         loadOrFetchTouristAttractionList()
         loadOrFetchRestaurantList()
         loadOrFetchCafeList()
