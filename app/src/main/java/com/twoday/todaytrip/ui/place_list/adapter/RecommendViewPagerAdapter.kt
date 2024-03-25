@@ -35,9 +35,10 @@ enum class RecommendViewType(val viewType: Int) {
     MAP(2)
 }
 
-interface OnRefreshRecommendClickListener{
+interface OnRefreshRecommendClickListener {
     fun onRefreshRecommendClick()
 }
+
 interface OnAddAllRecommendClickListener {
     fun onAddAllRecommendClick(isAllAdded: Boolean)
 }
@@ -62,7 +63,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            RecommendViewType.COVER.viewType ->{
+            RecommendViewType.COVER.viewType -> {
                 val binding = ItemPlaceListRecommendCoverBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -91,7 +92,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         Log.d(TAG, "onBindViewHolder) called, position: ${position % 6}")
         when (val currentRecommendData = recommendDataList[position % 6]) {  //6추가
             is RecommendCover -> {
-                (holder as CoverHolder).run{
+                (holder as CoverHolder).run {
                     bindCover(currentRecommendData)
                     setOnClickListener()
                 }
@@ -121,17 +122,20 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         recommendDataList = newRecommendDataList
         notifyDataSetChanged()
     }
-    fun changeDataSet(newRecommendDataList: List<RecommendData>, position:Int) {
+
+    fun changeDataSet(newRecommendDataList: List<RecommendData>, position: Int) {
         recommendDataList = newRecommendDataList
         notifyItemChanged(position)
     }
+
     fun getDataSet(): List<RecommendData> = recommendDataList
 
     override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
         Log.d(TAG, "onViewAttachedToWindow) called, position: ${holder.position % 6}")
         super.onViewAttachedToWindow(holder)
-        if(holder is MapHolder) holder.startMapLifecycle()
+        if (holder is MapHolder) holder.startMapLifecycle()
     }
+
     override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
         Log.d(TAG, "onViewDetachedToWindow) called, position: ${holder.position % 6}")
         super.onViewDetachedFromWindow(holder)
@@ -147,7 +151,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             imageView.setImageResource(recommendCover.imageId)
             destinationTextView.text = recommendCover.destination
         }
-        fun setOnClickListener(){
+
+        fun setOnClickListener() {
             refreshLayout.setOnClickListener {
                 Log.d(TAG, "refresh clicked")
                 onRefreshRecommendClickListener?.onRefreshRecommendClick()
@@ -155,6 +160,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
 
     }
+
     inner class Holder(binding: ItemPlaceListRecommendBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val imageView: ImageView = binding.ivItemPlaceListRecommendImage
@@ -215,7 +221,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             setAllAddButtonUI(recommendMap.isAllAdded)
         }
 
-        private fun clearMap(){
+        private fun clearMap() {
             polylineOverlay.map = null
             markers.forEach {
                 it.map = null
@@ -244,7 +250,13 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         fun setOnClickListener(recommendMap: RecommendMap) {
             addAllButton.setOnClickListener {
-                onAddAllRecommendClickListener?.onAddAllRecommendClick(recommendMap.isAllAdded)
+                if (recommendMap.isAllAdded) {
+                    onAddAllRecommendClickListener?.onAddAllRecommendClick(true)
+                } else {
+                    onAddAllRecommendClickListener?.onAddAllRecommendClick(false)
+                    recommendMap.isAllAdded = true
+                    setAllAddButtonUI(true)
+                }
             }
         }
 
@@ -302,13 +314,14 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             }
         }
 
-        fun startMapLifecycle(){
+        fun startMapLifecycle() {
             Log.d(TAG, "startMapLifecycle) called")
             mapView.onCreate(null)
             mapView.onStart()
             mapView.onResume()
         }
-        fun stopMapLifecycle(){
+
+        fun stopMapLifecycle() {
             Log.d(TAG, "stopMapLifecycle) called")
             mapView.onPause()
             mapView.onStop()
