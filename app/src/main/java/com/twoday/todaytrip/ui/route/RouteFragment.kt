@@ -231,6 +231,7 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
             main.hideBottomNav(isEditing)
             binding.layoutRouteFinishButton.isEnabled = !isEditing
             binding.tvRouteFinishButton.setTextColor(resources.getColor(R.color.button_gray))
+            binding.tvRouteRemoveAllButton.isVisible = true
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
         }
         binding.tvRouteComplitButton.setOnClickListener {
@@ -239,7 +240,12 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
             main.hideBottomNav(isEditing)
             binding.layoutRouteFinishButton.isEnabled = !isEditing
             binding.tvRouteFinishButton.setTextColor(resources.getColor(R.color.main_blue))
+            binding.tvRouteRemoveAllButton.isVisible = false
             requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
+        }
+        binding.tvRouteRemoveAllButton.setOnClickListener {
+//            onRouteListDataRemove()
+//            clearMarkers()
         }
 //        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
     }

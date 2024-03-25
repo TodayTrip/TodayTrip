@@ -32,6 +32,20 @@
 <!--        app:layout_constraintTop_toBottomOf="@+id/cv_route_map_frame" />-->
 
     <TextView
+        android:id="@+id/tv_route_remove_all_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="전체삭제"
+        android:textColor="@color/red"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toStartOf="@+id/tv_route_complit_button"
+        app:layout_constraintTop_toTopOf="@+id/tv_route_complit_button"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_route_complit_button"
+        />
+
+    <TextView
         android:id="@+id/tv_route_remove_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="완료"
-        android:textColor="@color/dark_gray"
+        android:textColor="@color/main_blue"
         android:textSize="14sp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/rv_route_recyclerview"
