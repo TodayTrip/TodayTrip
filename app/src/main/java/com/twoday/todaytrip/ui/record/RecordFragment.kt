@@ -86,7 +86,6 @@ class RecordFragment : Fragment(), OnRecordClickListener {
     }
 
     private fun setChartVisibility(isVisible: Boolean) {
-        binding.layoutRecordChart.isVisible = isVisible
         binding.tvChartEmpty.isVisible = !isVisible
     }
 
