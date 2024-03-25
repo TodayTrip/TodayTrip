@@ -45,6 +45,12 @@ class RouteViewModel: ViewModel() {
         ContentIdPrefUtil.removeContentId(item.contentId)
         _routeListDataSet.value = list
     }
+    fun dataAllRemove(){
+        val list = _routeListDataSet.value!!.toMutableList()
+        list.clear()
+        ContentIdPrefUtil.resetContentIdListPref()
+        _routeListDataSet.value = list
+    }
 
     fun getRouteDataSet(){
         val contentIdList = ContentIdPrefUtil.loadContentIdList() //담은 목록

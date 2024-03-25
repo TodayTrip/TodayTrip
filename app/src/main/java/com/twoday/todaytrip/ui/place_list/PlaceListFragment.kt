@@ -81,6 +81,7 @@ class PlaceListFragment : Fragment(),
         initAutoScroll()
     }
 
+    //자동 스와이프
     private fun autoScrollStart(intervalTime: Long) {
         myHandler.removeMessages(0) // 이거 안하면 핸들러가 1개, 2개, 3개 ... n개 만큼 계속 늘어남
         myHandler.sendEmptyMessageDelayed(0, intervalTime) // intervalTime 만큼 반복해서 핸들러를 실행하게 함
