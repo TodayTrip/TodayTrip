@@ -30,6 +30,7 @@
             android:layout_width="15dp"
             android:layout_height="15dp"
             android:src="@drawable/ic_record_detail_back"
+            android:background="@drawable/shape_button_click"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
