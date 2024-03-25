@@ -56,7 +56,7 @@ class RandomResultOneFragment : Fragment() {
 
     private fun initView() {
         Glide.with(this)
-            .load(R.drawable.gif_loading)
+            .load(R.drawable.gif_loading3)
             .into(binding.ivResultOneImage)
     }
 
@@ -72,6 +72,7 @@ class RandomResultOneFragment : Fragment() {
                     binding.tvResultOneTitle.text =
                         DestinationPrefUtil.loadDestination().toString() + "으로 떠나볼까요?"
                 }
+                binding.tvResultOneTitle.textSize = 32F
                 val resultImg = when (DestinationPrefUtil.loadDestination().toString()) {
                     "서울" -> {
                         R.drawable.img_map_seoul

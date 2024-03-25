@@ -61,6 +61,7 @@ class RandomResultFragment : Fragment() {
                     binding.textView2.text =
                         DestinationPrefUtil.loadDestination().toString() + "으로 떠나볼까요?"
                 }
+                binding.textView2.textSize = 32F
                 val resultImg = when (DestinationPrefUtil.loadDestination().toString()) {
                     "서울" -> {
                         R.drawable.img_map_seoul

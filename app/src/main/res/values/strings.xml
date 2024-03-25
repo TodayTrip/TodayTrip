@@ -11,7 +11,7 @@
     <string name="random_next">다음</string>
 
     <!--  RandomOptionFragment  -->
-    <string name="option_choice_region">랜덤 선택 옵션을 선택해주세요.</string>
+    <string name="option_choice_region">랜덤 옵션을 선택해주세요.</string>
     <string name="option_all_random">완전 랜덤</string>
     <string name="option_theme_random">테마별 랜덤</string>
 

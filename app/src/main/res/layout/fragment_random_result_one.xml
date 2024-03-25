@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
+    android:background="@color/background_white"
     tools:context=".ui.random.RandomResultOneFragment">
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_marginHorizontal="30dp"
         android:layout_marginBottom="20dp"
         android:padding="40dp"
-        android:src="@drawable/gif_loading"
+        android:src="@drawable/gif_loading3"
         android:scaleType="fitCenter"
         app:layout_constraintTop_toBottomOf="@+id/tv_result_one_title"
         app:layout_constraintStart_toStartOf="parent"
