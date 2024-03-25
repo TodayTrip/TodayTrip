@@ -94,7 +94,7 @@ class PlaceListFragment : Fragment(),
             super.handleMessage(msg)
 
             if (msg.what == 0) {
-                binding.viewpagerRecommend.setCurrentItem(++currentPosition, true) // 다음 페이지로 이동
+                binding?.viewpagerRecommend?.setCurrentItem(++currentPosition, true) // 다음 페이지로 이동
                 autoScrollStart(intervalTime) // 스크롤을 계속 이어서 한다.
             }
         }
