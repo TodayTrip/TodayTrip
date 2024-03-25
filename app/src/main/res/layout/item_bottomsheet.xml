@@ -27,7 +27,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:text="@string/bottom_sheet_record_title"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/place_addr_gray"
         android:letterSpacing="-0.04"

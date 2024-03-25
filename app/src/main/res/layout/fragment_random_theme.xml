@@ -241,7 +241,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/btn_theme_next"
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
