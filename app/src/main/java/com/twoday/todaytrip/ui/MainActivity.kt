@@ -65,6 +65,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun hideButtonNavi(state: Boolean){
+        if (state) binding.bottomAppBar.visibility = View.GONE
+        else binding.bottomAppBar.visibility = View.VISIBLE
+
+    }
+
     fun moveToRouteFragment() {
         binding.bottomNavigationView.selectedItemId = R.id.navigation_route
     }

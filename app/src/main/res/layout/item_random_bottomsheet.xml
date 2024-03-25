@@ -47,7 +47,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_bottom_sheet_button"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="45dp"
         android:layout_margin="20dp"
         android:background="@drawable/shape_white_10_radius"
         android:backgroundTint="@color/main_blue"

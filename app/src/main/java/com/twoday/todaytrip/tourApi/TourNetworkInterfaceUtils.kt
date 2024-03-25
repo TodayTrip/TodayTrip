@@ -501,7 +501,7 @@ object TourNetworkInterfaceUtils {
                         )
                     }
 
-                    else ->{
+                    else -> {
                         // do nothing
                     }
                 }
@@ -558,7 +558,7 @@ object TourNetworkInterfaceUtils {
                 mapX = mapX,
                 mapY = mapY,
                 radius = 20000,
-                numOfRows = 6
+                numOfRows = 10
             )
             if (locationBasedResponse.response.body.totalCount == 0) {
                 Log.d(TAG, "getLocationBasedList) totalCount = 0")
@@ -567,9 +567,15 @@ object TourNetworkInterfaceUtils {
             locationBasedResponse.response.body.items.item
                 .toMutableList()
                 .run {
-                    val filteredList = this.filter {
-                        (!it.mapx.isNullOrBlank()) && (!it.mapy.isNullOrBlank())
-                    }
+                    val filteredList = this
+                        .filter {
+                            (!it.mapx.isNullOrBlank()) && (!it.mapy.isNullOrBlank())
+                        }
+                        .filter {
+                            (it.contenttypeid != TourContentTypeId.TRAVEL_COURSE.contentTypeId)
+                                    && (it.contenttypeid != TourContentTypeId.LODGEMENT.contentTypeId)
+                                    && (it.contenttypeid != TourContentTypeId.SHOPPING.contentTypeId)
+                        }
                     clear()
                     addAll(filteredList)
                 }

@@ -17,8 +17,12 @@
 
         <ImageView
             android:id="@+id/iv_record_detail_back"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:paddingTop="7.5dp"
+            android:paddingBottom="7.5dp"
+            android:paddingEnd="15dp"
+            android:background="@drawable/shape_button_click"
             android:src="@drawable/ic_record_detail_back"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,6 +35,7 @@
             android:text="@string/record_detail_delete"
             android:textColor="@color/red"
             android:textSize="16sp"
+            android:background="@drawable/shape_button_click"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="부산"
             android:textColor="@color/place_title_gray"
-            android:textSize="24sp"
+            android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -65,18 +70,21 @@
         android:id="@+id/iv_record_detail_option"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_record_detail_date"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:isw_icon_left="@drawable/ic_record_detail_list"
-        app:isw_icon_right="@drawable/ic_record_detail_gallery"
-        app:isw_background_color="@color/place_detail_info_gray"
-        app:isw_thumb_color_left="@color/main_blue"
-        app:isw_thumb_color_right="@color/main_blue"
-        app:isw_inactive_tint_icon_right="@color/light_gray"
-        app:isw_inactive_tint_icon_left="@color/light_gray"
+        android:layout_marginEnd="8dp"
         app:isw_active_tint_icon_left="@color/white"
         app:isw_active_tint_icon_right="@color/white"
-        app:isw_icon_size="16dp"/>
+        app:isw_background_color="#AFAFAF"
+        app:isw_default_selection="left"
+        app:isw_icon_left="@drawable/ic_record_detail_list"
+        app:isw_icon_right="@drawable/ic_record_detail_gallery"
+        app:isw_icon_size="18dp"
+        app:isw_inactive_tint_icon_left="@color/light_gray"
+        app:isw_inactive_tint_icon_right="@color/light_gray"
+        app:isw_thumb_color_left="@color/main_blue"
+        app:isw_thumb_color_right="@color/main_blue"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_record_detail_date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tv_record_detail_date" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/container_record_detail"
@@ -85,7 +93,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_detail_date"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

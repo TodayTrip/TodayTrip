@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,25 +21,21 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.FusedLocationSource
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.MapUtils
-import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.naver.maps.map.overlay.PolylineOverlay
-import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
@@ -83,6 +80,15 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         initToolTip()
     }
 
+    private fun editModeBackButton(editMode: Boolean) {
+        requireActivity().onBackPressedDispatcher.addCallback(this) {
+            // 뒤로 버튼 이벤트 처리
+            routeViewModel.toggleEditMode()
+            Log.e(TAG, "뒤로가기 클릭")
+            isEnabled = false
+        }
+    }
+
     private fun initModelObserver() {
         routeViewModel.routeListDataSet.observe(viewLifecycleOwner) { routeDataList ->
             routeViewModel.getLocation()
@@ -98,6 +104,9 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             routeAdapter.iconTogle(editMode)
             binding.tvRouteRemoveButton.isVisible = !editMode
             binding.tvRouteComplitButton.isVisible = editMode
+            binding.tvRouteAllremoveButton.isVisible = editMode
+            if (editMode) editModeBackButton(editMode)
+            routeViewModel.editMode.value?.let { (activity as MainActivity).hideButtonNavi(it) }
         }
 
         routeViewModel.isMapReady.observe(viewLifecycleOwner) { isMapReady ->
@@ -211,14 +220,24 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
                     startActivity(intent)
 //                    requireActivity().overridePendingTransition(R.anim.slide_in, R.anim.fade_out)
                 }
+
             } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
+            if (routeViewModel.editMode.value == true) {
+                routeViewModel.toggleEditMode()
+            }
         }
 
         binding.tvRouteRemoveButton.setOnClickListener {
-            routeViewModel.toggleEditMode()
+            if (routeViewModel.routeListDataSet.value?.isNotEmpty() == true)
+                routeViewModel.toggleEditMode()
+            else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }
         binding.tvRouteComplitButton.setOnClickListener {
             routeViewModel.toggleEditMode()
+        }
+
+        binding.tvRouteAllremoveButton.setOnClickListener {
+            routeViewModel.dataAllRemove()
         }
     }
 

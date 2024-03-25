@@ -42,7 +42,7 @@
     <string name="record_title">여행 캘린더</string>
     <string name="record_sub_title">지금까지 <font color="#1355FF">%d개의 여행지</font>를 여행했어요!</string>
     <string name="record_chart_title">자주 방문한 여행지 <font color="#FFD15B"><b>TOP3</b></font></string>
-    <string name="record_chart_empty">여행지를 2곳 이상 방문해보세요!</string>
+    <string name="record_chart_empty">여행지를 방문해보세요!</string>
     <string name="record_list_empty">저장된 여행 기록이 없습니다!</string>
 
     <!--  RecordDetailActivity  -->
@@ -93,7 +93,7 @@
     <string name="place_list_more_event_no_result">행사/축제 더 불러오기 실패</string>
 
     <!--  Bottom Sheet  -->
-    <string name="bottom_sheet_record_title">현재까지의 경로가 기록됩니다.</string>
+    <string name="bottom_sheet_record_title">현재까지의 경로가 기록됩니다</string>
     <string name="bottom_sheet_record_description">지금까지의 경로는 기록 후 초기화되며\n기록 탭에서 확인 가능합니다</string>
     <string name="bottom_sheet_record_button">기록하기</string>
     <string name="record_finish">추억이 추가되었습니다!</string>
@@ -132,5 +132,7 @@
 
     <!--  Random Result Fragment  -->
     <string name="random_result_one_loading">지역 정보를 가져오는 중···</string>
+
+    <string name="detail_image">상세 이미지</string>
 
 </resources>

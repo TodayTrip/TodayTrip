@@ -28,6 +28,7 @@ import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
+import java.lang.ref.WeakReference
 
 class PlaceListFragment : Fragment(),
     OnRefreshRecommendClickListener,
@@ -82,16 +83,34 @@ class PlaceListFragment : Fragment(),
         myHandler.removeMessages(0) // 핸들러를 중지시킴
     }
 
-    private inner class MyHandler : Handler() {
+//    private inner class MyHandler : Handler() {
+//        override fun handleMessage(msg: Message) {
+//            super.handleMessage(msg)
+//
+//            if (msg.what == 0) {
+//                binding.viewpagerRecommend.setCurrentItem(++currentPosition, true) // 다음 페이지로 이동
+//                autoScrollStart(intervalTime) // 스크롤을 계속 이어서 한다.
+//            }
+//        }
+//    }
+    private class MyHandler(fragment: PlaceListFragment) : Handler() {
+        private val fragmentWeakRef = WeakReference(fragment)
+
         override fun handleMessage(msg: Message) {
             super.handleMessage(msg)
 
             if (msg.what == 0) {
                 binding?.viewpagerRecommend?.setCurrentItem(model.recommendPosition.value!! + 1, true) // 다음 페이지로 이동
                 autoScrollStart(intervalTime) // 스크롤을 계속 이어서 한다.
+            fragmentWeakRef.get()?.let { fragment ->
+                if (msg.what == 0 && fragment.isAdded) {
+                    fragment.binding.viewpagerRecommend.setCurrentItem(++fragment.currentPosition, true)
+                    fragment.autoScrollStart(fragment.intervalTime)
+                }
             }
         }
     }
+
 
     private fun initRecommendAdapter() {
         recommendAdapter.run{
@@ -274,7 +293,8 @@ class PlaceListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         model.setIsAllRecommendAdded()
-        myHandler = MyHandler()
+//        myHandler = MyHandler()
+        myHandler = MyHandler(this)
         autoScrollStart(intervalTime) // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
     }
 
