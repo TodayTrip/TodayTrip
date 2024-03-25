@@ -65,7 +65,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
         mainModel.loadOrFetchTouristAttractionList()
     }
 
-    private fun initUI(){
+    private fun initUI() {
         setLoadingUI(true)
         setNoResultUI(false)
 
@@ -73,17 +73,19 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
             .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
             .into(binding.ivTouristAttractionRecyclerViewNoResult)
     }
-    private fun setNoResultUI(isNoResult: Boolean){
+
+    private fun setNoResultUI(isNoResult: Boolean) {
         Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
         binding.layoutTouristAttractionRecyclerViewNoResult.isVisible = isNoResult
     }
+
     private fun setLoadingUI(isLoading: Boolean) {
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
         binding.shimmerTouristAttractionRecyclerView.isVisible = isLoading
         if (isLoading) binding.shimmerTouristAttractionRecyclerView.startShimmer()
     }
 
-    private fun initSwipeRefreshLayout(){
+    private fun initSwipeRefreshLayout() {
         binding.swipeTouristAttractionRecyclerView.setOnRefreshListener {
             setNoResultUI(false)
             setLoadingUI(true)
@@ -92,26 +94,36 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
             binding.swipeTouristAttractionRecyclerView.isRefreshing = false
         }
     }
+
     private fun initRecyclerView() {
-        touristAttractionAdapter.onTourItemClickListener = this@TouristAttractionRecyclerViewFragment
-        binding.rvTouristAttractionRecyclerView.run{
+        touristAttractionAdapter.onTourItemClickListener =
+            this@TouristAttractionRecyclerViewFragment
+        binding.rvTouristAttractionRecyclerView.run {
             this.adapter = touristAttractionAdapter
             initScrollListener(this)
         }
         initFloatingButton()
     }
-    private fun initScrollListener(recyclerView: RecyclerView){
-        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+    private fun initScrollListener(recyclerView: RecyclerView) {
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
                 if (!recyclerView.canScrollVertically(1)) {
                     Log.d(TAG, "recyclerview end of scroll!")
-                    Log.d(TAG, "adapter current list size: ${touristAttractionAdapter.currentList.size}")
-                    Log.d(TAG, "isTouristAttractionLoadReady: ${mainModel.isTouristAttractionLoadReady}")
+                    Log.d(
+                        TAG,
+                        "adapter current list size: ${touristAttractionAdapter.currentList.size}"
+                    )
+                    Log.d(
+                        TAG,
+                        "isTouristAttractionLoadReady: ${mainModel.isTouristAttractionLoadReady}"
+                    )
 
-                    if((touristAttractionAdapter.currentList.isNotEmpty()) &&
-                        (mainModel.isTouristAttractionLoadReady)){
+                    if ((touristAttractionAdapter.currentList.isNotEmpty()) &&
+                        (mainModel.isTouristAttractionLoadReady)
+                    ) {
                         Log.d(TAG, "fetch and save more tourist attraction list")
                         touristAttractionAdapter.addDummyTourItem()
                         mainModel.fetchAndSaveMoreTouristAttractionList()
@@ -134,29 +146,30 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     }
 
     private fun initModelObserver() {
-        mainModel.touristAttractionList.observe(viewLifecycleOwner){touristAttractionList ->
+        mainModel.touristAttractionList.observe(viewLifecycleOwner) { touristAttractionList ->
             Log.d(TAG, "observe) tourist attraction list size: ${touristAttractionList.size}")
             touristAttractionAdapter.submitList(touristAttractionList.toMutableList())
             Log.d(TAG, "observe) current list size: ${touristAttractionAdapter.currentList.size}")
 
             setLoadingUI(false)
-            if(touristAttractionList.isEmpty()) setNoResultUI(true)
+            if (touristAttractionList.isEmpty()) setNoResultUI(true)
         }
 
-        mainModel.touristAttractionMoreLoaded.observe(viewLifecycleOwner){
-            if(it == 0) return@observe
+        mainModel.touristAttractionMoreLoaded.observe(viewLifecycleOwner) {
+            if (it == 0) return@observe
 
             Log.d(TAG, "observe) touristAttractionMoreLoaded: $it")
-            touristAttractionAdapter.removeDummyTourItem()
-            showSnackBar(
-                message = R.string.place_list_more_tourist_attraction_no_result,
-                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
-            )
+            //touristAttractionAdapter.removeDummyTourItem()
+            if (it == -1)
+                showSnackBar(
+                    message = R.string.place_list_more_tourist_attraction_no_result,
+                    anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+                )
             mainModel.setTouristAttractionMoreLoadedDefault()
         }
     }
 
-    private fun initFloatingButton(){
+    private fun initFloatingButton() {
         // 플로팅 버튼
         val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
         val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }
