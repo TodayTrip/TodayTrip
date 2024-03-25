@@ -1,14 +1,15 @@
 package com.twoday.todaytrip.weatherApi
 
+import com.twoday.todaytrip.BuildConfig
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-
+const val WEATHER_API_KEY = BuildConfig.WEATHER_API_KEY
 interface WeatherInterface {
     // getVilageFcst : 동네 예보 조회
     // getUltraSrtFcst
-    @GET("getVilageFcst?serviceKey=sGsBo9qDtZTsAcQo8nG1ByeQJxOkUMKXwZrq9%2FIPhMgXhlN%2B7fYiuzf7O4eIPJN69UYCNRDljT9Iji1KeZZBdQ%3D%3D")
+    @GET(WEATHER_API_KEY)
 
     fun getWeather(@Query("dataType") dataType : String,
                    @Query("numOfRows") numOfRows : Int,
