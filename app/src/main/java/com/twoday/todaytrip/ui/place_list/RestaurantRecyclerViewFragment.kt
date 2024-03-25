@@ -150,15 +150,16 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             if (restaurantList.isEmpty()) setNoResultUI(true)
         })
 
-        mainModel.restaurantMoreLoaded.observe(viewLifecycleOwner){
-            if(it == 0) return@observe
+        mainModel.restaurantMoreLoaded.observe(viewLifecycleOwner) {
+            if (it == 0) return@observe
 
             Log.d(TAG, "observe) restaurantMoreLoaded: $it")
-            restaurantAdapter.removeDummyTourItem()
-            showSnackBar(
-                message = R.string.place_list_more_restaurant_no_result,
-                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
-            )
+            //restaurantAdapter.removeDummyTourItem()
+            if (it == -1)
+                showSnackBar(
+                    message = R.string.place_list_more_restaurant_no_result,
+                    anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+                )
             mainModel.setRestaurantMoreLoadedDefault()
         }
     }
