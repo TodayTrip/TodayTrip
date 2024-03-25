@@ -4,7 +4,7 @@ import com.naver.maps.geometry.LatLng
 import ted.gun0912.clustering.clustering.TedClusterItem
 import ted.gun0912.clustering.geometry.TedLatLng
 
-data class MapModel(var position: LatLng) : TedClusterItem {
+data class MapModel(var position: LatLng, var index: Int? = null) : TedClusterItem {
     override fun getTedLatLng(): TedLatLng {
         return TedLatLng(position.latitude, position.longitude)
     }
