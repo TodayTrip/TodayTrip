@@ -14,28 +14,23 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.OnRefreshRecommentClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.OnRefreshRecommendClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceInfiniteAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 
 class PlaceListFragment : Fragment(),
-    OnRefreshRecommentClickListener,
+    OnRefreshRecommendClickListener,
     OnTourItemClickListener,
     OnAddAllRecommendClickListener {
     private val TAG = "PlaceListFragment"
@@ -122,7 +117,7 @@ class PlaceListFragment : Fragment(),
 
     private fun initRecommendAdapter() {
         recommendAdapter.run{
-            onRefreshRecommentClickListener = this@PlaceListFragment
+            onRefreshRecommendClickListener = this@PlaceListFragment
             onTourItemClickListener = this@PlaceListFragment
             onAddAllRecommendClickListener = this@PlaceListFragment
         }
