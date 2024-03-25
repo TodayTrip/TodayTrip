@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.databinding.ItemRouteListBinding
@@ -33,6 +34,7 @@ class RouteAdapter :
 
         holder.icon.setOnClickListener {
             onRouteListDataClickListener?.onRouteListDataRemove(currentItem, position)
+            Toast.makeText(it.context,"경로가 삭제되었습니다.",Toast.LENGTH_SHORT).show()
         }
     }
 
