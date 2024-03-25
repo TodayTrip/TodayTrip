@@ -19,6 +19,7 @@
         android:id="@+id/rv_record_detail_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:overScrollMode="never"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintTop_toBottomOf="@+id/mv_record_detail_map"
         app:layout_constraintBottom_toBottomOf="parent"

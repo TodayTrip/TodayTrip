@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.naver.maps.geometry.LatLng
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
-import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.MemoryData
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
@@ -37,11 +35,11 @@ class PlaceDetailViewModel() : ViewModel() {
     private val _isLoadingNearByList = MutableLiveData<Boolean>(true)
     val isLoadingNearByList: LiveData<Boolean> get() = _isLoadingNearByList
 
-    private val _nearByLocations = MutableLiveData<List<LatLng>>()
-    val nearByLocations: LiveData<List<LatLng>> get() = _nearByLocations
-
     private val _memoryDataList = MutableLiveData<List<MemoryData>>()
     val memoryDataList: LiveData<List<MemoryData>> = _memoryDataList
+
+    private val _isMapReady = MutableLiveData<Boolean>(false)
+    val isMapReady: LiveData<Boolean> = _isMapReady
 
     fun initTourItem(tourItemIntent: TourItem) {
         tourItem = tourItemIntent.apply {
@@ -70,7 +68,10 @@ class PlaceDetailViewModel() : ViewModel() {
             }.await()
 
             withContext(Dispatchers.Main){
-                Log.d(TAG, "initNearbyList) fetchedNearByList: ${fetchedNearByList.toString()}")
+                fetchedNearByList.forEach {
+                    Log.d(TAG, "initNearbyList 경도" + it.getLongitude() +" "+it.getLatitude())
+                }
+//                Log.d(TAG, "initNearbyList) fetchedNearByList: ${fetchedNearByList}")
                 _nearByList.value = fetchedNearByList
                 _isLoadingNearByList.value = false
                 saveNearByList()
@@ -83,15 +84,6 @@ class PlaceDetailViewModel() : ViewModel() {
         }
     }
 
-    fun getNearByLocations(){
-        val locations = mutableListOf<LatLng>()
-        _nearByList.value?.forEach { tourItem ->
-            locations.add(
-                LatLng(tourItem.getLatitude().toDouble(), tourItem.getLongitude().toDouble())
-            )
-        }
-        _nearByLocations.value = locations
-    }
     private fun initMemoryDataList() {
         val loadedMemoryDataList = mutableListOf<MemoryData>()
         RecordPrefUtil.loadRecordList().forEach { record ->
@@ -108,5 +100,9 @@ class PlaceDetailViewModel() : ViewModel() {
 
         Log.d(TAG, "initMemoryDataList) loadedMemoryDataList.size: ${loadedMemoryDataList.size}")
         _memoryDataList.value = loadedMemoryDataList
+    }
+
+    fun setIsMapReady(isReady: Boolean){
+        _isMapReady.value = isReady
     }
 }

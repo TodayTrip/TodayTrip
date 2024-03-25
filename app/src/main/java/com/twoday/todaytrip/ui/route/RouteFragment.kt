@@ -1,9 +1,6 @@
 package com.twoday.todaytrip.ui.route
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -13,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -24,34 +20,27 @@ import com.naver.maps.map.NaverMap
 import com.naver.maps.map.OnMapReadyCallback
 import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
-import com.naver.maps.map.util.FusedLocationSource
 import com.skydoves.balloon.ArrowPositionRules
 import com.skydoves.balloon.BalloonAnimation
 import com.skydoves.balloon.BalloonSizeSpec
 import com.skydoves.balloon.createBalloon
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRouteBinding
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.save_photo.SavePhotoActivity
 import com.twoday.todaytrip.utils.MapUtils
-import com.twoday.todaytrip.utils.MapUtils.drawPolyline
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import com.twoday.todaytrip.tourData.TourItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomappbar.BottomAppBar
 import com.naver.maps.map.overlay.PolylineOverlay
-import com.twoday.todaytrip.ui.MainActivity
-import com.twoday.todaytrip.ui.save_photo.SavePhotoAdapter
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
 import com.twoday.todaytrip.viewModel.RouteViewModel
 
-class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
+class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListener,
     OnMoveEndListener {
     private val TAG = "RouteFragment"
 
@@ -66,9 +55,6 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
     private val polylineOverlay = PolylineOverlay()
     private val markers = mutableListOf<Marker>()
 
-    private lateinit var backCallback: OnBackPressedCallback
-    private var isEditing = false
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -77,7 +63,6 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -224,30 +209,12 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
             } else Toast.makeText(context, "경로를 추가해 주세요", Toast.LENGTH_SHORT).show()
         }
 
-        val main = activity as MainActivity
         binding.tvRouteRemoveButton.setOnClickListener {
             routeViewModel.toggleEditMode()
-            isEditing = true
-            main.hideBottomNav(isEditing)
-            binding.layoutRouteFinishButton.isEnabled = !isEditing
-            binding.tvRouteFinishButton.setTextColor(resources.getColor(R.color.button_gray))
-            binding.tvRouteRemoveAllButton.isVisible = true
-            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
         }
         binding.tvRouteComplitButton.setOnClickListener {
             routeViewModel.toggleEditMode()
-            isEditing = false
-            main.hideBottomNav(isEditing)
-            binding.layoutRouteFinishButton.isEnabled = !isEditing
-            binding.tvRouteFinishButton.setTextColor(resources.getColor(R.color.main_blue))
-            binding.tvRouteRemoveAllButton.isVisible = false
-            requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
         }
-        binding.tvRouteRemoveAllButton.setOnClickListener {
-//            onRouteListDataRemove()
-//            clearMarkers()
-        }
-//        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backCallback)
     }
 
     override fun onRouteListDataRemove(item: RouteListData, position: Int) {
@@ -312,17 +279,6 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
         super.onResume()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        backCallback = object : OnBackPressedCallback(!isEditing) {
-            override fun handleOnBackPressed() {
-//                requireActivity().supportFragmentManager.beginTransaction()
-//                    .remove(this@RouteFragment)
-//                    .commit()
-            }
-        }
-    }
-
     override fun onPause() {
         routeViewModel.setIsMapReady(false)
         mapView.onPause()
@@ -343,5 +299,4 @@ class RouteFragment() : Fragment(), OnMapReadyCallback, OnRouteListDataClickList
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
     }
-
 }

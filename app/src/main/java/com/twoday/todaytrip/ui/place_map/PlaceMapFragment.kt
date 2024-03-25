@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.geometry.LatLngBounds
 import com.naver.maps.map.CameraAnimation
 import com.naver.maps.map.CameraPosition
 import com.naver.maps.map.CameraUpdate
@@ -30,8 +31,6 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceMapBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
-import com.twoday.todaytrip.utils.MapUtils.createBoundsForAllMarkers
-import com.twoday.todaytrip.utils.MapUtils.updateCameraToBounds
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadCafeList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadEventList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
@@ -146,12 +145,12 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         Log.d(TAG,"moveToMarker")
         val locationInfo = locations[position]
         val targetLocation = locationInfo.latLng
-        val zoomLevel = 15.0 // 숫자가 커질 수록 확대됨
+        val zoomLevel = 17.0 // 숫자가 커질 수록 확대됨
         val cameraPosition = CameraPosition(targetLocation, zoomLevel)
         val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition).animate(CameraAnimation.Easing)
 
         naverMap.moveCamera(cameraUpdate)
-        initOnChangeListener(position)
+//        initOnChangeListener(position)
     }
 
     private fun initTabLayout() {
@@ -210,25 +209,29 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                     position = LatLng(naverItem.getTedLatLng().latitude, naverItem.getTedLatLng().longitude)
                 }
             }
+            .markerClickListener { clusterItem ->
+                clusterItem.index?.let { scrollToRecyclerViewPosition(it) }
+            }
             .make()
 
-        if (locations.isNotEmpty()) {
+        val boundsBuilder = LatLngBounds.Builder()
 
-            locations.forEachIndexed { index, locationInfo ->
+        locations.forEachIndexed { index, locationInfo ->
+            val naverItem = MapModel(locationInfo.latLng, index)
+            tedNaverClustering.addItem(naverItem)
 
-                val naverItem = MapModel(locationInfo.latLng.latitude,locationInfo.latLng.longitude)
-                val marker = Marker().apply {
-                    position = locationInfo.latLng
-                    if (index < placeMapAdapter.currentList.size) {
-                        tag = locationInfo.title
-                    }
-                }
-                markers.add(marker) // 마커 리스트에 추가
-                tedNaverClustering.addItem(naverItem)
-            }
+            boundsBuilder.include(locationInfo.latLng)
+        }
 
-            val bounds = createBoundsForAllMarkers(markers)
-            updateCameraToBounds(naverMap, bounds, 100)
+        val bounds = boundsBuilder.build()
+
+        val cameraUpdate = CameraUpdate.fitBounds(bounds, 200)
+        naverMap.moveCamera(cameraUpdate)
+    }
+
+    private fun scrollToRecyclerViewPosition(position: Int) {
+        binding.rvPlaceMap.layoutManager?.let { layoutManager ->
+            (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position + 1, binding.rvPlaceMap.width)
         }
     }
 
