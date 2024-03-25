@@ -25,7 +25,7 @@ enum class PlaceListViewType(val viewType: Int){
 }
 class PlaceListAdapter :
     ListAdapter<TourItem, RecyclerView.ViewHolder>(TourItemDiffCallback) {
-    private val TAG = "PlaceListRecyclerViewAdapter"
+    private val TAG = "PlaceListAdapter"
 
     private val DUMMY_COUNT = 3
     var onTourItemClickListener: OnTourItemClickListener? = null
@@ -69,7 +69,7 @@ class PlaceListAdapter :
     }
 
     override fun submitList(list: MutableList<TourItem>?) {
-        Log.d(TAG, "submitList) submitted list size: ${currentList.size}")
+        Log.d(TAG, "submitList) submitted list size: ${list?.size}")
         list?.forEach {
             it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
         }

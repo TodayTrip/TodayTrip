@@ -44,7 +44,8 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        _binding = FragmentPlaceListCafeRecyclerViewBinding.inflate(layoutInflater, container, false)
+        _binding =
+            FragmentPlaceListCafeRecyclerViewBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
@@ -56,12 +57,13 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         initRecyclerView()
         initModelObserver()
     }
+
     override fun onResume() {
         super.onResume()
         mainModel.loadOrFetchCafeList()
     }
 
-    private fun initUI(){
+    private fun initUI() {
         setLoadingUI(true)
         setNoResultUI(false)
 
@@ -69,17 +71,19 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
             .into(binding.ivCafeRecyclerViewNoResult)
     }
-    private fun setNoResultUI(isNoResult: Boolean){
+
+    private fun setNoResultUI(isNoResult: Boolean) {
         Log.d(TAG, "setNoResultUI) isNoResult: $isNoResult")
         binding.layoutCafeRecyclerViewNoResult.isVisible = isNoResult
     }
+
     private fun setLoadingUI(isLoading: Boolean) {
         Log.d(TAG, "setLoadingUI) isLoading: $isLoading")
         binding.shimmerCafeRecyclerView.isVisible = isLoading
         if (isLoading) binding.shimmerCafeRecyclerView.startShimmer()
     }
 
-    private fun initSwipeRefreshLayout(){
+    private fun initSwipeRefreshLayout() {
         binding.swipeCafeRecyclerView.setOnRefreshListener {
             setNoResultUI(false)
             setLoadingUI(true)
@@ -88,16 +92,18 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             binding.swipeCafeRecyclerView.isRefreshing = false
         }
     }
-    private fun initRecyclerView(){
+
+    private fun initRecyclerView() {
         cafeAdapter.onTourItemClickListener = this@CafeRecyclerViewFragment
-        binding.rvCafeRecyclerView.run{
+        binding.rvCafeRecyclerView.run {
             this.adapter = cafeAdapter
             initScrollListener(this)
         }
         initFloatingButton()
     }
-    private fun initScrollListener(recyclerView: RecyclerView){
-        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener(){
+
+    private fun initScrollListener(recyclerView: RecyclerView) {
+        recyclerView.setOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
@@ -106,8 +112,9 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
                     Log.d(TAG, "adapter current list size: ${cafeAdapter.currentList.size}")
                     Log.d(TAG, "isCafeLoadReady: ${mainModel.isCafeLoadReady}")
 
-                    if((cafeAdapter.currentList.isNotEmpty()) &&
-                        (mainModel.isCafeLoadReady)){
+                    if ((cafeAdapter.currentList.isNotEmpty()) &&
+                        (mainModel.isCafeLoadReady)
+                    ) {
                         Log.d(TAG, "fetch and save more cafe list")
                         cafeAdapter.addDummyTourItem()
                         mainModel.fetchAndSaveMoreCafeList()
@@ -123,35 +130,37 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         val placeDetailIntent = PlaceDetailActivity.newIntent(
             requireContext(),
             tourItem.getContentTypeId(),
-            tourItem)
+            tourItem
+        )
         startActivity(placeDetailIntent)
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
 
-    private fun initModelObserver(){
+    private fun initModelObserver() {
         mainModel.cafeList.observe(viewLifecycleOwner, Observer { cafeList ->
             Log.d(TAG, "observe) cafe list size: ${cafeList.size}")
             cafeAdapter.submitList(cafeList.toMutableList())
             Log.d(TAG, "observe) current list size: ${cafeAdapter.currentList.size}")
 
             setLoadingUI(false)
-            if(cafeList.isEmpty()) setNoResultUI(true)
+            if (cafeList.isEmpty()) setNoResultUI(true)
         })
 
-        mainModel.cafeMoreLoaded.observe(viewLifecycleOwner){
-            if(it == 0) return@observe
+        mainModel.cafeMoreLoaded.observe(viewLifecycleOwner) {
+            if (it == 0) return@observe
 
             Log.d(TAG, "observe) cafeMoreLoaded: $it")
             cafeAdapter.removeDummyTourItem()
-            showSnackBar(
-                message = R.string.place_list_more_cafe_no_result,
-                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
-            )
+            if (it == -1)
+                showSnackBar(
+                    message = R.string.place_list_more_cafe_no_result,
+                    anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+                )
             mainModel.setCafeMoreLoadedDefault()
         }
     }
 
-    private fun initFloatingButton(){
+    private fun initFloatingButton() {
         // 플로팅 버튼
         val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
         val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }

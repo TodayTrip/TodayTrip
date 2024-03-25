@@ -137,7 +137,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     }
 
     private fun initModelObserver() {
-        mainModel.eventList.observe(viewLifecycleOwner, Observer {eventList ->
+        mainModel.eventList.observe(viewLifecycleOwner, Observer { eventList ->
             Log.d(TAG, "observe) event list size: ${eventList.size}")
             eventAdapter.submitList(eventList.toMutableList())
             Log.d(TAG, "observe) current list size: ${eventAdapter.currentList.size}")
@@ -147,20 +147,21 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
 
         })
 
-        mainModel.eventMoreLoaded.observe(viewLifecycleOwner){
-            if(it == 0) return@observe
+        mainModel.eventMoreLoaded.observe(viewLifecycleOwner) {
+            if (it == 0) return@observe
 
             Log.d(TAG, "observe) eventMoreLoaded: $it")
             eventAdapter.removeDummyTourItem()
-            showSnackBar(
-                message = R.string.place_list_more_event_no_result,
-                anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
-            )
+            if (it == -1)
+                showSnackBar(
+                    message = R.string.place_list_more_event_no_result,
+                    anchorView = requireActivity().findViewById(R.id.fab_bottom_random)
+                )
             mainModel.setEventMoreLoadedDefault()
         }
     }
 
-    private fun initFloatingButton(){
+    private fun initFloatingButton() {
         // 플로팅 버튼
         val fadeIn = AlphaAnimation(0f, 1f).apply { duration = 500 }
         val fadeOut = AlphaAnimation(1f, 0f).apply { duration = 500 }
