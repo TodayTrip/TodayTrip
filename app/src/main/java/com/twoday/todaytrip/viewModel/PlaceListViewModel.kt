@@ -391,6 +391,7 @@ class PlaceListViewModel : ViewModel() {
         newRecommendDataList[RECOMMEND_INDEX_TOURIST_ATTRACTION] = RecommendTourItem(
             subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
             tourItem = recommendTouristAttraction
+
         )
         _recommendDataList.value = newRecommendDataList
         RecommendPrefUtil.saveRecommendTouristAttraction(recommendTouristAttraction)
