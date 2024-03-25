@@ -13,16 +13,16 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.databinding.ItemPlaceListSkeletonShimmerBinding
-import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DateTimeUtil
 
-enum class PlaceListViewType(val viewType: Int){
+enum class PlaceListViewType(val viewType: Int) {
     TOUR_ITEM(0),
     DUMMY_ITEM(1)
 }
+
 class PlaceListAdapter :
     ListAdapter<TourItem, RecyclerView.ViewHolder>(TourItemDiffCallback) {
     private val TAG = "PlaceListAdapter"
@@ -30,16 +30,15 @@ class PlaceListAdapter :
     private val DUMMY_COUNT = 3
     var onTourItemClickListener: OnTourItemClickListener? = null
 
-    override fun getItemViewType(position: Int): Int  =
-        if(getItem(position) != PlaceListConstants.DUMMY_TOUR_ITEM){
+    override fun getItemViewType(position: Int): Int =
+        if (getItem(position) != PlaceListConstants.DUMMY_TOUR_ITEM) {
             PlaceListViewType.TOUR_ITEM.viewType
-        }
-        else{
+        } else {
             PlaceListViewType.DUMMY_ITEM.viewType
         }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder  =
-        when(viewType){
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder =
+        when (viewType) {
             PlaceListViewType.TOUR_ITEM.viewType -> {
                 val binding =
                     ItemPlaceListBinding.inflate(
@@ -47,7 +46,8 @@ class PlaceListAdapter :
                     )
                 TourItemHolder(binding)
             }
-            else ->{
+
+            else -> {
                 val binding =
                     ItemPlaceListSkeletonShimmerBinding.inflate(
                         LayoutInflater.from(parent.context), parent, false
@@ -57,53 +57,46 @@ class PlaceListAdapter :
         }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if(holder is TourItemHolder) {
+        if (holder is TourItemHolder) {
             holder.run {
                 initOnClickListener(getItem(position))
                 bind(getItem(position))
             }
-        }
-        else{
+        } else {
             (holder as DummyTourItemHolder).bind()
         }
     }
 
     override fun submitList(list: MutableList<TourItem>?) {
         Log.d(TAG, "submitList) submitted list size: ${list?.size}")
-        list?.forEach {
-            it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
-        }
 
-        if(list != null){
+        if (list != null) {
+            list.forEach {
+                it.isAdded = ContentIdPrefUtil.isSavedContentId(it.getContentId())
+            }
+
             val newList = mutableListOf<TourItem>()
             newList.addAll(list.filter { it.isAdded })
             newList.addAll(list.filter { !it.isAdded })
+
             list.clear()
             list.addAll(newList)
         }
         super.submitList(list)
     }
 
-    fun addDummyTourItem(){
+    fun addDummyTourItem() {
         val newListWithDummy = mutableListOf<TourItem>()
-        newListWithDummy.run{
+        newListWithDummy.run {
             addAll(currentList)
-            for(i in 0 until DUMMY_COUNT)
+            for (i in 0 until DUMMY_COUNT)
                 add(PlaceListConstants.DUMMY_TOUR_ITEM)
         }
         submitList(newListWithDummy)
     }
-    fun removeDummyTourItem(){
-        val newListWithoutDummy =  mutableListOf<TourItem>()
-        newListWithoutDummy.addAll(currentList)
 
-        if(newListWithoutDummy.isNullOrEmpty()) return
-        submitList(
-            newListWithoutDummy.subList(0, currentList.size-DUMMY_COUNT)
-        )
-    }
-
-    inner class TourItemHolder(val binding: ItemPlaceListBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class TourItemHolder(val binding: ItemPlaceListBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         private val firstImageView = binding.ivItemPlaceListThumbnail
         private val titleTextView = binding.tvItemPlaceListTitle
         private val addressTextView = binding.tvItemPlaceListAddress
@@ -121,7 +114,7 @@ class PlaceListAdapter :
                     .into(firstImageView)
             }
 
-            if (item.isAdded){
+            if (item.isAdded) {
                 binding.ivBookmark.visibility = View.VISIBLE
             } else {
                 binding.ivBookmark.visibility = View.INVISIBLE
@@ -137,18 +130,21 @@ class PlaceListAdapter :
                         )
                         firstImageView.colorFilter = filter
                         binding.layoutEntire.setBackgroundResource(R.color.light_gray)
-                    }
-                    else {
+                    } else {
                         firstImageView.colorFilter = null
                         binding.layoutEntire.setBackgroundResource(R.color.white)
                     }
                 }
-                else ->{
+
+                else -> {
                     // do nothing
                 }
             }
 
-            Log.d("date", "current date=${DateTimeUtil.getCurrentDateWithNoLine()} place date=${item.getTimeInfoWithLabel()[1].second} detail info=${item.getDetailInfoWithLabel()}")
+            Log.d(
+                "date",
+                "current date=${DateTimeUtil.getCurrentDateWithNoLine()} place date=${item.getTimeInfoWithLabel()[1].second} detail info=${item.getDetailInfoWithLabel()}"
+            )
             firstImageView.clipToOutline = true
 
             titleTextView.text = item.getTitle()
@@ -168,8 +164,9 @@ class PlaceListAdapter :
         }
     }
 
-    inner class DummyTourItemHolder(val binding: ItemPlaceListSkeletonShimmerBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(){
+    inner class DummyTourItemHolder(val binding: ItemPlaceListSkeletonShimmerBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind() {
             Log.d(TAG, "bind dummy TourItem for loading UI")
             binding.shimmerItemPlaceListSkeletonShimmer.startShimmer()
         }

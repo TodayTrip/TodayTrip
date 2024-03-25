@@ -154,7 +154,7 @@ class RestaurantRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             if (it == 0) return@observe
 
             Log.d(TAG, "observe) restaurantMoreLoaded: $it")
-            restaurantAdapter.removeDummyTourItem()
+            //restaurantAdapter.removeDummyTourItem()
             if (it == -1)
                 showSnackBar(
                     message = R.string.place_list_more_restaurant_no_result,

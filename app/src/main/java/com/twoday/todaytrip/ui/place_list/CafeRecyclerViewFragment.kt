@@ -150,7 +150,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
             if (it == 0) return@observe
 
             Log.d(TAG, "observe) cafeMoreLoaded: $it")
-            cafeAdapter.removeDummyTourItem()
+            //cafeAdapter.removeDummyTourItem()
             if (it == -1)
                 showSnackBar(
                     message = R.string.place_list_more_cafe_no_result,

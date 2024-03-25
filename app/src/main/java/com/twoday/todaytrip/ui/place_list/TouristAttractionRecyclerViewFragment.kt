@@ -159,7 +159,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
             if (it == 0) return@observe
 
             Log.d(TAG, "observe) touristAttractionMoreLoaded: $it")
-            touristAttractionAdapter.removeDummyTourItem()
+            //touristAttractionAdapter.removeDummyTourItem()
             if (it == -1)
                 showSnackBar(
                     message = R.string.place_list_more_tourist_attraction_no_result,
