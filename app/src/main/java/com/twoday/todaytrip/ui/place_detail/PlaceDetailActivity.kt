@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
@@ -210,6 +211,9 @@ class PlaceDetailActivity : AppCompatActivity() , OnTourItemClickListener, OnMap
     private fun initAddButton() {
         binding.tvPlaceDetailAddPathBtn.setOnClickListener {
             model.addButtonClicked()
+            if(binding.tvPlaceDetailAddPathBtn.text == "경로에 추가하기") Toast.makeText(this@PlaceDetailActivity, "경로 탭에서 삭제되었습니다.",
+                Toast.LENGTH_SHORT).show()
+            else Toast.makeText(this@PlaceDetailActivity, "경로 탭에 추가되었습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
