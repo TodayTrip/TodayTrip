@@ -1,6 +1,5 @@
 package com.twoday.todaytrip.ui.place_list
 
-//import com.twoday.todaytrip.utils.SharedPreferencesUtil
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -20,6 +19,7 @@ import androidx.transition.TransitionInflater
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
@@ -54,9 +54,8 @@ class PlaceListFragment : Fragment(),
 
     private val recommendAdapter = RecommendViewPagerAdapter()
 
-    private var numBanner = 6
+    private lateinit var myHandler : MyHandler
     private var currentPosition = Int.MAX_VALUE / 2 - 3
-    private var myHandler = MyHandler()
     private val intervalTime = 3000.toLong() // 몇초 간격으로 페이지를 넘길것인지 (1500 = 1.5초)
 
     override fun onCreateView(
@@ -81,7 +80,6 @@ class PlaceListFragment : Fragment(),
         initAutoScroll()
     }
 
-    /***/
     private fun autoScrollStart(intervalTime: Long) {
         myHandler.removeMessages(0) // 이거 안하면 핸들러가 1개, 2개, 3개 ... n개 만큼 계속 늘어남
         myHandler.sendEmptyMessageDelayed(0, intervalTime) // intervalTime 만큼 반복해서 핸들러를 실행하게 함
@@ -109,11 +107,6 @@ class PlaceListFragment : Fragment(),
 
         binding.viewpagerRecommend.apply {
             registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-//                    binding.textViewCurrentBanner.text = "${(position % 3) + 1}"  //필요없는거 같음
-                }
-
                 override fun onPageScrollStateChanged(state: Int) {
                     super.onPageScrollStateChanged(state)
                     when (state) {
@@ -126,8 +119,6 @@ class PlaceListFragment : Fragment(),
             })
         }
     }
-
-
 
     private fun initRecommendAdapter() {
         recommendAdapter.run{
@@ -147,9 +138,6 @@ class PlaceListFragment : Fragment(),
                         binding.placeIndicator4,
                         binding.placeIndicator5,
                         binding.placeIndicator6)
-
-//                Log.d(TAG,"position ${position}")
-//                Log.d(TAG,"indicator ${indicatorList.toString()}")
                 indicatorList.forEach {
                     it.setBackgroundResource(R.drawable.shape_circle_gray)
                     Log.d(TAG,"position forEach ${position}")
@@ -293,6 +281,7 @@ class PlaceListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         model.setIsAllRecommendAdded()
+        myHandler = MyHandler()
         autoScrollStart(intervalTime) // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
     }
 
