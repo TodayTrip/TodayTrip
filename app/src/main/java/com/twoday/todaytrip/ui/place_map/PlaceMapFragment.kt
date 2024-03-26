@@ -214,19 +214,20 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             }
             .make()
 
-        val boundsBuilder = LatLngBounds.Builder()
+        if (locations.isNotEmpty()) {
+            val boundsBuilder = LatLngBounds.Builder()
 
-        locations.forEachIndexed { index, locationInfo ->
-            val naverItem = MapModel(locationInfo.latLng, index)
-            tedNaverClustering.addItem(naverItem)
+            locations.forEachIndexed { index, locationInfo ->
+                val naverItem = MapModel(locationInfo.latLng, index)
+                tedNaverClustering.addItem(naverItem)
+                boundsBuilder.include(locationInfo.latLng)
+            }
+            val bounds = boundsBuilder.build()
 
-            boundsBuilder.include(locationInfo.latLng)
+            val cameraUpdate = CameraUpdate.fitBounds(bounds, 200)
+            naverMap.moveCamera(cameraUpdate)
         }
 
-        val bounds = boundsBuilder.build()
-
-        val cameraUpdate = CameraUpdate.fitBounds(bounds, 200)
-        naverMap.moveCamera(cameraUpdate)
     }
 
     private fun scrollToRecyclerViewPosition(position: Int) {

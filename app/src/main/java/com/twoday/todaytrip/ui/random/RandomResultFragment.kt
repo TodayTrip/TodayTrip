@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -56,11 +57,12 @@ class RandomResultFragment : Fragment() {
                 val someRegions = listOf("서울", "대구", "제주", "경기", "광주")
                 if (DestinationPrefUtil.loadDestination() in someRegions) {
                     binding.textView2.text =
-                        DestinationPrefUtil.loadDestination().toString() + "로 떠나볼까요?"
+                        "\n" + DestinationPrefUtil.loadDestination().toString() + "로 \n떠나볼까요?"
                 } else {
                     binding.textView2.text =
-                        DestinationPrefUtil.loadDestination().toString() + "으로 떠나볼까요?"
+                        "\n" + DestinationPrefUtil.loadDestination().toString() + "으로 \n떠나볼까요?"
                 }
+                binding.textView2.textSize = 36F
                 val resultImg = when (DestinationPrefUtil.loadDestination().toString()) {
                     "서울" -> {
                         R.drawable.img_map_seoul

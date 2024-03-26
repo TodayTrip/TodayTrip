@@ -56,7 +56,7 @@ class RandomResultOneFragment : Fragment() {
 
     private fun initView() {
         Glide.with(this)
-            .load(R.drawable.gif_loading)
+            .load(R.drawable.gif_loading3)
             .into(binding.ivResultOneImage)
     }
 
@@ -67,11 +67,12 @@ class RandomResultOneFragment : Fragment() {
                 val someRegions = listOf("서울", "대구", "제주", "경기", "광주")
                 if (DestinationPrefUtil.loadDestination() in someRegions) {
                     binding.tvResultOneTitle.text =
-                        DestinationPrefUtil.loadDestination().toString() + "로 떠나볼까요?"
+                        "\n" + DestinationPrefUtil.loadDestination().toString() + "로 \n떠나볼까요?"
                 } else {
                     binding.tvResultOneTitle.text =
-                        DestinationPrefUtil.loadDestination().toString() + "으로 떠나볼까요?"
+                        "\n" + DestinationPrefUtil.loadDestination().toString() + "으로 \n떠나볼까요?"
                 }
+                binding.tvResultOneTitle.textSize = 36F
                 val resultImg = when (DestinationPrefUtil.loadDestination().toString()) {
                     "서울" -> {
                         R.drawable.img_map_seoul

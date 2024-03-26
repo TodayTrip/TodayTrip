@@ -17,7 +17,7 @@
         android:textColor="@color/dark_gray"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:layout_marginHorizontal="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -27,12 +27,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_select_region_all"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:background="@drawable/shape_light_gray_16_radius"
         android:text="@string/select_region_all"
         android:textAlignment="center"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textColor="@color/selector_chip_text"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_select_region_description">
@@ -55,11 +55,11 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:text="@string/seoul"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/chip_select_region_incheon"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintHorizontal_chainStyle="spread"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_select_region_incheon"
@@ -102,6 +102,7 @@
             android:text="@string/gyeongbuk"
             app:layout_constraintEnd_toStartOf="@+id/chip_select_region_gyeongnam"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chip_select_region_seoul" />
 
@@ -146,6 +147,7 @@
             android:text="@string/gangwon"
             app:layout_constraintEnd_toStartOf="@+id/chip_select_region_daegu"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/chip_select_region_gyeongbuk" />
 
@@ -190,6 +192,7 @@
             android:text="@string/jeju"
             app:layout_constraintEnd_toStartOf="@+id/chip_select_region_gyeonggi"
             app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/chip_select_region_gangwon" />
 

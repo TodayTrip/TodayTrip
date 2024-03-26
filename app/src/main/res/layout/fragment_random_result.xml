@@ -9,10 +9,11 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
-        android:gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:gravity="start"
         android:text="@string/result_choice_region"
         android:textColor="@color/black"
         android:textSize="24sp"
