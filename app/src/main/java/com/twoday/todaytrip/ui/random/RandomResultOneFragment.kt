@@ -56,7 +56,7 @@ class RandomResultOneFragment : Fragment() {
 
     private fun initView() {
         Glide.with(this)
-            .load(R.drawable.gif_loading3)
+            .load(R.drawable.gif_loading4)
             .into(binding.ivResultOneImage)
     }
 
@@ -150,7 +150,7 @@ class RandomResultOneFragment : Fragment() {
                         MainActivity::class.java
                     ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                }, 3000)
+                }, 1000)
             }
         })
     }
