@@ -52,7 +52,7 @@
         android:id="@+id/tv_route_allremove_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="비우기"
+        android:text="전체 삭제"
         android:textSize="14sp"
         android:textColor="@color/red"
         android:layout_marginEnd="12dp"

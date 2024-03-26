@@ -213,7 +213,7 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
             currentLatLng = LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble())
 
             val markerIconBitmap =
-                resizeMapIcons(this, R.drawable.ic_yellow_circle_marker, 100, 100)
+                resizeMapIcons(this, R.drawable.ic_white_circle_marker, 100, 100)
 
             val currentMarker = Marker().apply {
                 position = currentLatLng!!
@@ -230,7 +230,7 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
 
                 if (currentTitle != location.getTitle() || !markers.any { it.captionText == currentTitle }) {
                     val markerIconBitmap =
-                        resizeMapIcons(this, R.drawable.ic_white_circle_marker, 100, 100)
+                        resizeMapIcons(this, R.drawable.ic_white_circle_marker, 70, 70)
 
                     val marker = Marker().apply {
                         position = latLng
