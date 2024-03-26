@@ -46,6 +46,10 @@ class PlaceListViewModel : ViewModel() {
     private val _recommendDataList = MutableLiveData<List<RecommendData>>()
     val recommendDataList: LiveData<List<RecommendData>> get() = _recommendDataList
 
+    // 오늘의 랜덤 코스 ViewPager position
+    private val _recommendPosition = MutableLiveData( Int.MAX_VALUE / 2 - 3)
+    val recommendPosition: LiveData<Int> = _recommendPosition
+
     // 오늘의 랜덤 코스가 모두 경로에 담겼는가
     private val _isAllRecommendAdded = MutableLiveData<Boolean>()
     val isAllRecommendAdded: LiveData<Boolean> = _isAllRecommendAdded
@@ -183,6 +187,10 @@ class PlaceListViewModel : ViewModel() {
             "울산" -> Coordinates("102", "84")
             else -> null
         }
+    }
+
+    fun setRecommendPosition(position: Int){
+        _recommendPosition.value = position
     }
 
     private fun initRecommendDataList() {
