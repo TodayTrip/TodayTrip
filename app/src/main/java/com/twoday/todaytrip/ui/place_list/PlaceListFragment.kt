@@ -120,6 +120,7 @@ class PlaceListFragment : Fragment(),
                     ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
                 }
             }
+
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 Log.d(TAG, "position % 6  = ${position % 6}")
@@ -168,22 +169,22 @@ class PlaceListFragment : Fragment(),
         startActivity(placeDetailIntent)
     }
 
-    override fun onAddAllRecommendClick(isAllAdded: Boolean) {
-        if (!isAllAdded) {
-            Toast.makeText(
-                requireActivity(),
-                R.string.place_list_recommend_add_all_toast,
-                Toast.LENGTH_SHORT
-            ).show()
-            model.addAllRecommend()
+    override fun onAddAllRecommendClick(optimizedOrder: List<Int>) {
+        Toast.makeText(
+            requireActivity(),
+            R.string.place_list_recommend_add_all_toast,
+            Toast.LENGTH_SHORT
+        ).show()
+        model.addAllRecommend(optimizedOrder)
 
-            mainModel.loadOrFetchTouristAttractionList()
-            mainModel.loadOrFetchRestaurantList()
-            mainModel.loadOrFetchCafeList()
-            mainModel.loadOrFetchEventList()
-        } else {
-            (requireActivity() as MainActivity).moveToRouteFragment()
-        }
+        mainModel.loadOrFetchTouristAttractionList()
+        mainModel.loadOrFetchRestaurantList()
+        mainModel.loadOrFetchCafeList()
+        mainModel.loadOrFetchEventList()
+    }
+
+    override fun onMoveToRouteClick() {
+        (requireActivity() as MainActivity).moveToRouteFragment()
     }
 
     private fun initMainAdapter() {
@@ -245,7 +246,10 @@ class PlaceListFragment : Fragment(),
         }
         model.recommendDataList.observe(viewLifecycleOwner) { recommendDataList ->
             if (recommendDataList.isNotEmpty()) {
-                (recommendDataList.last() as RecommendMap).locations = model.getMarkerPositions()
+                (recommendDataList.last() as RecommendMap).run {
+                    optimizedLocations = model.getOptimizedLocations()
+                    optimizedOrder = model.getOptimizedOrder()
+                }
             }
             recommendAdapter.changeDataSet(recommendDataList)
         }
