@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_marginHorizontal="16dp"
-        android:gravity="start"
+        android:gravity="center"
         android:text="@string/result_choice_region"
         android:textColor="@color/black"
         android:textSize="24sp"
