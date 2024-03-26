@@ -13,12 +13,12 @@ import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import androidx.transition.TransitionInflater
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
 
 class RandomResultFragment : Fragment() {
@@ -146,9 +146,7 @@ class RandomResultFragment : Fragment() {
     }
 
     private fun initView() {
-        Glide.with(this)
-            .load(R.drawable.gif_map)
-            .into(binding.ivRandomMapGif)
+        binding.ivRandomMapGif.glide(R.drawable.gif_map)
     }
 
     override fun onDestroyView() {
