@@ -37,7 +37,7 @@
         android:theme="@style/Theme.TodayTrip"
         android:usesCleartextTraffic="true"
         android:largeHeap="true"
-        android:hardwareAccelerated="false"
+        android:hardwareAccelerated="true"
         tools:targetApi="31">
         <activity
             android:name=".ui.record_gallery.FullScreenImageActivity"
