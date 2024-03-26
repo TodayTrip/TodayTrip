@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_entire"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/iv_item_place_list_thumbnail"
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/shape_white_10_radius"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_default"
+            android:transitionName="thumbnail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="115dp"
+            android:layout_height="115dp"
+            android:clipToOutline="true"
+            android:background="@drawable/img_light_gray_blur_10"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_item_place_list_thumbnail"
+            app:layout_constraintEnd_toEndOf="@+id/iv_item_place_list_thumbnail" />
+
+        <TextView
+            android:id="@+id/tv_item_place_list_title"
+            style="@style/PlaceTitleBoldText"
+            android:layout_marginEnd="40dp"
+            android:maxLines="1"
+            android:text="이곳은 이 장소의 이름을 나타나는 공간입니다."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_thumbnail"
+            app:layout_constraintTop_toTopOf="@+id/iv_item_place_list_thumbnail" />
+
+        <ImageView
+            android:id="@+id/iv_bookmark"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_item_place_list_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_place_list_title" />
+
+        <TextView
+            android:id="@+id/tv_item_place_list_address"
+            style="@style/PlaceAddrText"
+            android:layout_marginEnd="20dp"
+            android:maxLines="1"
+            android:text="이곳은 이 장소의 주소를 나타나는 공간입니다."
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_title" />
+
+        <ImageView
+            android:id="@+id/iv_item_place_list_time_label1"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_place_list_time_info"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time1"
+            app:layout_constraintStart_toStartOf="@+id/tv_item_place_list_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_place_list_time1" />
+
+        <TextView
+            android:id="@+id/tv_item_place_list_time1"
+            style="@style/PlaceLabelInfoText"
+            android:layout_marginTop="8dp"
+            android:maxLines="1"
+            android:text="이곳은 이 장소의 운영 시간을 나타나는 공간입니다."
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_address"
+            app:layout_constraintStart_toEndOf="@+id/iv_item_place_list_time_label1"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_address" />
+
+        <ImageView
+            android:id="@+id/iv_item_place_list_time_label2"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:src="@drawable/ic_place_list_date_info"
+            android:textAppearance="@style/PlaceLabelText"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_item_place_list_time2"
+            app:layout_constraintStart_toStartOf="@id/tv_item_place_list_title"
+            app:layout_constraintTop_toTopOf="@+id/tv_item_place_list_time2" />
+
+        <TextView
+            android:id="@+id/tv_item_place_list_time2"
+            style="@style/PlaceLabelInfoText"
+            android:layout_marginTop="4dp"
+            android:maxLines="1"
+            android:text="이곳은 이 장소의 운영 날짜를 나타나는 공간입니다."
+            app:layout_constraintEnd_toEndOf="@+id/tv_item_place_list_time1"
+            app:layout_constraintStart_toEndOf="@id/iv_item_place_list_time_label2"
+            app:layout_constraintTop_toBottomOf="@+id/tv_item_place_list_time1" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="0dp"
+            android:layout_height="0.5dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/middle_gray"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:layout_editor_absoluteY="154dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

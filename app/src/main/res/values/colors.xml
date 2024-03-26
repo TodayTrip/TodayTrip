@@ -2,9 +2,43 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="main_blue">#1355FF</color>
+    <color name="background_white">#f8f8f8</color>
+    <color name="red">#FF0404</color>
+
+    <color name="main_blue">#0085FF</color>
+    <color name="dark_blue">#004B98</color>
     <color name="sub_blue">#E8F5FF</color>
+    <color name="sub_btn_blue">#9DD0FF</color>
+    <color name="point_yellow">#FFD15B</color>
+
+    <color name="theme_title1">#53B386</color>
+    <color name="theme_title2">#78CAEA</color>
+    <color name="theme_title3">#836546</color>
+    <color name="theme_title4">#6BA8D7</color>
+    <color name="theme_title5">#8D62B6</color>
+    <color name="theme_title6">#F06F79</color>
+    <color name="theme_title7">#EE9811</color>
+
+    <color name="map_gray">#DADADA</color>
+    <color name="map_blue1">#04085F</color>
+    <color name="map_blue2">#023F8A</color>
+    <color name="map_blue3">#0078B4</color>
+    <color name="map_blue4">#0096C5</color>
+    <color name="map_blue5">#42CDE9</color>
+    <color name="map_blue6">#93E0F1</color>
+
     <color name="button_gray">#4E4E4E</color>
+
+    <color name="place_title_gray">#2C2C2C</color>
+    <color name="place_addr_gray">#393939</color>
+    <color name="place_detail_info_gray">#838383</color>
+
     <color name="light_gray">#F2F2F2</color>
     <color name="middle_gray">#D9D9D9</color>
+    <color name="start_background">#F7F7FA</color>
+    <color name="transparent">#00000000</color>
+    <color name="dark_gray">#3A3A3A</color>
+    <color name="light_gray2">#F6F6F6</color>
+
+    <color name="system_gray">#FF888888</color>
 </resources>

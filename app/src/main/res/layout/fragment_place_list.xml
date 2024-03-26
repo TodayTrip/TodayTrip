@@ -1,14 +1,238 @@
-<?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.PlaceListFragment">
+    android:layout_height="match_parent">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tv_travel_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:paddingEnd="6dp"
+        android:textAppearance="@style/address"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="근심이 없어지는" />
+
+    <TextView
+        android:id="@+id/tv_travel_destination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="여행지"
+        android:textAppearance="@style/address"
+        android:textColor="@color/place_title_gray"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@id/tv_travel_theme"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_weather"
+            android:layout_width="33dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="12dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_weather_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_weather"
+            app:layout_constraintStart_toEndOf="@+id/img_weather"
+            app:layout_constraintTop_toTopOf="@+id/img_weather" />
+
+        <TextView
+            android:id="@+id/tv_weather_info2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_weather"
+            app:layout_constraintStart_toEndOf="@+id/tv_weather_info"
+            app:layout_constraintTop_toTopOf="@+id/img_weather" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="50dp">
 
-</FrameLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:contentScrim="@color/white"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <!-- parallax: 스크롤 시 접힘 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+
+                    <!-- pin: 스크롤 시 고정 -->
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/viewpager_recommend"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_collapseMode="parallax"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintDimensionRatio="3:2"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="1.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:id="@+id/place_indicator3"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="7.5dp"
+                    android:background="@drawable/shape_circle_gray" />
+
+                <View
+                    android:id="@+id/place_indicator2"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="22.5dp"
+                    android:background="@drawable/shape_circle_gray" />
+
+                <View
+                    android:id="@+id/place_indicator1"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginEnd="37.5dp"
+                    android:background="@drawable/shape_circle_gray" />
+
+                <View
+                    android:id="@+id/place_indicator4"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_circle_gray"
+                    android:layout_marginStart="7.5dp"/>
+
+                <View
+                    android:id="@+id/place_indicator5"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_circle_gray"
+                    android:layout_marginStart="22.5dp"/>
+
+                <View
+                    android:id="@+id/place_indicator6"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_circle_gray"
+                    android:layout_marginStart="37.5dp"/>
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+<!--            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator-->
+<!--                android:id="@+id/spring_dots_indicator"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                app:dampingRatio="0.5"-->
+<!--                app:dotsColor="@color/main_blue"-->
+<!--                app:dotsStrokeColor="@color/main_blue"-->
+<!--                app:dotsCornerRadius="100dp"-->
+<!--                app:dotsSize="16dp"-->
+<!--                app:dotsSpacing="6dp"-->
+<!--                app:dotsStrokeWidth="2dp"-->
+<!--                app:stiffness="300"-->
+
+<!--                />-->
+
+            <!-- 뷰페이저와 연결할 탭 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layout_place_list_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent">
+
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tl_tab_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:tabBackground="@color/white"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="@color/main_blue"
+                    app:tabIndicatorFullWidth="false"
+                    app:tabIndicatorGravity="bottom"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@color/black"
+                    app:tabTextAppearance="@style/tab_text"
+                    app:tabTextColor="@color/middle_gray">
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_list_tourist_attraction" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_list_restaurant" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_list_cafe" />
+
+                    <com.google.android.material.tabs.TabItem
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/place_list_event" />
+                </com.google.android.material.tabs.TabLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_viewpager_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

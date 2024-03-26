@@ -1,0 +1,112 @@
+package com.twoday.todaytrip.ui.random
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import androidx.transition.TransitionInflater
+import com.twoday.todaytrip.R
+import com.twoday.todaytrip.databinding.FragmentRandomOptionBinding
+
+class RandomOptionFragment : Fragment() {
+
+    private var _binding: FragmentRandomOptionBinding? = null
+    private val binding get() = _binding!!
+    private var isSelectedAllRandomBtn = false
+    private var isSelectedThemeRandomBtn = false
+    private var isButtonClickable = false
+//    private val viewModel by lazy {
+//        ViewModelProvider(this@RandomOptionFragment)[RandomViewModel::class.java]
+//    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?,
+    ): View? {
+        _binding = FragmentRandomOptionBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+        setUpClickListener()
+        val inflater = TransitionInflater.from(requireContext())
+        exitTransition = inflater.inflateTransition(R.transition.fade)
+        enterTransition = inflater.inflateTransition(R.transition.slide_right)
+    }
+
+    private fun initView() {
+        binding.btnOptionNext.visibility = View.INVISIBLE
+    }
+
+    private fun setUpClickListener() {
+        binding.btnOptionNext.setOnClickListener {
+            if (isSelectedAllRandomBtn) {
+                // 전체 랜덤 선택 시 Sharf에 여행지 랜덤 저장
+//                viewModel.selectRandomDestination()
+                findNavController().navigate(R.id.action_navigation_random_option_to_navigation_select_region)
+            } else {
+                findNavController().navigate(R.id.action_navigation_random_option_to_navigation_random_theme)
+            }
+        }
+        binding.btnAllRandom.setOnClickListener {
+            selectButton(isAllRandom = true)
+        }
+        binding.btnThemeRandom.setOnClickListener {
+            selectButton(isAllRandom = false)
+        }
+    }
+
+    private fun selectButton(isAllRandom: Boolean) {
+        isButtonClickable = true
+        if (isAllRandom) {
+            isSelectedAllRandomBtn = true
+            isSelectedThemeRandomBtn = false
+        } else {
+            isSelectedAllRandomBtn = false
+            isSelectedThemeRandomBtn = true
+        }
+
+        updateRandomButtonStyle()
+        updateNextButtonStyle(isButtonClickable)
+    }
+
+    private fun updateNextButtonStyle(isButtonClickable: Boolean) {
+        binding.btnOptionNext.visibility = View.VISIBLE
+        binding.btnOptionNext.isEnabled = isButtonClickable
+        binding.btnOptionNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
+    }
+
+    private fun updateRandomButtonStyle() {
+        setAllRandomButtonStyle(isSelectedAllRandomBtn)
+        setThemeRandomButtonStyle(isSelectedThemeRandomBtn)
+    }
+
+    private fun setAllRandomButtonStyle(isSelected: Boolean) {
+        binding.btnAllRandom.apply {
+            if (isSelected) {
+                binding.ivAllRandomGray.visibility = View.INVISIBLE
+            } else {
+                binding.ivAllRandomGray.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun setThemeRandomButtonStyle(isSelected: Boolean) {
+        binding.btnThemeRandom.apply {
+            if (!isSelected) {
+                binding.ivThemeRandomGray.visibility = View.VISIBLE
+            } else {
+                binding.ivThemeRandomGray.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

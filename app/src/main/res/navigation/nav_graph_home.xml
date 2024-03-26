@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_navigation"
+    app:startDestination="@id/navigation_place_list">
+
+    <fragment
+        android:id="@+id/navigation_place_list"
+        android:name="com.twoday.todaytrip.ui.place_list.PlaceListFragment"
+        android:label="fragment_place_list"
+        tools:layout="@layout/fragment_place_list">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_map"
+        android:name="com.twoday.todaytrip.ui.place_map.PlaceMapFragment"
+        android:label="fragment_place_map"
+        tools:layout="@layout/fragment_place_map">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_route"
+        android:name="com.twoday.todaytrip.ui.route.RouteFragment"
+        android:label="fragment_route"
+        tools:layout="@layout/fragment_route">
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_record"
+        android:name="com.twoday.todaytrip.ui.record.RecordFragment"
+        android:label="navigation_record"
+        tools:layout="@layout/fragment_record">
+    </fragment>
+</navigation>

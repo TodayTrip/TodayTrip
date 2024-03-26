@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background_white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_select_region_fragment"
+    tools:context=".ui.random.SelectRegionFragment">
+
+    <TextView
+        android:id="@+id/tv_select_region_description"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/select_region_description"
+        android:textColor="@color/dark_gray"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginTop="80dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_select_region_all"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/shape_light_gray_16_radius"
+        android:text="@string/select_region_all"
+        android:textAlignment="center"
+        android:textSize="14sp"
+        android:textColor="@color/selector_chip_text"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_select_region_description"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_select_region_chips"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_select_region_description">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_seoul"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/seoul"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_incheon"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_incheon"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/incheon"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_jeonbuk"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_seoul"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_seoul" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_jeonbuk"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/jeonbuk"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_jeonnam"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_incheon"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_seoul" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_jeonnam"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/jeonnam"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_jeonbuk"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_seoul" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_gyeongbuk"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gyeongbuk"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_gyeongnam"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chip_select_region_seoul" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_gyeongnam"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gyeongnam"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_chungbuk"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_gyeongbuk"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_gyeongbuk" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_chungbuk"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/chungbuk"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_chungnam"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_gyeongnam"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_gyeongbuk" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_chungnam"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/chungnam"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_chungbuk"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_gyeongbuk" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_gangwon"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gangwon"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_daegu"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/chip_select_region_gyeongbuk" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_daegu"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/daegu"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_busan"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_gangwon"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_gangwon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_busan"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/busan"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_daejeon"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_daegu"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_gangwon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_daejeon"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/daejeon"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_busan"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_gangwon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_jeju"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/jeju"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_gyeonggi"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chip_select_region_gangwon" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_gyeonggi"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gyeonggi"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_gwangju"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_jeju"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_jeju" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_gwangju"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/gwangju"
+            app:layout_constraintEnd_toStartOf="@+id/chip_select_region_ulsan"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_gyeonggi"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_jeju" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_select_region_ulsan"
+            style="@style/SelectedChip"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:text="@string/ulsan"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/chip_select_region_gwangju"
+            app:layout_constraintTop_toTopOf="@+id/chip_select_region_jeju" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/iv_select_region_map"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/img_korea_map"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_select_region_chips"
+        app:layout_constraintBottom_toTopOf="@+id/btn_region_select_next"
+        />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/btn_region_select_next"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_middle_gray_12_radius"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/SmallBoldText"
+            android:text="@string/random_next"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
