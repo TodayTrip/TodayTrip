@@ -28,6 +28,8 @@ import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
+import java.lang.Integer.max
+import java.lang.Integer.min
 
 enum class RecommendViewType(val viewType: Int) {
     COVER(0),
@@ -40,7 +42,8 @@ interface OnRefreshRecommendClickListener {
 }
 
 interface OnAddAllRecommendClickListener {
-    fun onAddAllRecommendClick(isAllAdded: Boolean)
+    fun onAddAllRecommendClick(optimizedOrder: List<Int>)
+    fun onMoveToRouteClick()
 }
 
 class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -125,7 +128,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     fun changeDataSet(newRecommendDataList: List<RecommendData>, position: Int) {
         recommendDataList = newRecommendDataList
-        notifyItemChanged(position)
+        notifyItemRangeChanged(max(0, position - 6), min(position + 6, itemCount))
     }
 
     fun getDataSet(): List<RecommendData> = recommendDataList
@@ -203,21 +206,24 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         RecyclerView.ViewHolder(binding.root), OnMapReadyCallback {
 
         private lateinit var naverMap: NaverMap
-        private var locations = listOf<LatLng>()
         private val polylineOverlay = PolylineOverlay()
         private val markers = mutableListOf<Marker>()
+
+        private lateinit var optimizedLocations: List<LatLng>
+        private lateinit var optimizedOrder: List<Int>
 
         private val mapView: MapView = binding.mapItemPlaceListRecommendMap
         private val destinationTextView: TextView = binding.tvItemPlaceListRecommendMapDestination
         private val addAllButton: TextView = binding.tvItemPlaceListRecommendMapAddAll
         fun bindMap(recommendMap: RecommendMap) {
             Log.d(TAG, "bindMap) called")
-            destinationTextView.text = recommendMap.destination
-            locations = recommendMap.locations
+            optimizedLocations = recommendMap.optimizedLocations
+            optimizedOrder = recommendMap.optimizedOrder
 
             clearMap()
             mapView.getMapAsync(this@MapHolder)
 
+            destinationTextView.text = recommendMap.destination
             setAllAddButtonUI(recommendMap.isAllAdded)
         }
 
@@ -251,9 +257,9 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         fun setOnClickListener(recommendMap: RecommendMap) {
             addAllButton.setOnClickListener {
                 if (recommendMap.isAllAdded) {
-                    onAddAllRecommendClickListener?.onAddAllRecommendClick(true)
+                    onAddAllRecommendClickListener?.onMoveToRouteClick()
                 } else {
-                    onAddAllRecommendClickListener?.onAddAllRecommendClick(false)
+                    onAddAllRecommendClickListener?.onAddAllRecommendClick(recommendMap.optimizedOrder)
                     recommendMap.isAllAdded = true
                     setAllAddButtonUI(true)
                 }
@@ -265,8 +271,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             this.naverMap = naverMap
             naverMap.uiSettings.isZoomControlEnabled = false
 
-            if (locations.isNotEmpty()) {
-                locations.forEachIndexed { index, latLng ->
+            if (optimizedLocations.isNotEmpty()) {
+                optimizedLocations.forEachIndexed { index, latLng ->
                     val text = (index + 1).toString()
                     val iconWithTextBitmap =
                         MapUtils.createIconWithText(
@@ -290,7 +296,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 val bounds = MapUtils.createBoundsForAllMarkers(markers)
                 MapUtils.updateCameraToBounds(naverMap, bounds, 130)
 
-                if (locations.size == 1) {
+                if (optimizedLocations.size == 1) {
                     naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
                 }
             } else {
@@ -302,8 +308,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 }
                 naverMap.moveCamera(CameraUpdate.zoomTo(9.0))
             }
-            if (locations.size > 1) {
-                val markerPositions = locations.map { location ->
+            if (optimizedLocations.size > 1) {
+                val markerPositions = optimizedLocations.map { location ->
                     LatLng(location.latitude, location.longitude)
                 }
                 polylineOverlay.apply {
@@ -319,13 +325,6 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             mapView.onCreate(null)
             mapView.onStart()
             mapView.onResume()
-        }
-
-        fun stopMapLifecycle() {
-            Log.d(TAG, "stopMapLifecycle) called")
-            mapView.onPause()
-            mapView.onStop()
-            mapView.onDestroy()
         }
     }
 }
