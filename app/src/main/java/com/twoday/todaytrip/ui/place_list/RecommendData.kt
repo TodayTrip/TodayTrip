@@ -1,6 +1,7 @@
 package com.twoday.todaytrip.ui.place_list
 
 import com.naver.maps.geometry.LatLng
+import com.naver.maps.map.overlay.Marker
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourData.TourItem
 
@@ -22,6 +23,7 @@ data class RecommendEmpty(
 
 data class RecommendMap(
     val destination: String,
-    var locations: List<LatLng>,
+    var optimizedLocations: List<LatLng> = listOf(),
+    var optimizedOrder: List<Int> = listOf(),
     var isAllAdded: Boolean = false
 ): RecommendData

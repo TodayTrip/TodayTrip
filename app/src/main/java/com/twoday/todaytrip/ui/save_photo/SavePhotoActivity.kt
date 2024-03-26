@@ -94,7 +94,6 @@ class SavePhotoActivity : AppCompatActivity(), OnMapReadyCallback {
                 this@SavePhotoActivity.position = position
                 FishBun.with(this@SavePhotoActivity).setImageAdapter(GlideAdapter())
                     .startAlbumWithOnActivityResult(FishBun.FISHBUN_REQUEST_CODE)
-                Toast.makeText(this@SavePhotoActivity, "클릭", Toast.LENGTH_SHORT).show()
             }
         }
     }

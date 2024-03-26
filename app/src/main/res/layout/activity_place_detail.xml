@@ -42,17 +42,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
+
     <ImageView
         android:id="@+id/iv_place_detail_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:paddingStart="6dp"
-        android:paddingTop="4dp"
-        android:paddingEnd="8dp"
-        android:paddingBottom="4dp"
-        android:src="@drawable/ic_place_detail_back"
+        android:padding="15dp"
+        android:background="@drawable/shape_button_click"
+        android:src="@drawable/ic_record_detail_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

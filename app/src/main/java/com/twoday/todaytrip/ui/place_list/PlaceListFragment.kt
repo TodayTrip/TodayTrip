@@ -14,29 +14,24 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
-import androidx.transition.TransitionInflater
-import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
-import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
-import com.twoday.todaytrip.ui.place_list.adapter.OnRefreshRecommentClickListener
+import com.twoday.todaytrip.ui.place_list.adapter.OnRefreshRecommendClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PagerFragmentStateAdapter
-import com.twoday.todaytrip.ui.place_list.adapter.PlaceInfiniteAdapter
 import com.twoday.todaytrip.ui.place_list.adapter.RecommendViewPagerAdapter
 import com.twoday.todaytrip.viewModel.MainViewModel
 import com.twoday.todaytrip.viewModel.PlaceListViewModel
 import java.lang.ref.WeakReference
 
 class PlaceListFragment : Fragment(),
-    OnRefreshRecommentClickListener,
+    OnRefreshRecommendClickListener,
     OnTourItemClickListener,
     OnAddAllRecommendClickListener {
     private val TAG = "PlaceListFragment"
@@ -55,8 +50,7 @@ class PlaceListFragment : Fragment(),
 
     private val recommendAdapter = RecommendViewPagerAdapter()
 
-    private lateinit var myHandler : MyHandler
-    private var currentPosition = Int.MAX_VALUE / 2 - 3
+    private val myHandler = MyHandler(this@PlaceListFragment)
     private val intervalTime = 3000.toLong() // 몇초 간격으로 페이지를 넘길것인지 (1500 = 1.5초)
 
     override fun onCreateView(
@@ -78,7 +72,6 @@ class PlaceListFragment : Fragment(),
     private fun initAdapter() {
         initRecommendAdapter()
         initMainAdapter()
-        initAutoScroll()
     }
 
     private fun autoScrollStart(intervalTime: Long) {
@@ -90,76 +83,66 @@ class PlaceListFragment : Fragment(),
         myHandler.removeMessages(0) // 핸들러를 중지시킴
     }
 
-//    private inner class MyHandler : Handler() {
-//        override fun handleMessage(msg: Message) {
-//            super.handleMessage(msg)
-//
-//            if (msg.what == 0) {
-//                binding.viewpagerRecommend.setCurrentItem(++currentPosition, true) // 다음 페이지로 이동
-//                autoScrollStart(intervalTime) // 스크롤을 계속 이어서 한다.
-//            }
-//        }
-//    }
     private class MyHandler(fragment: PlaceListFragment) : Handler() {
         private val fragmentWeakRef = WeakReference(fragment)
-
         override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
             fragmentWeakRef.get()?.let { fragment ->
                 if (msg.what == 0 && fragment.isAdded) {
-                    fragment.binding.viewpagerRecommend.setCurrentItem(++fragment.currentPosition, true)
+                    fragment.binding.viewpagerRecommend.setCurrentItem(
+                        fragment.model.recommendPosition.value!! + 1,
+                        true
+                    )
                     fragment.autoScrollStart(fragment.intervalTime)
                 }
             }
         }
     }
 
-
-    private fun initAutoScroll() {
-        binding.viewpagerRecommend.adapter = recommendAdapter
-        binding.viewpagerRecommend.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-        binding.viewpagerRecommend.setCurrentItem(currentPosition, false)
-
-        binding.viewpagerRecommend.apply {
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageScrollStateChanged(state: Int) {
-                    super.onPageScrollStateChanged(state)
-                    when (state) {
-                        // 뷰페이저에서 손 떼었을때 / 뷰페이저 멈춰있을 때
-                        ViewPager2.SCROLL_STATE_IDLE -> autoScrollStart(intervalTime)
-                        // 뷰페이저 움직이는 중
-                        ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
-                    }
-                }
-            })
-        }
-    }
-
     private fun initRecommendAdapter() {
-        recommendAdapter.run{
-            onRefreshRecommentClickListener = this@PlaceListFragment
+        recommendAdapter.run {
+            onRefreshRecommendClickListener = this@PlaceListFragment
             onTourItemClickListener = this@PlaceListFragment
             onAddAllRecommendClickListener = this@PlaceListFragment
         }
-        binding.viewpagerRecommend.adapter = recommendAdapter
+        binding.viewpagerRecommend.run {
+            adapter = recommendAdapter
+            orientation = ViewPager2.ORIENTATION_HORIZONTAL
 
-        binding.viewpagerRecommend.registerOnPageChangeCallback( object : ViewPager2.OnPageChangeCallback() {
+            setCurrentItem(model.recommendPosition.value!!, false)
+        }
+        binding.viewpagerRecommend.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                when (state) {
+                    ViewPager2.SCROLL_STATE_IDLE -> autoScrollStart(intervalTime)
+                    ViewPager2.SCROLL_STATE_DRAGGING -> autoScrollStop()
+                }
+            }
+
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                val indicatorList =
-                    listOf(binding.placeIndicator1,
-                        binding.placeIndicator2,
-                        binding.placeIndicator3,
-                        binding.placeIndicator4,
-                        binding.placeIndicator5,
-                        binding.placeIndicator6)
-                indicatorList.forEach {
-                    it.setBackgroundResource(R.drawable.shape_circle_gray)
-                    Log.d(TAG,"position forEach ${position}")
-                }
-                indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
-                Log.d(TAG,"position % 6 ${position }")
+                Log.d(TAG, "position % 6  = ${position % 6}")
+                model.setRecommendPosition(position)
             }
         })
+    }
+
+    private fun setRecommendPageIndicator(position: Int) {
+        val indicatorList =
+            listOf(
+                binding.placeIndicator1,
+                binding.placeIndicator2,
+                binding.placeIndicator3,
+                binding.placeIndicator4,
+                binding.placeIndicator5,
+                binding.placeIndicator6
+            )
+        indicatorList.forEach {
+            it.setBackgroundResource(R.drawable.shape_circle_gray)
+        }
+        indicatorList[position % 6].setBackgroundResource(R.drawable.shape_circle_blue)
     }
 
     override fun onRefreshRecommendClick() {
@@ -186,22 +169,22 @@ class PlaceListFragment : Fragment(),
         startActivity(placeDetailIntent)
     }
 
-    override fun onAddAllRecommendClick(isAllAdded: Boolean) {
-        if (!isAllAdded) {
-            Toast.makeText(
-                requireActivity(),
-                R.string.place_list_recommend_add_all_toast,
-                Toast.LENGTH_SHORT
-            ).show()
-            model.addAllRecommend()
+    override fun onAddAllRecommendClick(optimizedOrder: List<Int>) {
+        Toast.makeText(
+            requireActivity(),
+            R.string.place_list_recommend_add_all_toast,
+            Toast.LENGTH_SHORT
+        ).show()
+        model.addAllRecommend(optimizedOrder)
 
-            mainModel.loadOrFetchTouristAttractionList()
-            mainModel.loadOrFetchRestaurantList()
-            mainModel.loadOrFetchCafeList()
-            mainModel.loadOrFetchEventList()
-        } else {
-            (requireActivity() as MainActivity).moveToRouteFragment()
-        }
+        mainModel.loadOrFetchTouristAttractionList()
+        mainModel.loadOrFetchRestaurantList()
+        mainModel.loadOrFetchCafeList()
+        mainModel.loadOrFetchEventList()
+    }
+
+    override fun onMoveToRouteClick() {
+        (requireActivity() as MainActivity).moveToRouteFragment()
     }
 
     private fun initMainAdapter() {
@@ -229,12 +212,11 @@ class PlaceListFragment : Fragment(),
     }
 
     private fun initModelObserver() {
-        model.themeTitleInfo.observe(viewLifecycleOwner){themeTitleInfo ->
-            if(themeTitleInfo.first == -1) {
+        model.themeTitleInfo.observe(viewLifecycleOwner) { themeTitleInfo ->
+            if (themeTitleInfo.first == -1) {
                 binding.tvTravelTheme.isVisible = false
-            }
-            else {
-                binding.tvTravelTheme.run{
+            } else {
+                binding.tvTravelTheme.run {
                     isVisible = true
                     setText(themeTitleInfo.first)
                     setTextColor(resources.getColor(themeTitleInfo.second))
@@ -262,32 +244,40 @@ class PlaceListFragment : Fragment(),
                 e.stackTrace
             }
         }
-        model.recommendDataList.observe(viewLifecycleOwner){recommendDataList ->
-            if(recommendDataList.isNotEmpty()){
-                (recommendDataList.last() as RecommendMap).locations = model.getMarkerPositions()
+        model.recommendDataList.observe(viewLifecycleOwner) { recommendDataList ->
+            if (recommendDataList.isNotEmpty()) {
+                (recommendDataList.last() as RecommendMap).run {
+                    optimizedLocations = model.getOptimizedLocations()
+                    optimizedOrder = model.getOptimizedOrder()
+                }
             }
             recommendAdapter.changeDataSet(recommendDataList)
         }
 
-        model.isAllRecommendAdded.observe(viewLifecycleOwner){isAllRecommendAdded ->
+        model.recommendPosition.observe(viewLifecycleOwner) { recommendPosition ->
+            setRecommendPageIndicator(recommendPosition)
+        }
+
+        model.isAllRecommendAdded.observe(viewLifecycleOwner) { isAllRecommendAdded ->
             val recommendDataList = recommendAdapter.getDataSet()
-            if(recommendDataList.isNotEmpty()){
+            if (recommendDataList.isNotEmpty()) {
                 (recommendDataList.last() as RecommendMap).isAllAdded = isAllRecommendAdded
             }
             recommendAdapter.changeDataSet(recommendDataList, 5)
         }
     }
-    private fun initMainModelObserver(){
-        mainModel.touristAttractionList.observe(viewLifecycleOwner){
+
+    private fun initMainModelObserver() {
+        mainModel.touristAttractionList.observe(viewLifecycleOwner) {
             model.pickAndSaveRecommendTouristAttraction(it)
         }
-        mainModel.restaurantList.observe(viewLifecycleOwner){
+        mainModel.restaurantList.observe(viewLifecycleOwner) {
             model.pickAndSaveRecommendRestaurant(it)
         }
-        mainModel.cafeList.observe(viewLifecycleOwner){
+        mainModel.cafeList.observe(viewLifecycleOwner) {
             model.pickAndSaveRecommendCafe(it)
         }
-        mainModel.eventList.observe(viewLifecycleOwner){
+        mainModel.eventList.observe(viewLifecycleOwner) {
             model.pickAndSaveRecommendEvent(it)
         }
     }
@@ -295,12 +285,9 @@ class PlaceListFragment : Fragment(),
     override fun onResume() {
         super.onResume()
         model.setIsAllRecommendAdded()
-//        myHandler = MyHandler()
-        myHandler = MyHandler(this)
-        autoScrollStart(intervalTime) // 다른 페이지 갔다가 돌아오면 다시 스크롤 시작
+        autoScrollStart(intervalTime)
     }
 
-    // 다른 페이지로 떠나있는 동안 스크롤이 동작할 필요는 없음. 정지
     override fun onPause() {
         super.onPause()
         autoScrollStop()

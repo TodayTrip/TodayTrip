@@ -10,10 +10,10 @@
         android:id="@+id/cv_save_photo_pocket_frame"
         android:layout_width="25dp"
         android:layout_height="25dp"
+        android:layout_marginStart="18dp"
         android:background="@color/black"
         app:cardCornerRadius="100dp"
         app:layout_constraintBottom_toBottomOf="@+id/cv_save_photo_text_frame"
-        app:layout_constraintEnd_toStartOf="@+id/cv_save_photo_text_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cv_save_photo_text_frame">
 
@@ -37,8 +37,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cv_save_photo_text_frame"
         android:layout_width="0dp"
-        android:layout_height="85dp"
-        android:layout_marginStart="51dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="47dp"
         android:layout_marginEnd="12dp"
         android:background="@drawable/shape_white_10_radius"
         android:backgroundTint="@color/white"
@@ -49,8 +49,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_save_photo_frame"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="8dp"
             android:backgroundTint="@color/light_gray"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -87,9 +87,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom|center"
+                android:layout_marginTop="6dp"
                 android:text="사진추가"
                 android:textSize="12sp"
-                android:layout_marginTop="6dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -115,11 +115,9 @@
             android:maxLines="1"
             android:text="경로1"
             android:textSize="18sp"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/tv_save_photo_address"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/layout_save_photo_frame"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/layout_save_photo_frame"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <TextView
@@ -127,9 +125,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="6dp"
             android:text="주소"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/tv_save_photo_road_text"
             app:layout_constraintStart_toStartOf="@+id/tv_save_photo_road_text"
             app:layout_constraintTop_toBottomOf="@+id/tv_save_photo_road_text" />
@@ -155,9 +153,12 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
         android:background="@color/light_gray"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vi_route_last_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

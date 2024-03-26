@@ -28,6 +28,8 @@ import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
+import java.lang.Integer.max
+import java.lang.Integer.min
 
 enum class RecommendViewType(val viewType: Int) {
     COVER(0),
@@ -35,19 +37,22 @@ enum class RecommendViewType(val viewType: Int) {
     MAP(2)
 }
 
-interface OnRefreshRecommentClickListener{
+interface OnRefreshRecommendClickListener {
     fun onRefreshRecommendClick()
 }
+
 interface OnAddAllRecommendClickListener {
-    fun onAddAllRecommendClick(isAllAdded: Boolean)
+    fun onAddAllRecommendClick(optimizedOrder: List<Int>)
+    fun onMoveToRouteClick()
 }
 
 class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val TAG = "RecommendViewPagerAdapter"
 
     private var recommendDataList = listOf<RecommendData>()
+    private val recommendMapIndex = 5
 
-    var onRefreshRecommentClickListener: OnRefreshRecommentClickListener? = null
+    var onRefreshRecommendClickListener: OnRefreshRecommendClickListener? = null
     var onTourItemClickListener: OnTourItemClickListener? = null
     var onAddAllRecommendClickListener: OnAddAllRecommendClickListener? = null
 
@@ -61,7 +66,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            RecommendViewType.COVER.viewType ->{
+            RecommendViewType.COVER.viewType -> {
                 val binding = ItemPlaceListRecommendCoverBinding.inflate(
                     LayoutInflater.from(parent.context), parent, false
                 )
@@ -82,16 +87,15 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 Holder(binding)
             }
         }
-
     }
 
-//    override fun getItemCount(): Int = recommendDataList.size
     override fun getItemCount(): Int = Int.MAX_VALUE
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        Log.d(TAG, "onBindViewHolder) called, position: ${position % 6}")
         when (val currentRecommendData = recommendDataList[position % 6]) {  //6추가
             is RecommendCover -> {
-                (holder as CoverHolder).run{
+                (holder as CoverHolder).run {
                     bindCover(currentRecommendData)
                     setOnClickListener()
                 }
@@ -121,11 +125,24 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         recommendDataList = newRecommendDataList
         notifyDataSetChanged()
     }
-    fun changeDataSet(newRecommendDataList: List<RecommendData>, position:Int) {
+
+    fun changeDataSet(newRecommendDataList: List<RecommendData>, position: Int) {
         recommendDataList = newRecommendDataList
-        notifyItemChanged(position)
+        notifyItemRangeChanged(max(0, position - 6), min(position + 6, itemCount))
     }
+
     fun getDataSet(): List<RecommendData> = recommendDataList
+
+    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
+        Log.d(TAG, "onViewAttachedToWindow) called, position: ${holder.position % 6}")
+        super.onViewAttachedToWindow(holder)
+        if (holder is MapHolder) holder.startMapLifecycle()
+    }
+
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        Log.d(TAG, "onViewDetachedToWindow) called, position: ${holder.position % 6}")
+        super.onViewDetachedFromWindow(holder)
+    }
 
     inner class CoverHolder(binding: ItemPlaceListRecommendCoverBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -137,14 +154,16 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             imageView.setImageResource(recommendCover.imageId)
             destinationTextView.text = recommendCover.destination
         }
-        fun setOnClickListener(){
+
+        fun setOnClickListener() {
             refreshLayout.setOnClickListener {
                 Log.d(TAG, "refresh clicked")
-                onRefreshRecommentClickListener?.onRefreshRecommendClick()
+                onRefreshRecommendClickListener?.onRefreshRecommendClick()
             }
         }
 
     }
+
     inner class Holder(binding: ItemPlaceListRecommendBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val imageView: ImageView = binding.ivItemPlaceListRecommendImage
@@ -187,24 +206,28 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         RecyclerView.ViewHolder(binding.root), OnMapReadyCallback {
 
         private lateinit var naverMap: NaverMap
-        private var locations = listOf<LatLng>()
         private val polylineOverlay = PolylineOverlay()
         private val markers = mutableListOf<Marker>()
+
+        private lateinit var optimizedLocations: List<LatLng>
+        private lateinit var optimizedOrder: List<Int>
 
         private val mapView: MapView = binding.mapItemPlaceListRecommendMap
         private val destinationTextView: TextView = binding.tvItemPlaceListRecommendMapDestination
         private val addAllButton: TextView = binding.tvItemPlaceListRecommendMapAddAll
         fun bindMap(recommendMap: RecommendMap) {
-            destinationTextView.text = recommendMap.destination
-            locations = recommendMap.locations
+            Log.d(TAG, "bindMap) called")
+            optimizedLocations = recommendMap.optimizedLocations
+            optimizedOrder = recommendMap.optimizedOrder
 
             clearMap()
             mapView.getMapAsync(this@MapHolder)
 
+            destinationTextView.text = recommendMap.destination
             setAllAddButtonUI(recommendMap.isAllAdded)
         }
 
-        private fun clearMap(){
+        private fun clearMap() {
             polylineOverlay.map = null
             markers.forEach {
                 it.map = null
@@ -233,17 +256,23 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         fun setOnClickListener(recommendMap: RecommendMap) {
             addAllButton.setOnClickListener {
-                onAddAllRecommendClickListener?.onAddAllRecommendClick(recommendMap.isAllAdded)
+                if (recommendMap.isAllAdded) {
+                    onAddAllRecommendClickListener?.onMoveToRouteClick()
+                } else {
+                    onAddAllRecommendClickListener?.onAddAllRecommendClick(recommendMap.optimizedOrder)
+                    recommendMap.isAllAdded = true
+                    setAllAddButtonUI(true)
+                }
             }
         }
 
         override fun onMapReady(naverMap: NaverMap) {
+            Log.d(TAG, "onMapReady) called")
             this.naverMap = naverMap
-
             naverMap.uiSettings.isZoomControlEnabled = false
 
-            if (locations.isNotEmpty()) {
-                locations.forEachIndexed { index, latLng ->
+            if (optimizedLocations.isNotEmpty()) {
+                optimizedLocations.forEachIndexed { index, latLng ->
                     val text = (index + 1).toString()
                     val iconWithTextBitmap =
                         MapUtils.createIconWithText(
@@ -267,7 +296,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 val bounds = MapUtils.createBoundsForAllMarkers(markers)
                 MapUtils.updateCameraToBounds(naverMap, bounds, 130)
 
-                if (locations.size == 1) {
+                if (optimizedLocations.size == 1) {
                     naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
                 }
             } else {
@@ -279,8 +308,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 }
                 naverMap.moveCamera(CameraUpdate.zoomTo(9.0))
             }
-            if (locations.size > 1) {
-                val markerPositions = locations.map { location ->
+            if (optimizedLocations.size > 1) {
+                val markerPositions = optimizedLocations.map { location ->
                     LatLng(location.latitude, location.longitude)
                 }
                 polylineOverlay.apply {
@@ -289,6 +318,13 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                     map = naverMap
                 }
             }
+        }
+
+        fun startMapLifecycle() {
+            Log.d(TAG, "startMapLifecycle) called")
+            mapView.onCreate(null)
+            mapView.onStart()
+            mapView.onResume()
         }
     }
 }
