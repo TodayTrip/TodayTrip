@@ -49,8 +49,8 @@
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:padding="7.5dp"
-        android:background="@drawable/shape_background_button_click"
+        android:padding="15dp"
+        android:background="@drawable/shape_button_click"
         android:src="@drawable/ic_record_detail_back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
