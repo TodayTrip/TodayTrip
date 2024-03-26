@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tv_item_place_list_recommend_title"
         app:layout_constraintStart_toStartOf="@id/tv_item_place_list_recommend_title"

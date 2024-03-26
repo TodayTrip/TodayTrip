@@ -55,6 +55,7 @@
     <string name="place_detail_no_nearby">이 장소 근처 정보가 없습니다</string>
     <string name="place_detail_my_memory">이 장소에서 나의 추억</string>
     <string name="place_detail_no_photo">이 장소에 저장한 사진이 없습니다</string>
+    <string name="place_detail_expand_info">더보기</string>
 
     <!-- PlaceListFragment -->
     <string name="place_list_tourist_attraction">관광지</string>
