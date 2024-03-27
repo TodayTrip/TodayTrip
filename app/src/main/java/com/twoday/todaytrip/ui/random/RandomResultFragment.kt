@@ -137,7 +137,7 @@ class RandomResultFragment : Fragment() {
                 Handler(Looper.getMainLooper()).postDelayed({
                     val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                }, 3000)
+                }, 1000)
 //                Log.d(TAG, "tourist attraction list ready! start main activity")
 //                val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
 //                startActivity(intent)
