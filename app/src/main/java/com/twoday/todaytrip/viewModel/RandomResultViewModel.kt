@@ -66,7 +66,7 @@ class RandomResultViewModel : ViewModel() {
         if (destination.isNullOrBlank()) ""
         else DestinationData.destinationAreaCodes[destination] ?: ""
 
-    private fun fetchAndSaveTouristAttractionList() {
+    private suspend fun fetchAndSaveTouristAttractionList() {
         val pageNo = PageNoPrefUtil.FIRST_PAGE
 
         val touristAttractionList =

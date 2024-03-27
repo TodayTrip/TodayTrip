@@ -7,15 +7,15 @@ import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.TourItemDTOConverter
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 
 object TourNetworkInterfaceUtils {
     private val TAG = "TourNetworkInterfaceUtils"
-    fun fetchTouristAttractionList(areaCode: String, pageNo: Int): List<TourItem> =
-        runBlocking(Dispatchers.IO) {
+    suspend fun fetchTouristAttractionList(areaCode: String, pageNo: Int): List<TourItem> =
+        CoroutineScope(Dispatchers.IO).async {
             val touristAttractionList = mutableListOf<TourItem>()
 
             withContext(Dispatchers.Default) {
@@ -47,221 +47,218 @@ object TourNetworkInterfaceUtils {
                 }
             }
 
-            return@runBlocking touristAttractionList.toList()
-        }
+            return@async touristAttractionList
+        }.await().toList()
 
-    fun fetchTouristAttractionListWithTheme(
+    suspend fun fetchTouristAttractionListWithTheme(
         theme: String,
         areaCode: String,
         pageNo: Int
-    ): List<TourItem> =
-        runBlocking(Dispatchers.IO) {
-            val touristAttractionList = mutableListOf<TourItem>()
-            when (theme) {
-                "산" -> {
-                    fetchMountainThemeList(areaCode, pageNo).forEach { areaBasedList ->
-                        areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.TouristDestination(item, it)
-                                )
-                            }
+    ): List<TourItem> = CoroutineScope(Dispatchers.IO).async {
+        val touristAttractionList = mutableListOf<TourItem>()
+        when (theme) {
+            "산" -> {
+                fetchMountainThemeList(areaCode, pageNo).forEach { areaBasedList ->
+                    areaBasedList?.response?.body?.items?.item?.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(item, it)
+                            )
                         }
                     }
-                }
-
-                "바다" -> {
-                    fetchSeaThemeList(areaCode, pageNo).forEach { areaBasedList ->
-                        areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.TouristDestination(item, it)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                "역사" -> {
-                    fetchHistoricalTheme(areaCode, pageNo)?.let { areaBasedList ->
-                        areaBasedList.response.body.items.item.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.TouristDestination(item, it)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                "휴양" -> {
-                    fetchRecreationalTheme(areaCode, pageNo)?.let { areaBasedList ->
-                        areaBasedList.response.body.items.item.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.TouristDestination(item, it)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                "체험" -> {
-                    fetchExperientialTheme(areaCode, pageNo)?.let { areaBasedList ->
-                        areaBasedList.response.body.items.item.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.TouristDestination(item, it)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                "레포츠" -> {
-                    fetchLeisureSportsTheme(areaCode, pageNo)?.let { areaBasedList ->
-                        areaBasedList.response.body.items.item.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.LeisureSports(item, it)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                "문화시설" -> {
-                    fetchCulturalThemeList(areaCode, pageNo).forEach { areaBasedList ->
-                        areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                                touristAttractionList.add(
-                                    TourItem.CulturalFacilities(item, it)
-                                )
-                            }
-                        }
-                    }
-                }
-
-                else -> {
-                    Log.d(TAG, "error! theme does not exist!")
                 }
             }
-            return@runBlocking touristAttractionList.toList()
+
+            "바다" -> {
+                fetchSeaThemeList(areaCode, pageNo).forEach { areaBasedList ->
+                    areaBasedList?.response?.body?.items?.item?.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(item, it)
+                            )
+                        }
+                    }
+                }
+            }
+
+            "역사" -> {
+                fetchHistoricalTheme(areaCode, pageNo)?.let { areaBasedList ->
+                    areaBasedList.response.body.items.item.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(item, it)
+                            )
+                        }
+                    }
+                }
+            }
+
+            "휴양" -> {
+                fetchRecreationalTheme(areaCode, pageNo)?.let { areaBasedList ->
+                    areaBasedList.response.body.items.item.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(item, it)
+                            )
+                        }
+                    }
+                }
+            }
+
+            "체험" -> {
+                fetchExperientialTheme(areaCode, pageNo)?.let { areaBasedList ->
+                    areaBasedList.response.body.items.item.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(item, it)
+                            )
+                        }
+                    }
+                }
+            }
+
+            "레포츠" -> {
+                fetchLeisureSportsTheme(areaCode, pageNo)?.let { areaBasedList ->
+                    areaBasedList.response.body.items.item.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.LeisureSports(item, it)
+                            )
+                        }
+                    }
+                }
+            }
+
+            "문화시설" -> {
+                fetchCulturalThemeList(areaCode, pageNo).forEach { areaBasedList ->
+                    areaBasedList?.response?.body?.items?.item?.forEach { item ->
+                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                            touristAttractionList.add(
+                                TourItem.CulturalFacilities(item, it)
+                            )
+                        }
+                    }
+                }
+            }
+
+            else -> {
+                Log.d(TAG, "error! theme does not exist!")
+            }
         }
+        return@async touristAttractionList
+    }.await().toList()
 
-    private fun fetchMountainThemeList(areaCode: String, pageNo: Int)
-            : List<AreaBasedList?> =
-        runBlocking(Dispatchers.IO) {
-            val mountainList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.MOUNTAIN.id,
-                    numOfRows = 3,
-                    pageNo = pageNo
-                )
-            }
-            val naturalRecreationForestList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
-                    numOfRows = 3,
-                    pageNo = pageNo
-                )
-            }
-            val arboretumList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.ARBORETUM.id,
-                    numOfRows = 3,
-                    pageNo = pageNo
-                )
-            }
-            return@runBlocking listOf(
-                mountainList.await(),
-                naturalRecreationForestList.await(),
-                arboretumList.await()
-            )
-        }
-
-    private fun fetchSeaThemeList(areaCode: String, pageNo: Int)
-            : List<AreaBasedList?> =
-        runBlocking(Dispatchers.IO) {
-            val coastalSceneryList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.COASTAL_SCENERY.id,
-                    numOfRows = 2,
-                    pageNo = pageNo
-                )
-            }
-            val portList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.PORT.id,
-                    numOfRows = 2,
-                    pageNo = pageNo
-                )
-            }
-            val lightHouseList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.LIGHTHOUSE.id,
-                    numOfRows = 2,
-                    pageNo = pageNo
-                )
-            }
-            val islandList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.ISLAND.id,
-                    numOfRows = 2,
-                    pageNo = pageNo
-                )
-            }
-            val beachList = async {
-                fetchAreaBasedList(
-                    areaCode = areaCode,
-                    contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
-                    category1 = TourCategoryId1.NATURE.id,
-                    category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
-                    category3 = TourCategoryId3.BEACH.id,
-                    numOfRows = 2,
-                    pageNo = pageNo
-                )
-            }
-            return@runBlocking listOf(
-                coastalSceneryList.await(),
-                portList.await(),
-                lightHouseList.await(),
-                islandList.await(),
-                beachList.await()
-            )
-        }
-
-    private fun fetchHistoricalTheme(areaCode: String, pageNo: Int): AreaBasedList? =
-        runBlocking(Dispatchers.IO) {
+    private suspend fun fetchMountainThemeList(areaCode: String, pageNo: Int)
+            : List<AreaBasedList?> = CoroutineScope(Dispatchers.IO).async {
+        val mountainList = async {
             fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.MOUNTAIN.id,
+                numOfRows = 3,
+                pageNo = pageNo
+            )
+        }
+        val naturalRecreationForestList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.NATURAL_RECREATION_FOREST.id,
+                numOfRows = 3,
+                pageNo = pageNo
+            )
+        }
+        val arboretumList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.ARBORETUM.id,
+                numOfRows = 3,
+                pageNo = pageNo
+            )
+        }
+        return@async listOf(
+            mountainList.await(),
+            naturalRecreationForestList.await(),
+            arboretumList.await()
+        )
+    }.await()
+
+    private suspend fun fetchSeaThemeList(areaCode: String, pageNo: Int)
+            : List<AreaBasedList?> = CoroutineScope(Dispatchers.IO).async {
+        val coastalSceneryList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.COASTAL_SCENERY.id,
+                numOfRows = 2,
+                pageNo = pageNo
+            )
+        }
+        val portList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.PORT.id,
+                numOfRows = 2,
+                pageNo = pageNo
+            )
+        }
+        val lightHouseList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.LIGHTHOUSE.id,
+                numOfRows = 2,
+                pageNo = pageNo
+            )
+        }
+        val islandList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.ISLAND.id,
+                numOfRows = 2,
+                pageNo = pageNo
+            )
+        }
+        val beachList = async {
+            fetchAreaBasedList(
+                areaCode = areaCode,
+                contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
+                category1 = TourCategoryId1.NATURE.id,
+                category2 = TourCategoryId2.NATURE_TOURIST_ATTRACTION.id,
+                category3 = TourCategoryId3.BEACH.id,
+                numOfRows = 2,
+                pageNo = pageNo
+            )
+        }
+        return@async listOf(
+            coastalSceneryList.await(),
+            portList.await(),
+            lightHouseList.await(),
+            islandList.await(),
+            beachList.await()
+        )
+    }.await()
+
+    private suspend fun fetchHistoricalTheme(areaCode: String, pageNo: Int): AreaBasedList? =
+        CoroutineScope(Dispatchers.IO).async {
+            return@async fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
@@ -269,11 +266,11 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10,
                 pageNo = pageNo
             )
-        }
+        }.await()
 
-    private fun fetchRecreationalTheme(areaCode: String, pageNo: Int): AreaBasedList? =
-        runBlocking(Dispatchers.IO) {
-            fetchAreaBasedList(
+    private suspend fun fetchRecreationalTheme(areaCode: String, pageNo: Int): AreaBasedList? =
+        CoroutineScope(Dispatchers.IO).async {
+            return@async fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
@@ -281,11 +278,11 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10,
                 pageNo = pageNo
             )
-        }
+        }.await()
 
-    private fun fetchExperientialTheme(areaCode: String, pageNo: Int): AreaBasedList? =
-        runBlocking(Dispatchers.IO) {
-            fetchAreaBasedList(
+    private suspend fun fetchExperientialTheme(areaCode: String, pageNo: Int): AreaBasedList? =
+        CoroutineScope(Dispatchers.IO).async {
+            return@async fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
                 category1 = TourCategoryId1.HUMANITIES.id,
@@ -293,20 +290,23 @@ object TourNetworkInterfaceUtils {
                 numOfRows = 10,
                 pageNo = pageNo
             )
-        }
+        }.await()
 
-    private fun fetchLeisureSportsTheme(areaCode: String, pageNo: Int): AreaBasedList? =
-        runBlocking(Dispatchers.IO) {
-            fetchAreaBasedList(
+    private suspend fun fetchLeisureSportsTheme(areaCode: String, pageNo: Int): AreaBasedList? =
+        CoroutineScope(Dispatchers.IO).async {
+            return@async fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.LEISURE_SPORTS.contentTypeId,
                 numOfRows = 10,
                 pageNo = pageNo
             )
-        }
+        }.await()
 
-    private fun fetchCulturalThemeList(areaCode: String, pageNo: Int): List<AreaBasedList?> =
-        runBlocking(Dispatchers.IO) {
+    private suspend fun fetchCulturalThemeList(
+        areaCode: String,
+        pageNo: Int
+    ): List<AreaBasedList?> =
+        CoroutineScope(Dispatchers.IO).async {
             val museumList = async {
                 fetchAreaBasedList(
                     areaCode = areaCode,
@@ -362,17 +362,17 @@ object TourNetworkInterfaceUtils {
                     pageNo = pageNo
                 )
             }
-            return@runBlocking listOf(
+            return@async listOf(
                 museumList.await(),
                 memorialHallList.await(),
                 exhibitionList.await(),
                 areGalleryList.await(),
                 conventionCenterList.await()
             )
-        }
+        }.await()
 
-    fun fetchRestaurantTabList(areaCode: String, pageNo: Int): List<TourItem> =
-        runBlocking(Dispatchers.IO) {
+    suspend fun fetchRestaurantTabList(areaCode: String, pageNo: Int): List<TourItem> =
+        CoroutineScope(Dispatchers.IO).async {
             val restaurantList = fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
@@ -389,11 +389,11 @@ object TourNetworkInterfaceUtils {
                         restaurantTabList.add(TourItem.Restaurant(item, it))
                     }
                 }
-            return@runBlocking restaurantTabList.toList()
-        }
+            return@async restaurantTabList
+        }.await().toList()
 
-    fun fetchCafeTabList(areaCode: String, pageNo: Int)
-            : List<TourItem> = runBlocking(Dispatchers.IO) {
+    suspend fun fetchCafeTabList(areaCode: String, pageNo: Int)
+            : List<TourItem> = CoroutineScope(Dispatchers.IO).async {
         val cafeList = fetchAreaBasedList(
             areaCode = areaCode,
             contentTypeId = TourContentTypeId.RESTAURANT.contentTypeId,
@@ -409,11 +409,11 @@ object TourNetworkInterfaceUtils {
                 cafeTabList.add(TourItem.Restaurant(item, it))
             }
         }
-        return@runBlocking cafeTabList.toList()
-    }
+        return@async cafeTabList
+    }.await().toList()
 
-    fun fetchEventTabList(areaCode: String, pageNo: Int): List<TourItem> =
-        runBlocking(Dispatchers.IO) {
+    suspend fun fetchEventTabList(areaCode: String, pageNo: Int): List<TourItem> =
+        CoroutineScope(Dispatchers.IO).async {
             val eventList = fetchAreaBasedList(
                 areaCode = areaCode,
                 contentTypeId = TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId,
@@ -441,74 +441,75 @@ object TourNetworkInterfaceUtils {
                     eventTabList.add(TourItem.EventPerformanceFestival(item, it))
                 }
             }
-            return@runBlocking eventTabList.toList()
-        }
+            return@async eventTabList.toList()
+        }.await()
 
-    fun fetchNearByList(tourItem: TourItem): List<TourItem> = runBlocking(Dispatchers.IO) {
-        val nearByList = mutableListOf<TourItem>()
+    suspend fun fetchNearByList(tourItem: TourItem): List<TourItem> =
+        CoroutineScope(Dispatchers.IO).async {
+            val nearByList = mutableListOf<TourItem>()
 
-        val locationBasedList = fetchLocationBasedList(
-            mapX = tourItem.getLongitude(),
-            mapY = tourItem.getLatitude()
-        )
-        Log.d(TAG, "fetchNearByList) locationBasedList is null: ${locationBasedList == null}")
-        locationBasedList?.response?.body?.items?.item?.forEach { item ->
-            Log.d(TAG, "fetchNearByList) item.contentId: ${item.contentid}")
-            fetchIntroDetail(item.contentid, item.contenttypeid)?.let {
-                when (it.contentTypeId) {
-                    TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
-                        nearByList.add(
-                            TourItem.TouristDestination(
-                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
-                                it
+            val locationBasedList = fetchLocationBasedList(
+                mapX = tourItem.getLongitude(),
+                mapY = tourItem.getLatitude()
+            )
+            Log.d(TAG, "fetchNearByList) locationBasedList is null: ${locationBasedList == null}")
+            locationBasedList?.response?.body?.items?.item?.forEach { item ->
+                Log.d(TAG, "fetchNearByList) item.contentId: ${item.contentid}")
+                fetchIntroDetail(item.contentid, item.contenttypeid)?.let {
+                    when (it.contentTypeId) {
+                        TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
+                            nearByList.add(
+                                TourItem.TouristDestination(
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    it
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
-                        nearByList.add(
-                            TourItem.CulturalFacilities(
-                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
-                                it
+                        TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
+                            nearByList.add(
+                                TourItem.CulturalFacilities(
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    it
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
-                        nearByList.add(
-                            TourItem.LeisureSports(
-                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
-                                it
+                        TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
+                            nearByList.add(
+                                TourItem.LeisureSports(
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    it
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    TourContentTypeId.RESTAURANT.contentTypeId -> {
-                        nearByList.add(
-                            TourItem.Restaurant(
-                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
-                                it
+                        TourContentTypeId.RESTAURANT.contentTypeId -> {
+                            nearByList.add(
+                                TourItem.Restaurant(
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    it
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
-                        nearByList.add(
-                            TourItem.EventPerformanceFestival(
-                                TourItemDTOConverter.getAreaBasedFromLocationBased(item),
-                                it
+                        TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
+                            nearByList.add(
+                                TourItem.EventPerformanceFestival(
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    it
+                                )
                             )
-                        )
-                    }
+                        }
 
-                    else -> {
-                        // do nothing
+                        else -> {
+                            // do nothing
+                        }
                     }
                 }
             }
-        }
-        return@runBlocking nearByList
-    }
+            return@async nearByList
+        }.await()
 
     private suspend fun fetchAreaBasedList(
         areaCode: String,
