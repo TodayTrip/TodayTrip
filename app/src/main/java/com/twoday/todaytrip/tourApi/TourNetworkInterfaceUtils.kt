@@ -27,12 +27,16 @@ object TourNetworkInterfaceUtils {
                 )
             }?.let { areaBasedList ->
                 areaBasedList.response.body.items.item.forEach { item ->
-                    fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                    val introDetail: IntroDetailItem? = async {
+                        fetchIntroDetail(item.contentId, item.contentTypeId)
+                    }.await()
+                    introDetail?.let {
                         touristAttractionList.add(TourItem.TouristDestination(item, it))
                     }
                 }
             }
-            withContext(Dispatchers.Default) {
+            withContext(Dispatchers.Default)
+            {
                 fetchAreaBasedList(
                     areaCode = areaCode,
                     contentTypeId = TourContentTypeId.CULTURAL_FACILITIES.contentTypeId,
@@ -41,12 +45,14 @@ object TourNetworkInterfaceUtils {
                 )
             }?.let { areaBasedList ->
                 areaBasedList.response.body.items.item.forEach { item ->
-                    fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
+                    val introDetail = CoroutineScope(Dispatchers.IO).async {
+                        fetchIntroDetail(item.contentId, item.contentTypeId)
+                    }.await()
+                    introDetail?.let {
                         touristAttractionList.add(TourItem.CulturalFacilities(item, it))
                     }
                 }
             }
-
             return@async touristAttractionList
         }.await().toList()
 
@@ -58,84 +64,112 @@ object TourNetworkInterfaceUtils {
         val touristAttractionList = mutableListOf<TourItem>()
         when (theme) {
             "산" -> {
-                fetchMountainThemeList(areaCode, pageNo).forEach { areaBasedList ->
+                val mountainThemeList = async {
+                    fetchMountainThemeList(areaCode, pageNo)
+                }.await()
+                mountainThemeList.forEach { areaBasedList ->
                     areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.TouristDestination(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.TouristDestination(item, it))
                         }
                     }
                 }
             }
 
             "바다" -> {
-                fetchSeaThemeList(areaCode, pageNo).forEach { areaBasedList ->
+                val seaThemeList = async {
+                    fetchSeaThemeList(areaCode, pageNo)
+                }.await()
+                seaThemeList.forEach { areaBasedList ->
                     areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.TouristDestination(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.TouristDestination(item, it))
                         }
                     }
                 }
             }
 
             "역사" -> {
-                fetchHistoricalTheme(areaCode, pageNo)?.let { areaBasedList ->
+                val historicalTheme = async {
+                    fetchHistoricalTheme(areaCode, pageNo)
+                }.await()
+                historicalTheme?.let { areaBasedList ->
                     areaBasedList.response.body.items.item.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.TouristDestination(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.TouristDestination(item, it))
                         }
                     }
                 }
             }
 
             "휴양" -> {
-                fetchRecreationalTheme(areaCode, pageNo)?.let { areaBasedList ->
+                val recreationalTheme = async {
+                    fetchRecreationalTheme(areaCode, pageNo)
+                }.await()
+                recreationalTheme?.let { areaBasedList ->
                     areaBasedList.response.body.items.item.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.TouristDestination(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.TouristDestination(item, it))
                         }
                     }
                 }
             }
 
             "체험" -> {
-                fetchExperientialTheme(areaCode, pageNo)?.let { areaBasedList ->
+                val experimentalTheme = async {
+                    fetchExperientialTheme(areaCode, pageNo)
+                }.await()
+                experimentalTheme?.let { areaBasedList ->
                     areaBasedList.response.body.items.item.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.TouristDestination(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.TouristDestination(item, it))
                         }
                     }
                 }
             }
 
             "레포츠" -> {
-                fetchLeisureSportsTheme(areaCode, pageNo)?.let { areaBasedList ->
+                val leisureSportsTheme = async {
+                    fetchLeisureSportsTheme(areaCode, pageNo)
+                }.await()
+                leisureSportsTheme?.let { areaBasedList ->
                     areaBasedList.response.body.items.item.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.LeisureSports(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.LeisureSports(item, it))
                         }
                     }
                 }
             }
 
             "문화시설" -> {
-                fetchCulturalThemeList(areaCode, pageNo).forEach { areaBasedList ->
+                val culturalThemeList = async {
+                    fetchCulturalThemeList(areaCode, pageNo)
+                }.await()
+                culturalThemeList.forEach { areaBasedList ->
                     areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                        fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                            touristAttractionList.add(
-                                TourItem.CulturalFacilities(item, it)
-                            )
+                        val introDetail = async {
+                            fetchIntroDetail(item.contentId, item.contentTypeId)
+                        }.await()
+                        introDetail?.let {
+                            touristAttractionList.add(TourItem.CulturalFacilities(item, it))
                         }
                     }
                 }
