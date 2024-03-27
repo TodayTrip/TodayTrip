@@ -73,7 +73,6 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
     private val markers = mutableListOf<Marker>()
     private var tedNaverClustering: TedNaverClustering<MapModel>? = null
-    private var tedNaverClusteringBuilder: BaseBuilder<TedNaverClustering<MapModel>, MapModel, Marker, TedNaverMarker, NaverMap, OverlayImage>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -204,7 +203,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             naverMap.moveCamera(cameraUpdate)
         }
 
-        tedNaverClusteringBuilder = TedNaverClustering.with<MapModel>(requireContext(), naverMap)
+        tedNaverClustering = TedNaverClustering.with<MapModel>(requireContext(), naverMap)
             .items(naverItems)
             .customMarker { naverItem ->
                 Marker().apply {
@@ -219,8 +218,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
             }
             .markerClickListener { clusterItem ->
                 clusterItem.index?.let { scrollToRecyclerViewPosition(it) }
-            }
-        tedNaverClustering = tedNaverClusteringBuilder!!.make()
+            }.make()
     }
 
     private fun scrollToRecyclerViewPosition(position: Int) {
