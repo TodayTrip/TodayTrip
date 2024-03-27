@@ -291,7 +291,6 @@ class PlaceListViewModel : ViewModel() {
                 R.drawable.img_daegu3
             ).random()
 
-
             "부산" -> listOf(
                 R.drawable.img_busan1,
                 R.drawable.img_busan2,
@@ -300,7 +299,7 @@ class PlaceListViewModel : ViewModel() {
             ).random()
 
             "대전" -> listOf(
-                R.drawable.img_seoul1
+                R.drawable.img_daejeon
             ).random()
 
             "제주" -> listOf(
