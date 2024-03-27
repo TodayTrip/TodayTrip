@@ -54,13 +54,12 @@ class RandomResultViewModel : ViewModel() {
 
     private suspend fun fetchAndSaveTourItemList() {
         val timedValue = measureTimedValue {
-            CoroutineScope(Dispatchers.IO).async {
+            val touristAttractionJob = CoroutineScope(Dispatchers.IO).launch {
                 fetchAndSaveTouristAttractionList()
-            }.await()
+            }
+                touristAttractionJob.join()
         }
-        val fetchTime = timedValue.duration
-
-        Log.d(TAG, "chAndSaveTouristAttractionList duration: $fetchTime")
+        Log.d(TAG, "chAndSaveTouristAttractionList duration: ${timedValue.duration}")
 
         withContext(Dispatchers.Main) {
             if(TourItemPrefUtil.loadTouristAttractionList().isEmpty())
