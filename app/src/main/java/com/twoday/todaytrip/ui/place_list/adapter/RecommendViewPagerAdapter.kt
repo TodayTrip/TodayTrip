@@ -133,17 +133,6 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
     fun getDataSet(): List<RecommendData> = recommendDataList
 
-    override fun onViewAttachedToWindow(holder: RecyclerView.ViewHolder) {
-        Log.d(TAG, "onViewAttachedToWindow) called, position: ${holder.position % 6}")
-        super.onViewAttachedToWindow(holder)
-        if (holder is MapHolder) holder.startMapLifecycle()
-    }
-
-    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
-        Log.d(TAG, "onViewDetachedToWindow) called, position: ${holder.position % 6}")
-        super.onViewDetachedFromWindow(holder)
-    }
-
     inner class CoverHolder(binding: ItemPlaceListRecommendCoverBinding) :
         RecyclerView.ViewHolder(binding.root) {
         private val imageView: ImageView = binding.ivItemPlaceListRecommendCoverImage
@@ -225,6 +214,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             optimizedOrder = recommendMap.optimizedOrder
 
             clearMap()
+            startMapLifecycle()
             mapView.getMapAsync(this@MapHolder)
 
             destinationTextView.text = recommendMap.destination
