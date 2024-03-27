@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ItemRecordGalleryPhotoBinding
+import com.twoday.todaytrip.utils.glide
 
 class RecordGalleryAdapter(private val uriList: List<String>) : RecyclerView.Adapter<RecordGalleryAdapter.ViewHolder>() {
     var itemClick: ItemClick? = null
@@ -35,9 +36,7 @@ class RecordGalleryAdapter(private val uriList: List<String>) : RecyclerView.Ada
 
     inner class ViewHolder(private val binding: ItemRecordGalleryPhotoBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(imageUri: String) {
-            Glide.with(binding.galleryPhoto.context)
-                .load(imageUri)
-                .into(binding.galleryPhoto)
+            binding.galleryPhoto.glide(imageUri)
             Log.d("zxc",imageUri)
 
             binding.root.setOnClickListener {

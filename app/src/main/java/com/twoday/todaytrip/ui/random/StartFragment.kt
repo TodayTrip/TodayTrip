@@ -11,6 +11,7 @@ import androidx.transition.TransitionInflater
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentStartBinding
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.RandomViewModel
 
 class StartFragment : Fragment() {
@@ -38,9 +39,7 @@ class StartFragment : Fragment() {
     }
 
     private fun initView() {
-        Glide.with(this)
-            .load(R.drawable.gif_start_walk)
-            .into(binding.ivStartWalkGif)
+        binding.ivStartWalkGif.glide(R.drawable.gif_start_walk)
     }
 
     private fun setUpClickListener() {

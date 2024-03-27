@@ -11,6 +11,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemSavePhotoListBinding
 
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
+import com.twoday.todaytrip.utils.glideWithPlaceholder
 
 class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAdapter.Holder>(
     TourItemDiffCallback()
@@ -50,15 +51,9 @@ class RecordDetailListAdapter() : ListAdapter<SavePhotoData, RecordDetailListAda
             title.text = item.tourItem.getTitle()
             address.text = item.tourItem.getAddress()
             if (!item.imageUriList.isNullOrEmpty()) {
-                Glide.with(itemView.context)
-                    .load(item.imageUriList[0])
-                    .placeholder(R.drawable.img_default)
-                    .into(image)
+                image.glideWithPlaceholder(item.imageUriList[0])
             }else {
-                Glide.with(itemView.context)
-                    .load(R.drawable.img_default)
-                    .placeholder(R.drawable.img_default)
-                    .into(image)
+                image.setImageResource(R.drawable.img_default)
             }
             image.clipToOutline = true
 

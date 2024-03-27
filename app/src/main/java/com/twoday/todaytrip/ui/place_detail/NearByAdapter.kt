@@ -10,6 +10,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceDetailNearbyBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
+import com.twoday.todaytrip.utils.glideWithPlaceholder
 
 class NearByAdapter : RecyclerView.Adapter<NearByAdapter.Holder>(){
 
@@ -41,10 +42,9 @@ class NearByAdapter : RecyclerView.Adapter<NearByAdapter.Holder>(){
         private val titleTextView: TextView = binding.tvItemPlaceDetailNearbyTitle
 
         fun bind(tourItem: TourItem){
-            Glide.with(itemView.context)
-                .load(tourItem.getImage())
-                .placeholder(R.drawable.img_default)
-                .into(imageView)
+            tourItem.getImage()?.let{
+                imageView.glideWithPlaceholder(it)
+            }
             imageView.clipToOutline = true
 
             titleTextView.text = tourItem.getTitle()
