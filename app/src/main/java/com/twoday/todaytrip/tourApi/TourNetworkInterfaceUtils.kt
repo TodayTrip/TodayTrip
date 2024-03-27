@@ -206,7 +206,7 @@ object TourNetworkInterfaceUtils {
                     pageNo = pageNo
                 )
             }
-            val postList = async {
+            val portList = async {
                 fetchAreaBasedList(
                     areaCode = areaCode,
                     contentTypeId = TourContentTypeId.TOURIST_DESTINATION.contentTypeId,
@@ -252,7 +252,7 @@ object TourNetworkInterfaceUtils {
             }
             return@runBlocking listOf(
                 coastalSceneryList.await(),
-                postList.await(),
+                portList.await(),
                 lightHouseList.await(),
                 islandList.await(),
                 beachList.await()
