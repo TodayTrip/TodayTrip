@@ -13,29 +13,36 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/iv_record_detail_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:paddingTop="7.5dp"
-            android:paddingBottom="7.5dp"
-            android:paddingEnd="15dp"
-            android:background="@drawable/shape_button_click"
-            android:src="@drawable/ic_record_detail_back"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@drawable/shape_button_click"
+                android:src="@drawable/ic_record_detail_back"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/iv_place_detail_back"
+                app:layout_constraintTop_toTopOf="@id/iv_place_detail_back" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
             android:id="@+id/tv_record_detail_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/shape_button_click"
             android:text="@string/record_detail_delete"
             android:textColor="@color/red"
             android:textSize="16sp"
-            android:background="@drawable/shape_button_click"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +97,7 @@
         android:id="@+id/container_record_detail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_record_detail_date"
         app:layout_constraintVertical_bias="1.0"
