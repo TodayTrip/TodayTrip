@@ -112,6 +112,7 @@ class PlaceListAdapter :
                     .load(url)
                     .placeholder(R.drawable.img_default)
                     .into(firstImageView)
+                firstImageView.clipToOutline = true
             }
 
             if (item.isAdded) {
