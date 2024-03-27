@@ -9,14 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.databinding.ItemPlaceListSkeletonShimmerBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.DateTimeUtil
+import com.twoday.todaytrip.utils.glide
 
 enum class PlaceListViewType(val viewType: Int) {
     TOUR_ITEM(0),
@@ -107,13 +106,13 @@ class PlaceListAdapter :
         )
 
         fun bind(item: TourItem) {
-            item.getThumbnailImage()?.let { url ->
-                Glide.with(itemView.context)
-                    .load(url)
-                    .placeholder(R.drawable.img_default)
-                    .into(firstImageView)
-                firstImageView.clipToOutline = true
-            }
+            if (item.getImage() != null)
+                firstImageView.glide(item.getImage()!!)
+            else
+                item.getThumbnailImage()?.let { url ->
+                    firstImageView.glide(url)
+                }
+            firstImageView.clipToOutline = true
 
             if (item.isAdded) {
                 binding.ivBookmark.visibility = View.VISIBLE
@@ -142,16 +141,10 @@ class PlaceListAdapter :
                 }
             }
 
-            Log.d(
-                "date",
-                "current date=${DateTimeUtil.getCurrentDateWithNoLine()} place date=${item.getTimeInfoWithLabel()[1].second} detail info=${item.getDetailInfoWithLabel()}"
-            )
-            firstImageView.clipToOutline = true
-
             titleTextView.text = item.getTitle()
             addressTextView.text = item.getAddress().removeDestination()
 
-            item.getTimeInfoWithLabel().forEachIndexed { index, pair ->
+            item.getTimeInfoWithLabel().forEachIndexed{ index, pair ->
                 Log.d(TAG, "getTimeInfoWithLabel) index: $index, pair: $pair")
                 timeTextViewList[index].text = Html.fromHtml(pair.second)
             }

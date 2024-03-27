@@ -10,6 +10,8 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.utils.glide
+import com.twoday.todaytrip.utils.glideWithPlaceholder
 
 class PlaceMapAdapter(
     private val onItemClick: (TourItem) -> Unit
@@ -44,11 +46,13 @@ class PlaceMapAdapter(
             binding.tvItemPlaceMapTitle.text = item.getTitle()
             binding.tvItemPlaceMapAddress.text = item.getAddress()
 
-            Glide.with(itemView.context)
-                .load(item.getThumbnailImage())
-                .placeholder(R.drawable.img_default)
-                .into(binding.ivItemPlaceMapThumbnail)
-            binding.ivItemPlaceMapThumbnail.clipToOutline = true
+            binding.ivItemPlaceMapThumbnail.run{
+                if (item.getImage() != null)
+                    glide(item.getImage()!!)
+                else
+                    item.getThumbnailImage()?.let { glide(it) }
+                clipToOutline = true
+            }
 
             val timeInfo = item.getTimeInfoWithLabel()
             binding.tvItemPlaceListTime1.text = timeInfo[0].second

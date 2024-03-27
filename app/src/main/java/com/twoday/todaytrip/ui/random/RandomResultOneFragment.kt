@@ -21,6 +21,7 @@ import com.twoday.todaytrip.databinding.FragmentRandomResultOneBinding
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.SelectRegionPrefUtil
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
 
 class RandomResultOneFragment : Fragment() {
@@ -33,10 +34,6 @@ class RandomResultOneFragment : Fragment() {
     private val model: RandomResultViewModel by activityViewModels()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,17 +44,17 @@ class RandomResultOneFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val inflater = TransitionInflater.from(requireContext())
         exitTransition = inflater.inflateTransition(R.transition.fade)
         enterTransition = inflater.inflateTransition(R.transition.slide_right)
+
         initView()
         initModelObserver()
     }
 
     private fun initView() {
-        Glide.with(this)
-            .load(R.drawable.gif_loading4)
-            .into(binding.ivResultOneImage)
+        binding.ivResultOneImage.glide(R.drawable.gif_loading_hour_glass)
     }
 
     @SuppressLint("SetTextI18n")

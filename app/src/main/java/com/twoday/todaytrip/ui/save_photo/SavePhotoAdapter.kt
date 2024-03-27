@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ItemSavePhotoListBinding
+import com.twoday.todaytrip.utils.glide
 
 class SavePhotoAdapter :
     ListAdapter<SavePhotoData, SavePhotoAdapter.ItemViewHolder>(
@@ -73,9 +74,7 @@ class SavePhotoAdapter :
             address.text = item.tourItem.getAddress()
 
             if (!item.imageUriList.isNullOrEmpty()) {
-                Glide.with(image)
-                    .load(item.imageUriList[0])
-                    .into(image)
+                image.glide(item.imageUriList[0])
                 icon.isVisible = false
                 iconText.isVisible = false
                 image.clipToOutline = true

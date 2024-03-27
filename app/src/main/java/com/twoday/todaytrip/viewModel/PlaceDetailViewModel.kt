@@ -57,28 +57,29 @@ class PlaceDetailViewModel() : ViewModel() {
         _isTourItemAdded.value = tourItem?.isAdded
     }
 
-    private fun initPlaceInfoList(){
+    private fun initPlaceInfoList() {
         _placeInfoList.value = tourItem?.getDetailInfoWithLabel()
     }
 
     private fun initNearbyList() = CoroutineScope(Dispatchers.IO).launch {
         tourItem?.let {
-            val fetchedNearByList = async{
+            val fetchedNearByList = async {
                 TourNetworkInterfaceUtils.fetchNearByList(tourItem!!)
             }.await()
 
-            withContext(Dispatchers.Main){
-                fetchedNearByList.forEach {
-                    Log.d(TAG, "initNearbyList 경도" + it.getLongitude() +" "+it.getLatitude())
-                }
-//                Log.d(TAG, "initNearbyList) fetchedNearByList: ${fetchedNearByList}")
+            withContext(Dispatchers.Main) {
                 _nearByList.value = fetchedNearByList
+                    .toMutableList()
+                    .filter {
+                        it.getContentId() != tourItem!!.getContentId()
+                    }
                 _isLoadingNearByList.value = false
                 saveNearByList()
             }
         }
     }
-    private fun saveNearByList(){
+
+    private fun saveNearByList() {
         _nearByList.value?.forEach { tourItem ->
             TourItemPrefUtil.addTourItem(tourItem)
         }
@@ -102,7 +103,7 @@ class PlaceDetailViewModel() : ViewModel() {
         _memoryDataList.value = loadedMemoryDataList
     }
 
-    fun setIsMapReady(isReady: Boolean){
+    fun setIsMapReady(isReady: Boolean) {
         _isMapReady.value = isReady
     }
 }
