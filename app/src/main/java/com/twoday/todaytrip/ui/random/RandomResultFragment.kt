@@ -63,84 +63,17 @@ class RandomResultFragment : Fragment() {
                         "\n" + DestinationPrefUtil.loadDestination().toString() + "으로 \n떠나볼까요?"
                 }
                 binding.textView2.textSize = 36F
-                val resultImg = when (DestinationPrefUtil.loadDestination().toString()) {
-                    "서울" -> {
-                        R.drawable.img_map_seoul
-                    }
 
-                    "인천" -> {
-                        R.drawable.img_map_incheon
-                    }
-
-                    "전북" -> {
-                        R.drawable.img_map_jeonbuk
-                    }
-
-                    "전남" -> {
-                        R.drawable.img_map_jeonnam
-                    }
-
-                    "경북" -> {
-                        R.drawable.img_map_gyeongbuk
-                    }
-
-                    "경남" -> {
-                        R.drawable.img_map_gyeongnam
-                    }
-
-                    "충북" -> {
-                        R.drawable.img_map_chungbuk
-                    }
-
-                    "충남" -> {
-                        R.drawable.img_map_chungnam
-                    }
-
-                    "강원" -> {
-                        R.drawable.img_map_gangwon
-                    }
-
-                    "대구" -> {
-                        R.drawable.img_map_daegu
-                    }
-
-                    "부산" -> {
-                        R.drawable.img_map_busan
-                    }
-
-                    "대전" -> {
-                        R.drawable.img_map_daejeon
-                    }
-
-                    "제주" -> {
-                        R.drawable.img_map_jeju
-                    }
-
-                    "경기" -> {
-                        R.drawable.img_map_gyeonggi
-                    }
-
-                    "광주" -> {
-                        R.drawable.img_map_gwangju
-                    }
-
-                    "울산" -> {
-                        R.drawable.img_map_ulsan
-                    }
-
-                    else -> 0
+                val resultImg = model.regionToMap[DestinationPrefUtil.loadDestination().toString()]
+                if (resultImg != null) {
+                    binding.ivRandomMapGif.setImageResource(resultImg)
                 }
-
-                binding.ivRandomMapGif.setImageResource(resultImg)
 
                 Log.d(TAG, "tourist attraction list ready! start main activity")
                 Handler(Looper.getMainLooper()).postDelayed({
                     val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 }, 1000)
-//                Log.d(TAG, "tourist attraction list ready! start main activity")
-//                val intent = Intent(activity, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                startActivity(intent)
             }
         })
     }
