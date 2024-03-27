@@ -1,5 +1,6 @@
 package com.twoday.todaytrip.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,9 +13,11 @@ import com.twoday.todaytrip.utils.RecommendPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kotlin.time.measureTimedValue
 
 class RandomResultViewModel : ViewModel() {
     private val TAG = "RandomResultViewModel"
@@ -50,10 +53,14 @@ class RandomResultViewModel : ViewModel() {
 
 
     private suspend fun fetchAndSaveTourItemList() {
-        val touristAttractionJob = CoroutineScope(Dispatchers.IO).launch {
-            fetchAndSaveTouristAttractionList()
+        val timedValue = measureTimedValue {
+            CoroutineScope(Dispatchers.IO).async {
+                fetchAndSaveTouristAttractionList()
+            }.await()
         }
-        touristAttractionJob.join()
+        val fetchTime = timedValue.duration
+
+        Log.d(TAG, "chAndSaveTouristAttractionList duration: $fetchTime")
 
         withContext(Dispatchers.Main) {
             if(TourItemPrefUtil.loadTouristAttractionList().isEmpty())
