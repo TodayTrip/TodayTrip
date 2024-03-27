@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_white_12_radius"
-    android:padding="8dp">
+    android:background="@drawable/shape_white_12_radius">
 
     <TextView
         android:id="@+id/tv_alert_dialog_title"
@@ -24,23 +24,45 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="12dp"
-        android:text="경고 설명 경고 설명 경고 설명 경고 설명 경고 설명 경고 설명 경고 설명 경고 설명"
-        android:textAppearance="@style/SmallText"
-        android:textColor="@color/button_gray"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:paddingStart="8dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
+        android:text="경고 설명 경고 설명 경고 설명 경고 설명"
+        android:textAppearance="@style/PlaceLabelText"
+        android:textColor="@color/system_gray"
         app:layout_constraintEnd_toEndOf="@id/tv_alert_dialog_title"
         app:layout_constraintStart_toStartOf="@id/tv_alert_dialog_title"
         app:layout_constraintTop_toBottomOf="@id/tv_alert_dialog_title" />
 
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@+id/tv_alert_dialog_description" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="1dp"
+        android:layout_height="50dp"
+        android:background="@color/light_gray"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tv_alert_dialog_title"
+        app:layout_constraintStart_toStartOf="@+id/tv_alert_dialog_title"
+        app:layout_constraintTop_toBottomOf="@+id/view1" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_alert_negative"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/shape_light_gray_16_radius"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:paddingHorizontal="20dp"
-        app:layout_constraintEnd_toStartOf="@id/layout_alert_positive"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_alert_dialog_description">
+        app:layout_constraintTop_toBottomOf="@+id/tv_alert_dialog_description">
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,21 +79,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_alert_positive"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginTop="12dp"
-        android:background="@drawable/shape_main_blue_12_radius"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:paddingHorizontal="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/layout_alert_negative"
-        app:layout_constraintTop_toBottomOf="@id/tv_alert_dialog_description">
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/tv_alert_dialog_description">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/alert_dialog_positive"
             android:textAppearance="@style/SmallText"
-            android:textColor="@color/white"
+            android:textColor="@color/red"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -30,7 +30,7 @@ class FullScreenImageActivity : AppCompatActivity() {
         imageUris?.let {
             val adapter = ImagePagerAdapter(it)
             viewPager.adapter = adapter
-            binding.viewPager.setCurrentItem(position,false)
+            binding.viewPager.setCurrentItem(position, false)
         }
     }
 }

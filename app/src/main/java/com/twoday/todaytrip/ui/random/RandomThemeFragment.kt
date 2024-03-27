@@ -1,21 +1,23 @@
 package com.twoday.todaytrip.ui.random
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.TransitionInflater
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomThemeBinding
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.viewModel.RandomThemeViewModel
 
 class RandomThemeFragment : Fragment() {
     private var _binding: FragmentRandomThemeBinding? = null
     private val binding get() = _binding!!
-    private var selectedTheme: String? = null
+
+    private val viewModel: RandomThemeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,21 +35,32 @@ class RandomThemeFragment : Fragment() {
         val inflater = TransitionInflater.from(requireContext())
         exitTransition = inflater.inflateTransition(R.transition.fade)
         enterTransition = inflater.inflateTransition(R.transition.slide_right)
-        initView()
 
+        viewModel.selectedButtonIndex.observe(viewLifecycleOwner) { index ->
+            selectButton(index)
+            updateNextButtonStyle()
+        }
+
+        initView()
     }
+
     private fun initView() {
         binding.btnThemeNext.visibility = View.INVISIBLE
     }
 
     private fun setUpButtonClickState(status: Boolean) {
         binding.btnThemeNext.isEnabled = status
-        if(status){
+        if (status) {
             binding.btnThemeNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
             binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-        }else{
+        } else {
             binding.btnThemeNext.setBackgroundResource(R.drawable.shape_light_gray_16_radius)
-            binding.tvBtnNext.setTextColor(ContextCompat.getColor(requireContext(), R.color.middle_gray))
+            binding.tvBtnNext.setTextColor(
+                ContextCompat.getColor(
+                    requireContext(),
+                    R.color.middle_gray
+                )
+            )
         }
     }
 
@@ -56,24 +69,18 @@ class RandomThemeFragment : Fragment() {
             findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_random_option)
         }
         binding.btnThemeNext.setOnClickListener {
-
-            selectedTheme?.let {
+            viewModel.selectedTheme.value?.let { theme ->
                 findNavController().navigate(R.id.action_navigation_random_theme_to_navigation_select_region)
             }
         }
-        binding.btnTheme1.setOnClickListener { selectTheme("산", 0) }
-        binding.btnTheme2.setOnClickListener { selectTheme("바다", 1) }
-        binding.btnTheme3.setOnClickListener { selectTheme("역사", 2) }
-        binding.btnTheme4.setOnClickListener { selectTheme("휴양", 3) }
-        binding.btnTheme5.setOnClickListener { selectTheme("체험", 4) }
-        binding.btnTheme6.setOnClickListener { selectTheme("레포츠", 5) }
-        binding.btnTheme7.setOnClickListener { selectTheme("문화시설", 6) }
-    }
+        binding.btnTheme1.setOnClickListener { viewModel.selectTheme("산", 0) }
+        binding.btnTheme2.setOnClickListener { viewModel.selectTheme("바다", 1) }
+        binding.btnTheme3.setOnClickListener { viewModel.selectTheme("역사", 2) }
+        binding.btnTheme4.setOnClickListener { viewModel.selectTheme("휴양", 3) }
+        binding.btnTheme5.setOnClickListener { viewModel.selectTheme("체험", 4) }
+        binding.btnTheme6.setOnClickListener { viewModel.selectTheme("레포츠", 5) }
+        binding.btnTheme7.setOnClickListener { viewModel.selectTheme("문화시설", 6) }
 
-    private fun selectTheme(theme: String, selectedNumber: Int) {
-        selectedTheme = theme
-        selectButton(selectedNumber)
-        selectRandomDestination(theme)
     }
 
     private fun selectButton(selectedNumber: Int) {
@@ -95,21 +102,16 @@ class RandomThemeFragment : Fragment() {
             }
         }
         setUpButtonClickState(true)
-        updateNextButtonStyle()
     }
+
 
     private fun updateNextButtonStyle() {
         binding.btnThemeNext.visibility = View.VISIBLE
         binding.btnThemeNext.setBackgroundResource(R.drawable.shape_main_blue_12_radius)
     }
 
-    private fun selectRandomDestination(theme: String) {
-        DestinationPrefUtil.saveTheme(theme)
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }
