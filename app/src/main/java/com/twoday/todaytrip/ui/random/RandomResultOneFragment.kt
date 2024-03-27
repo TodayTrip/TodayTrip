@@ -56,7 +56,7 @@ class RandomResultOneFragment : Fragment() {
 
     private fun initView() {
         Glide.with(this)
-            .load(R.drawable.gif_loading3)
+            .load(R.drawable.gif_loading4)
             .into(binding.ivResultOneImage)
     }
 

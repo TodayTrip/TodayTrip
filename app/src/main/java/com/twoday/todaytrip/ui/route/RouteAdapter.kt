@@ -72,6 +72,7 @@ class RouteAdapter :
         fun bind(item: RouteListData) {
             name.text = item.name
             address.text = item.address
+            position.clipToOutline = true
         }
 
         fun iconTogleEdit(show: Boolean) {
