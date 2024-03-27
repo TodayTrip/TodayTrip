@@ -151,6 +151,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val refreshLayout = binding.layoutItemPlaceListRecommendCoverRefresh
         fun bindCover(recommendCover: RecommendCover) {
             Log.d(TAG, "bindCover) called")
+            //glide util로 바꾸기
             Glide.with(itemView.context)
                 .load(recommendCover.imageId)
                 .into(imageView)
