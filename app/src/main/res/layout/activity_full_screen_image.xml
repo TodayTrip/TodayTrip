@@ -27,8 +27,8 @@
 
         <ImageView
             android:id="@+id/btn_gallery_back"
-            android:layout_width="15dp"
-            android:layout_height="15dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:src="@drawable/ic_record_detail_back"
             android:background="@drawable/shape_button_click"
             app:layout_constraintBottom_toBottomOf="parent"
