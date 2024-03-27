@@ -14,7 +14,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="12dp"
         android:letterSpacing="-0.04"
-        android:text="내가 담은 여행지"
+        android:text="@string/route_list_title"
         android:textAppearance="@style/address"
         android:textColor="@color/dark_gray"
         android:textSize="25sp"
