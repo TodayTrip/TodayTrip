@@ -28,6 +28,7 @@ import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
+import com.twoday.todaytrip.utils.glide
 import java.lang.Integer.max
 import java.lang.Integer.min
 
@@ -140,11 +141,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         private val refreshLayout = binding.layoutItemPlaceListRecommendCoverRefresh
         fun bindCover(recommendCover: RecommendCover) {
             Log.d(TAG, "bindCover) called")
-            //glide util로 바꾸기
-            Glide.with(itemView.context)
-                .load(recommendCover.imageId)
-                .into(imageView)
-//            imageView.setImageResource(recommendCover.imageId)
+            imageView.glide(recommendCover.imageId)
             destinationTextView.text = recommendCover.destination
         }
 
@@ -166,10 +163,8 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         fun bindTourItem(recommendTourItem: RecommendTourItem) {
             Log.d(TAG, "bindTourItem) title: ${recommendTourItem.tourItem.getTitle()}")
-            recommendTourItem.tourItem.getImage().let { url ->
-                Glide.with(itemView.context)
-                    .load(url)
-                    .into(imageView)
+            recommendTourItem.tourItem.getImage()?.let { url ->
+                imageView.glide(url)
             }
             subTitleTextView.setText(recommendTourItem.subTitleId)
             titleTextView.text = recommendTourItem.tourItem.getTitle()
@@ -181,9 +176,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             imageView.setImageDrawable(null)
             subTitleTextView.setText(recommendEmpty.subTitleId)
             titleTextView.setText(recommendEmpty.titleId)
-            Glide.with(itemView.context)
-                .load(R.drawable.gif_loading_reading_glasses)
-                .into(noResultImageView)
+            noResultImageView.glide(R.drawable.gif_loading_reading_glasses)
             noResultImageView.isVisible = true
         }
 

@@ -22,6 +22,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.utils.showSnackBar
 import com.twoday.todaytrip.viewModel.MainViewModel
 
@@ -67,9 +68,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         setLoadingUI(true)
         setNoResultUI(false)
 
-        Glide.with(requireContext())
-            .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
-            .into(binding.ivCafeRecyclerViewNoResult)
+        binding.ivCafeRecyclerViewNoResult.glide(R.drawable.gif_loading_reading_glasses)
     }
 
     private fun setNoResultUI(isNoResult: Boolean) {

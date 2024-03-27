@@ -15,13 +15,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListEventRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.utils.showSnackBar
 import com.twoday.todaytrip.viewModel.MainViewModel
 
@@ -67,9 +67,7 @@ class EventRecyclerViewFragment : Fragment(), OnTourItemClickListener {
         setLoadingUI(true)
         setNoResultUI(false)
 
-        Glide.with(requireContext())
-            .load(resources.getDrawable(R.drawable.gif_loading_reading_glasses))
-            .into(binding.ivEventRecyclerViewNoResult)
+        binding.ivEventRecyclerViewNoResult.glide(R.drawable.gif_loading_reading_glasses)
     }
 
     private fun setNoResultUI(isNoResult: Boolean) {

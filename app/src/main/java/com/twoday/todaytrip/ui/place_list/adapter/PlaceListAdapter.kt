@@ -17,6 +17,7 @@ import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DateTimeUtil
+import com.twoday.todaytrip.utils.glide
 
 enum class PlaceListViewType(val viewType: Int) {
     TOUR_ITEM(0),
@@ -108,10 +109,7 @@ class PlaceListAdapter :
 
         fun bind(item: TourItem) {
             item.getThumbnailImage()?.let { url ->
-                Glide.with(itemView.context)
-                    .load(url)
-                    .placeholder(R.drawable.img_default)
-                    .into(firstImageView)
+                firstImageView.glide(url)
                 firstImageView.clipToOutline = true
             }
 
