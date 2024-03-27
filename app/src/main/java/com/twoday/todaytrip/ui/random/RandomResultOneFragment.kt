@@ -150,7 +150,7 @@ class RandomResultOneFragment : Fragment() {
                         MainActivity::class.java
                     ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                }, 3000)
+                }, 1000)
             }
         })
     }
