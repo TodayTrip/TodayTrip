@@ -26,12 +26,15 @@ object TourNetworkInterfaceUtils {
                     pageNo = pageNo
                 )
             }?.let { areaBasedList ->
-                areaBasedList.response.body.items.item.forEach { item ->
-                    val introDetail: IntroDetailItem? = async {
+                val itemList = areaBasedList.response.body.items.item
+                val deferredList = itemList.map { item ->
+                    async {
                         fetchIntroDetail(item.contentId, item.contentTypeId)
-                    }.await()
-                    introDetail?.let {
-                        touristAttractionList.add(TourItem.TouristDestination(item, it))
+                    }
+                }
+                deferredList.forEachIndexed { index, deferred ->
+                    deferred.await()?.let {
+                        touristAttractionList.add(TourItem.TouristDestination(itemList[index], it))
                     }
                 }
             }
@@ -44,12 +47,15 @@ object TourNetworkInterfaceUtils {
                     pageNo = pageNo
                 )
             }?.let { areaBasedList ->
-                areaBasedList.response.body.items.item.forEach { item ->
-                    val introDetail = CoroutineScope(Dispatchers.IO).async {
+                val itemList = areaBasedList.response.body.items.item
+                val deferredList = itemList.map { item ->
+                    async {
                         fetchIntroDetail(item.contentId, item.contentTypeId)
-                    }.await()
-                    introDetail?.let {
-                        touristAttractionList.add(TourItem.CulturalFacilities(item, it))
+                    }
+                }
+                deferredList.forEachIndexed { index, deferred ->
+                    deferred.await()?.let {
+                        touristAttractionList.add(TourItem.CulturalFacilities(itemList[index], it))
                     }
                 }
             }
@@ -68,12 +74,20 @@ object TourNetworkInterfaceUtils {
                     fetchMountainThemeList(areaCode, pageNo)
                 }.await()
                 mountainThemeList.forEach { areaBasedList ->
-                    areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList?.response?.body?.items?.item
+                    val deferredList = itemList?.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.TouristDestination(item, it))
+                        }
+                    }
+                    deferredList?.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(
+                                    itemList[index],
+                                    it
+                                )
+                            )
                         }
                     }
                 }
@@ -84,12 +98,20 @@ object TourNetworkInterfaceUtils {
                     fetchSeaThemeList(areaCode, pageNo)
                 }.await()
                 seaThemeList.forEach { areaBasedList ->
-                    areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList?.response?.body?.items?.item
+                    val deferredList = itemList?.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.TouristDestination(item, it))
+                        }
+                    }
+                    deferredList?.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(
+                                    itemList[index],
+                                    it
+                                )
+                            )
                         }
                     }
                 }
@@ -100,12 +122,20 @@ object TourNetworkInterfaceUtils {
                     fetchHistoricalTheme(areaCode, pageNo)
                 }.await()
                 historicalTheme?.let { areaBasedList ->
-                    areaBasedList.response.body.items.item.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList.response.body.items.item
+                    val deferredList = itemList.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.TouristDestination(item, it))
+                        }
+                    }
+                    deferredList.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(
+                                    itemList[index],
+                                    it
+                                )
+                            )
                         }
                     }
                 }
@@ -116,12 +146,20 @@ object TourNetworkInterfaceUtils {
                     fetchRecreationalTheme(areaCode, pageNo)
                 }.await()
                 recreationalTheme?.let { areaBasedList ->
-                    areaBasedList.response.body.items.item.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList.response.body.items.item
+                    val deferredList = itemList.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.TouristDestination(item, it))
+                        }
+                    }
+                    deferredList.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(
+                                    itemList[index],
+                                    it
+                                )
+                            )
                         }
                     }
                 }
@@ -132,12 +170,20 @@ object TourNetworkInterfaceUtils {
                     fetchExperientialTheme(areaCode, pageNo)
                 }.await()
                 experimentalTheme?.let { areaBasedList ->
-                    areaBasedList.response.body.items.item.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList.response.body.items.item
+                    val deferredList = itemList.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.TouristDestination(item, it))
+                        }
+                    }
+                    deferredList.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(
+                                TourItem.TouristDestination(
+                                    itemList[index],
+                                    it
+                                )
+                            )
                         }
                     }
                 }
@@ -148,12 +194,15 @@ object TourNetworkInterfaceUtils {
                     fetchLeisureSportsTheme(areaCode, pageNo)
                 }.await()
                 leisureSportsTheme?.let { areaBasedList ->
-                    areaBasedList.response.body.items.item.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList.response.body.items.item
+                    val deferredList = itemList.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.LeisureSports(item, it))
+                        }
+                    }
+                    deferredList.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(TourItem.LeisureSports(itemList[index], it))
                         }
                     }
                 }
@@ -164,12 +213,20 @@ object TourNetworkInterfaceUtils {
                     fetchCulturalThemeList(areaCode, pageNo)
                 }.await()
                 culturalThemeList.forEach { areaBasedList ->
-                    areaBasedList?.response?.body?.items?.item?.forEach { item ->
-                        val introDetail = async {
+                    val itemList = areaBasedList?.response?.body?.items?.item
+                    val deferredList = itemList?.map { item ->
+                        async {
                             fetchIntroDetail(item.contentId, item.contentTypeId)
-                        }.await()
-                        introDetail?.let {
-                            touristAttractionList.add(TourItem.CulturalFacilities(item, it))
+                        }
+                    }
+                    deferredList?.forEachIndexed { index, deferred ->
+                        deferred.await()?.let {
+                            touristAttractionList.add(
+                                TourItem.CulturalFacilities(
+                                    itemList[index],
+                                    it
+                                )
+                            )
                         }
                     }
                 }
@@ -414,15 +471,20 @@ object TourNetworkInterfaceUtils {
                 pageNo = pageNo
             )
             val restaurantTabList = mutableListOf<TourItem>()
-            restaurantList?.response?.body?.items?.item
-                ?.filter {
-                    (!it.category3.isNullOrBlank()) && (it.category3 != TourCategoryId3.CAFE_AND_TEA.id)
+
+            val itemList = restaurantList?.response?.body?.items?.item?.filter {
+                (!it.category3.isNullOrBlank()) && (it.category3 != TourCategoryId3.CAFE_AND_TEA.id)
+            }
+            val deferredList = itemList?.map { item ->
+                async {
+                    fetchIntroDetail(item.contentId, item.contentTypeId)
                 }
-                ?.forEach { item ->
-                    fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                        restaurantTabList.add(TourItem.Restaurant(item, it))
-                    }
+            }
+            deferredList?.forEachIndexed { index, deferred ->
+                deferred.await()?.let {
+                    restaurantTabList.add(TourItem.Restaurant(itemList[index], it))
                 }
+            }
             return@async restaurantTabList
         }.await().toList()
 
@@ -438,9 +500,16 @@ object TourNetworkInterfaceUtils {
             pageNo = pageNo
         )
         val cafeTabList = mutableListOf<TourItem>()
-        cafeList?.response?.body?.items?.item?.forEach { item ->
-            fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                cafeTabList.add(TourItem.Restaurant(item, it))
+
+        val itemList = cafeList?.response?.body?.items?.item
+        val deferredList = itemList?.map { item ->
+            async {
+                fetchIntroDetail(item.contentId, item.contentTypeId)
+            }
+        }
+        deferredList?.forEachIndexed { index, deferred ->
+            deferred.await()?.let {
+                cafeTabList.add(TourItem.Restaurant(itemList[index], it))
             }
         }
         return@async cafeTabList
@@ -465,14 +534,28 @@ object TourNetworkInterfaceUtils {
                 pageNo = pageNo
             )
             val eventTabList = mutableListOf<TourItem>()
-            eventList?.response?.body?.items?.item?.forEach { item ->
-                fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    eventTabList.add(TourItem.EventPerformanceFestival(item, it))
+
+            val eventItemList = eventList?.response?.body?.items?.item
+            val eventDeferredList = eventItemList?.map { item ->
+                async {
+                    fetchIntroDetail(item.contentId, item.contentTypeId)
                 }
             }
-            festivalList?.response?.body?.items?.item?.forEach { item ->
-                fetchIntroDetail(item.contentId, item.contentTypeId)?.let {
-                    eventTabList.add(TourItem.EventPerformanceFestival(item, it))
+            val festivalItemList = festivalList?.response?.body?.items?.item
+            val festivalDeferredList = festivalItemList?.map { item ->
+                async {
+                    fetchIntroDetail(item.contentId, item.contentTypeId)
+                }
+            }
+
+            eventDeferredList?.forEachIndexed { index, deferred ->
+                deferred.await()?.let {
+                    eventTabList.add(TourItem.EventPerformanceFestival(eventItemList[index], it))
+                }
+            }
+            festivalDeferredList?.forEachIndexed { index, deferred ->
+                deferred.await()?.let {
+                    eventTabList.add(TourItem.EventPerformanceFestival(festivalItemList[index], it))
                 }
             }
             return@async eventTabList.toList()
@@ -487,14 +570,20 @@ object TourNetworkInterfaceUtils {
                 mapY = tourItem.getLatitude()
             )
             Log.d(TAG, "fetchNearByList) locationBasedList is null: ${locationBasedList == null}")
-            locationBasedList?.response?.body?.items?.item?.forEach { item ->
-                Log.d(TAG, "fetchNearByList) item.contentId: ${item.contentid}")
-                fetchIntroDetail(item.contentid, item.contenttypeid)?.let {
+
+            val itemList = locationBasedList?.response?.body?.items?.item
+            val deferredList = itemList?.map { item ->
+                async {
+                    fetchIntroDetail(item.contentid, item.contenttypeid)
+                }
+            }
+            deferredList?.forEachIndexed { index, deferred ->
+                deferred.await()?.let {
                     when (it.contentTypeId) {
                         TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
                             nearByList.add(
                                 TourItem.TouristDestination(
-                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(itemList[index]),
                                     it
                                 )
                             )
@@ -503,7 +592,7 @@ object TourNetworkInterfaceUtils {
                         TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
                             nearByList.add(
                                 TourItem.CulturalFacilities(
-                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(itemList[index]),
                                     it
                                 )
                             )
@@ -512,7 +601,7 @@ object TourNetworkInterfaceUtils {
                         TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
                             nearByList.add(
                                 TourItem.LeisureSports(
-                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(itemList[index]),
                                     it
                                 )
                             )
@@ -521,7 +610,7 @@ object TourNetworkInterfaceUtils {
                         TourContentTypeId.RESTAURANT.contentTypeId -> {
                             nearByList.add(
                                 TourItem.Restaurant(
-                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(itemList[index]),
                                     it
                                 )
                             )
@@ -530,7 +619,7 @@ object TourNetworkInterfaceUtils {
                         TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
                             nearByList.add(
                                 TourItem.EventPerformanceFestival(
-                                    TourItemDTOConverter.getAreaBasedFromLocationBased(item),
+                                    TourItemDTOConverter.getAreaBasedFromLocationBased(itemList[index]),
                                     it
                                 )
                             )
