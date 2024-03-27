@@ -216,6 +216,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                     )
                 }
             }
+            .clusterBuckets(intArrayOf(300, 625, 1250, 2500, 5000)) // default: intArrayOf(10, 20, 50, 100, 200, 500, 1000)
             .markerClickListener { clusterItem ->
                 clusterItem.index?.let { scrollToRecyclerViewPosition(it) }
             }.make()
