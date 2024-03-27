@@ -50,7 +50,7 @@ class PlaceListViewModel : ViewModel() {
     val recommendPosition: LiveData<Int> = _recommendPosition
 
     // 오늘의 랜덤 코스가 모두 경로에 담겼는가
-    private val _isAllRecommendAdded = MutableLiveData<Boolean>()
+    private val _isAllRecommendAdded = MutableLiveData<Boolean>(false)
     val isAllRecommendAdded: LiveData<Boolean> = _isAllRecommendAdded
 
     // 오늘 랜덤 코스에 뜰 관광지 정보 인덱스 상수
@@ -542,6 +542,10 @@ class PlaceListViewModel : ViewModel() {
     }
 
     fun setIsAllRecommendAdded() {
+        if(_recommendDataList.value.isNullOrEmpty()) {
+            _isAllRecommendAdded.value = false
+            return
+        }
         val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
         _recommendDataList.value
             ?.filterIsInstance<RecommendTourItem>()
