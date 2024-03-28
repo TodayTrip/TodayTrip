@@ -4,8 +4,8 @@ import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.twoday.todaytrip.databinding.ItemFullScreenImageBinding
+import com.twoday.todaytrip.utils.glide
 
 class ImagePagerAdapter(private val imageUris: List<String>) :
     RecyclerView.Adapter<ImagePagerAdapter.ImageViewHolder>() {
@@ -13,9 +13,7 @@ class ImagePagerAdapter(private val imageUris: List<String>) :
     inner class ImageViewHolder(private val binding: ItemFullScreenImageBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(uri: Uri) {
-            Glide.with(binding.root)
-                .load(uri)
-                .into(binding.imageView)
+            binding.imageView.glide(uri)
         }
     }
 

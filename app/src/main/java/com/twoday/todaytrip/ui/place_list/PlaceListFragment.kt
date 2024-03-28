@@ -127,6 +127,9 @@ class PlaceListFragment : Fragment(),
                 model.setRecommendPosition(position)
             }
         })
+        binding.layoutItemPlaceListRecommendCoverRefresh.setOnClickListener {
+            recommendAdapter.onRefreshRecommendClickListener?.onRefreshRecommendClick()
+        }
     }
 
     private fun setRecommendPageIndicator(position: Int) {
@@ -245,10 +248,12 @@ class PlaceListFragment : Fragment(),
             }
         }
         model.recommendDataList.observe(viewLifecycleOwner) { recommendDataList ->
+            model.setIsAllRecommendAdded()
             if (recommendDataList.isNotEmpty()) {
                 (recommendDataList.last() as RecommendMap).run {
                     optimizedLocations = model.getOptimizedLocations()
                     optimizedOrder = model.getOptimizedOrder()
+                    isAllAdded = model.isAllRecommendAdded.value!!
                 }
             }
             recommendAdapter.changeDataSet(recommendDataList)

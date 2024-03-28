@@ -50,14 +50,14 @@ class PlaceListViewModel : ViewModel() {
     val recommendPosition: LiveData<Int> = _recommendPosition
 
     // 오늘의 랜덤 코스가 모두 경로에 담겼는가
-    private val _isAllRecommendAdded = MutableLiveData<Boolean>()
+    private val _isAllRecommendAdded = MutableLiveData<Boolean>(false)
     val isAllRecommendAdded: LiveData<Boolean> = _isAllRecommendAdded
 
     // 오늘 랜덤 코스에 뜰 관광지 정보 인덱스 상수
-    private val RECOMMEND_INDEX_TOURIST_ATTRACTION = 1
-    private val RECOMMEND_INDEX_RESTAURANT = 2
-    private val RECOMMEND_INDEX_CAFE = 3
-    private val RECOMMEND_INDEX_EVENT = 4
+    private val recommendIndexTouristAttraction = 1
+    private val recommendIndexRestaurant = 2
+    private val recommendIndexCafe = 3
+    private val recommendIndexEvent = 4
 
     init {
         initThemeTitleInfo()
@@ -291,7 +291,6 @@ class PlaceListViewModel : ViewModel() {
                 R.drawable.img_daegu3
             ).random()
 
-
             "부산" -> listOf(
                 R.drawable.img_busan1,
                 R.drawable.img_busan2,
@@ -300,7 +299,7 @@ class PlaceListViewModel : ViewModel() {
             ).random()
 
             "대전" -> listOf(
-                R.drawable.img_seoul1
+                R.drawable.img_daejeon
             ).random()
 
             "제주" -> listOf(
@@ -334,7 +333,7 @@ class PlaceListViewModel : ViewModel() {
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
-            newRecommendDataList[RECOMMEND_INDEX_TOURIST_ATTRACTION] = RecommendTourItem(
+            newRecommendDataList[recommendIndexTouristAttraction] = RecommendTourItem(
                 subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
                 tourItem = recommendTouristAttraction
             )
@@ -347,7 +346,7 @@ class PlaceListViewModel : ViewModel() {
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
-            newRecommendDataList[RECOMMEND_INDEX_RESTAURANT] = RecommendTourItem(
+            newRecommendDataList[recommendIndexRestaurant] = RecommendTourItem(
                 subTitleId = R.string.place_list_recommend_sub_title_restaurant,
                 tourItem = recommendRestaurant
             )
@@ -360,7 +359,7 @@ class PlaceListViewModel : ViewModel() {
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
-            newRecommendDataList[RECOMMEND_INDEX_CAFE] = RecommendTourItem(
+            newRecommendDataList[recommendIndexCafe] = RecommendTourItem(
                 subTitleId = R.string.place_list_recommend_sub_title_cafe,
                 tourItem = recommendCafe
             )
@@ -373,7 +372,7 @@ class PlaceListViewModel : ViewModel() {
             val newRecommendDataList = mutableListOf<RecommendData>().apply {
                 addAll(_recommendDataList.value!!)
             }
-            newRecommendDataList[RECOMMEND_INDEX_EVENT] = RecommendTourItem(
+            newRecommendDataList[recommendIndexEvent] = RecommendTourItem(
                 subTitleId = R.string.place_list_recommend_sub_title_event,
                 tourItem = recommendEvent
             )
@@ -388,14 +387,14 @@ class PlaceListViewModel : ViewModel() {
 
     fun pickAndSaveRecommendTouristAttraction(touristAttractionList: List<TourItem>?) {
         if (touristAttractionList.isNullOrEmpty()) return
-        if (_recommendDataList.value!![RECOMMEND_INDEX_TOURIST_ATTRACTION] is RecommendTourItem)
+        if (_recommendDataList.value!![recommendIndexTouristAttraction] is RecommendTourItem)
             return
 
         val recommendTouristAttraction = touristAttractionList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
             addAll(_recommendDataList.value!!)
         }
-        newRecommendDataList[RECOMMEND_INDEX_TOURIST_ATTRACTION] = RecommendTourItem(
+        newRecommendDataList[recommendIndexTouristAttraction] = RecommendTourItem(
             subTitleId = R.string.place_list_recommend_sub_title_tourist_attraction,
             tourItem = recommendTouristAttraction
         )
@@ -405,13 +404,13 @@ class PlaceListViewModel : ViewModel() {
 
     fun pickAndSaveRecommendRestaurant(restaurantList: List<TourItem>?) {
         if (restaurantList.isNullOrEmpty()) return
-        if (_recommendDataList.value!![RECOMMEND_INDEX_RESTAURANT] is RecommendTourItem) return
+        if (_recommendDataList.value!![recommendIndexRestaurant] is RecommendTourItem) return
 
         val recommendRestaurant = restaurantList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
             addAll(_recommendDataList.value!!)
         }
-        newRecommendDataList[RECOMMEND_INDEX_RESTAURANT] = RecommendTourItem(
+        newRecommendDataList[recommendIndexRestaurant] = RecommendTourItem(
             subTitleId = R.string.place_list_recommend_sub_title_restaurant,
             tourItem = recommendRestaurant
         )
@@ -421,13 +420,13 @@ class PlaceListViewModel : ViewModel() {
 
     fun pickAndSaveRecommendCafe(cafeList: List<TourItem>?) {
         if (cafeList.isNullOrEmpty()) return
-        if (_recommendDataList.value!![RECOMMEND_INDEX_CAFE] is RecommendTourItem) return
+        if (_recommendDataList.value!![recommendIndexCafe] is RecommendTourItem) return
 
         val recommendCafe = cafeList.random()
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
             addAll(_recommendDataList.value!!)
         }
-        newRecommendDataList[RECOMMEND_INDEX_CAFE] = RecommendTourItem(
+        newRecommendDataList[recommendIndexCafe] = RecommendTourItem(
             subTitleId = R.string.place_list_recommend_sub_title_cafe,
             tourItem = recommendCafe
         )
@@ -437,7 +436,7 @@ class PlaceListViewModel : ViewModel() {
 
     fun pickAndSaveRecommendEvent(eventList: List<TourItem>?) {
         if (eventList.isNullOrEmpty()) return
-        if (_recommendDataList.value!![RECOMMEND_INDEX_EVENT] is RecommendTourItem) return
+        if (_recommendDataList.value!![recommendIndexEvent] is RecommendTourItem) return
 
         val filteredEventList = eventList?.filter {
             !(it as TourItem.EventPerformanceFestival).isEventPerformanceFestivalOver()
@@ -448,7 +447,7 @@ class PlaceListViewModel : ViewModel() {
         val newRecommendDataList = mutableListOf<RecommendData>().apply {
             addAll(_recommendDataList.value!!)
         }
-        newRecommendDataList[RECOMMEND_INDEX_EVENT] = RecommendTourItem(
+        newRecommendDataList[recommendIndexEvent] = RecommendTourItem(
             subTitleId = R.string.place_list_recommend_sub_title_event,
             tourItem = recommendEvent
         )
@@ -543,6 +542,10 @@ class PlaceListViewModel : ViewModel() {
     }
 
     fun setIsAllRecommendAdded() {
+        if(_recommendDataList.value.isNullOrEmpty()) {
+            _isAllRecommendAdded.value = false
+            return
+        }
         val addedContentIdList = ContentIdPrefUtil.loadContentIdList()
         _recommendDataList.value
             ?.filterIsInstance<RecommendTourItem>()

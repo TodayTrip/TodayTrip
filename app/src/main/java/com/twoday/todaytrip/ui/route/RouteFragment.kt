@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.addCallback
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
@@ -80,6 +81,13 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         initToolTip()
     }
 
+    private val back = object: OnBackPressedCallback(true){
+        override fun handleOnBackPressed() {
+            routeViewModel.toggleEditMode()
+        }
+
+    }
+
     private fun editModeBackButton(editMode: Boolean) {
         requireActivity().onBackPressedDispatcher.addCallback(this) {
             // 뒤로 버튼 이벤트 처리
@@ -105,7 +113,8 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
             binding.tvRouteRemoveButton.isVisible = !editMode
             binding.tvRouteComplitButton.isVisible = editMode
             binding.tvRouteAllremoveButton.isVisible = editMode
-            if (editMode) editModeBackButton(editMode)
+            if (editMode) requireActivity().onBackPressedDispatcher.addCallback(back)
+            else back.remove()
             routeViewModel.editMode.value?.let { (activity as MainActivity).hideButtonNavi(it) }
         }
 

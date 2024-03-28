@@ -73,26 +73,4 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@id/tv_item_place_list_recommend_cover_destination" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layout_item_place_list_recommend_cover_refresh"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_marginStart="6dp"
-        android:background="@drawable/shape_circle"
-        android:backgroundTint="@color/white"
-        android:padding="2dp"
-        app:layout_constraintBottom_toBottomOf="@id/tv_item_place_list_recommend_cover_title"
-        app:layout_constraintStart_toEndOf="@id/tv_item_place_list_recommend_cover_title"
-        app:layout_constraintTop_toTopOf="@id/tv_item_place_list_recommend_cover_title">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_place_list_recommend_refresh"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

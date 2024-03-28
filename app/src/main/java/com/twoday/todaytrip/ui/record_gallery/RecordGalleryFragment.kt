@@ -56,7 +56,11 @@ class RecordGalleryFragment : Fragment() {
                                 putStringArrayListExtra("imageUris", ArrayList(uriList))
                                 putExtra("position", position)
                             }
-                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(requireActivity(), view,"gallery_photo")
+                        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                            requireActivity(),
+                            view,
+                            "gallery_photo"
+                        )
                         startActivity(intent, options.toBundle())
                     }
                 }
@@ -76,14 +80,3 @@ class RecordGalleryFragment : Fragment() {
         return if (numColumns <= 1) 2 else numColumns
     }
 }
-
-//    private fun observeViewModel() {
-//        val imageUriList = arguments?.getStringArrayList("IMAGE_URI_LIST")
-//        viewModel.setImageUriList(imageUriList ?: emptyList())
-//
-//        viewModel.imageUriListLiveData.observe(viewLifecycleOwner, fun(imageUriList: List<String>) {
-//            val adapter = RecordGalleryAdapter(imageUriList)
-//            binding.rvRecordGallery.adapter = adapter
-//        })
-//    }
-

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -36,56 +35,60 @@ import com.twoday.todaytrip.utils.TourItemPrefUtil.loadEventList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
 import com.twoday.todaytrip.utils.TourItemPrefUtil.loadTouristAttractionList
 import com.twoday.todaytrip.viewModel.PlaceMapViewModel
+import ted.gun0912.clustering.BaseBuilder
+import ted.gun0912.clustering.TedMarker
+import ted.gun0912.clustering.clustering.ClusterManager
 import ted.gun0912.clustering.naver.TedNaverClustering
+import ted.gun0912.clustering.naver.TedNaverMarker
+
+data class LocationInfo(
+    val latLng: LatLng,
+    val title: String
+)
 
 @RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     private val TAG = "PlaceMapFragment"
+
     private var _binding: FragmentPlaceMapBinding? = null
     private val binding get() = _binding!!
-    private val placeMapAdapter by lazy { PlaceMapAdapter(onItemClick) }
-    private val viewModel: PlaceMapViewModel by viewModels()
 
-    private val pagerSnapHelper = PagerSnapHelper()
-    private lateinit var naverMap: NaverMap
-    private lateinit var mapView: MapView
-
-    private val markers = mutableListOf<Marker>()
-    lateinit var tedNaverClustering: TedNaverClustering<MapModel>
-
-    private var locations =
-        loadTouristAttractionList().map {
-            LocationInfo(
-                LatLng(it.getLatitude().toDouble(), it.getLongitude().toDouble()),
-                it.getTitle()
-            )
-        }
+    private val model: PlaceMapViewModel by viewModels()
 
     private val onItemClick: (TourItem) -> Unit = { tourItem ->
         val placeDetailIntent = PlaceDetailActivity.newIntent(
             requireContext(),
             tourItem.getContentTypeId(),
-            tourItem)
+            tourItem
+        )
+
+        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         startActivity(placeDetailIntent)
-//        requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }
+    private val placeMapAdapter =  PlaceMapAdapter(onItemClick)
+    private val pagerSnapHelper = PagerSnapHelper()
+
+    private lateinit var naverMap: NaverMap
+    private lateinit var mapView: MapView
+
+    private val markers = mutableListOf<Marker>()
+    private var tedNaverClustering: TedNaverClustering<MapModel>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.d(TAG,"onCreateView")
+        Log.d(TAG, "onCreateView")
         _binding = FragmentPlaceMapBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG,"onViewCreated")
+        Log.d(TAG, "onViewCreated")
 
         mapView = binding.mvPlaceMap
         mapView.onCreate(savedInstanceState)
-        mapView.getMapAsync(this)
 
         initImageRecyclerView()
         initTabLayout()
@@ -93,8 +96,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initOnChangeListener(position: Int) {
-        Log.d(TAG,"initOnChangeListener")
-        val locationInfo = locations[position]
+        val locationInfo = model.locations.value!![position]
         val targetTitle = locationInfo.title
         naverMap.addOnCameraChangeListener { _, _ ->
             val zoom = naverMap.cameraPosition.zoom
@@ -116,15 +118,17 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun initModelObserver() {
-        Log.d(TAG,"initModelObserver")
-        viewModel.locations.observe(viewLifecycleOwner, Observer {
-            locations = it
-        })
+        model.locations.observe(viewLifecycleOwner){locations ->
+            if (model.isMapReady.value!!) drawMarkersOnMap(locations)
+        }
+        model.isMapReady.observe(viewLifecycleOwner){isMapReady ->
+            if(isMapReady) drawMarkersOnMap(model.locations.value!!)
+        }
     }
 
     private fun initImageRecyclerView() {
-        Log.d(TAG,"initImageRecyclerView")
         pagerSnapHelper.attachToRecyclerView(binding.rvPlaceMap)
+
         binding.rvPlaceMap.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = placeMapAdapter
@@ -133,8 +137,10 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
                     super.onScrollStateChanged(recyclerView, newState)
                     if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                         val view = pagerSnapHelper.findSnapView(layoutManager)
-                        val pos = layoutManager?.getPosition(view!!)
-                        pos?.let { moveToMarker(it)}
+                        val pos = view?.let{view ->
+                            layoutManager?.getPosition(view)
+                        }
+                        pos?.let { moveToMarker(it) }
                     }
                 }
             })
@@ -142,42 +148,28 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun moveToMarker(position: Int) {
-        Log.d(TAG,"moveToMarker")
-        val locationInfo = locations[position]
+        Log.d(TAG, "moveToMarker")
+        val locationInfo = model.locations.value!![position]
         val targetLocation = locationInfo.latLng
         val zoomLevel = 17.0 // 숫자가 커질 수록 확대됨
         val cameraPosition = CameraPosition(targetLocation, zoomLevel)
-        val cameraUpdate = CameraUpdate.toCameraPosition(cameraPosition).animate(CameraAnimation.Easing)
+        val cameraUpdate =
+            CameraUpdate.toCameraPosition(cameraPosition).animate(CameraAnimation.Easing)
 
         naverMap.moveCamera(cameraUpdate)
-//        initOnChangeListener(position)
     }
 
     private fun initTabLayout() {
-        Log.d(TAG,"initTabLayout")
+        Log.d(TAG, "initTabLayout")
         binding.tlTabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
-                viewModel.onTabSeleted(tab.position)
-                clearMarkers()
+                model.onTabSeleted(tab.position)
                 when (tab.position) {
-                    0 -> {
-                        Log.d(TAG,"initTabLayout 1")
-                        placeMapAdapter.submitList(loadTouristAttractionList())
-                    }
-                    1 -> {
-                        Log.d(TAG,"initTabLayout 2")
-                        placeMapAdapter.submitList(loadRestaurantList())
-                    }
-                    2 -> {
-                        Log.d(TAG,"initTabLayout 3")
-                        placeMapAdapter.submitList(loadCafeList())
-                    }
-                    3 -> {
-                        Log.d(TAG,"initTabLayout 4")
-                        placeMapAdapter.submitList(loadEventList())
-                    }
+                    0 -> placeMapAdapter.submitList(loadTouristAttractionList())
+                    1 -> placeMapAdapter.submitList(loadRestaurantList())
+                    2 -> placeMapAdapter.submitList(loadCafeList())
+                    3 -> placeMapAdapter.submitList(loadEventList())
                 }
-                onMarkerReady()
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
@@ -190,59 +182,63 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
         })
     }
 
-
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
-
-        onMarkerReady()
+        model.setIsMapReady(true)
     }
 
-    private fun onMarkerReady() {
-        Log.d(TAG,"onMarkerReady")
+    private fun drawMarkersOnMap(locations:List<LocationInfo>) {
+        clearMarkers()
+        clearClusteringItems()
+
+        val naverItems = mutableListOf<MapModel>()
+        if (locations.isNotEmpty()) {
+            val boundsBuilder = LatLngBounds.Builder()
+            locations.forEachIndexed { index, locationInfo ->
+                naverItems.add(MapModel(locationInfo.latLng, index))
+                boundsBuilder.include(locationInfo.latLng)
+            }
+            val bounds = boundsBuilder.build()
+            val cameraUpdate = CameraUpdate.fitBounds(bounds, 200)
+            naverMap.moveCamera(cameraUpdate)
+        }
 
         tedNaverClustering = TedNaverClustering.with<MapModel>(requireContext(), naverMap)
+            .items(naverItems)
             .customMarker { naverItem ->
                 Marker().apply {
                     icon = OverlayImage.fromResource(R.drawable.ic_white_circle_marker)
                     width = 100
                     height = 100
-                    position = LatLng(naverItem.getTedLatLng().latitude, naverItem.getTedLatLng().longitude)
+                    position = LatLng(
+                        naverItem.getTedLatLng().latitude,
+                        naverItem.getTedLatLng().longitude
+                    )
                 }
             }
+            .clusterBuckets(intArrayOf(300, 625, 1250, 2500, 5000)) // default: intArrayOf(10, 20, 50, 100, 200, 500, 1000)
             .markerClickListener { clusterItem ->
                 clusterItem.index?.let { scrollToRecyclerViewPosition(it) }
-            }
-            .make()
-
-        if (locations.isNotEmpty()) {
-            val boundsBuilder = LatLngBounds.Builder()
-
-            locations.forEachIndexed { index, locationInfo ->
-                val naverItem = MapModel(locationInfo.latLng, index)
-                tedNaverClustering.addItem(naverItem)
-                boundsBuilder.include(locationInfo.latLng)
-            }
-            val bounds = boundsBuilder.build()
-
-            val cameraUpdate = CameraUpdate.fitBounds(bounds, 200)
-            naverMap.moveCamera(cameraUpdate)
-        }
-
+            }.make()
     }
 
     private fun scrollToRecyclerViewPosition(position: Int) {
         binding.rvPlaceMap.layoutManager?.let { layoutManager ->
-            (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(position + 1, binding.rvPlaceMap.width)
+            (layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                position + 1,
+                binding.rvPlaceMap.width
+            )
         }
     }
 
-    //TODO ViewModel로 옮기려고 하는데 마커를 지도에서 제거하는 건 View에서 없애는 거니까 옮기면 안될까요?
     private fun clearMarkers() {
-        Log.d(TAG,"clearMarkers")
         markers.forEach { marker ->
-            marker.map = null // 마커를 지도에서 제거
+            marker.map = null
         }
-        markers.clear() // 마커 리스트 비우기
+        markers.clear()
+    }
+    private fun clearClusteringItems(){
+        tedNaverClustering?.clearItems()
     }
 
     override fun onStart() {
@@ -252,10 +248,12 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
     override fun onResume() {
         super.onResume()
+        mapView.getMapAsync(this)
         mapView.onResume()
     }
 
     override fun onPause() {
+        model.setIsMapReady(false)
         mapView.onPause()
         super.onPause()
     }
@@ -271,20 +269,15 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
-        Log.d(TAG,"onSaveInstanceState")
+        Log.d(TAG, "onSaveInstanceState")
         super.onSaveInstanceState(outState)
         mapView.onSaveInstanceState(outState)
     }
 
     override fun onDestroyView() {
-        Log.d(TAG,"onDestroyView\n--------------------------------------")
+        Log.d(TAG, "onDestroyView\n--------------------------------------")
         super.onDestroyView()
         mapView.onDestroy()
         _binding = null
     }
 }
-
-data class LocationInfo(
-    val latLng: LatLng,
-    val title: String
-)

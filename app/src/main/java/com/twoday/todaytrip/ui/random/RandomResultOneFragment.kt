@@ -21,6 +21,7 @@ import com.twoday.todaytrip.databinding.FragmentRandomResultOneBinding
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.SelectRegionPrefUtil
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
 
 class RandomResultOneFragment : Fragment() {
@@ -33,10 +34,6 @@ class RandomResultOneFragment : Fragment() {
     private val model: RandomResultViewModel by activityViewModels()
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -47,17 +44,17 @@ class RandomResultOneFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         val inflater = TransitionInflater.from(requireContext())
         exitTransition = inflater.inflateTransition(R.transition.fade)
         enterTransition = inflater.inflateTransition(R.transition.slide_right)
+
         initView()
         initModelObserver()
     }
 
     private fun initView() {
-        Glide.with(this)
-            .load(R.drawable.gif_loading3)
-            .into(binding.ivResultOneImage)
+        binding.ivResultOneImage.glide(R.drawable.gif_loading_hour_glass)
     }
 
     @SuppressLint("SetTextI18n")
@@ -73,75 +70,11 @@ class RandomResultOneFragment : Fragment() {
                         "\n" + DestinationPrefUtil.loadDestination().toString() + "으로 \n떠나볼까요?"
                 }
                 binding.tvResultOneTitle.textSize = 36F
-                val resultImg = when (DestinationPrefUtil.loadDestination().toString()) {
-                    "서울" -> {
-                        R.drawable.img_map_seoul
-                    }
 
-                    "인천" -> {
-                        R.drawable.img_map_incheon
-                    }
-
-                    "전북" -> {
-                        R.drawable.img_map_jeonbuk
-                    }
-
-                    "전남" -> {
-                        R.drawable.img_map_jeonnam
-                    }
-
-                    "경북" -> {
-                        R.drawable.img_map_gyeongbuk
-                    }
-
-                    "경남" -> {
-                        R.drawable.img_map_gyeongnam
-                    }
-
-                    "충북" -> {
-                        R.drawable.img_map_chungbuk
-                    }
-
-                    "충남" -> {
-                        R.drawable.img_map_chungnam
-                    }
-
-                    "강원" -> {
-                        R.drawable.img_map_gangwon
-                    }
-
-                    "대구" -> {
-                        R.drawable.img_map_daegu
-                    }
-
-                    "부산" -> {
-                        R.drawable.img_map_busan
-                    }
-
-                    "대전" -> {
-                        R.drawable.img_map_daejeon
-                    }
-
-                    "제주" -> {
-                        R.drawable.img_map_jeju
-                    }
-
-                    "경기" -> {
-                        R.drawable.img_map_gyeonggi
-                    }
-
-                    "광주" -> {
-                        R.drawable.img_map_gwangju
-                    }
-
-                    "울산" -> {
-                        R.drawable.img_map_ulsan
-                    }
-
-                    else -> 0
+                val resultImg = model.regionToMap[DestinationPrefUtil.loadDestination().toString()]
+                if (resultImg != null) {
+                    binding.ivResultOneImage.setImageResource(resultImg)
                 }
-
-                binding.ivResultOneImage.setImageResource(resultImg)
 
                 Log.d(TAG, "tourist attraction list ready! start main activity")
                 Handler(Looper.getMainLooper()).postDelayed({
@@ -150,7 +83,7 @@ class RandomResultOneFragment : Fragment() {
                         MainActivity::class.java
                     ).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                }, 3000)
+                }, 1000)
             }
         })
     }

@@ -19,8 +19,8 @@ android {
         applicationId = "com.twoday.todaytrip"
         minSdk = 26
         targetSdk = 34
-        versionCode = 6
-        versionName = "1.0"
+        versionCode = 9
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TOUR_API_KEY", properties.getProperty("TOUR_API_KEY"))
@@ -70,8 +70,6 @@ dependencies {
     // BottomNavigation
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
-    // William Charts
-    implementation ("com.diogobernardino:williamchart:3.10.1")
     // Map
     implementation("com.naver.maps:map-sdk:3.17.0")
     implementation("com.google.android.gms:play-services-location:21.1.0")
@@ -90,14 +88,10 @@ dependencies {
     // HttpHeaders
     implementation(platform("com.google.firebase:firebase-bom:32.7.3"))
     implementation("com.google.firebase:firebase-analytics")
-    // Lottie animation
-    implementation("com.airbnb.android:lottie:6.3.0")
-    // ViewPager2
+   // ViewPager2
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
-    // Coil
-    implementation("io.coil-kt:coil:2.0.0-rc03")
     // balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
     // Word cloud
@@ -115,12 +109,10 @@ dependencies {
     implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     // Material
     implementation("com.google.android.material:material:1.11.0")
-    // vector img color
+    // Vector img color
     implementation("com.github.devsideal:VectorChildFinder:1.0.0")
-    //toggle Button
+    // Toggle Button
     implementation("com.polyak:icon-switch:1.0.0")
-
-    // clustering
+    // Naver Map Clustering
     implementation("io.github.ParkSangGwon:tedclustering-naver:1.0.2")
-
 }

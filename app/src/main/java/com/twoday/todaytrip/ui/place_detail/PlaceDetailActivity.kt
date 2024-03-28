@@ -24,6 +24,7 @@ import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
+import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.PlaceDetailViewModel
 
 class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapReadyCallback {
@@ -115,13 +116,9 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
 
             Log.d(TAG, "image: ${it.getImage()}, thumbnail: ${it.getThumbnailImage()}")
             if (!it.getImage().isNullOrEmpty()) {
-                Glide.with(this@PlaceDetailActivity)
-                    .load(it.getImage().toString())
-                    .into(binding.ivPlaceDetailPic)
+                binding.ivPlaceDetailPic.glide(it.getImage()!!)
             } else if (!it.getThumbnailImage().isNullOrEmpty()) {
-                Glide.with(this@PlaceDetailActivity)
-                    .load(it.getThumbnailImage().toString())
-                    .into(binding.ivPlaceDetailPic)
+                binding.ivPlaceDetailPic.glide(it.getThumbnailImage()!!)
             }
             binding.tvPlaceDetailTitle.text = it.getTitle()
             binding.tvPlaceDetailScrollTitle.text = it.getTitle()

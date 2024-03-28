@@ -7,17 +7,17 @@
     tools:context=".ui.route.RouteFragment"
     android:background="@color/white">
 
-
   <TextView
-      android:id="@+id/tv_route_list_title"
+      android:id="@+id/tv_save_photo_title"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_marginStart="16dp"
+      android:layout_marginTop="12dp"
       android:letterSpacing="-0.04"
-      android:text="장소별 나의 추억을 기록해보세요"
-      android:textSize="22sp"
-      android:textStyle="bold"
+      android:text="@string/save_photo_title"
+      android:textAppearance="@style/address"
       android:textColor="@color/dark_gray"
+      android:textSize="25sp"
       app:layout_constraintBottom_toTopOf="@+id/cv_route_map_frame"
       app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent" />
