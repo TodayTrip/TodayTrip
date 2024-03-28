@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.twoday.todaytrip.R
 import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData
@@ -13,7 +14,6 @@ import com.twoday.todaytrip.utils.RecommendPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,10 +22,10 @@ import kotlin.time.measureTimedValue
 class RandomResultViewModel : ViewModel() {
     private val TAG = "RandomResultViewModel"
 
-    private val theme by lazy{
+    private val theme by lazy {
         DestinationPrefUtil.loadTheme()
     }
-    private val areaCode by lazy{
+    private val areaCode by lazy {
         getDestinationAreaCode(
             DestinationPrefUtil.loadDestination()
         )
@@ -35,9 +35,28 @@ class RandomResultViewModel : ViewModel() {
     val isTouristAttractionListReady: LiveData<Boolean>
         get() = _isTouristAttractionListReady
 
+    val regionToMap
+        get() = mapOf(
+            "서울" to R.drawable.img_map_seoul,
+            "인천" to R.drawable.img_map_incheon,
+            "전북" to R.drawable.img_map_jeonbuk,
+            "전남" to R.drawable.img_map_jeonnam,
+            "경북" to R.drawable.img_map_gyeongbuk,
+            "경남" to R.drawable.img_map_gyeongnam,
+            "충북" to R.drawable.img_map_chungbuk,
+            "충남" to R.drawable.img_map_chungnam,
+            "강원" to R.drawable.img_map_gangwon,
+            "대구" to R.drawable.img_map_daegu,
+            "부산" to R.drawable.img_map_busan,
+            "대전" to R.drawable.img_map_daejeon,
+            "제주" to R.drawable.img_map_jeju,
+            "경기" to R.drawable.img_map_gyeonggi,
+            "광주" to R.drawable.img_map_gwangju,
+            "울산" to R.drawable.img_map_ulsan
+        )
+
     init {
         resetSharedPref()
-
         _isTouristAttractionListReady.value = false
         CoroutineScope(Dispatchers.IO).launch {
             fetchAndSaveTourItemList()
@@ -62,7 +81,7 @@ class RandomResultViewModel : ViewModel() {
         Log.d(TAG, "chAndSaveTouristAttractionList duration: ${timedValue.duration}")
 
         withContext(Dispatchers.Main) {
-            if(TourItemPrefUtil.loadTouristAttractionList().isEmpty())
+            if (TourItemPrefUtil.loadTouristAttractionList().isEmpty())
                 delay(3000)
             _isTouristAttractionListReady.value = true
         }
@@ -79,10 +98,14 @@ class RandomResultViewModel : ViewModel() {
             if (theme.isNullOrBlank())
                 TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(theme, areaCode, pageNo)
+                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
+                    theme,
+                    areaCode,
+                    pageNo
+                )
         TourItemPrefUtil.saveTouristAttractionList(touristAttractionList)
 
-        if(!touristAttractionList.isNullOrEmpty())
-            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo+1)
+        if (!touristAttractionList.isNullOrEmpty())
+            PageNoPrefUtil.saveTouristAttractionPageNo(pageNo + 1)
     }
 }

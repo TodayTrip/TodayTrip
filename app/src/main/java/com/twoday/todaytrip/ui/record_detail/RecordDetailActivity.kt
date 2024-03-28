@@ -34,6 +34,7 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
         override fun handleOnBackPressed() {
             Log.d(TAG, "handleOnBackPressed) called")
             finish()
+            overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
         }
     }
 
