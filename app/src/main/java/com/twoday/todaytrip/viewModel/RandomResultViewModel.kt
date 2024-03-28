@@ -14,7 +14,6 @@ import com.twoday.todaytrip.utils.RecommendPrefUtil
 import com.twoday.todaytrip.utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

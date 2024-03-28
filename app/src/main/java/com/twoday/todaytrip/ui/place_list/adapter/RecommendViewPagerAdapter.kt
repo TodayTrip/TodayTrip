@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapView
@@ -98,7 +97,6 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             is RecommendCover -> {
                 (holder as CoverHolder).run {
                     bindCover(currentRecommendData)
-                    setOnClickListener()
                 }
             }
 
@@ -138,20 +136,11 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         RecyclerView.ViewHolder(binding.root) {
         private val imageView: ImageView = binding.ivItemPlaceListRecommendCoverImage
         private val destinationTextView: TextView = binding.tvItemPlaceListRecommendCoverDestination
-        private val refreshLayout = binding.layoutItemPlaceListRecommendCoverRefresh
         fun bindCover(recommendCover: RecommendCover) {
             Log.d(TAG, "bindCover) called")
             imageView.glide(recommendCover.imageId)
             destinationTextView.text = recommendCover.destination
         }
-
-        fun setOnClickListener() {
-            refreshLayout.setOnClickListener {
-                Log.d(TAG, "refresh clicked")
-                onRefreshRecommendClickListener?.onRefreshRecommendClick()
-            }
-        }
-
     }
 
     inner class Holder(binding: ItemPlaceListRecommendBinding) :
@@ -186,6 +175,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
                 onTourItemClickListener?.onTourItemClick(recommendTourItem.tourItem)
             }
         }
+
     }
 
     inner class MapHolder(binding: ItemPlaceListRecommendMapBinding) :
