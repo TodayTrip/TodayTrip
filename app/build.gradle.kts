@@ -19,8 +19,8 @@ android {
         applicationId = "com.twoday.todaytrip"
         minSdk = 26
         targetSdk = 34
-        versionCode = 8
-        versionName = "1.0"
+        versionCode = 9
+        versionName = "1.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "TOUR_API_KEY", properties.getProperty("TOUR_API_KEY"))
