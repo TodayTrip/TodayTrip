@@ -97,10 +97,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginTop="250dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_record_chart">
+            app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
             <ImageView
                 android:layout_width="60dp"
@@ -131,6 +132,7 @@
             android:layout_height="match_parent"
             android:layout_marginHorizontal="8dp"
             android:overScrollMode="never"
+            android:paddingBottom="130dp"
             android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
