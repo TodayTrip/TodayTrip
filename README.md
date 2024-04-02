@@ -88,34 +88,35 @@
     - 여행 테마 선택 후, 랜덤 선택에 포함될 지역을 선택할 수 있습니다.
     - 지역 선택 후, 랜덤으로 여행지가 선택되며, **홈**으로 이동합니다.
 
-![(0) 시작화면]()
+
+
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/4bb2a729-ce57-44e1-b405-5e0994fd774a" width="200"/>
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/af80a6d7-272f-4834-a9e4-968c348fd183" width="200"/>
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/b36a5bb0-9251-4149-b45d-b8e17d489710" width="200"/>
 
 (0) 시작화면
-
-![(1) 완전 랜덤 선택]()
-
 (1) 완전 랜덤 선택
-
-![(2-1) 지역 선택]()
-
 (2-1) 지역 선택
 
-![(1-1) 테마별 랜덤 선택]()
+
+
+
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/de623c9f-f46a-4eb1-8a43-25265e9490ea" width="200"/>
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/99f54ac1-2779-4abb-8ef3-fe5be2f56c51" width="200"/>
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/6e090f91-6524-4bc8-83b0-d2c5849babc8" width="200"/>
 
 (1-1) 테마별 랜덤 선택
+(1-2) 여행 테마 선택 
+(2-1) 지역 선택
 
-![(2-2) 여러 지역 선택 시, 로딩 화면]()
+
+
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/3584c371-2042-46d8-b2e9-bc95a0118880" width="200"/>
+<img src="https://github.com/TodayTrip/TodayTrip/assets/151485887/2478c77b-02d3-4ff4-82cf-1fdc7d0b1c02" width="200"/>
 
 (2-2) 여러 지역 선택 시, 로딩 화면
-
-![(1-2) 여행 테마 선택]()
-
-(1-2) 여행 테마 선택
-
-![(2-2) 하나의 지역 선택 시, 로딩 화면]()
-
 (2-2) 하나의 지역 선택 시, 로딩 화면
 
-![(2-1) 지역 선택]()
 
-(2-1) 지역 선택
+
+
