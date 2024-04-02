@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
+import com.twoday.todaytrip.tourApi.TourApiUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.MemoryData
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemAddClickListener
@@ -64,7 +64,7 @@ class PlaceDetailViewModel() : ViewModel() {
     private fun initNearbyList() = CoroutineScope(Dispatchers.IO).launch {
         tourItem?.let {
             val fetchedNearByList = async {
-                TourNetworkInterfaceUtils.fetchNearByList(tourItem!!)
+                TourApiUtils.fetchNearByList(tourItem!!)
             }.await()
 
             withContext(Dispatchers.Main) {

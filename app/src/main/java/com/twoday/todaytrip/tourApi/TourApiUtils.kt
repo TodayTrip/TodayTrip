@@ -12,7 +12,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
-object TourNetworkInterfaceUtils {
+object TourApiUtils {
     private val TAG = "TourNetworkInterfaceUtils"
     suspend fun fetchTouristAttractionList(areaCode: String, pageNo: Int): List<TourItem> =
         CoroutineScope(Dispatchers.IO).async {
