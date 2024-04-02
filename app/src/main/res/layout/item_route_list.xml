@@ -17,8 +17,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cv_save_photo_text_frame">
 
-        <View
-            android:id="@+id/vi_save_photo_pocket_color"
+        <ImageView
+            android:id="@+id/iv_save_photo_pocket_color"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToOutline="true"
