@@ -13,7 +13,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 
 object TourApiUtils {
-    private val TAG = "TourNetworkInterfaceUtils"
+    private val TAG = "TourApiUtils"
     suspend fun fetchTouristAttractionList(areaCode: String, pageNo: Int): List<TourItem> =
         CoroutineScope(Dispatchers.IO).async {
             val touristAttractionList = mutableListOf<TourItem>()
