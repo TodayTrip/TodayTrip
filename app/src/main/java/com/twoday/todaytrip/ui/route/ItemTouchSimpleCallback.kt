@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.twoday.todaytrip.utils.ContentIdPrefUtil
 import java.lang.Integer.max
-import java.util.Collections
+import java.lang.Integer.min
+import kotlin.math.abs
 
 interface OnMoveEndListener{
     fun onMoveEnd()
@@ -33,8 +34,8 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
         val toPosition = targetViewHolder.absoluteAdapterPosition
         //val dataSet = routeAdapter.currentList.toMutableList()
 
-        Log.d(TAG, "currentList")
-        routeAdapter.currentList.forEach { Log.d(TAG, "${it.toString()}")}
+        //Log.d(TAG, "currentList")
+        //routeAdapter.currentList.forEach { Log.d(TAG, "${it.toString()}")}
 
         //Log.d(TAG, "dataSet")
         //dataSet.forEach { Log.d(TAG, "${it.toString()}") }
@@ -44,7 +45,7 @@ class ItemTouchSimpleCallback : ItemTouchHelper.SimpleCallback(
         routeAdapter.apply{
             Log.d(TAG, "from: ${fromPosition}, to: ${toPosition}")
             notifyItemMoved(fromPosition,toPosition)
-            notifyItemRangeChanged(0, max(fromPosition, toPosition)+1, Any())
+            notifyItemRangeChanged(min(fromPosition, toPosition), abs(fromPosition - toPosition) +1, Any())
         }
         return true
     }
