@@ -3,9 +3,10 @@
 |제목|Name|
 |------|---|
 |테스트1|[김나희](https://github.com/kimnahee1529)|
-|테스트1|박재원|
-|테스트1|이선주|
+|테스트1|[박재원](https://github.com/parkjaewons)|
+|테스트1|[이선주](https://github.com/sunjoolee)|
 |테스트1|[송동철](https://github.com/wade316)|
+|테스트1|[최영정](https://github.com/YoungjeongChoi)|
 ----
 
 ### 🧳서비스 소개🧳
