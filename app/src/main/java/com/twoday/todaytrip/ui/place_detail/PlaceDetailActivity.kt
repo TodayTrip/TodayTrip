@@ -112,14 +112,7 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
 
     private fun initTitleUI() {
         tourItemExtra?.let {
-            Log.d(TAG, "tourItem is not null")
-
-            Log.d(TAG, "image: ${it.getImage()}, thumbnail: ${it.getThumbnailImage()}")
-            if (!it.getImage().isNullOrEmpty()) {
-                binding.ivPlaceDetailPic.glide(it.getImage()!!)
-            } else if (!it.getThumbnailImage().isNullOrEmpty()) {
-                binding.ivPlaceDetailPic.glide(it.getThumbnailImage()!!)
-            }
+            binding.ivPlaceDetailPic.glide(it.getImage())
             binding.tvPlaceDetailTitle.text = it.getTitle()
             binding.tvPlaceDetailScrollTitle.text = it.getTitle()
             binding.tvPlaceDetailAddress.text = it.getAddress()

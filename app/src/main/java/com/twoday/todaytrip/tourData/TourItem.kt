@@ -15,9 +15,9 @@ sealed interface TourItem : Parcelable {
     var isAdded: Boolean
     val tourItemInfo: AreaBasedListItem
     fun getTitle() = tourItemInfo.title
-    fun getAddress() = tourItemInfo.address ?: "주소 정보 없음"
-    fun getImage() = tourItemInfo.firstImage ?: null
-    fun getThumbnailImage() = tourItemInfo.firstImageThumbnail ?: null
+    fun getAddress() = tourItemInfo.address
+    fun getImage() = tourItemInfo.firstImage
+    fun getThumbnailImage() = tourItemInfo.firstImageThumbnail
     fun getLongitude() = tourItemInfo.mapX
     fun getLatitude() = tourItemInfo.mapY
     fun getTimeInfoWithLabel(): List<Pair<String, String>>
@@ -25,8 +25,8 @@ sealed interface TourItem : Parcelable {
     fun getContentId() = tourItemInfo.contentId
     fun getContentTypeId() = tourItemInfo.contentTypeId
 
-    private fun getInfoWithNoBlank(info: String?): String =
-        if (info.isNullOrBlank()) "정보 없음" else info
+    private fun getInfoWithNoBlank(info: String): String =
+        info.ifBlank { "정보 없음" }
 
     @Parcelize
     @Serializable

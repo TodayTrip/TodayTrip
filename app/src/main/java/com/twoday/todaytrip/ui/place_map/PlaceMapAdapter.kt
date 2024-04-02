@@ -47,10 +47,7 @@ class PlaceMapAdapter(
             binding.tvItemPlaceMapAddress.text = item.getAddress()
 
             binding.ivItemPlaceMapThumbnail.run{
-                if (item.getImage() != null)
-                    glide(item.getImage()!!)
-                else
-                    item.getThumbnailImage()?.let { glide(it) }
+                glide(item.getImage())
                 clipToOutline = true
             }
 

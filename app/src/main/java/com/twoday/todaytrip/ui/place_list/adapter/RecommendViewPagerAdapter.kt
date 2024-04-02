@@ -163,9 +163,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         fun bindTourItem(recommendTourItem: RecommendTourItem) {
             Log.d(TAG, "bindTourItem) title: ${recommendTourItem.tourItem.getTitle()}")
-            recommendTourItem.tourItem.getImage()?.let { url ->
-                imageView.glide(url)
-            }
+            imageView.glide(recommendTourItem.tourItem.getImage())
             subTitleTextView.setText(recommendTourItem.subTitleId)
             titleTextView.text = recommendTourItem.tourItem.getTitle()
             noResultImageView.isVisible = false

@@ -106,12 +106,7 @@ class PlaceListAdapter :
         )
 
         fun bind(item: TourItem) {
-            if (item.getImage() != null)
-                firstImageView.glide(item.getImage()!!)
-            else
-                item.getThumbnailImage()?.let { url ->
-                    firstImageView.glide(url)
-                }
+            firstImageView.glide(item.getImage())
             firstImageView.clipToOutline = true
 
             if (item.isAdded) {
