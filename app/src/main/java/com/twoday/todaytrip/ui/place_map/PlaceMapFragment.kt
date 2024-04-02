@@ -30,16 +30,12 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceMapBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
-import com.twoday.todaytrip.utils.TourItemPrefUtil.loadCafeList
-import com.twoday.todaytrip.utils.TourItemPrefUtil.loadEventList
-import com.twoday.todaytrip.utils.TourItemPrefUtil.loadRestaurantList
-import com.twoday.todaytrip.utils.TourItemPrefUtil.loadTouristAttractionList
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadCafeList
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadEventList
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadRestaurantList
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadTouristAttractionList
 import com.twoday.todaytrip.viewModel.PlaceMapViewModel
-import ted.gun0912.clustering.BaseBuilder
-import ted.gun0912.clustering.TedMarker
-import ted.gun0912.clustering.clustering.ClusterManager
 import ted.gun0912.clustering.naver.TedNaverClustering
-import ted.gun0912.clustering.naver.TedNaverMarker
 
 data class LocationInfo(
     val latLng: LatLng,

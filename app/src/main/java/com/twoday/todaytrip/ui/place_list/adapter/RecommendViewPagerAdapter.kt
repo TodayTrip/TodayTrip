@@ -7,7 +7,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.naver.maps.geometry.LatLng
 import com.naver.maps.map.CameraUpdate
 import com.naver.maps.map.MapView
@@ -26,7 +25,7 @@ import com.twoday.todaytrip.ui.place_list.RecommendEmpty
 import com.twoday.todaytrip.ui.place_list.RecommendMap
 import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.glide
 import java.lang.Integer.max

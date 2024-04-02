@@ -5,8 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.ui.record.Record
-import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.RecordPrefUtil
+import com.twoday.todaytrip.pref_utils.RecordPrefUtil
 
 class RecordViewModel: ViewModel(){
     private val TAG = "RecordViewModel"

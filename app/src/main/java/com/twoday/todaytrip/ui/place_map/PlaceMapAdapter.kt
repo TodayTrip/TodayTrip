@@ -5,13 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ItemPlaceMapListBinding
 import com.twoday.todaytrip.tourData.TourItem
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 import com.twoday.todaytrip.utils.glide
-import com.twoday.todaytrip.utils.glideWithPlaceholder
 
 class PlaceMapAdapter(
     private val onItemClick: (TourItem) -> Unit

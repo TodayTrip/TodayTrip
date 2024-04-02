@@ -14,7 +14,7 @@ import com.twoday.todaytrip.databinding.ItemPlaceListBinding
 import com.twoday.todaytrip.databinding.ItemPlaceListSkeletonShimmerBinding
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.removeDestination
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.glide
 
 enum class PlaceListViewType(val viewType: Int) {

@@ -20,7 +20,7 @@ import com.twoday.todaytrip.databinding.FragmentRecordDetailListBinding
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
-import com.twoday.todaytrip.utils.RecordPrefUtil
+import com.twoday.todaytrip.pref_utils.RecordPrefUtil
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordDetailListFragment : Fragment(), OnMapReadyCallback {

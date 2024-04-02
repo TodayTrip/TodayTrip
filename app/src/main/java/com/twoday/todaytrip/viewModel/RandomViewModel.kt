@@ -1,12 +1,11 @@
 package com.twoday.todaytrip.viewModel
 
 import androidx.lifecycle.ViewModel
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.PageNoPrefUtil
-import com.twoday.todaytrip.utils.RecommendPrefUtil
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.PageNoPrefUtil
+import com.twoday.todaytrip.pref_utils.RecommendPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 
 class RandomViewModel : ViewModel() {
     fun resetSharedPref() {

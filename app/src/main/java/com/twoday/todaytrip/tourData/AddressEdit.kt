@@ -1,7 +1,6 @@
 package com.twoday.todaytrip.tourData
 
-import android.content.SharedPreferences
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 
 fun String.removeDestination(): String {
     return when (DestinationPrefUtil.loadDestination()) {

@@ -12,9 +12,9 @@ import com.twoday.todaytrip.ui.place_list.RecommendData
 import com.twoday.todaytrip.ui.place_list.RecommendEmpty
 import com.twoday.todaytrip.ui.place_list.RecommendMap
 import com.twoday.todaytrip.ui.place_list.RecommendTourItem
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.RecommendPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.RecommendPrefUtil
 import com.twoday.todaytrip.weatherApi.Item
 import com.twoday.todaytrip.weatherApi.WeatherClient
 import com.twoday.todaytrip.weatherApi.weather

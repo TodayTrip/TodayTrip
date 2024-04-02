@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
 import com.twoday.todaytrip.ui.place_map.LocationInfo
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 
 class PlaceMapViewModel : ViewModel() {
 
