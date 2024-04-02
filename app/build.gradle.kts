@@ -92,6 +92,8 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
+    // Moshi
+    implementation ("com.squareup.moshi:moshi:1.12.0")
     // balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
     // Word cloud
