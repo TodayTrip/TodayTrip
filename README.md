@@ -58,10 +58,10 @@
 |Jetpack|`ViewModel` `LiveData` `LifeCycles` `ViewBinding` `AAC` `Navigation`|
 |비동기 처리|`Coroutine` `async`|
 |데이터 처리|`Percelize` `SharedPreferences` `Serializable` `Gson`|
-|API 통신|`Retrofit`|
+|API 통신|`Retrofit` `OkHttp`|
 |활용 API|`Naver Map API` `Tour API` `기상청 단기 예보 API`|
 |이미지 처리|`Glide` `FishBun`|
-|UI Frameworks|`Fragment` `RecyclerViewAdapter` `ListAdapter` `Shimmer` `BottomSheet` `Ballon` `ViewPager2` `MapView` `SwipteRefreshLayout` `Word Cloud` `Icon-Switch` `CoordinatorLayout` `MotionLayout` `MeterialDesign`|  
+|UI Frameworks|`Fragment` `RecyclerViewAdapter` `ListAdapter` `Shimmer` `BottomSheet` `Ballon` `ViewPager2` `MapView` `SwipteRefreshLayout` `Word Cloud` `Icon-Switch` `CoordinatorLayout` `MotionLayout` `MeterialDesign` `TedClustering`|  
 #### 🔧아키텍처🔧
 `MVVM`  
 ----
