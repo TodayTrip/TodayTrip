@@ -3,6 +3,7 @@ package com.twoday.todaytrip.tourData
 
 import android.os.Parcelable
 import android.util.Log
+import com.squareup.moshi.JsonClass
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
 import com.twoday.todaytrip.utils.DateTimeUtil
@@ -11,6 +12,7 @@ import kotlinx.parcelize.RawValue
 import kotlinx.serialization.Serializable
 
 @Serializable
+@JsonClass(generateAdapter = true)
 sealed interface TourItem : Parcelable {
     var isAdded: Boolean
     val tourItemInfo: AreaBasedListItem
@@ -30,6 +32,7 @@ sealed interface TourItem : Parcelable {
 
     @Parcelize
     @Serializable
+    @JsonClass(generateAdapter = true)
     class TouristDestination(
         private val _tourItemInfo: AreaBasedListItem,
         private val touristDestinationInfo: IntroDetailItem
@@ -71,6 +74,7 @@ sealed interface TourItem : Parcelable {
 
     @Parcelize
     @Serializable
+    @JsonClass(generateAdapter = true)
     class CulturalFacilities(
         private val _tourItemInfo: @RawValue AreaBasedListItem,
         private val culturalFacilitiesInfo: @RawValue IntroDetailItem
@@ -111,6 +115,7 @@ sealed interface TourItem : Parcelable {
 
     @Parcelize
     @Serializable
+    @JsonClass(generateAdapter = true)
     class Restaurant(
         private val _tourItemInfo: @RawValue AreaBasedListItem,
         private val restaurantInfo: @RawValue IntroDetailItem
@@ -152,6 +157,7 @@ sealed interface TourItem : Parcelable {
 
     @Parcelize
     @Serializable
+    @JsonClass(generateAdapter = true)
     class LeisureSports(
         private val _tourItemInfo: @RawValue AreaBasedListItem,
         private val leisureSportsInfo: @RawValue IntroDetailItem
@@ -191,6 +197,7 @@ sealed interface TourItem : Parcelable {
 
     @Parcelize
     @Serializable
+    @JsonClass(generateAdapter = true)
     class EventPerformanceFestival(
         private val _tourItemInfo: @RawValue AreaBasedListItem,
         private val eventPerformanceFestivalInfo: @RawValue IntroDetailItem

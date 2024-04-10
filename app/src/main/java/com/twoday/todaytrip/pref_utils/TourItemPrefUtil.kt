@@ -173,8 +173,11 @@ object TourItemPrefUtil {
         val type = object : TypeToken<List<String>>() {}.type
         val serializedTourItemList: List<String> = Gson().fromJson(json, type)
 
-        val tourItemList = serializedTourItemList.map {
-            TourItemJsonConverter.fromJson(it)
+        val tourItemList = mutableListOf<TourItem>()
+        serializedTourItemList.forEach {
+            TourItemJsonConverter.fromJson(it)?.let{tourItem ->
+                tourItemList.add(tourItem)
+            }
         }
         return tourItemList
     }

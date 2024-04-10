@@ -1,43 +1,43 @@
 package com.twoday.todaytrip.tourData
 
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import android.util.Log
+import com.squareup.moshi.JsonDataException
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.adapters.PolymorphicJsonAdapterFactory
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 object TourItemJsonConverter {
+    private val TAG = "TourItemJsonConverter"
+
+    private val moshi = Moshi.Builder()
+        .add(
+            PolymorphicJsonAdapterFactory.of(TourItem::class.java, "tour_item_type")
+                .withSubtype(TourItem.TouristDestination::class.java, "tourist_attraction")
+                .withSubtype(TourItem.CulturalFacilities::class.java, "cultural_facilities")
+                .withSubtype(TourItem.Restaurant::class.java, "restaurant")
+                .withSubtype(TourItem.LeisureSports::class.java, "leisure_sports")
+                .withSubtype(TourItem.EventPerformanceFestival::class.java, "event_performance_festival")
+        )
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
     fun toJson(tourItem: TourItem): String {
-        val serializedPair = tourItem.getContentTypeId() to Gson().toJson(tourItem)
-        return Gson().toJson(serializedPair)
+        Log.d(TAG, "toJson, TourItem:${tourItem.getTitle()}")
+        return try{
+            moshi.adapter(TourItem::class.java).toJson(tourItem)
+        }catch (e:JsonDataException){
+            e.printStackTrace()
+            ""
+        }
     }
 
-    fun fromJson(json: String): TourItem {
-        val type = object : TypeToken<Pair<String, String>>() {}.type
-        val serializedPair: Pair<String, String> = Gson().fromJson(json, type)
-
-        val tourItemType = when (serializedPair.first) {
-            TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
-                object : TypeToken<TourItem.TouristDestination>() {}.type
-            }
-
-            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
-                object : TypeToken<TourItem.CulturalFacilities>() {}.type
-            }
-
-            TourContentTypeId.RESTAURANT.contentTypeId -> {
-                object : TypeToken<TourItem.Restaurant>() {}.type
-            }
-
-            TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
-                object : TypeToken<TourItem.LeisureSports>() {}.type
-            }
-
-            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
-                object : TypeToken<TourItem.EventPerformanceFestival>() {}.type
-            }
-
-            else -> {
-                object : TypeToken<TourItem.TouristDestination>() {}.type
-            }
+    fun fromJson(json: String): TourItem? {
+        Log.d(TAG, "fromJson, json: ${json}")
+        return try {
+            moshi.adapter(TourItem::class.java).fromJson(json)
+        }catch (e:JsonDataException){
+            e.printStackTrace()
+            null
         }
-        return Gson().fromJson(serializedPair.second, tourItemType)
     }
 }
