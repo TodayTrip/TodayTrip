@@ -36,7 +36,7 @@ data class AreaBasedListItem(
     @SerializedName("contenttypeid")
     val contentTypeId:String, //콘텐츠 타입 ID
     //등록일&수정일 정보 (필수)
-    @SerializedName("createdTime")
+    @SerializedName("createdtime")
     val createdTime:String, //등록일
     @SerializedName("modifiedtime")
     val modifiedTime:String, //수정일

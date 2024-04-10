@@ -12,15 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.transition.TransitionInflater
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CenterInside
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRandomResultOneBinding
 import com.twoday.todaytrip.ui.MainActivity
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.SelectRegionPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
 

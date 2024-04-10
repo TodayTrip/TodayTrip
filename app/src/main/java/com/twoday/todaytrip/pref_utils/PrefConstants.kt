@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.utils
+package com.twoday.todaytrip.pref_utils
 
 object PrefConstants {
     // Select Region 지역 선택 목록 저장 Shared Preference

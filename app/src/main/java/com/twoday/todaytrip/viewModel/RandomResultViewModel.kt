@@ -5,13 +5,13 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.R
-import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.tourApi.TourApiUtils
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
 import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.PageNoPrefUtil
-import com.twoday.todaytrip.utils.RecommendPrefUtil
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.PageNoPrefUtil
+import com.twoday.todaytrip.pref_utils.RecommendPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -96,9 +96,9 @@ class RandomResultViewModel : ViewModel() {
 
         val touristAttractionList =
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
+                TourApiUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
+                TourApiUtils.fetchTouristAttractionListWithTheme(
                     theme,
                     areaCode,
                     pageNo

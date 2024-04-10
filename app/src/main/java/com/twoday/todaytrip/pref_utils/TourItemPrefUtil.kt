@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.utils
+package com.twoday.todaytrip.pref_utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -9,6 +9,8 @@ import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourData.TourCategoryId3
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
+import kotlinx.serialization.json.Json
 
 object TourItemPrefUtil {
     private val TAG = "TourItemPrefUtil"
@@ -152,64 +154,30 @@ object TourItemPrefUtil {
         )
 
     private fun saveTourItemList(tourItemList: List<TourItem>, destinationKey: String) {
-        Log.d(
-            TAG,
-            "saveTourItemList) destination key: ${destinationKey}, list size: ${tourItemList.size}"
-        )
-
         val prefs = getTourItemListPreferences()
 
-        // (1) TourItem JSON 직렬화 -> Pair에 담기
         val serializedTourItemList = tourItemList.map {
-            it.getContentTypeId() to Gson().toJson(it)
+            TourItemJsonConverter.toJson(it)
         }
-        // (2) List<Pair> 직렬화
         val json = Gson().toJson(serializedTourItemList)
         prefs.edit().putString(destinationKey, json).apply()
     }
 
     private fun loadTourItemList(destinationKey: String): List<TourItem> {
-        Log.d(TAG, "loadTourItemList) destination key: ${destinationKey}")
-
         val prefs = getTourItemListPreferences()
 
         val json = prefs.getString(destinationKey, null)
         if ((json == null) || (json.toString() == "[]"))
             return emptyList()
 
-        // (1) List<Pair> 역직렬화
-        val type = object : TypeToken<List<Pair<String, String>>>() {}.type
-        val serializedTourItemList: List<Pair<String, String>> = Gson().fromJson(json, type)
+        val type = object : TypeToken<List<String>>() {}.type
+        val serializedTourItemList: List<String> = Gson().fromJson(json, type)
 
-        // (2) Pair에서 꺼내기 -> TourItem JSON 역직렬화
         val tourItemList = mutableListOf<TourItem>()
         serializedTourItemList.forEach {
-            val tourItemType = when (it.first) {
-                TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
-                    object : TypeToken<TourItem.TouristDestination>() {}.type
-                }
-
-                TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
-                    object : TypeToken<TourItem.CulturalFacilities>() {}.type
-                }
-
-                TourContentTypeId.RESTAURANT.contentTypeId -> {
-                    object : TypeToken<TourItem.Restaurant>() {}.type
-                }
-
-                TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
-                    object : TypeToken<TourItem.LeisureSports>() {}.type
-                }
-
-                TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
-                    object : TypeToken<TourItem.EventPerformanceFestival>() {}.type
-                }
-
-                else -> {
-                    object : TypeToken<TourItem.TouristDestination>() {}.type
-                }
+            TourItemJsonConverter.fromJson(it)?.let{tourItem ->
+                tourItemList.add(tourItem)
             }
-            tourItemList.add(Gson().fromJson(it.second, tourItemType))
         }
         return tourItemList
     }

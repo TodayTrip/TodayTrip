@@ -9,7 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.random.RandomActivity
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 
 class RandomBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {

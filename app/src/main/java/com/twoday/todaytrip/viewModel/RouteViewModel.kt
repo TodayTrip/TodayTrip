@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.naver.maps.geometry.LatLng
 import com.twoday.todaytrip.ui.route.RouteListData
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 
 class RouteViewModel : ViewModel() {
 

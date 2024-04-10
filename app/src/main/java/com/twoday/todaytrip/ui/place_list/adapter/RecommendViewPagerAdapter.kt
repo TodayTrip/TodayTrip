@@ -25,7 +25,7 @@ import com.twoday.todaytrip.ui.place_list.RecommendEmpty
 import com.twoday.todaytrip.ui.place_list.RecommendMap
 import com.twoday.todaytrip.ui.place_list.RecommendTourItem
 import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.glide
 import java.lang.Integer.max
@@ -152,9 +152,7 @@ class RecommendViewPagerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         fun bindTourItem(recommendTourItem: RecommendTourItem) {
             Log.d(TAG, "bindTourItem) title: ${recommendTourItem.tourItem.getTitle()}")
-            recommendTourItem.tourItem.getImage()?.let { url ->
-                imageView.glide(url)
-            }
+            imageView.glide(recommendTourItem.tourItem.getImage())
             subTitleTextView.setText(recommendTourItem.subTitleId)
             titleTextView.text = recommendTourItem.tourItem.getTitle()
             noResultImageView.isVisible = false

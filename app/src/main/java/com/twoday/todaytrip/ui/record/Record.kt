@@ -1,10 +1,9 @@
 package com.twoday.todaytrip.ui.record
 
 import android.os.Parcelable
-import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
 import com.twoday.todaytrip.utils.DateTimeUtil
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
 import java.util.UUID

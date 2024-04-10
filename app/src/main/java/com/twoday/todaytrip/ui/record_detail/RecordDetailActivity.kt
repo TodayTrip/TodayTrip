@@ -15,7 +15,7 @@ import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.record_gallery.RecordGalleryFragment
-import com.twoday.todaytrip.utils.RecordPrefUtil
+import com.twoday.todaytrip.pref_utils.RecordPrefUtil
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveClickListener {

@@ -3,7 +3,7 @@ package com.twoday.todaytrip.ui.route
 import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
 import java.lang.Integer.max
 import java.lang.Integer.min
 import kotlin.math.abs

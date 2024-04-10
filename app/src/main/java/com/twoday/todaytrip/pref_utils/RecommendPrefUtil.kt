@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.utils
+package com.twoday.todaytrip.pref_utils
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -8,6 +8,7 @@ import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 
 object RecommendPrefUtil {
     private val TAG = "RecommendUtil"
@@ -63,15 +64,12 @@ object RecommendPrefUtil {
 
     private fun saveRecommendTourItem(recommendTourItem: TourItem, destinationKey: String) {
         val prefs = getRecommendTourItemPreferences()
-
-        // (1) TourItem JSON 직렬화 -> Pair에 담기
-        val serializedTourItem = (
-                recommendTourItem.getContentTypeId() to Gson().toJson(recommendTourItem)
-                ) as Pair<String, String>
-
-        // (2) Pair 직렬화
-        val json = Gson().toJson(serializedTourItem)
-        prefs.edit().putString(destinationKey, json).apply()
+        prefs.edit()
+            .putString(
+                destinationKey,
+                TourItemJsonConverter.toJson(recommendTourItem)
+            )
+            .apply()
     }
 
     private fun loadRecommendTourItem(destinationKey: String): TourItem? {
@@ -81,36 +79,6 @@ object RecommendPrefUtil {
         if ((json == null) || json.toString().isNullOrEmpty())
             return null
 
-        // (1) Pair 역직렬화
-        val type = object : TypeToken<Pair<String, String>>() {}.type
-        val serializedTourItem: Pair<String, String> = Gson().fromJson(json, type)
-
-        // (2) Pair에서 꺼내기 -> TourItem JSON 역직렬화
-        val tourItemType = when (serializedTourItem.first) {
-            TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
-                object : TypeToken<TourItem.TouristDestination>() {}.type
-            }
-
-            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
-                object : TypeToken<TourItem.CulturalFacilities>() {}.type
-            }
-
-            TourContentTypeId.RESTAURANT.contentTypeId -> {
-                object : TypeToken<TourItem.Restaurant>() {}.type
-            }
-
-            TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
-                object : TypeToken<TourItem.LeisureSports>() {}.type
-            }
-
-            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
-                object : TypeToken<TourItem.EventPerformanceFestival>() {}.type
-            }
-
-            else -> {
-                object : TypeToken<TourItem.TouristDestination>() {}.type
-            }
-        }
-        return Gson().fromJson(serializedTourItem.second, tourItemType)
+        return TourItemJsonConverter.fromJson(json)
     }
 }

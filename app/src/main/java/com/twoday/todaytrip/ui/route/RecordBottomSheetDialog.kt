@@ -15,8 +15,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.record.Record
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.RecordPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.RecordPrefUtil
 import com.twoday.todaytrip.viewModel.SavePhotoViewModel
 
 class RecordBottomSheetDialog : BottomSheetDialogFragment() {

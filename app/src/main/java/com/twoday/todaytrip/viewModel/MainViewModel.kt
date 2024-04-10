@@ -4,12 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.twoday.todaytrip.tourApi.TourNetworkInterfaceUtils
+import com.twoday.todaytrip.tourApi.TourApiUtils
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.utils.DestinationData
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.PageNoPrefUtil
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.PageNoPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -188,9 +188,9 @@ class MainViewModel : ViewModel() {
 
         val touristAttractionList = CoroutineScope(Dispatchers.IO).async {
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
+                TourApiUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
+                TourApiUtils.fetchTouristAttractionListWithTheme(
                     theme,
                     areaCode,
                     pageNo
@@ -209,7 +209,7 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "fetchAndSaveRestaurantList) pageNo: $pageNo")
 
         val restaurantList = CoroutineScope(Dispatchers.IO).async {
-            TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
+            TourApiUtils.fetchRestaurantTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveRestaurantList(restaurantList.await())
         if (restaurantList.await().isNotEmpty())
@@ -223,7 +223,7 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "fetchAndSaveCafeList) pageNo: $pageNo")
 
         val cafeList = CoroutineScope(Dispatchers.IO).async {
-            TourNetworkInterfaceUtils.fetchCafeTabList(areaCode, pageNo)
+            TourApiUtils.fetchCafeTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveCafeList(cafeList.await())
         if (cafeList.await().isNotEmpty())
@@ -237,7 +237,7 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "fetchAndSaveEventList) pageNo: $pageNo")
 
         val eventList = CoroutineScope(Dispatchers.IO).async {
-            TourNetworkInterfaceUtils.fetchEventTabList(areaCode, pageNo)
+            TourApiUtils.fetchEventTabList(areaCode, pageNo)
         }
         TourItemPrefUtil.saveEventList(eventList.await())
         if (eventList.await().isNotEmpty())
@@ -257,9 +257,9 @@ class MainViewModel : ViewModel() {
 
         val moreTouristAttractionList = async {
             if (theme.isNullOrBlank())
-                TourNetworkInterfaceUtils.fetchTouristAttractionList(areaCode, pageNo)
+                TourApiUtils.fetchTouristAttractionList(areaCode, pageNo)
             else
-                TourNetworkInterfaceUtils.fetchTouristAttractionListWithTheme(
+                TourApiUtils.fetchTouristAttractionListWithTheme(
                     theme,
                     areaCode,
                     pageNo
@@ -301,7 +301,7 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "fetchAndSaveMoreRestaurantList) pageNo: $pageNo")
 
         val moreRestaurantList = async {
-            TourNetworkInterfaceUtils.fetchRestaurantTabList(areaCode, pageNo)
+            TourApiUtils.fetchRestaurantTabList(areaCode, pageNo)
         }.await()
 
         Log.d(
@@ -338,7 +338,7 @@ class MainViewModel : ViewModel() {
         Log.d(TAG, "fetchAndSaveMoreCafeList) pageNo: $pageNo")
 
         val moreCafeList = async {
-            TourNetworkInterfaceUtils.fetchCafeTabList(areaCode, pageNo)
+            TourApiUtils.fetchCafeTabList(areaCode, pageNo)
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreCafeList) moreCafeList size: ${moreCafeList.size}")
@@ -372,7 +372,7 @@ class MainViewModel : ViewModel() {
         val pageNo = PageNoPrefUtil.loadEventPageNo()
         Log.d(TAG, "fetchAndSaveMoreEventList) pageNo: $pageNo")
         val moreEventList = async {
-            TourNetworkInterfaceUtils.fetchEventTabList(areaCode, pageNo)
+            TourApiUtils.fetchEventTabList(areaCode, pageNo)
         }.await()
 
         Log.d(TAG, "fetchAndSaveMoreEventList) moreEventList size: ${moreEventList.size}")

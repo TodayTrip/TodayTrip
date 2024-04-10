@@ -9,7 +9,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,7 +16,7 @@ import com.twoday.todaytrip.R
 import androidx.transition.TransitionInflater
 import com.twoday.todaytrip.databinding.FragmentRandomResultBinding
 import com.twoday.todaytrip.ui.MainActivity
-import com.twoday.todaytrip.utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
 import com.twoday.todaytrip.utils.glide
 import com.twoday.todaytrip.viewModel.RandomResultViewModel
 

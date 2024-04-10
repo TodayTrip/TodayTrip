@@ -42,9 +42,7 @@ class NearByAdapter : RecyclerView.Adapter<NearByAdapter.Holder>(){
         private val titleTextView: TextView = binding.tvItemPlaceDetailNearbyTitle
 
         fun bind(tourItem: TourItem){
-            tourItem.getImage()?.let{
-                imageView.glideWithPlaceholder(it)
-            }
+            imageView.glideWithPlaceholder(tourItem.getImage())
             imageView.clipToOutline = true
 
             titleTextView.text = tourItem.getTitle()

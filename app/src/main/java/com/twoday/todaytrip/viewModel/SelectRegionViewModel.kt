@@ -3,8 +3,8 @@ package com.twoday.todaytrip.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.twoday.todaytrip.utils.DestinationPrefUtil
-import com.twoday.todaytrip.utils.SelectRegionPrefUtil
+import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.pref_utils.SelectRegionPrefUtil
 
 class SelectRegionViewModel : ViewModel() {
 

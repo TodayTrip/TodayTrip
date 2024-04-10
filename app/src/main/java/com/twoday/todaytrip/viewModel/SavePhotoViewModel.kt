@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.twoday.todaytrip.ui.save_photo.SavePhotoData
-import com.twoday.todaytrip.utils.ContentIdPrefUtil
-import com.twoday.todaytrip.utils.TourItemPrefUtil
+import com.twoday.todaytrip.pref_utils.ContentIdPrefUtil
+import com.twoday.todaytrip.pref_utils.TourItemPrefUtil
 
 class SavePhotoViewModel: ViewModel() {
 

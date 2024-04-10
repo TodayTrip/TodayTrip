@@ -1,4 +1,4 @@
-package com.twoday.todaytrip.utils
+package com.twoday.todaytrip.pref_utils
 
 import android.content.Context
 import android.content.SharedPreferences
