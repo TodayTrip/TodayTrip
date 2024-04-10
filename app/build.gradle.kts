@@ -6,6 +6,7 @@ plugins {
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.gms.google-services")
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp").version("1.6.10-1.0.4")
 }
 
 val properties = Properties()
@@ -46,7 +47,6 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
-        dataBinding = true
     }
 }
 dependencies {
@@ -82,6 +82,11 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.10.0")
     implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
+    // Moshi
+    implementation("com.squareup.moshi:moshi:1.15.0")
+    ksp ("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
+    implementation("com.squareup.moshi:moshi-adapters:1.9.2")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
     // Glide
     implementation("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
@@ -92,8 +97,6 @@ dependencies {
     implementation("androidx.viewpager2:viewpager2:1.0.0")
     // Serialization
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.0")
-    // Moshi
-    implementation ("com.squareup.moshi:moshi:1.12.0")
     // balloon
     implementation ("com.github.skydoves:balloon:1.4.6")
     // Word cloud
