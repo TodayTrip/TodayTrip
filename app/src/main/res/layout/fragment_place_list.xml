@@ -102,6 +102,27 @@
                         app:layout_constraintHorizontal_bias="1.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/layout_item_place_list_recommend_cover_refresh"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/shape_circle"
+                        android:backgroundTint="@color/white"
+                        android:padding="2dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/viewpager_recommend">
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_place_list_recommend_refresh"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
@@ -109,8 +130,8 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="7.5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/shape_circle_gray" />
 
                 <View
@@ -118,8 +139,8 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="22.5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/shape_circle_gray" />
 
                 <View
@@ -127,8 +148,8 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
-                    android:layout_marginBottom="10dp"
                     android:layout_marginEnd="37.5dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/shape_circle_gray" />
 
                 <View
@@ -136,45 +157,45 @@
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginStart="7.5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/shape_circle_gray"
-                    android:layout_marginStart="7.5dp"/>
+                    android:background="@drawable/shape_circle_gray" />
 
                 <View
                     android:id="@+id/place_indicator5"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginStart="22.5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/shape_circle_gray"
-                    android:layout_marginStart="22.5dp"/>
+                    android:background="@drawable/shape_circle_gray" />
 
                 <View
                     android:id="@+id/place_indicator6"
                     android:layout_width="7dp"
                     android:layout_height="7dp"
                     android:layout_gravity="bottom|center_horizontal"
+                    android:layout_marginStart="37.5dp"
                     android:layout_marginBottom="10dp"
-                    android:background="@drawable/shape_circle_gray"
-                    android:layout_marginStart="37.5dp"/>
+                    android:background="@drawable/shape_circle_gray" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-<!--            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator-->
-<!--                android:id="@+id/spring_dots_indicator"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_gravity="center"-->
-<!--                app:dampingRatio="0.5"-->
-<!--                app:dotsColor="@color/main_blue"-->
-<!--                app:dotsStrokeColor="@color/main_blue"-->
-<!--                app:dotsCornerRadius="100dp"-->
-<!--                app:dotsSize="16dp"-->
-<!--                app:dotsSpacing="6dp"-->
-<!--                app:dotsStrokeWidth="2dp"-->
-<!--                app:stiffness="300"-->
+            <!--            <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator-->
+            <!--                android:id="@+id/spring_dots_indicator"-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_gravity="center"-->
+            <!--                app:dampingRatio="0.5"-->
+            <!--                app:dotsColor="@color/main_blue"-->
+            <!--                app:dotsStrokeColor="@color/main_blue"-->
+            <!--                app:dotsCornerRadius="100dp"-->
+            <!--                app:dotsSize="16dp"-->
+            <!--                app:dotsSpacing="6dp"-->
+            <!--                app:dotsStrokeWidth="2dp"-->
+            <!--                app:stiffness="300"-->
 
-<!--                />-->
+            <!--                />-->
 
             <!-- 뷰페이저와 연결할 탭 -->
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -235,4 +256,5 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

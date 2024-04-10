@@ -217,6 +217,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
 
     override fun onMoveEnd() {
         Log.d(TAG, "onMoveEnd) called")
+        routeViewModel.updateRouteDataSet()
         routeViewModel.getLocation()
     }
 

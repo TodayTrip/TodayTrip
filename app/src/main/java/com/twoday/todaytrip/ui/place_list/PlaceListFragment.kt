@@ -127,6 +127,9 @@ class PlaceListFragment : Fragment(),
                 model.setRecommendPosition(position)
             }
         })
+        binding.layoutItemPlaceListRecommendCoverRefresh.setOnClickListener {
+            recommendAdapter.onRefreshRecommendClickListener?.onRefreshRecommendClick()
+        }
     }
 
     private fun setRecommendPageIndicator(position: Int) {
