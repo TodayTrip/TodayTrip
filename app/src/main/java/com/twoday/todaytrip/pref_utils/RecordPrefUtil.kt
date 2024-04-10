@@ -130,6 +130,5 @@ data class SerializedRecord(
     @SerializedName("traveldate")
     val travelDate: String,
     @SerializedName("serializedsavephotodatalist")
-//    val serializedSavePhotoDataList: List<Triple<String, String, String>>
     val serializedSavePhotoDataList: List<Triple<String, MutableList<String>, String>>
 ) : java.io.Serializable
