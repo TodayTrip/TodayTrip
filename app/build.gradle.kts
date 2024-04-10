@@ -84,6 +84,7 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp-urlconnection:4.4.1")
     // Moshi
     implementation("com.squareup.moshi:moshi:1.15.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.14.0")
     ksp ("com.squareup.moshi:moshi-kotlin-codegen:1.8.0")
     implementation("com.squareup.moshi:moshi-adapters:1.9.2")
     implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
