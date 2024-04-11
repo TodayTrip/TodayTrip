@@ -28,7 +28,7 @@ object TourNetworkClient {
     private val tourRetrofit = Retrofit.Builder()
         .baseUrl(TOUR_BASE_URL)
         .addConverterFactory(
-            MoshiConverterFactory.create(moshi)
+            MoshiConverterFactory.create(moshi).asLenient()
         )
         .client(createOkHttpClient())
         .build()
