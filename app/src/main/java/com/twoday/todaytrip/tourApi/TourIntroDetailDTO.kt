@@ -1,9 +1,6 @@
 package com.twoday.todaytrip.tourApi
 
-import android.os.Parcelable
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
+import com.squareup.moshi.Json
 
 data class IntroDetail(
     val response: IntroDetailResponse
@@ -25,14 +22,12 @@ data class IntroDetailResponseBody(
 data class IntroDetailItems(
     val item: List<IntroDetailItem>
 )
-@Serializable
 data class IntroDetailItem(
-    // 기본 정보
-    @SerializedName("contentid")
+    @Json(name="contentid")
     val contentId:String,
-    @SerializedName("contenttypeid")
+    @Json(name="contenttypeid")
     val contentTypeId:String,
-    //TODO change data class property name to camel case
+    // TODO change data class property name to camel case
     // 관광지 정보
     val accomcount:String = "",
     val chkbabycarriage:String = "",

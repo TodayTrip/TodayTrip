@@ -15,10 +15,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListCafeRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
@@ -127,10 +127,7 @@ class CafeRecyclerViewFragment : Fragment(), OnTourItemClickListener {
     override fun onTourItemClick(tourItem: TourItem) {
         Log.d(TAG, "onTourItemClick) called, ${tourItem.getTitle()}")
         val placeDetailIntent = PlaceDetailActivity.newIntent(
-            requireContext(),
-            tourItem.getContentTypeId(),
-            tourItem
-        )
+            requireContext(),TourItemJsonConverter.toJson(tourItem))
         startActivity(placeDetailIntent)
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }

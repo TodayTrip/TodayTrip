@@ -18,6 +18,7 @@ import com.bumptech.glide.Glide
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListTouristAttractionRecyclerViewBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.ui.place_list.adapter.PlaceListAdapter
@@ -138,9 +139,7 @@ class TouristAttractionRecyclerViewFragment : Fragment(), OnTourItemClickListene
     override fun onTourItemClick(tourItem: TourItem) {
         Log.d(TAG, "onTourItemClick) called, ${tourItem.getTitle()}")
         val placeDetailIntent = PlaceDetailActivity.newIntent(
-            requireContext(),
-            tourItem.getContentTypeId(),
-            tourItem
+            requireContext(), TourItemJsonConverter.toJson(tourItem)
         )
         startActivity(placeDetailIntent)
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
