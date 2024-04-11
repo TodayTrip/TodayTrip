@@ -1,13 +1,10 @@
 package com.twoday.todaytrip.tourData
 
-
-import android.os.Parcelable
 import android.util.Log
 import com.squareup.moshi.JsonClass
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
 import com.twoday.todaytrip.utils.DateTimeUtil
-import kotlinx.parcelize.RawValue
 
 @JsonClass(generateAdapter = true)
 sealed interface TourItem{
@@ -28,7 +25,7 @@ sealed interface TourItem{
 
     @JsonClass(generateAdapter = true)
     class TouristDestination(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val _tourItemInfo: AreaBasedListItem,
         private val touristDestinationInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
@@ -68,7 +65,7 @@ sealed interface TourItem{
 
     @JsonClass(generateAdapter = true)
     class CulturalFacilities(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val _tourItemInfo: AreaBasedListItem,
         private val culturalFacilitiesInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
@@ -107,7 +104,7 @@ sealed interface TourItem{
 
     @JsonClass(generateAdapter = true)
     class Restaurant(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val _tourItemInfo: AreaBasedListItem,
         private val restaurantInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
@@ -147,7 +144,7 @@ sealed interface TourItem{
 
     @JsonClass(generateAdapter = true)
     class LeisureSports(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val _tourItemInfo: AreaBasedListItem,
         private val leisureSportsInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
@@ -185,7 +182,7 @@ sealed interface TourItem{
 
     @JsonClass(generateAdapter = true)
     class EventPerformanceFestival(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
+        private val _tourItemInfo: AreaBasedListItem,
         private val eventPerformanceFestivalInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
