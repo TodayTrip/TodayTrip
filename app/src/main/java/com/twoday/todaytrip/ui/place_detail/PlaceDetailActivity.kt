@@ -16,11 +16,11 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.ActivityPlaceDetailBinding
-import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.ui.place_list.adapter.OnTourItemClickListener
 import com.twoday.todaytrip.utils.DestinationData
 import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.MapUtils.resizeMapIcons
 import com.twoday.todaytrip.utils.glide
@@ -46,41 +46,16 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
     private val markers = mutableListOf<Marker>()
 
     private val tourItemExtra by lazy {
-        when (intent.getStringExtra(EXTRA_CONTENT_TYPE_ID)) {
-            TourContentTypeId.TOURIST_DESTINATION.contentTypeId -> {
-                intent.getParcelableExtra<TourItem.TouristDestination>(EXTRA_TOUR_ITEM)
-            }
-
-            TourContentTypeId.CULTURAL_FACILITIES.contentTypeId -> {
-                intent.getParcelableExtra<TourItem.CulturalFacilities>(EXTRA_TOUR_ITEM)
-            }
-
-            TourContentTypeId.RESTAURANT.contentTypeId -> {
-                intent.getParcelableExtra<TourItem.Restaurant>(EXTRA_TOUR_ITEM)
-            }
-
-            TourContentTypeId.LEISURE_SPORTS.contentTypeId -> {
-                intent.getParcelableExtra<TourItem.LeisureSports>(EXTRA_TOUR_ITEM)
-            }
-
-            TourContentTypeId.EVENT_PERFORMANCE_FESTIVAL.contentTypeId -> {
-                intent.getParcelableExtra<TourItem.EventPerformanceFestival>(EXTRA_TOUR_ITEM)
-            }
-
-            else -> {
-                Log.d(TAG, "tour item from intent extra is null!")
-                null
-            }
+        intent.getStringExtra(EXTRA_TOUR_ITEM_JSON)?.let {
+            TourItemJsonConverter.fromJson(it)
         }
     }
 
     companion object {
-        const val EXTRA_CONTENT_TYPE_ID = "extra_content_type_id"
-        const val EXTRA_TOUR_ITEM = "extra_tour_item"
-        fun newIntent(context: Context, contentTypeId: String, tourItem: TourItem): Intent =
+        private const val EXTRA_TOUR_ITEM_JSON = "extra_tour_item_json"
+        fun newIntent(context: Context, json: String): Intent =
             Intent(context, PlaceDetailActivity::class.java).apply {
-                putExtra(EXTRA_CONTENT_TYPE_ID, contentTypeId)
-                putExtra(EXTRA_TOUR_ITEM, tourItem)
+                putExtra(EXTRA_TOUR_ITEM_JSON, json)
             }
     }
 
@@ -141,7 +116,7 @@ class PlaceDetailActivity : AppCompatActivity(), OnTourItemClickListener, OnMapR
             "onTourItemClick) current TourItem: ${tourItemExtra!!.getTitle()} -> clicked TourItem: ${tourItem.getTitle()}"
         )
         startActivity(
-            newIntent(this@PlaceDetailActivity, tourItem.getContentTypeId(), tourItem)
+            newIntent(this@PlaceDetailActivity, TourItemJsonConverter.toJson(tourItem))
         )
     }
 

@@ -34,6 +34,7 @@ import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadCafeList
 import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadEventList
 import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadRestaurantList
 import com.twoday.todaytrip.pref_utils.TourItemPrefUtil.loadTouristAttractionList
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 import com.twoday.todaytrip.viewModel.PlaceMapViewModel
 import ted.gun0912.clustering.naver.TedNaverClustering
 
@@ -53,9 +54,7 @@ class PlaceMapFragment : Fragment(), OnMapReadyCallback {
 
     private val onItemClick: (TourItem) -> Unit = { tourItem ->
         val placeDetailIntent = PlaceDetailActivity.newIntent(
-            requireContext(),
-            tourItem.getContentTypeId(),
-            tourItem
+            requireContext(), TourItemJsonConverter.toJson(tourItem)
         )
 
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

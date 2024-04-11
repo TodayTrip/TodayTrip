@@ -19,6 +19,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentPlaceListBinding
 import com.twoday.todaytrip.tourData.TourItem
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.ui.place_detail.PlaceDetailActivity
 import com.twoday.todaytrip.ui.place_list.adapter.OnAddAllRecommendClickListener
@@ -165,9 +166,7 @@ class PlaceListFragment : Fragment(),
     override fun onTourItemClick(tourItem: TourItem) {
         Log.d(TAG, "onTourItemClick) called, ${tourItem.getTitle()}")
         val placeDetailIntent = PlaceDetailActivity.newIntent(
-            requireContext(),
-            tourItem.getContentTypeId(),
-            tourItem
+            requireContext(), TourItemJsonConverter.toJson(tourItem)
         )
         startActivity(placeDetailIntent)
     }
