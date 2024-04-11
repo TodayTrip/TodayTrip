@@ -1,6 +1,7 @@
 package com.twoday.todaytrip.tourApi
 
 import android.util.Log
+import com.squareup.moshi.JsonDataException
 import com.twoday.todaytrip.tourData.TourCategoryId1
 import com.twoday.todaytrip.tourData.TourCategoryId2
 import com.twoday.todaytrip.tourData.TourCategoryId3
@@ -667,8 +668,9 @@ object TourApiUtils {
                     addAll(filteredList)
                 }
             return areaBasedResponse
-        } catch (e: Exception) {
+        } catch (e: JsonDataException) {
             Log.d(TAG, "getAreaBasedList) error!")
+            e.printStackTrace()
             return null
         }
     }
@@ -704,8 +706,9 @@ object TourApiUtils {
                     addAll(filteredList)
                 }
             return locationBasedResponse
-        } catch (e: Exception) {
+        } catch (e: JsonDataException) {
             Log.d(TAG, "getLocationBasedList) error!")
+            e.printStackTrace()
             return null
         }
     }
@@ -725,8 +728,9 @@ object TourApiUtils {
                 return null
             }
             return introDetailResponse.response.body.items.item[0]
-        } catch (e: Exception) {
+        } catch (e: JsonDataException) {
             Log.d(TAG, "getIntroDetail) error!")
+            e.printStackTrace()
             return null
         }
     }
