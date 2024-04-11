@@ -3,17 +3,21 @@ package com.twoday.todaytrip.pref_utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.tourData.TourCategoryId3
-import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.TourItemJsonConverter
-import kotlinx.serialization.json.Json
 
 object TourItemPrefUtil {
     private val TAG = "TourItemPrefUtil"
+
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
     fun loadAllTourItemList(): List<TourItem> = mutableListOf<TourItem>().apply {
         addAll(loadTouristAttractionList())
         addAll(loadRestaurantList())
@@ -159,7 +163,8 @@ object TourItemPrefUtil {
         val serializedTourItemList = tourItemList.map {
             TourItemJsonConverter.toJson(it)
         }
-        val json = Gson().toJson(serializedTourItemList)
+        val type = Types.newParameterizedType(List::class.java, String::class.java)
+        val json = moshi.adapter<List<String>>(type).toJson(serializedTourItemList)
         prefs.edit().putString(destinationKey, json).apply()
     }
 
@@ -170,11 +175,11 @@ object TourItemPrefUtil {
         if ((json == null) || (json.toString() == "[]"))
             return emptyList()
 
-        val type = object : TypeToken<List<String>>() {}.type
-        val serializedTourItemList: List<String> = Gson().fromJson(json, type)
+        val type = Types.newParameterizedType(List::class.java, String::class.java)
+        val serializedTourItemList = moshi.adapter<List<String>>(type).fromJson(json)
 
         val tourItemList = mutableListOf<TourItem>()
-        serializedTourItemList.forEach {
+        serializedTourItemList?.forEach {
             TourItemJsonConverter.fromJson(it)?.let{tourItem ->
                 tourItemList.add(tourItem)
             }
