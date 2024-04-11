@@ -3,10 +3,7 @@ package com.twoday.todaytrip.pref_utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.twoday.todaytrip.MyApplication
-import com.twoday.todaytrip.tourData.TourContentTypeId
 import com.twoday.todaytrip.tourData.TourItem
 import com.twoday.todaytrip.tourData.TourItemJsonConverter
 

@@ -3,13 +3,18 @@ package com.twoday.todaytrip.pref_utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.util.Log
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.twoday.todaytrip.MyApplication
 import java.util.Collections
 
 object ContentIdPrefUtil {
     private val TAG = "ContentIdPrefUtil"
+
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
 
     fun loadContentIdList() = loadContentIdList(PrefConstants.ADDED_CONTENT_ID_LIST_KEY)
     private fun saveContentIdList(contentIdList: List<String>) = saveContentIDList(
@@ -53,7 +58,8 @@ object ContentIdPrefUtil {
 
     private fun saveContentIDList(contentIdList: List<String>, destinationKey: String) {
         val prefs = getContentIdListPreferences()
-        val json = Gson().toJson(contentIdList)
+        val type = Types.newParameterizedType(List::class.java, String::class.java)
+        val json = moshi.adapter<List<String>>(type).toJson(contentIdList)
         prefs.edit().putString(destinationKey, json).apply()
     }
 
@@ -61,8 +67,8 @@ object ContentIdPrefUtil {
         val prefs = getContentIdListPreferences()
         val json = prefs.getString(destinationKey, null)
         return if ((json != null) && (json.toString() != "[]")) {
-            val type = object : TypeToken<List<String>>() {}.type
-            Gson().fromJson(json, type)
+            val type = Types.newParameterizedType(List::class.java, String::class.java)
+            moshi.adapter<List<String>>(type).fromJson(json) ?: emptyList()
         } else {
             emptyList()
         }

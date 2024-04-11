@@ -2,7 +2,8 @@ package com.twoday.todaytrip.tourApi
 
 import android.util.Log
 import com.google.common.net.HttpHeaders.CACHE_CONTROL
-import com.google.gson.GsonBuilder
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.twoday.todaytrip.MyApplication
 import com.twoday.todaytrip.utils.NetworkUtil
 import okhttp3.Cache
@@ -12,7 +13,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.moshi.MoshiConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -20,14 +21,14 @@ import java.util.concurrent.TimeUnit
 object TourNetworkClient {
     private const val TOUR_BASE_URL = "https://apis.data.go.kr/B551011/KorService1/"
 
+    private val moshi = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
+        .build()
+
     private val tourRetrofit = Retrofit.Builder()
         .baseUrl(TOUR_BASE_URL)
         .addConverterFactory(
-            GsonConverterFactory.create(
-                GsonBuilder()
-                    .setLenient()
-                    .create()
-            )
+            MoshiConverterFactory.create(moshi).asLenient()
         )
         .client(createOkHttpClient())
         .build()

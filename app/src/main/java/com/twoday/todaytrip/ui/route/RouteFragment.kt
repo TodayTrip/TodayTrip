@@ -39,6 +39,7 @@ import com.naver.maps.map.overlay.PolylineOverlay
 import com.twoday.todaytrip.ui.MainActivity
 import com.twoday.todaytrip.utils.DestinationData.destinationLatLng
 import com.twoday.todaytrip.pref_utils.DestinationPrefUtil
+import com.twoday.todaytrip.tourData.TourItemJsonConverter
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
 import com.twoday.todaytrip.viewModel.RouteViewModel
@@ -195,9 +196,7 @@ class RouteFragment : Fragment(), OnMapReadyCallback, OnRouteListDataClickListen
         }!!
         startActivity(
             PlaceDetailActivity.newIntent(
-                requireContext(),
-                clickedTourItem.getContentTypeId(),
-                clickedTourItem
+                requireContext(), TourItemJsonConverter.toJson(clickedTourItem)
             )
         )
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)

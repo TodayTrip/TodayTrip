@@ -1,15 +1,11 @@
 package com.twoday.todaytrip.ui.save_photo
 
-import android.os.Parcelable
+import com.squareup.moshi.JsonClass
 import com.twoday.todaytrip.tourData.TourItem
-import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.Serializable
 
-@Serializable
-@Parcelize
+@JsonClass(generateAdapter = true)
 data class SavePhotoData(
     val tourItem: TourItem,
-//    var imageUri: String? = null,
     var imageUriList: MutableList<String> = mutableListOf(),
     val position: Int = 0
-): java.io.Serializable, Parcelable
+)

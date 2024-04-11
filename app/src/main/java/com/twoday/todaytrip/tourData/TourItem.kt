@@ -1,25 +1,18 @@
 package com.twoday.todaytrip.tourData
 
-
-import android.os.Parcelable
 import android.util.Log
 import com.squareup.moshi.JsonClass
 import com.twoday.todaytrip.tourApi.AreaBasedListItem
 import com.twoday.todaytrip.tourApi.IntroDetailItem
 import com.twoday.todaytrip.utils.DateTimeUtil
-import kotlinx.parcelize.Parcelize
-import kotlinx.parcelize.RawValue
-import kotlinx.serialization.Serializable
 
-@Serializable
 @JsonClass(generateAdapter = true)
-sealed interface TourItem : Parcelable {
+sealed interface TourItem{
     var isAdded: Boolean
     val tourItemInfo: AreaBasedListItem
     fun getTitle() = tourItemInfo.title
     fun getAddress() = tourItemInfo.address
     fun getImage() = tourItemInfo.firstImage
-    fun getThumbnailImage() = tourItemInfo.firstImageThumbnail
     fun getLongitude() = tourItemInfo.mapX
     fun getLatitude() = tourItemInfo.mapY
     fun getTimeInfoWithLabel(): List<Pair<String, String>>
@@ -30,8 +23,6 @@ sealed interface TourItem : Parcelable {
     private fun getInfoWithNoBlank(info: String): String =
         info.ifBlank { "정보 없음" }
 
-    @Parcelize
-    @Serializable
     @JsonClass(generateAdapter = true)
     class TouristDestination(
         private val _tourItemInfo: AreaBasedListItem,
@@ -72,12 +63,10 @@ sealed interface TourItem : Parcelable {
         }
     }
 
-    @Parcelize
-    @Serializable
     @JsonClass(generateAdapter = true)
     class CulturalFacilities(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
-        private val culturalFacilitiesInfo: @RawValue IntroDetailItem
+        private val _tourItemInfo: AreaBasedListItem,
+        private val culturalFacilitiesInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -113,12 +102,10 @@ sealed interface TourItem : Parcelable {
         }
     }
 
-    @Parcelize
-    @Serializable
     @JsonClass(generateAdapter = true)
     class Restaurant(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
-        private val restaurantInfo: @RawValue IntroDetailItem
+        private val _tourItemInfo: AreaBasedListItem,
+        private val restaurantInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -155,12 +142,10 @@ sealed interface TourItem : Parcelable {
         }
     }
 
-    @Parcelize
-    @Serializable
     @JsonClass(generateAdapter = true)
     class LeisureSports(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
-        private val leisureSportsInfo: @RawValue IntroDetailItem
+        private val _tourItemInfo: AreaBasedListItem,
+        private val leisureSportsInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
@@ -195,12 +180,10 @@ sealed interface TourItem : Parcelable {
         }
     }
 
-    @Parcelize
-    @Serializable
     @JsonClass(generateAdapter = true)
     class EventPerformanceFestival(
-        private val _tourItemInfo: @RawValue AreaBasedListItem,
-        private val eventPerformanceFestivalInfo: @RawValue IntroDetailItem
+        private val _tourItemInfo: AreaBasedListItem,
+        private val eventPerformanceFestivalInfo: IntroDetailItem
     ) : TourItem {
         override var isAdded = false
         override val tourItemInfo = _tourItemInfo
