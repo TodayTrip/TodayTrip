@@ -101,7 +101,9 @@ class RecordFragment : Fragment(), OnRecordClickListener {
     override fun onRecordClick(record: Record) {
         Log.d(TAG, "onRecordClick) ${record.destination}, ${record.travelDate}")
         startActivity(
-            RecordDetailActivity.newIntent(this.requireContext(), record)
+            RecordDetailActivity.newIntent(
+                this.requireContext(), RecordJsonConverter.toJson(record)
+            )
         )
         requireActivity().overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
     }

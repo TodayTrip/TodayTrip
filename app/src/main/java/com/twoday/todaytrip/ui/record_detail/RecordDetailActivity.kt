@@ -16,6 +16,7 @@ import com.twoday.todaytrip.databinding.ActivityRecordDetailBinding
 import com.twoday.todaytrip.ui.record.Record
 import com.twoday.todaytrip.ui.record_gallery.RecordGalleryFragment
 import com.twoday.todaytrip.pref_utils.RecordPrefUtil
+import com.twoday.todaytrip.ui.record.RecordJsonConverter
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveClickListener {
@@ -27,7 +28,9 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
     private val viewModel: RecordDetailViewModel by viewModels()
 
     private val record: Record? by lazy {
-        intent.getParcelableExtra(EXTRA_RECORD)
+        intent.getStringExtra(EXTRA_RECORD_JSON)?.let{
+            RecordJsonConverter.fromJson(it)
+        }
     }
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -39,11 +42,10 @@ class RecordDetailActivity : AppCompatActivity(), DeleteRecordDialog.OnPositiveC
     }
 
     companion object {
-        private const val EXTRA_RECORD = "extra_record"
-        fun newIntent(context: Context, record: Record): Intent =
+        private const val EXTRA_RECORD_JSON = "extra_record_json"
+        fun newIntent(context: Context, json: String): Intent =
             Intent(context, RecordDetailActivity::class.java).apply {
-                putExtra(EXTRA_RECORD, record)
-                Log.d("TAG0 record의 savePhotoDataList", "${record?.savePhotoDataList?.size}")
+                putExtra(EXTRA_RECORD_JSON, json)
             }
     }
 

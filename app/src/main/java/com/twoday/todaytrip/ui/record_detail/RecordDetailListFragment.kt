@@ -17,10 +17,10 @@ import com.naver.maps.map.overlay.Marker
 import com.naver.maps.map.overlay.OverlayImage
 import com.twoday.todaytrip.R
 import com.twoday.todaytrip.databinding.FragmentRecordDetailListBinding
+import com.twoday.todaytrip.pref_utils.RecordPrefUtil
 import com.twoday.todaytrip.utils.MapUtils
 import com.twoday.todaytrip.utils.MapUtils.createIconWithText
 import com.twoday.todaytrip.utils.MapUtils.resizeBitmap
-import com.twoday.todaytrip.pref_utils.RecordPrefUtil
 import com.twoday.todaytrip.viewModel.RecordDetailViewModel
 
 class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
@@ -60,12 +60,17 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
 
         Log.d(TAG, "recordList: $recordList")
         if (recordList.isNotEmpty()) {
-            markerList = recordList.flatMap { record ->
-                record.savePhotoDataList.map { photoData ->
-                    LatLng(
-                        photoData.tourItem.getLatitude().toDouble(),
-                        photoData.tourItem.getLongitude().toDouble()
-                    )
+            markerList = mutableListOf()
+            recordList.forEach { record ->
+                record?.savePhotoDataList?.forEach{ photoData ->
+                    photoData?.tourItem?.let {
+                        (markerList as MutableList<LatLng>).add(
+                            LatLng(
+                                photoData.tourItem.getLatitude()?.toDouble() ?: 0.0,
+                                photoData.tourItem.getLongitude()?.toDouble()?: 0.0
+                            )
+                        )
+                    }
                 }
             }
             Log.d(TAG, "locations: $markerList")
@@ -114,9 +119,10 @@ class RecordDetailListFragment : Fragment(), OnMapReadyCallback {
             markers.add(marker) // 마커 리스트에 추가
         }
 
-        val bounds = MapUtils.createBoundsForAllMarkers(markers)
-        MapUtils.updateCameraToBounds(naverMap, bounds, 130)
-
+        if(markers.isNotEmpty()) {
+            val bounds = MapUtils.createBoundsForAllMarkers(markers)
+            MapUtils.updateCameraToBounds(naverMap, bounds, 130)
+        }
         if (markerList.size == 1) {
             naverMap.moveCamera(CameraUpdate.zoomTo(13.0))
         }
